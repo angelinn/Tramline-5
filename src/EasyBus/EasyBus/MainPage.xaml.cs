@@ -36,9 +36,25 @@ namespace EasyBus
 
         private async void btnStop_Click(object sender, RoutedEventArgs e)
         {
-            IEnumerable<ArrivalViewModel> arrivals = await SumcManager.GetByStopAsync(txtStopID.Text);
-            foreach (ArrivalViewModel arrival in arrivals)
-                Arrivals.Add(arrival);
+            prVirtualTables.IsActive = true;
+            prVirtualTables.Visibility = Visibility.Visible;
+
+            try
+            {
+                Arrivals.Clear();
+                IEnumerable<ArrivalViewModel> arrivals = await SumcManager.GetByStopAsync(txtStopID.Text);
+                foreach (ArrivalViewModel arrival in arrivals)
+                    Arrivals.Add(arrival);
+            }
+            catch (Exception ex)
+            {
+                Arrivals.Add(new ArrivalViewModel { Timings = ex.Message });
+            }
+            finally
+            {
+                prVirtualTables.IsActive = false;
+                prVirtualTables.Visibility = Visibility.Collapsed;
+            }
         }
     }
 }

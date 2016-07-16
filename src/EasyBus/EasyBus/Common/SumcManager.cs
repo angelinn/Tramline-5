@@ -26,7 +26,7 @@ namespace EasyBus.Common
 
                 var getresult = await client.GetAsync(address);
                 HtmlDocument doc = new HtmlDocument();
-                doc.Load(getresult.Content.ReadAsStreamAsync().Result);
+                doc.Load(await getresult.Content.ReadAsStreamAsync());
 
                 List<KeyValuePair<string, string>> formQuery = GetHiddenFields(doc).ToList();
                 formQuery.Add(new KeyValuePair<string, string>(STOP_CODE, query));
@@ -65,7 +65,14 @@ namespace EasyBus.Common
 
                 int number;
                 if (Int32.TryParse(title, out number) && data.Length >= 4)
-                    arrivals.Add(new ArrivalViewModel { VehicleNumber = Int32.Parse(title), Timings = data[2], Direction = data[3] });
+                {
+                    arrivals.Add(new ArrivalViewModel
+                    {
+                        VehicleNumber = Int32.Parse(title),
+                        Timings = data[2].Trim(),
+                        Direction = data[3].Trim()
+                    });
+                }
             }
 
             return arrivals;
@@ -76,7 +83,7 @@ namespace EasyBus.Common
         private const string SUBMIT = "submit";
         private const string SUBMIT_VALUE = "Провери";
         private const string MAGIC_COOKIE_NAME = "INSERT_NAME_HERE";
-        private const string MAGIC_COOKIE_VALUE = "INSERT_COOKIE_HERE";
+        private const string MAGIC_COOKIE_VALUE = "INSERT_VALUE_HERE";
         private const string USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.106 Safari/537.36 OPR/38.0.2220.41";
     }
 }

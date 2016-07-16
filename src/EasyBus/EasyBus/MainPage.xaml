@@ -11,19 +11,32 @@
         <PivotItem Header="Виртуални табла">
             <StackPanel>
                 <TextBlock Text="Код или име на спирка:" HorizontalAlignment="Center" />
-                <TextBox Name="txtStopID" HorizontalAlignment="Center" />
+                <TextBox Name="txtStopID" HorizontalAlignment="Center" Margin="0,5,0,5" />
                 <Button Name="btnStop" Content="Напред" Click="btnStop_Click" HorizontalAlignment="Center" />
 
+                <ProgressRing Name="prVirtualTables" 
+                              HorizontalAlignment="Center" 
+                              VerticalAlignment="Center" 
+                              Height="100" 
+                              Width="100" 
+                              Visibility="Collapsed"
+                              Margin="0,20,0,0"/>
+                
                 <ListView ItemsSource="{Binding Arrivals}">
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <StackPanel>
-                                <TextBlock Text="Номер: " />
-                                <TextBlock Text="{Binding VehicleNumber}"/>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Номер:" />
+                                    <TextBlock Text="{Binding VehicleNumber}" Margin="5,0,0,0"/>
+                                </StackPanel>
 
-                                <TextBlock Text="Времена: " />
-                                <TextBlock Text="{Binding Timings}" />
-                                
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Времена:" />
+                                    <TextBlock Text="{Binding Timings}" Margin="5,0,0,0" />
+                                </StackPanel>
+
+
                                 <TextBlock Text="Посока: " />
                                 <TextBlock Text="{Binding Direction}" />
                             </StackPanel>
@@ -33,5 +46,15 @@
                 </ListView>
             </StackPanel>
         </PivotItem>
+
+        <PivotItem Header="Любими">
+
+        </PivotItem>
+
+        <PivotItem Header="Офлайн разписание">
+            
+        </PivotItem>
+        
+
     </Pivot>
 </Page>
