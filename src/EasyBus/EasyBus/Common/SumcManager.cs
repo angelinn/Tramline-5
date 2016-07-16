@@ -10,8 +10,13 @@ using System.Threading.Tasks;
 
 namespace EasyBus.Common
 {
-    public class SumcManager
+    public static class SumcManager
     {
+        // 
+        // If null is returned, CaptchaUrl is set. Captcha is required.
+        // If empty IEnumerable is returned, there are no results in the query.
+        //
+
         public static async Task<IEnumerable<ArrivalViewModel>> GetByStopAsync(string query)
         {
             Uri address = new Uri(BASE_URL);
@@ -28,6 +33,9 @@ namespace EasyBus.Common
                 HtmlDocument doc = new HtmlDocument();
                 doc.Load(await getresult.Content.ReadAsStreamAsync());
 
+                if (RequiresCaptcha(doc))
+                    return null;
+
                 List<KeyValuePair<string, string>> formQuery = GetHiddenFields(doc).ToList();
                 formQuery.Add(new KeyValuePair<string, string>(STOP_CODE, query));
                 formQuery.Add(new KeyValuePair<string, string>(SUBMIT, WebUtility.UrlEncode(SUBMIT_VALUE)));
@@ -38,7 +46,7 @@ namespace EasyBus.Common
                 return GetArrivals(await response.Content.ReadAsStringAsync());
             }
         }
-        
+
         private static IEnumerable<KeyValuePair<string, string>> GetHiddenFields(HtmlDocument root)
         {
             return root.DocumentNode.Descendants()
@@ -77,6 +85,24 @@ namespace EasyBus.Common
 
             return arrivals;
         }
+
+        private static bool RequiresCaptcha(HtmlDocument root)
+        {
+            bool requiresCaptcha = root.DocumentNode.Descendants()
+                                    .Any(d => d.GetAttributeValue("class", "") == "formLblCaptcha");
+
+            if (requiresCaptcha)
+            {
+                CaptchaUrl = root.DocumentNode.Descendants()
+                                        .Where(d => d.OriginalName == "img")
+                                        .First()
+                                        .InnerHtml;
+            }
+
+            return requiresCaptcha;
+        }
+
+        public static string CaptchaUrl { get; set; }
 
         private const string BASE_URL = "http://m.sofiatraffic.bg/vt";
         private const string STOP_CODE = "stopCode";

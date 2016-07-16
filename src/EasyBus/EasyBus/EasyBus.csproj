@@ -96,6 +96,7 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Common\Arrival.cs" />
+    <Compile Include="Common\Exceptions\CaptchaLocationError.cs" />
     <Compile Include="Common\SumcManager.cs" />
     <Compile Include="Common\VehicleType.cs" />
     <Compile Include="MainPage.xaml.cs">

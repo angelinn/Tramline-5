@@ -1,4 +1,5 @@
 ﻿using EasyBus.Common;
+using EasyBus.Common.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -7,12 +8,14 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
+using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
@@ -43,8 +46,27 @@ namespace EasyBus
             {
                 Arrivals.Clear();
                 IEnumerable<ArrivalViewModel> arrivals = await SumcManager.GetByStopAsync(txtStopID.Text);
+                if (arrivals == null)
+                {
+                    await new MessageDialog("Изисква се попълване на captcha").ShowAsync();
+                    if (SumcManager.CaptchaUrl == null)
+                        throw new CaptchaLocationError("Captcha located, but no URL for the image.");
+
+                    BitmapImage bitmap = new BitmapImage(new Uri(SumcManager.CaptchaUrl));
+                    imgCaptcha.Source = bitmap;
+
+                    return;
+                }
+
+                if (arrivals.Count() == 0)
+                {
+                    Arrivals.Add(new ArrivalViewModel { Timings = "Няма резултати." });
+                }
+
+
                 foreach (ArrivalViewModel arrival in arrivals)
                     Arrivals.Add(arrival);
+
             }
             catch (Exception ex)
             {
