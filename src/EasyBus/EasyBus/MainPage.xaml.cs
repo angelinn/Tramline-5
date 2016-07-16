@@ -1,6 +1,7 @@
 ﻿using EasyBus.Common;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -23,14 +24,21 @@ namespace EasyBus
     /// </summary>
     public sealed partial class MainPage : Page
     {
+        public ObservableCollection<ArrivalViewModel> Arrivals { get; set; }
+
         public MainPage()
         {
             this.InitializeComponent();
+
+            Arrivals = new ObservableCollection<ArrivalViewModel>();
+            DataContext = this;
         }
 
-        private void btnStop_Click(object sender, RoutedEventArgs e)
+        private async void btnStop_Click(object sender, RoutedEventArgs e)
         {
-            SumcManager.GetByStop(txtStopID.Text);
+            IEnumerable<ArrivalViewModel> arrivals = await SumcManager.GetByStopAsync(txtStopID.Text);
+            foreach (ArrivalViewModel arrival in arrivals)
+                Arrivals.Add(arrival);
         }
     }
 }

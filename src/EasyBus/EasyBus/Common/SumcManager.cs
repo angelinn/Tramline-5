@@ -12,7 +12,7 @@ namespace EasyBus.Common
 {
     public class SumcManager
     {
-        public static string GetByStop(string query)
+        public static async Task<IEnumerable<ArrivalViewModel>> GetByStopAsync(string query)
         {
             Uri address = new Uri(BASE_URL);
             CookieContainer cookies = new CookieContainer();
@@ -24,7 +24,7 @@ namespace EasyBus.Common
                 handler.CookieContainer = cookies;
                 client.DefaultRequestHeaders.UserAgent.ParseAdd(USER_AGENT);
 
-                var getresult = client.GetAsync(address).Result;
+                var getresult = await client.GetAsync(address);
                 HtmlDocument doc = new HtmlDocument();
                 doc.Load(getresult.Content.ReadAsStreamAsync().Result);
 
@@ -34,10 +34,8 @@ namespace EasyBus.Common
 
                 FormUrlEncodedContent content = new FormUrlEncodedContent(formQuery);
 
-                var result = client.PostAsync(address, content).Result;
-                var str = result.Content.ReadAsStringAsync().Result;
-
-                return result.Content.ToString();
+                HttpResponseMessage response = await client.PostAsync(address, content);
+                return GetArrivals(await response.Content.ReadAsStringAsync());
             }
         }
         
@@ -49,12 +47,36 @@ namespace EasyBus.Common
                     .Select(n => new KeyValuePair<string, string>(n.Attributes["name"].Value, n.Attributes["value"].Value));
         }
 
+        private static IEnumerable<ArrivalViewModel> GetArrivals(string htmlString)
+        {
+            if (htmlString == null)
+                return null;
+
+            HtmlDocument doc = new HtmlDocument();
+            doc.LoadHtml(htmlString);
+            IEnumerable<HtmlNode> infos = doc.DocumentNode.Descendants()
+                    .Where(d => d.GetAttributeValue("class", "").StartsWith("arr_info"));
+
+            List<ArrivalViewModel> arrivals = new List<ArrivalViewModel>();
+            foreach (var info in infos)
+            {
+                string title = info.Descendants().Where(d => d.OriginalName == "b").Select(n => n.InnerText).FirstOrDefault();
+                string[] data = info.InnerText.Split('\n');
+
+                int number;
+                if (Int32.TryParse(title, out number) && data.Length >= 4)
+                    arrivals.Add(new ArrivalViewModel { VehicleNumber = Int32.Parse(title), Timings = data[2], Direction = data[3] });
+            }
+
+            return arrivals;
+        }
+
         private const string BASE_URL = "http://m.sofiatraffic.bg/vt";
         private const string STOP_CODE = "stopCode";
         private const string SUBMIT = "submit";
         private const string SUBMIT_VALUE = "Провери";
-        private const string MAGIC_COOKIE_NAME = "INSERT_COOKIE_HERE";
-        private const string MAGIC_COOKIE_VALUE = "INSERT_TOKEN_HERE";
+        private const string MAGIC_COOKIE_NAME = "INSERT_NAME_HERE";
+        private const string MAGIC_COOKIE_VALUE = "INSERT_COOKIE_HERE";
         private const string USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.106 Safari/537.36 OPR/38.0.2220.41";
     }
 }

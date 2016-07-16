@@ -12,8 +12,25 @@
             <StackPanel>
                 <TextBlock Text="Код или име на спирка:" HorizontalAlignment="Center" />
                 <TextBox Name="txtStopID" HorizontalAlignment="Center" />
-                <Button Name="btnStop" Content="Напред" Click="btnStop_Click" />
+                <Button Name="btnStop" Content="Напред" Click="btnStop_Click" HorizontalAlignment="Center" />
 
+                <ListView ItemsSource="{Binding Arrivals}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel>
+                                <TextBlock Text="Номер: " />
+                                <TextBlock Text="{Binding VehicleNumber}"/>
+
+                                <TextBlock Text="Времена: " />
+                                <TextBlock Text="{Binding Timings}" />
+                                
+                                <TextBlock Text="Посока: " />
+                                <TextBlock Text="{Binding Direction}" />
+                            </StackPanel>
+                            
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
             </StackPanel>
         </PivotItem>
     </Pivot>
