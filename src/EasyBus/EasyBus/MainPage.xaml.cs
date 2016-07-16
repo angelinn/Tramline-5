@@ -1,4 +1,5 @@
-﻿using System;
+﻿using EasyBus.Common;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -25,6 +26,11 @@ namespace EasyBus
         public MainPage()
         {
             this.InitializeComponent();
+        }
+
+        private void btnStop_Click(object sender, RoutedEventArgs e)
+        {
+            SumcManager.GetByStop(txtStopID.Text);
         }
     }
 }

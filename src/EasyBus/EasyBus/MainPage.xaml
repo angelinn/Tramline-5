@@ -7,7 +7,14 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <Pivot Title="EasyBus" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <PivotItem Header="Виртуални табла">
+            <StackPanel>
+                <TextBlock Text="Код или име на спирка:" HorizontalAlignment="Center" />
+                <TextBox Name="txtStopID" HorizontalAlignment="Center" />
+                <Button Name="btnStop" Content="Напред" Click="btnStop_Click" />
 
-    </Grid>
+            </StackPanel>
+        </PivotItem>
+    </Pivot>
 </Page>
