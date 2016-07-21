@@ -46,14 +46,11 @@ namespace EasyBus
             {
                 Arrivals.Clear();
                 IEnumerable<ArrivalViewModel> arrivals = await SumcManager.GetByStopAsync(txtStopID.Text);
+
                 if (arrivals == null)
                 {
-                    await new MessageDialog("Изисква се попълване на captcha").ShowAsync();
                     if (SumcManager.CaptchaUrl == null)
                         throw new CaptchaLocationError("Captcha located, but no URL for the image.");
-
-                    BitmapImage bitmap = new BitmapImage(new Uri(SumcManager.CaptchaUrl));
-                    imgCaptcha.Source = bitmap;
 
                     return;
                 }

@@ -17,9 +17,13 @@ namespace EasyBus.Common
         // If empty IEnumerable is returned, there are no results in the query.
         //
 
-        public static async Task<IEnumerable<ArrivalViewModel>> GetByStopAsync(string query)
+        public static async Task<IEnumerable<ArrivalViewModel>> GetByStopAsync(string query, string captcha = null)
         {
-            Uri address = new Uri(BASE_URL);
+            int queryNum;
+            if (String.IsNullOrEmpty(query) || !Int32.TryParse(query, out queryNum))
+                return null;
+
+            Uri address = new Uri(VIRTUAL_TABLES_URL);
             CookieContainer cookies = new CookieContainer();
             cookies.Add(address, new Cookie(MAGIC_COOKIE_NAME, MAGIC_COOKIE_VALUE));
 
@@ -33,12 +37,18 @@ namespace EasyBus.Common
                 HtmlDocument doc = new HtmlDocument();
                 doc.Load(await getresult.Content.ReadAsStreamAsync());
 
-                if (RequiresCaptcha(doc))
-                    return null;
-
                 List<KeyValuePair<string, string>> formQuery = GetHiddenFields(doc).ToList();
                 formQuery.Add(new KeyValuePair<string, string>(STOP_CODE, query));
                 formQuery.Add(new KeyValuePair<string, string>(SUBMIT, WebUtility.UrlEncode(SUBMIT_VALUE)));
+
+
+                if (RequiresCaptcha(doc))
+                {
+                    Captcha captchaDialog = new Captcha(CaptchaUrl);
+                    await captchaDialog.ShowAsync();
+
+                    formQuery.Add(new KeyValuePair<string, string>(CAPTCHA_KEY, captchaDialog.CaptchaString));
+                }
 
                 FormUrlEncodedContent content = new FormUrlEncodedContent(formQuery);
 
@@ -82,7 +92,7 @@ namespace EasyBus.Common
                     });
                 }
             }
-
+            
             return arrivals;
         }
 
@@ -93,23 +103,27 @@ namespace EasyBus.Common
 
             if (requiresCaptcha)
             {
-                CaptchaUrl = root.DocumentNode.Descendants()
+                CaptchaUrl = BASE_URL + root.DocumentNode.Descendants()
                                         .Where(d => d.OriginalName == "img")
-                                        .First()
-                                        .InnerHtml;
+                                        .Last()
+                                        .Attributes["src"]
+                                        .Value;
             }
 
             return requiresCaptcha;
         }
-
+        
         public static string CaptchaUrl { get; set; }
 
-        private const string BASE_URL = "http://m.sofiatraffic.bg/vt";
+        private const string BASE_URL = "http://m.sofiatraffic.bg";
+        private const string VIRTUAL_TABLES_URL = "http://m.sofiatraffic.bg/vt";
         private const string STOP_CODE = "stopCode";
         private const string SUBMIT = "submit";
         private const string SUBMIT_VALUE = "Провери";
-        private const string MAGIC_COOKIE_NAME = "INSERT_NAME_HERE";
-        private const string MAGIC_COOKIE_VALUE = "INSERT_VALUE_HERE";
+        private const string CAPTCHA_KEY = "sc";
+        private const string MAGIC_COOKIE_NAME = "alpocjengi";
+        // af64ddf454724184db77e2562c92a15a64d42171
+        private const string MAGIC_COOKIE_VALUE = "hue";
         private const string USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.106 Safari/537.36 OPR/38.0.2220.41";
     }
 }
