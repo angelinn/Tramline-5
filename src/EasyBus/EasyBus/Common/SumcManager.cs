@@ -7,23 +7,25 @@ using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.Storage;
 
 namespace EasyBus.Common
 {
     public static class SumcManager
     {
-        // 
-        // If null is returned, CaptchaUrl is set. Captcha is required.
-        // If empty IEnumerable is returned, there are no results in the query.
-        //
+        public static async Task Load()
+        {
+            await ReadCookie();
+        }
 
-        public static async Task<IEnumerable<ArrivalViewModel>> GetByStopAsync(string query, string captcha = null)
+        public static async Task<IEnumerable<ArrivalViewModel>> GetByStopAsync(string query)
         {
             int queryNum;
             if (String.IsNullOrEmpty(query) || !Int32.TryParse(query, out queryNum))
                 return null;
 
             Uri address = new Uri(VIRTUAL_TABLES_URL);
+
             CookieContainer cookies = new CookieContainer();
             cookies.Add(address, new Cookie(MAGIC_COOKIE_NAME, MAGIC_COOKIE_VALUE));
 
@@ -44,7 +46,7 @@ namespace EasyBus.Common
 
                 if (RequiresCaptcha(doc))
                 {
-                    Captcha captchaDialog = new Captcha(CaptchaUrl);
+                    Captcha captchaDialog = new Captcha(captchaUrl);
                     await captchaDialog.ShowAsync();
 
                     formQuery.Add(new KeyValuePair<string, string>(CAPTCHA_KEY, captchaDialog.CaptchaString));
@@ -53,6 +55,8 @@ namespace EasyBus.Common
                 FormUrlEncodedContent content = new FormUrlEncodedContent(formQuery);
 
                 HttpResponseMessage response = await client.PostAsync(address, content);
+
+                await SaveCookie(handler.CookieContainer.GetCookies(address));
                 return GetArrivals(await response.Content.ReadAsStringAsync());
             }
         }
@@ -103,7 +107,7 @@ namespace EasyBus.Common
 
             if (requiresCaptcha)
             {
-                CaptchaUrl = BASE_URL + root.DocumentNode.Descendants()
+                captchaUrl = BASE_URL + root.DocumentNode.Descendants()
                                         .Where(d => d.OriginalName == "img")
                                         .Last()
                                         .Attributes["src"]
@@ -112,8 +116,53 @@ namespace EasyBus.Common
 
             return requiresCaptcha;
         }
-        
-        public static string CaptchaUrl { get; set; }
+
+        private static async Task<bool> ReadCookie()
+        {
+            StorageFolder folder = ApplicationData.Current.LocalFolder;
+            StorageFile cookieFile = null;
+
+            try
+            {
+                cookieFile = await folder.GetFileAsync("kewl.txt");
+            }
+            catch (FileNotFoundException)
+            {
+                // It's ok, that means first boot of app is done
+                return false;
+            }
+
+            MAGIC_COOKIE_VALUE = await FileIO.ReadTextAsync(cookieFile);
+            return true;
+        }
+
+        private static async Task<bool> SaveCookie(CookieCollection cookies)
+        {
+            foreach (Cookie cookie in cookies)
+            {
+                if (cookie.Name == MAGIC_COOKIE_NAME)
+                {
+                    if (MAGIC_COOKIE_VALUE != cookie.Value)
+                    {
+                        MAGIC_COOKIE_VALUE = cookie.Value;
+
+                        StorageFolder folder = ApplicationData.Current.LocalFolder;
+                        StorageFile cookieFile = await folder.CreateFileAsync("kewl.txt", CreationCollisionOption.ReplaceExisting);
+                        await FileIO.WriteTextAsync(cookieFile, MAGIC_COOKIE_VALUE);
+                    }
+
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public static void ResetCookie()
+        {
+            MAGIC_COOKIE_VALUE = String.Empty;
+        }
+
+        private static string captchaUrl;
 
         private const string BASE_URL = "http://m.sofiatraffic.bg";
         private const string VIRTUAL_TABLES_URL = "http://m.sofiatraffic.bg/vt";
@@ -122,8 +171,7 @@ namespace EasyBus.Common
         private const string SUBMIT_VALUE = "Провери";
         private const string CAPTCHA_KEY = "sc";
         private const string MAGIC_COOKIE_NAME = "alpocjengi";
-        // af64ddf454724184db77e2562c92a15a64d42171
-        private const string MAGIC_COOKIE_VALUE = "hue";
+        private static string MAGIC_COOKIE_VALUE = "af64ddf454724184db77e2562c92a15a64d42171";
         private const string USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.106 Safari/537.36 OPR/38.0.2220.41";
     }
 }

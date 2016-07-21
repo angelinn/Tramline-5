@@ -35,6 +35,13 @@ namespace EasyBus
 
             Arrivals = new ObservableCollection<ArrivalViewModel>();
             DataContext = this;
+
+            Loaded += MainPage_Loaded;
+        }
+
+        private async void MainPage_Loaded(object sender, RoutedEventArgs e)
+        {
+            await SumcManager.Load();
         }
 
         private async void btnStop_Click(object sender, RoutedEventArgs e)
@@ -46,14 +53,6 @@ namespace EasyBus
             {
                 Arrivals.Clear();
                 IEnumerable<ArrivalViewModel> arrivals = await SumcManager.GetByStopAsync(txtStopID.Text);
-
-                if (arrivals == null)
-                {
-                    if (SumcManager.CaptchaUrl == null)
-                        throw new CaptchaLocationError("Captcha located, but no URL for the image.");
-
-                    return;
-                }
 
                 if (arrivals.Count() == 0)
                 {
@@ -74,6 +73,11 @@ namespace EasyBus
                 prVirtualTables.IsActive = false;
                 prVirtualTables.Visibility = Visibility.Collapsed;
             }
+        }
+
+        private void btnReset_Click(object sender, RoutedEventArgs e)
+        {
+            SumcManager.ResetCookie();
         }
     }
 }
