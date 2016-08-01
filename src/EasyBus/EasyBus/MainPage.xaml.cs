@@ -63,7 +63,8 @@ namespace EasyBus
 
                 if (arrivals.Count() == 0)
                 {
-                    Arrivals.Add(new ArrivalViewModel { Direction = "Няма резултати." });
+                    await new MessageDialog("Няма резултати.").ShowAsync();
+                    return;
                 }
 
 
