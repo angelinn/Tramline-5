@@ -108,17 +108,15 @@ namespace EasyBus
             }
         }
 
-        private async void OnFeedback(object sender, RoutedEventArgs e)
+        private async void OnFeedbackClick(object sender, RoutedEventArgs e)
         {
             Uri feedbackEmail = new Uri("mailto:angelin.nedelchev@outlook.com");
-
-            if (await Launcher.LaunchUriAsync(feedbackEmail))
-                await new MessageDialog("Успешно изпратихте съобщение до разработчика.").ShowAsync();
+            await Launcher.LaunchUriAsync(feedbackEmail);
         }
 
-        private void OnSettings(object sender, RoutedEventArgs e)
+        private async void OnSettingsClick(object sender, RoutedEventArgs e)
         {
-
+            await new MessageDialog("Настройки!").ShowAsync();
         }
     }
 }
