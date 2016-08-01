@@ -11,8 +11,15 @@
     <Page.Resources>
         <su:TimingConverter x:Key="TimingConverter" />
     </Page.Resources>
+
+    <Page.TopAppBar>
+        <CommandBar Background="DodgerBlue" Foreground="White">
+            <AppBarButton Icon="MailReply" Label="Обратна връзка" Foreground="LightGray" Click="OnFeedback" />
+            <AppBarButton Icon="Setting" Label="Настройки" Foreground="LightGray" Click="OnSettings" />
+        </CommandBar>
+    </Page.TopAppBar>
     
-    <Pivot Title="EasyBus" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <Pivot Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <PivotItem Header="Виртуални табла">
             <StackPanel>
                 <TextBlock Text="Код или име на спирка:" HorizontalAlignment="Center" />

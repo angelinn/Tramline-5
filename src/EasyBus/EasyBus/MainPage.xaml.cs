@@ -7,9 +7,11 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Foundation.Metadata;
+using Windows.System;
 using Windows.UI;
 using Windows.UI.Popups;
 using Windows.UI.ViewManagement;
@@ -39,13 +41,13 @@ namespace EasyBus
 
             Arrivals = new ObservableCollection<ArrivalViewModel>();
             DataContext = this;
-            SetStatusBar();
 
             Loaded += MainPage_Loaded;
         }
 
         private async void MainPage_Loaded(object sender, RoutedEventArgs e)
         {
+            await SetStatusBar();
             await SumcManager.Load();
         }
 
@@ -85,7 +87,7 @@ namespace EasyBus
             SumcManager.ResetCookie();
         }
 
-        private void SetStatusBar()
+        private async Task SetStatusBar()
         {
             if (ApiInformation.IsTypePresent("Windows.UI.ViewManagement.StatusBar"))
             {
@@ -94,10 +96,29 @@ namespace EasyBus
                 if (statusBar != null)
                 {
                     statusBar.BackgroundOpacity = 1;
-                    statusBar.BackgroundColor = Colors.DodgerBlue;
+                    statusBar.BackgroundColor = Color.FromArgb(0, 51, 153, 255);
                     statusBar.ForegroundColor = Colors.White;
+
+                    StatusBarProgressIndicator indicator = statusBar.ProgressIndicator;
+                    await indicator.ShowAsync();
+                    indicator.ProgressValue = 0;
+
+                    indicator.Text = "Софийски градски транспорт";
                 }
             }
+        }
+
+        private async void OnFeedback(object sender, RoutedEventArgs e)
+        {
+            Uri feedbackEmail = new Uri("mailto:angelin.nedelchev@outlook.com");
+
+            if (await Launcher.LaunchUriAsync(feedbackEmail))
+                await new MessageDialog("Успешно изпратихте съобщение до разработчика.").ShowAsync();
+        }
+
+        private void OnSettings(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }
