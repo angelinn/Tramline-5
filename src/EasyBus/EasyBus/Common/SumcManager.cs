@@ -1,4 +1,5 @@
-﻿using HtmlAgilityPack;
+﻿using EasyBus.ViewModels;
+using HtmlAgilityPack;
 using System;
 using System.Collections.Generic;
 using System.IO;

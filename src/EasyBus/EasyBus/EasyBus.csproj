@@ -98,7 +98,7 @@
     <Compile Include="Captcha.xaml.cs">
       <DependentUpon>Captcha.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Common\Arrival.cs" />
+    <Compile Include="ViewModels\ArrivalViewModel.cs" />
     <Compile Include="Common\Exceptions\CaptchaLocationError.cs" />
     <Compile Include="Common\SumcManager.cs" />
     <Compile Include="Common\VehicleType.cs" />
