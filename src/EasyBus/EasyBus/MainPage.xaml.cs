@@ -9,7 +9,10 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Foundation.Metadata;
+using Windows.UI;
 using Windows.UI.Popups;
+using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -36,6 +39,7 @@ namespace EasyBus
 
             Arrivals = new ObservableCollection<ArrivalViewModel>();
             DataContext = this;
+            SetStatusBar();
 
             Loaded += MainPage_Loaded;
         }
@@ -57,7 +61,7 @@ namespace EasyBus
 
                 if (arrivals.Count() == 0)
                 {
-                    Arrivals.Add(new ArrivalViewModel { Timings = "Няма резултати." });
+                    Arrivals.Add(new ArrivalViewModel { Direction = "Няма резултати." });
                 }
 
 
@@ -67,7 +71,7 @@ namespace EasyBus
             }
             catch (Exception ex)
             {
-                Arrivals.Add(new ArrivalViewModel { Timings = ex.Message });
+                Arrivals.Add(new ArrivalViewModel { Direction = ex.Message });
             }
             finally
             {
@@ -79,6 +83,21 @@ namespace EasyBus
         private void btnReset_Click(object sender, RoutedEventArgs e)
         {
             SumcManager.ResetCookie();
+        }
+
+        private void SetStatusBar()
+        {
+            if (ApiInformation.IsTypePresent("Windows.UI.ViewManagement.StatusBar"))
+            {
+
+                StatusBar statusBar = StatusBar.GetForCurrentView();
+                if (statusBar != null)
+                {
+                    statusBar.BackgroundOpacity = 1;
+                    statusBar.BackgroundColor = Colors.DodgerBlue;
+                    statusBar.ForegroundColor = Colors.White;
+                }
+            }
         }
     }
 }

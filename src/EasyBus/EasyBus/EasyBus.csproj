@@ -98,6 +98,7 @@
     <Compile Include="Captcha.xaml.cs">
       <DependentUpon>Captcha.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Common\Converters\TimingConverter.cs" />
     <Compile Include="ViewModels\ArrivalViewModel.cs" />
     <Compile Include="Common\Exceptions\CaptchaLocationError.cs" />
     <Compile Include="Common\SumcManager.cs" />
@@ -181,6 +182,11 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\" />
+  </ItemGroup>
+  <ItemGroup>
+    <SDKReference Include="WindowsMobile, Version=10.0.10240.0">
+      <Name>Windows Mobile Extensions for the UWP</Name>
+    </SDKReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

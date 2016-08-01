@@ -92,7 +92,7 @@ namespace EasyBus.Common
                     arrivals.Add(new ArrivalViewModel
                     {
                         VehicleNumber = Int32.Parse(title),
-                        Timings = data[2].Trim(),
+                        Timings = data[2].Trim().Split(','),
                         Direction = data[3].Trim()
                     });
                 }

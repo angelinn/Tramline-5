@@ -5,8 +5,13 @@
     xmlns:local="using:EasyBus"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:su="using:EasyBus.Common.Converters"
     mc:Ignorable="d">
 
+    <Page.Resources>
+        <su:TimingConverter x:Key="TimingConverter" />
+    </Page.Resources>
+    
     <Pivot Title="EasyBus" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <PivotItem Header="Виртуални табла">
             <StackPanel>
@@ -35,7 +40,7 @@
 
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock Text="Времена:" />
-                                    <TextBlock Text="{Binding Timings}" Margin="5,0,0,0" />
+                                    <TextBlock Text="{Binding Timings, Converter={StaticResource TimingConverter}}" Margin="5,0,0,0" />
                                 </StackPanel>
                             </StackPanel>
                             

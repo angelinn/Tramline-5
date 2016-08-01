@@ -39,8 +39,8 @@ namespace EasyBus.ViewModels
             }
         }
 
-        private string timings;
-        public string Timings
+        private string[] timings;
+        public string[] Timings
         {
             get
             {
