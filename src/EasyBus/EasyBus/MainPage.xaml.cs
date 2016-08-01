@@ -119,5 +119,13 @@ namespace EasyBus
         {
             await new MessageDialog("Настройки!").ShowAsync();
         }
+
+        private void txtStopID_KeyDown(object sender, KeyRoutedEventArgs e)
+        {
+            if (e.Key == VirtualKey.Enter)
+            {
+                btnStop_Click(this, new RoutedEventArgs());
+            }
+        }
     }
 }
