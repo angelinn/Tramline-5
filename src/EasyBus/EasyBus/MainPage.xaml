@@ -36,7 +36,7 @@
                 </AppBarButton>
             </CommandBar.Content>
             
-            <AppBarButton Icon="MailReply" Label="Обратна връзка" Foreground="White" />
+            <AppBarButton Name="btnSumc" Icon="Globe" Label="m.sumc.bg" Foreground="White" Click="btnSumc_Click" />
         </CommandBar>
     </Page.TopAppBar>
 

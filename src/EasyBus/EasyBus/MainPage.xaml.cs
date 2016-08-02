@@ -151,5 +151,19 @@ namespace EasyBus
         {
 
         }
+
+        private async void btnSumc_Click(object sender, RoutedEventArgs e)
+        {
+            MessageDialog sumcDialog = new MessageDialog("Ще бъдете прехвърлени към сайта на Градска мобилност.");
+            sumcDialog.Commands.Add(new UICommand(Strings.Yes));
+            sumcDialog.Commands.Add(new UICommand(Strings.No));
+
+            IUICommand result = await sumcDialog.ShowAsync();
+            if (result != null && result.Label == Strings.Yes)
+            {
+                Uri sumc = new Uri("http://m.sofiatraffic.bg/");
+                await Launcher.LaunchUriAsync(sumc);
+            }
+        }
     }
 }
