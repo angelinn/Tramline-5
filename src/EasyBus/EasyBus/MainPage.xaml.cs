@@ -137,7 +137,7 @@ namespace EasyBus
             IUICommand result = await feedbackDialog.ShowAsync();
             if (result != null && result.Label == Strings.Yes)
             {
-                Uri feedbackEmail = new Uri("mailto:angelin.nedelchev@outlook.com");
+                Uri feedbackEmail = new Uri(Urls.DeveloperEmail);
                 await Launcher.LaunchUriAsync(feedbackEmail);
             }
         }
@@ -147,9 +147,9 @@ namespace EasyBus
             await new MessageDialog("Версия: 0.0.1").ShowAsync();
         }
 
-        private void spSchedules_Tapped(object sender, TappedRoutedEventArgs e)
+        private async void spSchedules_Tapped(object sender, TappedRoutedEventArgs e)
         {
-
+            await new MessageDialog("Разписания!").ShowAsync();
         }
 
         private async void btnSumc_Click(object sender, RoutedEventArgs e)
@@ -161,7 +161,7 @@ namespace EasyBus
             IUICommand result = await sumcDialog.ShowAsync();
             if (result != null && result.Label == Strings.Yes)
             {
-                Uri sumc = new Uri("http://m.sofiatraffic.bg/");
+                Uri sumc = new Uri(Urls.Sumc);
                 await Launcher.LaunchUriAsync(sumc);
             }
         }

@@ -15,4 +15,10 @@ namespace EasyBus.Common
         public static string No = "Не";
         public static string SumcRedirect = "Ще бъдете прехвърлени към сайта на Градска мобилност.";
     }
+
+    public static class Urls
+    {
+        public static string Sumc = "http://m.sofiatraffic.bg/";
+        public static string DeveloperEmail = "mailto:angelin.nedelchev@outlook.com";
+    }
 }
