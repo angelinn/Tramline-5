@@ -13,57 +13,94 @@
     </Page.Resources>
 
     <Page.TopAppBar>
-        <CommandBar Background="DodgerBlue" Foreground="White">
-            <AppBarButton Icon="MailReply" Label="Обратна връзка" Foreground="LightGray" Click="OnFeedbackClick" />
-            <AppBarButton Icon="Setting" Label="Настройки" Foreground="LightGray" Click="OnSettingsClick" />
+        <CommandBar Background="DodgerBlue" Foreground="White" >
+            <CommandBar.Content>
+                <AppBarButton Click="OnHamburgerClick" Foreground="White" HorizontalAlignment="Left" Margin="-8,0,0,0">
+                    <AppBarButton.Icon>
+                        <FontIcon FontSize="25" Glyph="&#xE700;" />
+                    </AppBarButton.Icon>
+                </AppBarButton>
+            </CommandBar.Content>
+            
+            <AppBarButton Icon="MailReply" Label="Обратна връзка" Foreground="White" />
         </CommandBar>
     </Page.TopAppBar>
-    
-    <Pivot Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <PivotItem Header="Виртуални табла">
+
+    <SplitView Name="svMain" 
+               DisplayMode="Overlay" 
+               IsPaneOpen="False" 
+               CompactPaneLength="50" 
+               OpenPaneLength="200" 
+               PaneBackground="DodgerBlue">
+
+        <SplitView.Pane>
             <StackPanel>
-                <TextBlock Text="Код или име на спирка:" HorizontalAlignment="Center" />
-                <TextBox Name="txtStopID" HorizontalAlignment="Center" Margin="0,5,0,5" KeyDown="txtStopID_KeyDown" />
-                <Button Name="btnStop" Content="Напред" Click="btnStop_Click" HorizontalAlignment="Center" />
+                <StackPanel Name="spFeedback" Orientation="Horizontal" Tapped="spFeedback_Tapped">
+                    <Button FontFamily="Segoe MDL2 Assets" FontSize="20" Content="&#xE8CA;" Background="Transparent" Foreground="White" Width="50" Height="50" />
+                    <TextBlock Text="Обратна връзка" FontSize="18" VerticalAlignment="Center" Foreground="White"/>
+                </StackPanel>
 
-                <ProgressRing Name="prVirtualTables" 
-                              HorizontalAlignment="Center" 
-                              VerticalAlignment="Center" 
-                              Height="100" 
-                              Width="100" 
-                              Visibility="Collapsed"
-                              Margin="0,20,0,0"/>
-                
-                <ListView ItemsSource="{Binding Arrivals}">
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
-                            <StackPanel Margin="0,10,0,0">
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="{Binding VehicleNumber}" Margin="0,0,5,0"/>
-                                    <TextBlock Text="-" />
-                                    <TextBlock Text="{Binding Direction}"  Margin="5,0,0,0"/>
-                                </StackPanel>
+                <StackPanel Name="spInfo" Orientation="Horizontal" Tapped="spInfo_Tapped">
+                    <Button FontFamily="Segoe MDL2 Assets" FontSize="20" Content="&#xE8EA;" Background="Transparent" Foreground="White" Width="50" Height="50" />
+                    <TextBlock Text="Информация" FontSize="18" VerticalAlignment="Center" Foreground="White"/>
+                </StackPanel>
 
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="Времена:" />
-                                    <TextBlock Text="{Binding Timings, Converter={StaticResource TimingConverter}}" Margin="5,0,0,0" />
-                                </StackPanel>
-                            </StackPanel>
-                            
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
+                <StackPanel Name="spSettings" Orientation="Horizontal" Tapped="spSettings_Tapped">
+                    <Button FontFamily="Segoe MDL2 Assets" FontSize="20" Content="&#xE713;" Background="Transparent" Foreground="White" Width="50" Height="50" />
+                    <TextBlock Text="Настройки" FontSize="18" VerticalAlignment="Center" Foreground="White"/>
+                </StackPanel>
             </StackPanel>
-        </PivotItem>
-
-        <PivotItem Header="Любими">
-
-        </PivotItem>
-
-        <PivotItem Header="Офлайн разписание">
-            
-        </PivotItem>
+        </SplitView.Pane>
         
+        
+        <SplitView.Content>
+            <Pivot Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+                <PivotItem Header="Виртуални табла">
+                    <StackPanel>
+                        <TextBlock Text="Код или име на спирка:" HorizontalAlignment="Center" />
+                        <TextBox Name="txtStopID" HorizontalAlignment="Center" Margin="0,5,0,5" KeyDown="txtStopID_KeyDown" />
+                        <Button Name="btnStop" Content="Напред" Click="btnStop_Click" HorizontalAlignment="Center" />
 
-    </Pivot>
+                        <ProgressRing Name="prVirtualTables" 
+                                      HorizontalAlignment="Center" 
+                                      VerticalAlignment="Center" 
+                                      Height="100" 
+                                      Width="100" 
+                                      Visibility="Collapsed"
+                                      Margin="0,20,0,0"/>
+                
+                        <ListView ItemsSource="{Binding Arrivals}">
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Margin="0,10,0,0">
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="{Binding VehicleNumber}" Margin="0,0,5,0"/>
+                                            <TextBlock Text="-" />
+                                            <TextBlock Text="{Binding Direction}"  Margin="5,0,0,0"/>
+                                        </StackPanel>
+
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="Времена:" />
+                                            <TextBlock Text="{Binding Timings, Converter={StaticResource TimingConverter}}" Margin="5,0,0,0" />
+                                        </StackPanel>
+                                    </StackPanel>
+                            
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                    </StackPanel>
+                </PivotItem>
+
+                <PivotItem Header="Любими">
+
+                </PivotItem>
+
+                <PivotItem Header="Офлайн разписание">
+            
+                </PivotItem>
+
+
+            </Pivot>
+        </SplitView.Content>
+    </SplitView>
 </Page>

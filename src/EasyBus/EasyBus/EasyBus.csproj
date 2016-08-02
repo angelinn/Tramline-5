@@ -99,6 +99,7 @@
       <DependentUpon>Captcha.xaml</DependentUpon>
     </Compile>
     <Compile Include="Common\Converters\TimingConverter.cs" />
+    <Compile Include="Common\Constants.cs" />
     <Compile Include="ViewModels\ArrivalViewModel.cs" />
     <Compile Include="Common\Exceptions\CaptchaLocationError.cs" />
     <Compile Include="Common\SumcManager.cs" />

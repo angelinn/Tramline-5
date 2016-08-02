@@ -63,7 +63,7 @@ namespace EasyBus
 
                 if (arrivals.Count() == 0)
                 {
-                    await new MessageDialog("Няма резултати.").ShowAsync();
+                    await new MessageDialog(Strings.NoResults).ShowAsync();
                     return;
                 }
 
@@ -104,20 +104,9 @@ namespace EasyBus
                     await indicator.ShowAsync();
                     indicator.ProgressValue = 0;
 
-                    indicator.Text = "Софийски градски транспорт";
+                    indicator.Text = Strings.StatusBarText;
                 }
             }
-        }
-
-        private async void OnFeedbackClick(object sender, RoutedEventArgs e)
-        {
-            Uri feedbackEmail = new Uri("mailto:angelin.nedelchev@outlook.com");
-            await Launcher.LaunchUriAsync(feedbackEmail);
-        }
-
-        private async void OnSettingsClick(object sender, RoutedEventArgs e)
-        {
-            await new MessageDialog("Настройки!").ShowAsync();
         }
 
         private void txtStopID_KeyDown(object sender, KeyRoutedEventArgs e)
@@ -126,6 +115,27 @@ namespace EasyBus
             {
                 btnStop_Click(this, new RoutedEventArgs());
             }
+        }
+
+        private void OnHamburgerClick(object sender, RoutedEventArgs e)
+        {
+            svMain.IsPaneOpen = !svMain.IsPaneOpen;
+        }
+
+        private async void spSettings_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            await new MessageDialog("Настройки!").ShowAsync();
+        }
+
+        private async void spFeedback_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            Uri feedbackEmail = new Uri("mailto:angelin.nedelchev@outlook.com");
+            await Launcher.LaunchUriAsync(feedbackEmail);
+        }
+
+        private async void spInfo_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            await new MessageDialog("Версия: 0.0.1").ShowAsync();
         }
     }
 }
