@@ -154,7 +154,7 @@ namespace EasyBus
 
         private async void btnSumc_Click(object sender, RoutedEventArgs e)
         {
-            MessageDialog sumcDialog = new MessageDialog("Ще бъдете прехвърлени към сайта на Градска мобилност.");
+            MessageDialog sumcDialog = new MessageDialog(Strings.SumcRedirect);
             sumcDialog.Commands.Add(new UICommand(Strings.Yes));
             sumcDialog.Commands.Add(new UICommand(Strings.No));
 
