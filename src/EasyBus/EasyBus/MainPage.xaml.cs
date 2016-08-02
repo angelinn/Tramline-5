@@ -146,5 +146,10 @@ namespace EasyBus
         {
             await new MessageDialog("Версия: 0.0.1").ShowAsync();
         }
+
+        private void spSchedules_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+
+        }
     }
 }

@@ -49,6 +49,11 @@
 
         <SplitView.Pane>
             <StackPanel>
+                <StackPanel Name="spSchedules" Orientation="Horizontal" Tapped="spSchedules_Tapped">
+                    <Button Content="&#xE8A1;" Style="{StaticResource BarIcon}" />
+                    <TextBlock Text="Разписания" Style="{StaticResource BarText}" />
+                </StackPanel>
+                
                 <StackPanel Name="spFeedback" Orientation="Horizontal" Tapped="spFeedback_Tapped">
                     <Button Content="&#xE8CA;" Style="{StaticResource BarIcon}" />
                     <TextBlock Text="Обратна връзка" Style="{StaticResource BarText}"/>
@@ -108,12 +113,6 @@
                 <PivotItem Header="Любими">
 
                 </PivotItem>
-
-                <PivotItem Header="Офлайн разписание">
-            
-                </PivotItem>
-
-
             </Pivot>
         </SplitView.Content>
     </SplitView>
