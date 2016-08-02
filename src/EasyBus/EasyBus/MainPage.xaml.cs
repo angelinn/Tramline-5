@@ -114,6 +114,7 @@ namespace EasyBus
             if (e.Key == VirtualKey.Enter)
             {
                 btnStop_Click(this, new RoutedEventArgs());
+                e.Handled = true;
             }
         }
 
@@ -133,7 +134,7 @@ namespace EasyBus
             feedbackDialog.Commands.Add(new UICommand(Strings.Yes));
             feedbackDialog.Commands.Add(new UICommand(Strings.No));
 
-            var result = await feedbackDialog.ShowAsync();
+            IUICommand result = await feedbackDialog.ShowAsync();
             if (result != null && result.Label == Strings.Yes)
             {
                 Uri feedbackEmail = new Uri("mailto:angelin.nedelchev@outlook.com");
