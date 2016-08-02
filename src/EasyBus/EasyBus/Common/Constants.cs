@@ -10,5 +10,8 @@ namespace EasyBus.Common
     {
         public static string StatusBarText = "Софийски градски транспорт";
         public static string NoResults = "Няма резултати";
+        public static string RequestOutlookRedirect = "За да изпратите съобщение ще бъдете прехвърлени към Outlook.";
+        public static string Yes = "Да";
+        public static string No = "Не";
     }
 }

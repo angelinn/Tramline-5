@@ -129,8 +129,16 @@ namespace EasyBus
 
         private async void spFeedback_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            Uri feedbackEmail = new Uri("mailto:angelin.nedelchev@outlook.com");
-            await Launcher.LaunchUriAsync(feedbackEmail);
+            MessageDialog feedbackDialog = new MessageDialog(Strings.RequestOutlookRedirect);
+            feedbackDialog.Commands.Add(new UICommand(Strings.Yes));
+            feedbackDialog.Commands.Add(new UICommand(Strings.No));
+
+            var result = await feedbackDialog.ShowAsync();
+            if (result != null && result.Label == Strings.Yes)
+            {
+                Uri feedbackEmail = new Uri("mailto:angelin.nedelchev@outlook.com");
+                await Launcher.LaunchUriAsync(feedbackEmail);
+            }
         }
 
         private async void spInfo_Tapped(object sender, TappedRoutedEventArgs e)
