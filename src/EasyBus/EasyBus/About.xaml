@@ -15,6 +15,11 @@
         </Style>
     </Page.Resources>
 
+    <Page.TopAppBar>
+        <CommandBar Background="DodgerBlue" Foreground="White" >
+        </CommandBar>
+    </Page.TopAppBar>
+
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10,10,10,10">
             <TextBlock Text="EasyBus for Windows - Версия: 0.2" Style="{StaticResource aboutText}" FontWeight="Bold" />
