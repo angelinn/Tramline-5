@@ -37,7 +37,6 @@
             </CommandBar.Content>
 
             <AppBarButton Name="btnSumc" Icon="Globe" Label="m.sumc.bg" Foreground="White" Click="btnSumc_Click" />
-            <AppBarButton Name="btnRefresh" Icon="Refresh" Label="Обновяване" Foreground="White" Click="btnRefresh_Click" />
         </CommandBar>
     </Page.TopAppBar>
 

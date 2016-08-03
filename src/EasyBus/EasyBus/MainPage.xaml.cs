@@ -116,11 +116,6 @@ namespace EasyBus
             }
         }
 
-        private void btnReset_Click(object sender, RoutedEventArgs e)
-        {
-            SumcManager.ResetCookie();
-        }
-
         private void txtStopID_KeyDown(object sender, KeyRoutedEventArgs e)
         {
             if (e.Key == VirtualKey.Enter)
@@ -178,11 +173,6 @@ namespace EasyBus
                 Uri sumc = new Uri(Urls.Sumc);
                 await Launcher.LaunchUriAsync(sumc);
             }
-        }
-
-        private void btnRefresh_Click(object sender, RoutedEventArgs e)
-        {
-            btnStop_Click(this, e); 
         }
 
         private bool loading;
