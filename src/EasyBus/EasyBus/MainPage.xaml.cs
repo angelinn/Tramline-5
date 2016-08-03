@@ -120,6 +120,8 @@ namespace EasyBus
             if (e.Key == VirtualKey.Enter)
             {
                 btnStop_Click(this, new RoutedEventArgs());
+                InputPane.GetForCurrentView().TryHide();
+
                 e.Handled = true;
             }
         }
