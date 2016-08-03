@@ -42,9 +42,16 @@ namespace EasyBus
 
             Arrivals = new ObservableCollection<ArrivalViewModel>();
             DataContext = this;
+            NavigationCacheMode = NavigationCacheMode.Enabled;
 
             Loaded += MainPage_Loaded;
             SystemNavigationManager.GetForCurrentView().BackRequested += MainPage_BackRequested;
+        }
+
+        protected override void OnNavigatedFrom(NavigationEventArgs e)
+        {
+            base.OnNavigatedFrom(e);
+            svMain.IsPaneOpen = false;
         }
 
         private async void MainPage_BackRequested(object sender, BackRequestedEventArgs e)
@@ -52,7 +59,9 @@ namespace EasyBus
             Frame rootFrame = Window.Current.Content as Frame;
             e.Handled = true;
 
-            if (!rootFrame.CanGoBack)
+            if (rootFrame.CanGoBack)
+                rootFrame.GoBack();
+            else
             {
                 MessageDialog exitPrompt = new MessageDialog(Strings.PromptExit);
                 exitPrompt.Commands.Add(new UICommand(Strings.Yes));
@@ -66,8 +75,13 @@ namespace EasyBus
 
         private async void MainPage_Loaded(object sender, RoutedEventArgs e)
         {
-            await SetStatusBar();
-            await SumcManager.Load();
+            if (!loaded)
+            {
+                await SetStatusBar();
+                await SumcManager.Load();
+
+                loaded = true;
+            }
         }
 
         private async Task SetStatusBar()
@@ -195,5 +209,6 @@ namespace EasyBus
         }
 
         private bool loading;
+        private bool loaded;
     }
 }
