@@ -51,6 +51,27 @@ namespace EasyBus
             await SumcManager.Load();
         }
 
+        private async Task SetStatusBar()
+        {
+            if (ApiInformation.IsTypePresent("Windows.UI.ViewManagement.StatusBar"))
+            {
+
+                StatusBar statusBar = StatusBar.GetForCurrentView();
+                if (statusBar != null)
+                {
+                    statusBar.BackgroundOpacity = 1;
+                    statusBar.BackgroundColor = Color.FromArgb(0, 51, 153, 255);
+                    statusBar.ForegroundColor = Colors.White;
+
+                    StatusBarProgressIndicator indicator = statusBar.ProgressIndicator;
+                    await indicator.ShowAsync();
+                    indicator.ProgressValue = 0;
+
+                    indicator.Text = Strings.StatusBarText;
+                }
+            }
+        }
+
         private async void btnStop_Click(object sender, RoutedEventArgs e)
         {
             if (loading)
@@ -66,7 +87,13 @@ namespace EasyBus
                 Arrivals.Clear();
                 IEnumerable<ArrivalViewModel> arrivals = await SumcManager.GetByStopAsync(txtStopID.Text);
 
-                if (arrivals.Count() == 0)
+                if (arrivals == null)
+                {
+                    await new MessageDialog("Невалидна заявка.").ShowAsync();
+                    return;
+                }
+
+                if (arrivals?.Count() == 0)
                 {
                     await new MessageDialog(Strings.NoResults).ShowAsync();
                     return;
@@ -92,27 +119,6 @@ namespace EasyBus
         private void btnReset_Click(object sender, RoutedEventArgs e)
         {
             SumcManager.ResetCookie();
-        }
-
-        private async Task SetStatusBar()
-        {
-            if (ApiInformation.IsTypePresent("Windows.UI.ViewManagement.StatusBar"))
-            {
-
-                StatusBar statusBar = StatusBar.GetForCurrentView();
-                if (statusBar != null)
-                {
-                    statusBar.BackgroundOpacity = 1;
-                    statusBar.BackgroundColor = Color.FromArgb(0, 51, 153, 255);
-                    statusBar.ForegroundColor = Colors.White;
-
-                    StatusBarProgressIndicator indicator = statusBar.ProgressIndicator;
-                    await indicator.ShowAsync();
-                    indicator.ProgressValue = 0;
-
-                    indicator.Text = Strings.StatusBarText;
-                }
-            }
         }
 
         private void txtStopID_KeyDown(object sender, KeyRoutedEventArgs e)

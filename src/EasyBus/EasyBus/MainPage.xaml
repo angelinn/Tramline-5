@@ -77,8 +77,8 @@
             <Pivot Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
                 <PivotItem Header="Виртуални табла">
                     <StackPanel>
-                        <TextBlock Text="Код или име на спирка:" HorizontalAlignment="Center" />
-                        <TextBox Name="txtStopID" HorizontalAlignment="Center" Margin="0,5,0,5" KeyDown="txtStopID_KeyDown" />
+                        <TextBlock Text="Код на спирка:" HorizontalAlignment="Center" />
+                        <TextBox Name="txtStopID" HorizontalAlignment="Center" Margin="0,5,0,5" KeyDown="txtStopID_KeyDown" MaxWidth="64" />
                         <Button Name="btnStop" Content="Напред" Click="btnStop_Click" HorizontalAlignment="Center" />
 
                         <ProgressRing Name="prVirtualTables" 
