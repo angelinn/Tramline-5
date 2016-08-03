@@ -172,9 +172,9 @@ namespace EasyBus
             }
         }
 
-        private async void spInfo_Tapped(object sender, TappedRoutedEventArgs e)
+        private void spInfo_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            await new MessageDialog("Версия: 0.0.1").ShowAsync();
+            Frame.Navigate(typeof(About));
         }
 
         private async void spSchedules_Tapped(object sender, TappedRoutedEventArgs e)
