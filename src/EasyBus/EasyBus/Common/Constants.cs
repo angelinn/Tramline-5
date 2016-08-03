@@ -14,6 +14,8 @@ namespace EasyBus.Common
         public static string Yes = "Да";
         public static string No = "Не";
         public static string SumcRedirect = "Ще бъдете прехвърлени към сайта на Градска мобилност.";
+        public static string PromptExit = "Изход?";
+        public static string InvalidRequest = "Невалиден номер на спирка.";
     }
 
     public static class Urls

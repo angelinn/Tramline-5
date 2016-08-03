@@ -13,6 +13,7 @@ using Windows.Foundation.Collections;
 using Windows.Foundation.Metadata;
 using Windows.System;
 using Windows.UI;
+using Windows.UI.Core;
 using Windows.UI.Popups;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
@@ -43,6 +44,26 @@ namespace EasyBus
             DataContext = this;
 
             Loaded += MainPage_Loaded;
+            SystemNavigationManager.GetForCurrentView().BackRequested += MainPage_BackRequested;
+        }
+
+        private async void MainPage_BackRequested(object sender, BackRequestedEventArgs e)
+        {
+            Frame rootFrame = Window.Current.Content as Frame;
+            e.Handled = true;
+
+            if (!rootFrame.CanGoBack)
+            {
+                MessageDialog exitPrompt = new MessageDialog(Strings.PromptExit);
+                exitPrompt.Commands.Add(new UICommand(Strings.Yes));
+                exitPrompt.Commands.Add(new UICommand(Strings.No));
+
+                IUICommand result = await exitPrompt.ShowAsync();
+                if (result.Label == Strings.No)
+                    return;
+            }
+
+            rootFrame.GoBack();
         }
 
         private async void MainPage_Loaded(object sender, RoutedEventArgs e)
@@ -89,7 +110,7 @@ namespace EasyBus
 
                 if (arrivals == null)
                 {
-                    await new MessageDialog("Невалидна заявка.").ShowAsync();
+                    await new MessageDialog(Strings.InvalidRequest).ShowAsync();
                     return;
                 }
 
