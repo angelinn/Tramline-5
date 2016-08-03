@@ -53,6 +53,11 @@ namespace EasyBus
 
         private async void btnStop_Click(object sender, RoutedEventArgs e)
         {
+            if (loading)
+                return;
+
+            loading = true;
+
             prVirtualTables.IsActive = true;
             prVirtualTables.Visibility = Visibility.Visible;
 
@@ -80,6 +85,7 @@ namespace EasyBus
             {
                 prVirtualTables.IsActive = false;
                 prVirtualTables.Visibility = Visibility.Collapsed;
+                loading = false;
             }
         }
 
@@ -165,5 +171,12 @@ namespace EasyBus
                 await Launcher.LaunchUriAsync(sumc);
             }
         }
+
+        private void btnRefresh_Click(object sender, RoutedEventArgs e)
+        {
+            btnStop_Click(this, e); 
+        }
+
+        private bool loading;
     }
 }

@@ -35,8 +35,9 @@
                     </AppBarButton.Icon>
                 </AppBarButton>
             </CommandBar.Content>
-            
+
             <AppBarButton Name="btnSumc" Icon="Globe" Label="m.sumc.bg" Foreground="White" Click="btnSumc_Click" />
+            <AppBarButton Name="btnRefresh" Icon="Refresh" Label="Обновяване" Foreground="White" Click="btnRefresh_Click" />
         </CommandBar>
     </Page.TopAppBar>
 
@@ -53,7 +54,7 @@
                     <Button Content="&#xE8A1;" Style="{StaticResource BarIcon}" />
                     <TextBlock Text="Разписания" Style="{StaticResource BarText}" />
                 </StackPanel>
-                
+
                 <StackPanel Name="spFeedback" Orientation="Horizontal" Tapped="spFeedback_Tapped">
                     <Button Content="&#xE8CA;" Style="{StaticResource BarIcon}" />
                     <TextBlock Text="Обратна връзка" Style="{StaticResource BarText}"/>
@@ -70,8 +71,8 @@
                 </StackPanel>
             </StackPanel>
         </SplitView.Pane>
-        
-        
+
+
         <SplitView.Content>
             <Pivot Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
                 <PivotItem Header="Виртуални табла">
@@ -87,7 +88,7 @@
                                       Width="100" 
                                       Visibility="Collapsed"
                                       Margin="0,20,0,0"/>
-                
+
                         <ListView ItemsSource="{Binding Arrivals}">
                             <ListView.ItemTemplate>
                                 <DataTemplate>
@@ -103,7 +104,7 @@
                                             <TextBlock Text="{Binding Timings, Converter={StaticResource TimingConverter}}" Margin="5,0,0,0" />
                                         </StackPanel>
                                     </StackPanel>
-                            
+
                                 </DataTemplate>
                             </ListView.ItemTemplate>
                         </ListView>
