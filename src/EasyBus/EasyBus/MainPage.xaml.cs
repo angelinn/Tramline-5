@@ -59,11 +59,9 @@ namespace EasyBus
                 exitPrompt.Commands.Add(new UICommand(Strings.No));
 
                 IUICommand result = await exitPrompt.ShowAsync();
-                if (result.Label == Strings.No)
-                    return;
+                if (result?.Label == Strings.Yes)
+                    rootFrame.GoBack();
             }
-
-            rootFrame.GoBack();
         }
 
         private async void MainPage_Loaded(object sender, RoutedEventArgs e)
