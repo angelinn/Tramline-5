@@ -208,7 +208,15 @@ namespace EasyBus
             }
         }
 
+        private void ListViewItem_Holding(object sender, HoldingRoutedEventArgs e)
+        {
+            FrameworkElement senderElement = sender as FrameworkElement;
+            FlyoutBase attached = FlyoutBase.GetAttachedFlyout(senderElement);
+            attached.ShowAt(senderElement);
+        }
+
         private bool loading;
         private bool loaded;
+
     }
 }
