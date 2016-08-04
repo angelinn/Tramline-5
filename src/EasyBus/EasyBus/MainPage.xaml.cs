@@ -165,11 +165,6 @@ namespace EasyBus
             svMain.IsPaneOpen = !svMain.IsPaneOpen;
         }
 
-        private async void spSettings_Tapped(object sender, TappedRoutedEventArgs e)
-        {
-            await new MessageDialog("Настройки!").ShowAsync();
-        }
-
         private async void spFeedback_Tapped(object sender, TappedRoutedEventArgs e)
         {
             MessageDialog feedbackDialog = new MessageDialog(Strings.RequestOutlookRedirect);
@@ -182,6 +177,11 @@ namespace EasyBus
                 Uri feedbackEmail = new Uri(Urls.DeveloperEmail);
                 await Launcher.LaunchUriAsync(feedbackEmail);
             }
+        }
+        
+        private void spSettings_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(Settings));
         }
 
         private void spInfo_Tapped(object sender, TappedRoutedEventArgs e)
