@@ -22,8 +22,8 @@
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10,10,10,10">
-            <TextBlock Text="EasyBus for Windows - Версия: 0.2" Style="{StaticResource aboutText}" FontWeight="Bold" />
-            <TextBlock Text="2016 - Анджелин Неделчев" Style="{StaticResource aboutText}" FontWeight="Bold" />
+            <TextBlock Text="EasyBus for Windows - Версия: 0.2.2" Style="{StaticResource aboutText}" FontWeight="Bold" />
+            <TextBlock Text="2016" Style="{StaticResource aboutText}" FontWeight="Bold" />
             <TextBlock Style="{StaticResource aboutText}" Margin="0,20,0,20" Text="Universal Windows приложението предоставя информация за пристигането на колите на Софийски градски транспорт." />
 
             <TextBlock Text="Данните се извличат от" Style="{StaticResource aboutText}" />
