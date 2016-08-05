@@ -62,9 +62,7 @@ namespace EasyBus
                     //TODO: Load state from previously suspended application
                 }
                 
-                SolidColorBrush scb = new SolidColorBrush();
-                scb.Color = Colors.White;
-                rootFrame.Background = scb;
+                rootFrame.Background = new SolidColorBrush(Colors.White);
 
                 // Place the frame in the current Window
                 Window.Current.Content = rootFrame;
