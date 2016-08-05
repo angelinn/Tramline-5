@@ -1,4 +1,5 @@
 ﻿using EasyBus.Common;
+using EasyBus.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -26,11 +27,14 @@ namespace EasyBus
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
     public sealed partial class About : Page
-    {
+    { 
+
         public About()
         {
             this.InitializeComponent();
             this.Transitions = AnimationManager.SetUpPageAnimation();
+
+            this.DataContext = new VersionViewModel();
         }
     }
 }
