@@ -29,6 +29,7 @@ namespace EasyBus
             this.InitializeComponent();
             
             this.DataContext = new SettingsViewModel();
+            this.Transitions = AnimationManager.SetUpPageAnimation();
         }
     }
 }

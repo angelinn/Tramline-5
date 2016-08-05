@@ -101,6 +101,7 @@
     <Compile Include="Captcha.xaml.cs">
       <DependentUpon>Captcha.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Common\AnimationManager.cs" />
     <Compile Include="Common\Converters\TimingConverter.cs" />
     <Compile Include="Common\Constants.cs" />
     <Compile Include="Common\SettingsManager.cs" />
