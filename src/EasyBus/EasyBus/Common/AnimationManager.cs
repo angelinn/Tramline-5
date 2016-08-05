@@ -14,8 +14,8 @@ namespace EasyBus.Common
             TransitionCollection collection = new TransitionCollection();
             NavigationThemeTransition theme = new NavigationThemeTransition();
 
-            var info = new ContinuumNavigationTransitionInfo();
-
+            ContinuumNavigationTransitionInfo info = new ContinuumNavigationTransitionInfo();
+            
             theme.DefaultNavigationTransitionInfo = info;
             collection.Add(theme);
             return collection;

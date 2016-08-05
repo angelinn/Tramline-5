@@ -7,6 +7,7 @@ using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -60,6 +61,10 @@ namespace EasyBus
                 {
                     //TODO: Load state from previously suspended application
                 }
+                
+                SolidColorBrush scb = new SolidColorBrush();
+                scb.Color = Colors.White;
+                rootFrame.Background = scb;
 
                 // Place the frame in the current Window
                 Window.Current.Content = rootFrame;
