@@ -107,6 +107,9 @@
     <Compile Include="Common\Constants.cs" />
     <Compile Include="Common\SettingsManager.cs" />
     <Compile Include="Common\VersionManager.cs" />
+    <Compile Include="DataAccess\Entities\BaseEntity.cs" />
+    <Compile Include="DataAccess\Repositories\GenericRepository.cs" />
+    <Compile Include="DataAccess\Repositories\IGenericRepository.cs" />
     <Compile Include="DataAccess\TramlineFiveContext.cs" />
     <Compile Include="Settings.xaml.cs">
       <DependentUpon>Settings.xaml</DependentUpon>
@@ -202,7 +205,6 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="DataAccess\Repositories\" />
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
