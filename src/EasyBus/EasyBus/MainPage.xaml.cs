@@ -165,35 +165,6 @@ namespace EasyBus
             svMain.IsPaneOpen = !svMain.IsPaneOpen;
         }
 
-        private async void spFeedback_Tapped(object sender, TappedRoutedEventArgs e)
-        {
-            MessageDialog feedbackDialog = new MessageDialog(Strings.RequestOutlookRedirect);
-            feedbackDialog.Commands.Add(new UICommand(Strings.Yes));
-            feedbackDialog.Commands.Add(new UICommand(Strings.No));
-
-            IUICommand result = await feedbackDialog.ShowAsync();
-            if (result != null && result.Label == Strings.Yes)
-            {
-                Uri feedbackEmail = new Uri(Urls.DeveloperEmail);
-                await Launcher.LaunchUriAsync(feedbackEmail);
-            }
-        }
-        
-        private void spSettings_Tapped(object sender, TappedRoutedEventArgs e)
-        {
-            Frame.Navigate(typeof(Settings));
-        }
-
-        private void spInfo_Tapped(object sender, TappedRoutedEventArgs e)
-        {
-            Frame.Navigate(typeof(About));
-        }
-
-        private async void spSchedules_Tapped(object sender, TappedRoutedEventArgs e)
-        {
-            await new MessageDialog("Разписания!").ShowAsync();
-        }
-
         private async void btnSumc_Click(object sender, RoutedEventArgs e)
         {
             MessageDialog sumcDialog = new MessageDialog(Strings.SumcRedirect);
@@ -215,8 +186,36 @@ namespace EasyBus
             attached.ShowAt(senderElement);
         }
 
+        private async void btnSchedules_Click(object sender, RoutedEventArgs e)
+        {
+            await new MessageDialog("Разписания!").ShowAsync();
+        }
+
+        private async void btnFeedback_Click(object sender, RoutedEventArgs e)
+        {
+            MessageDialog feedbackDialog = new MessageDialog(Strings.RequestOutlookRedirect);
+            feedbackDialog.Commands.Add(new UICommand(Strings.Yes));
+            feedbackDialog.Commands.Add(new UICommand(Strings.No));
+
+            IUICommand result = await feedbackDialog.ShowAsync();
+            if (result != null && result.Label == Strings.Yes)
+            {
+                Uri feedbackEmail = new Uri(Urls.DeveloperEmail);
+                await Launcher.LaunchUriAsync(feedbackEmail);
+            }
+        }
+
+        private void btnAbout_Click(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(About));
+        }
+
+        private void btnSettings_Click(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(Settings));
+        }
+
         private bool loading;
         private bool loaded;
-
     }
 }

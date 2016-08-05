@@ -10,19 +10,28 @@
 
     <Page.Resources>
         <su:TimingConverter x:Key="TimingConverter" />
-        <Style x:Name="BarText" TargetType="TextBlock">
+        <Style x:Key="BarText" TargetType="TextBlock">
             <Setter Property="FontSize" Value="18" />
             <Setter Property="Foreground" Value="White" />
             <Setter Property="VerticalAlignment" Value="Center" />
         </Style>
 
-        <Style x:Name="BarIcon" TargetType="Button">
+        <Style x:Key="BarIcon" TargetType="Button">
             <Setter Property="FontSize" Value="20" />
             <Setter Property="Background" Value="Transparent" />
             <Setter Property="Foreground" Value="White" />
             <Setter Property="Width" Value="50" />
             <Setter Property="Height" Value="50" />
             <Setter Property="FontFamily" Value="Segoe MDL2 Assets" />
+            <Setter Property="IsHitTestVisible" Value="False" />
+        </Style>
+
+        <Style x:Key="HamburgerMenuButton" TargetType="Button" >
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="Margin" Value="-10,0,0,0" />
+            <Setter Property="Height" Value="50" />
+            <Setter Property="Width" Value="210" />
+            <Setter Property="HorizontalContentAlignment" Value="Left" />
         </Style>
 
         <MenuFlyout x:Name="LineFlyout">
@@ -56,25 +65,34 @@
 
         <SplitView.Pane>
             <StackPanel>
-                <StackPanel Name="spSchedules" Orientation="Horizontal" Tapped="spSchedules_Tapped">
-                    <Button Content="&#xE8A1;" Style="{StaticResource BarIcon}" />
-                    <TextBlock Text="Разписания" Style="{StaticResource BarText}" />
-                </StackPanel>
+                <Button Name="btnSchedules" Click="btnSchedules_Click" Style="{StaticResource HamburgerMenuButton}">
+                    <StackPanel Orientation="Horizontal">
+                        <Button Content="&#xE8A1;" Style="{StaticResource BarIcon}" />
+                        <TextBlock Text="Разписания" Style="{StaticResource BarText}" />
+                    </StackPanel>
+                </Button>
 
-                <StackPanel Name="spFeedback" Orientation="Horizontal" Tapped="spFeedback_Tapped">
-                    <Button Content="&#xE8CA;" Style="{StaticResource BarIcon}" />
-                    <TextBlock Text="Обратна връзка" Style="{StaticResource BarText}"/>
-                </StackPanel>
+                <Button Name="btnFeedback" Click="btnFeedback_Click" Style="{StaticResource HamburgerMenuButton}">
+                    <StackPanel Orientation="Horizontal">
+                        <Button Content="&#xE8CA;" Style="{StaticResource BarIcon}" />
+                        <TextBlock Text="Обратна връзка" Style="{StaticResource BarText}"/>
+                    </StackPanel>
+                </Button>
 
-                <StackPanel Name="spInfo" Orientation="Horizontal" Tapped="spInfo_Tapped">
-                    <Button Content="&#xE8EA;" Style="{StaticResource BarIcon}" />
-                    <TextBlock Text="Информация" Style="{StaticResource BarText}"/>
-                </StackPanel>
+                <Button Name="btnAbout" Click="btnAbout_Click" Style="{StaticResource HamburgerMenuButton}">
+                    <StackPanel Orientation="Horizontal">
+                        <Button Content="&#xE8EA;" Style="{StaticResource BarIcon}" />
+                        <TextBlock Text="Информация" Style="{StaticResource BarText}"/>
+                    </StackPanel>
+                </Button>
 
-                <StackPanel Name="spSettings" Orientation="Horizontal" Tapped="spSettings_Tapped">
-                    <Button Content="&#xE713;" Style="{StaticResource BarIcon}" />
-                    <TextBlock Text="Настройки" Style="{StaticResource BarText}"/>
-                </StackPanel>
+                <Button Name="btnSettings" Click="btnSettings_Click" Style="{StaticResource HamburgerMenuButton}">
+                    <StackPanel Orientation="Horizontal">
+                        <Button Content="&#xE713;" Style="{StaticResource BarIcon}" />
+                        <TextBlock Text="Настройки" Style="{StaticResource BarText}"/>
+                    </StackPanel>
+                </Button>
+
             </StackPanel>
         </SplitView.Pane>
 

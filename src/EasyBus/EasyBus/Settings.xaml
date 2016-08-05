@@ -24,7 +24,7 @@
 
     <StackPanel Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" >
         <StackPanel Margin="20,20,20,10">
-            <TextBlock Text="Приложението може да изпраща push notification-и" Style="{StaticResource SettingTitle}"/>
+            <TextBlock Text="Позволи на приложението да изпраща push notification-и" Style="{StaticResource SettingTitle}"/>
             <ToggleSwitch IsOn="{Binding PushNotifications, Mode=TwoWay}"  />
 
             <TextBlock Text="Обновявай живата плочка на всеки 30 мин" Style="{StaticResource SettingTitle}"/>
