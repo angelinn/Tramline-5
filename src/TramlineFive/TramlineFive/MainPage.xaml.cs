@@ -35,12 +35,15 @@ namespace TramlineFive
     public sealed partial class MainPage : Page
     {
         public ObservableCollection<ArrivalViewModel> Arrivals { get; set; }
+        public VersionViewModel Version { get; set; }
 
         public MainPage()
         {
             this.InitializeComponent();
 
             Arrivals = new ObservableCollection<ArrivalViewModel>();
+            Version = new VersionViewModel();
+
             DataContext = this;
             NavigationCacheMode = NavigationCacheMode.Enabled;
 

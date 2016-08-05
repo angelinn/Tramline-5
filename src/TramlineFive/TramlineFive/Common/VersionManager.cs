@@ -9,13 +9,26 @@ namespace TramlineFive.Common
 {
     public static class VersionManager
     {
-        public static string GetVersion()
+        private static string version;
+        public static string Version
         {
-            Package package = Package.Current;
-            PackageId packageId = package.Id;
-            PackageVersion version = packageId.Version;
-
-            return String.Format("{0}.{1}.{2}", version.Major, version.Minor, version.Build);
+            get
+            {
+                if (version == null)
+                {
+                    PackageVersion packageVersion = Package.Current.Id.Version;
+                    version = String.Format("{0}.{1}.{2}", packageVersion.Major, packageVersion.Minor, packageVersion.Build);
+                }
+                return version;
+            }
+        }
+        
+        public static string DisplayName
+        {
+            get
+            {
+                return Package.Current.DisplayName;
+            }
         }
     }
 }

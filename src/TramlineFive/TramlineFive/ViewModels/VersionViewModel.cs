@@ -7,14 +7,23 @@ using System.Threading.Tasks;
 
 namespace TramlineFive.ViewModels
 {
-    class VersionViewModel
+    public class VersionViewModel
     {
-        private string version = VersionManager.GetVersion();
+        private string version = VersionManager.Version;
         public string Version
         {
             get
             {
                 return version;
+            }
+        }
+
+        private string displayName = VersionManager.DisplayName.ToUpper();
+        public string DisplayName
+        {
+            get
+            {
+                return displayName;
             }
         }
     }

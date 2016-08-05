@@ -33,7 +33,7 @@
             <Setter Property="Width" Value="210" />
             <Setter Property="HorizontalContentAlignment" Value="Left" />
         </Style>
-
+        
         <MenuFlyout x:Name="LineFlyout">
             <MenuFlyoutItem Text="Добави в любими" />
         </MenuFlyout>
@@ -48,7 +48,7 @@
                             <FontIcon FontSize="25" Glyph="&#xE700;" />
                         </AppBarButton.Icon>
                     </AppBarButton>
-                    <TextBlock Text="ТРАМВАЙ №5" FontWeight="Bold" Foreground="White" Margin="0,14,0,0" />
+                    <TextBlock Text="{Binding Version.DisplayName}" FontWeight="Bold" Foreground="White" Margin="0,14,0,0" />
                 </StackPanel>
             </CommandBar.Content>
 
