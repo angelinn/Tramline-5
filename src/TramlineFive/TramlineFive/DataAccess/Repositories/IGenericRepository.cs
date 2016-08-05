@@ -5,7 +5,7 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EasyBus.DataAccess.Repositories
+namespace TramlineFive.DataAccess.Repositories
 {
     public interface IGenericRepository<T> : IDisposable
     {

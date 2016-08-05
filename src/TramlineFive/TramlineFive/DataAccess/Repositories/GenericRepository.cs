@@ -1,4 +1,4 @@
-﻿using EasyBus.DataAccess.Entities;
+﻿using TramlineFive.DataAccess.Entities;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TramlineFive.DataAccess;
 
-namespace EasyBus.DataAccess.Repositories
+namespace TramlineFive.DataAccess.Repositories
 {
     public class GenericRepository<T> : IGenericRepository<T> where T : class, BaseEntity
     {

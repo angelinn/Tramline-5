@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-using SettingsEntity = EasyBus.DataAccess.Entities.Settings;
+using SettingsEntity = TramlineFive.DataAccess.Entities.Settings;
 
 namespace TramlineFive.DataAccess
 {

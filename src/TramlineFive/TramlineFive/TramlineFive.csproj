@@ -111,6 +111,7 @@
     <Compile Include="DataAccess\Entities\Settings.cs" />
     <Compile Include="DataAccess\Repositories\GenericRepository.cs" />
     <Compile Include="DataAccess\Repositories\IGenericRepository.cs" />
+    <Compile Include="DataAccess\Repositories\UnitOfWork.cs" />
     <Compile Include="DataAccess\TramlineFiveContext.cs" />
     <Compile Include="Settings.xaml.cs">
       <DependentUpon>Settings.xaml</DependentUpon>

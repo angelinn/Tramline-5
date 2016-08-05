@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EasyBus.DataAccess.Entities
+namespace TramlineFive.DataAccess.Entities
 {
     public interface BaseEntity
     {
