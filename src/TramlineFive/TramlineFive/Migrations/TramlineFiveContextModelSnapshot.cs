@@ -69,20 +69,6 @@ namespace TramlineFive.Migrations
                     b.ToTable("Lines");
                 });
 
-            modelBuilder.Entity("TramlineFive.DataAccess.Entities.Settings", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<bool>("LiveTile");
-
-                    b.Property<bool>("PushNotifications");
-
-                    b.HasKey("ID");
-
-                    b.ToTable("Settings");
-                });
-
             modelBuilder.Entity("TramlineFive.DataAccess.Entities.Stop", b =>
                 {
                     b.Property<int>("ID")

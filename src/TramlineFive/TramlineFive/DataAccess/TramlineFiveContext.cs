@@ -6,7 +6,6 @@ using System.Text;
 using System.Threading.Tasks;
 using TramlineFive.DataAccess.Entities;
 using Windows.Storage;
-using SettingsEntity = TramlineFive.DataAccess.Entities.Settings;
 
 namespace TramlineFive.DataAccess
 {
@@ -18,7 +17,6 @@ namespace TramlineFive.DataAccess
         public DbSet<Stop> Stops { get; set; }
 
         public DbSet<Favourite> Favourites { get; set; }
-        public DbSet<SettingsEntity> Settings { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

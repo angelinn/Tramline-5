@@ -8,7 +8,7 @@ using TramlineFive.DataAccess;
 namespace TramlineFive.Migrations
 {
     [DbContext(typeof(TramlineFiveContext))]
-    [Migration("20160806204138_MyFirstMigration")]
+    [Migration("20160806235456_MyFirstMigration")]
     partial class MyFirstMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -68,20 +68,6 @@ namespace TramlineFive.Migrations
                     b.HasKey("ID");
 
                     b.ToTable("Lines");
-                });
-
-            modelBuilder.Entity("TramlineFive.DataAccess.Entities.Settings", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<bool>("LiveTile");
-
-                    b.Property<bool>("PushNotifications");
-
-                    b.HasKey("ID");
-
-                    b.ToTable("Settings");
                 });
 
             modelBuilder.Entity("TramlineFive.DataAccess.Entities.Stop", b =>
