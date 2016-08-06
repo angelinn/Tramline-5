@@ -8,11 +8,6 @@ namespace TramlineFive.DataAccess.Entities
 {
     public class Direction : BaseEntity
     {
-        public Direction()
-        {
-            Days = new HashSet<Day>();
-        }
-
         public int GetId()
         {
             return ID;
@@ -20,6 +15,6 @@ namespace TramlineFive.DataAccess.Entities
 
         public int ID { get; set; }
         public string Name { get; set; }
-        public virtual ICollection<Day> Days { get; set; }
+        public List<Day> Days { get; set; }
     }
 }

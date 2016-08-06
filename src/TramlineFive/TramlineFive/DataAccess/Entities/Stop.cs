@@ -8,11 +8,6 @@ namespace TramlineFive.DataAccess.Entities
 {
     public class Stop : BaseEntity
     {
-        public Stop()
-        {
-            Timings = new HashSet<string>();
-        }
-
         public int GetId()
         {
             return ID;
@@ -32,6 +27,6 @@ namespace TramlineFive.DataAccess.Entities
             }
         }
 
-        public ICollection<string> Timings { get; set; }
+        public List<string> Timings { get; set; }
     }
 }
