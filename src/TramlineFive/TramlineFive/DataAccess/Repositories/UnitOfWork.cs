@@ -8,6 +8,7 @@ using TramlineFive.DataAccess.Entities;
 using Microsoft.EntityFrameworkCore;
 
 using SettingsEntity = TramlineFive.DataAccess.Entities.Settings;
+using TramlineFive.Common.Extensions;
 
 namespace TramlineFive.DataAccess.Repositories
 {
@@ -36,6 +37,11 @@ namespace TramlineFive.DataAccess.Repositories
 
         public void Clear()
         {
+            context.Stops.Clear();
+            context.Days.Clear();
+            context.Directions.Clear();
+            context.Lines.Clear();
+
             context.SaveChanges();
         }
 
@@ -44,6 +50,22 @@ namespace TramlineFive.DataAccess.Repositories
             get
             {
                 return GetRepository<SettingsEntity>();
+            }
+        }
+
+        public IGenericRepository<Line> Lines
+        {
+            get
+            {
+                return GetRepository<Line>();
+            }
+        }
+
+        public IGenericRepository<Favourite> Favourites
+        {
+            get
+            {
+                return GetRepository<Favourite>();
             }
         }
 

@@ -89,7 +89,7 @@
   </PropertyGroup>
   <ItemGroup>
     <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
-    <None Include="Assets\grouped_201608062227.json" />
+    <None Include="Assets\App_Data\grouped_201608062227.json" />
     <None Include="project.json" />
     <None Include="TramlineFive_TemporaryKey.pfx" />
   </ItemGroup>
@@ -106,6 +106,7 @@
     <Compile Include="Common\AnimationManager.cs" />
     <Compile Include="Common\Converters\TimingConverter.cs" />
     <Compile Include="Common\Constants.cs" />
+    <Compile Include="Common\Extensions\DbSetClearExtension.cs" />
     <Compile Include="Common\SettingsManager.cs" />
     <Compile Include="Common\VersionManager.cs" />
     <Compile Include="DataAccess\Entities\BaseEntity.cs" />
@@ -213,7 +214,6 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Assets\App_Data\" />
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
