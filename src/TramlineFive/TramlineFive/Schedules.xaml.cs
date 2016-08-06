@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading.Tasks;
 using TramlineFive.DataAccess;
 using TramlineFive.DataAccess.Entities;
 using TramlineFive.DataAccess.Repositories;
@@ -31,15 +32,35 @@ namespace TramlineFive
         public Schedules()
         {
             this.InitializeComponent();
+
             LineViewModel = new LineViewModel();
             DataContext = LineViewModel;
+
+            Loaded += Schedules_Loaded;
         }
 
-        private void btnFetchSchedules_Click(object sender, RoutedEventArgs e)
+        private async void Schedules_Loaded(object sender, RoutedEventArgs e)
         {
-            using (UnitOfWork uow = new UnitOfWork())
+            try
             {
-                LineViewModel.Lines = uow.Lines.All().ToList();
+                List<Line> lines = null;
+                await Task.Run(() =>
+                {
+                    using (UnitOfWork uow = new UnitOfWork())
+                    {
+                        lines = uow.Lines.All().ToList();
+                    }
+                });
+                LineViewModel.Lines = lines;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                prLines.IsEnabled = false;
+                prLines.Visibility = Visibility.Collapsed;
             }
         }
     }

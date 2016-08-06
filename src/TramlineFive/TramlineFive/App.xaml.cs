@@ -34,6 +34,7 @@ namespace TramlineFive
         {
             this.InitializeComponent();
             this.Suspending += OnSuspending;
+
         }
 
         /// <summary>
@@ -44,7 +45,7 @@ namespace TramlineFive
         protected override void OnLaunched(LaunchActivatedEventArgs e)
         {
 #if DEBUG
-                if (System.Diagnostics.Debugger.IsAttached)
+            if (System.Diagnostics.Debugger.IsAttached)
                 {
                     this.DebugSettings.EnableFrameRateCounter = true;
                 }

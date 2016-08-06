@@ -6,9 +6,23 @@
     RequestedTheme="Light">
 
     <Application.Resources>
-        <Style x:Key="EllipsisButton" TargetType="Button">
-            <Setter Property="Visibility" Value="Collapsed"/>
-        </Style>
-    </Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.ThemeDictionaries>
+                <ResourceDictionary x:Key="Default">
+                    <SolidColorBrush x:Key="SystemControlHighlightAccentBrush" Color="DodgerBlue" />
+                </ResourceDictionary>
+                <ResourceDictionary x:Key="Dark">
+                    <SolidColorBrush x:Key="SystemControlHighlightAccentBrush" Color="DodgerBlue" />
+                </ResourceDictionary>
+                <ResourceDictionary x:Key="Light">
+                    <SolidColorBrush x:Key="SystemControlHighlightAccentBrush" Color="DodgerBlue" />
+                </ResourceDictionary>
+            </ResourceDictionary.ThemeDictionaries>
 
+            <Style x:Key="EllipsisButton" TargetType="Button">
+                <Setter Property="Visibility" Value="Collapsed"/>
+            </Style>
+        </ResourceDictionary>
+    </Application.Resources>
+    
 </Application>
