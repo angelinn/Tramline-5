@@ -85,6 +85,8 @@ namespace TramlineFive
         {
             if (!loaded)
             {
+                await CopyDatabaseFileIfNeeded();
+
                 await SetStatusBar();
                 await SumcManager.Load();
 
@@ -173,11 +175,6 @@ namespace TramlineFive
             attached.ShowAt(senderElement);
         }
 
-        private async void btnSchedules_Click(object sender, RoutedEventArgs e)
-        {
-            await new MessageDialog("Разписания!").ShowAsync();
-        }
-
         private async void btnFeedback_Click(object sender, RoutedEventArgs e)
         {
             MessageDialog feedbackDialog = new MessageDialog(Strings.RequestOutlookRedirect);
@@ -200,6 +197,11 @@ namespace TramlineFive
         private void btnSettings_Click(object sender, RoutedEventArgs e)
         {
             Frame.Navigate(typeof(Settings));
+        }
+
+        private void btnSchedules_Click(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(Schedules));
         }
 
         private async Task SetStatusBar()

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TramlineFive.DataAccess.Entities;
-
+using Windows.Storage;
 using SettingsEntity = TramlineFive.DataAccess.Entities.Settings;
 
 namespace TramlineFive.DataAccess
@@ -22,10 +22,10 @@ namespace TramlineFive.DataAccess
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlite($"Filename={databaseName}");
+            optionsBuilder.UseSqlite($"Filename={ApplicationData.Current.LocalFolder.Path}\\{databaseName}");
         }
 
-        private static string databaseName = "TramlneFive.db";
+        private static string databaseName = "TramlineFive.db";
         public static string DatabaseName
         {
             get
