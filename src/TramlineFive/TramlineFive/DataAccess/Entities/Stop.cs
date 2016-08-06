@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,7 +20,7 @@ namespace TramlineFive.DataAccess.Entities
         {
             get
             {
-                return string.Join(",", Timings);
+                return (Timings == null) ? String.Empty : String.Join(",", Timings);
             }
             set
             {
@@ -27,6 +28,9 @@ namespace TramlineFive.DataAccess.Entities
             }
         }
 
+        public Favourite Favourite { get; set; }
+
+        [NotMapped]
         public List<string> Timings { get; set; }
     }
 }

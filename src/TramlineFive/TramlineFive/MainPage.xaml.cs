@@ -85,15 +85,6 @@ namespace TramlineFive
         {
             if (!loaded)
             {
-                await CopyDatabaseFileIfNeeded();
-                await Task.Run(() =>
-                {
-                    using (UnitOfWork uow = new UnitOfWork())
-                    {
-                        uow.Migrate();
-                    }
-                });
-
                 await SetStatusBar();
                 await SumcManager.Load();
 

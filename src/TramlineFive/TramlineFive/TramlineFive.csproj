@@ -90,7 +90,6 @@
   <ItemGroup>
     <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
     <None Include="App.config" />
-    <None Include="Assets\App_Data\grouped_201608062227.json" />
     <None Include="project.json" />
     <None Include="TramlineFive_TemporaryKey.pfx" />
   </ItemGroup>
@@ -121,6 +120,11 @@
     <Compile Include="DataAccess\Repositories\IGenericRepository.cs" />
     <Compile Include="DataAccess\Repositories\UnitOfWork.cs" />
     <Compile Include="DataAccess\TramlineFiveContext.cs" />
+    <Compile Include="Migrations\20160806204138_MyFirstMigration.cs" />
+    <Compile Include="Migrations\20160806204138_MyFirstMigration.designer.cs">
+      <DependentUpon>20160806204138_MyFirstMigration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\TramlineFiveContextModelSnapshot.cs" />
     <Compile Include="Settings.xaml.cs">
       <DependentUpon>Settings.xaml</DependentUpon>
     </Compile>
@@ -215,6 +219,7 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Assets\App_Data\" />
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
