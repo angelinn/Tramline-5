@@ -89,6 +89,9 @@
   </PropertyGroup>
   <ItemGroup>
     <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
+    <Content Include="Assets\grouped_201608062227.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <None Include="project.json" />
     <None Include="TramlineFive_TemporaryKey.pfx" />
   </ItemGroup>
@@ -108,7 +111,11 @@
     <Compile Include="Common\SettingsManager.cs" />
     <Compile Include="Common\VersionManager.cs" />
     <Compile Include="DataAccess\Entities\BaseEntity.cs" />
+    <Compile Include="DataAccess\Entities\Day.cs" />
+    <Compile Include="DataAccess\Entities\Direction.cs" />
+    <Compile Include="DataAccess\Entities\Line.cs" />
     <Compile Include="DataAccess\Entities\Settings.cs" />
+    <Compile Include="DataAccess\Entities\Stop.cs" />
     <Compile Include="DataAccess\Repositories\GenericRepository.cs" />
     <Compile Include="DataAccess\Repositories\IGenericRepository.cs" />
     <Compile Include="DataAccess\Repositories\UnitOfWork.cs" />

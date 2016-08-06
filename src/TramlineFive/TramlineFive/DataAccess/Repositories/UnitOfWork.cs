@@ -4,10 +4,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
-using SettingsEntity = TramlineFive.DataAccess.Entities.Settings;
 using TramlineFive.DataAccess.Entities;
 using Microsoft.EntityFrameworkCore;
+
+using SettingsEntity = TramlineFive.DataAccess.Entities.Settings;
 
 namespace TramlineFive.DataAccess.Repositories
 {
