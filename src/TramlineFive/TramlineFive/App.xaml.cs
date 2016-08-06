@@ -3,10 +3,13 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading.Tasks;
+using TramlineFive.DataAccess;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Storage;
 using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -104,6 +107,24 @@ namespace TramlineFive
             var deferral = e.SuspendingOperation.GetDeferral();
             //TODO: Save application state and stop any background activity
             deferral.Complete();
+        }
+
+        private async Task CopyDatabaseFileIfNeeded()
+        {
+            StorageFile dbFile = 
+                await ApplicationData.Current.LocalFolder.TryGetItemAsync(TramlineFiveContext.DatabaseName) as StorageFile;
+
+            if (dbFile == null)
+            {
+                StorageFolder localFolder = ApplicationData.Current.LocalFolder;
+                Uri originalDbFileUri = new Uri($"ms-appx:///Assets/App_Data/{TramlineFiveContext.DatabaseName}");
+                var originalDbFile = await StorageFile.GetFileFromApplicationUriAsync(originalDbFileUri);
+
+                if (originalDbFile != null)
+                {
+                    dbFile = await originalDbFile.CopyAsync(localFolder, TramlineFiveContext.DatabaseName, NameCollisionOption.ReplaceExisting);
+                }
+            }
         }
     }
 }

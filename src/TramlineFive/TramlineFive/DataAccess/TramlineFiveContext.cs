@@ -22,7 +22,16 @@ namespace TramlineFive.DataAccess
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlite("Filename=TramlineFive.db");
+            optionsBuilder.UseSqlite($"Filename={databaseName}");
+        }
+
+        private static string databaseName = "TramlneFive.db";
+        public static string DatabaseName
+        {
+            get
+            {
+                return databaseName;
+            }
         }
     }
 }
