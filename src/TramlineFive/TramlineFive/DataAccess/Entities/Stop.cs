@@ -20,6 +20,18 @@ namespace TramlineFive.DataAccess.Entities
 
         public int ID { get; set; }
         public string Name { get; set; }
+        public string TimingsAsString
+        {
+            get
+            {
+                return string.Join(",", Timings);
+            }
+            set
+            {
+                Timings = value.Split(',').ToList();
+            }
+        }
+
         public ICollection<string> Timings { get; set; }
     }
 }

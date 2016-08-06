@@ -89,6 +89,7 @@
   </PropertyGroup>
   <ItemGroup>
     <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
+    <None Include="Assets\grouped_201608062227.json" />
     <None Include="project.json" />
     <None Include="TramlineFive_TemporaryKey.pfx" />
   </ItemGroup>
@@ -110,6 +111,7 @@
     <Compile Include="DataAccess\Entities\BaseEntity.cs" />
     <Compile Include="DataAccess\Entities\Day.cs" />
     <Compile Include="DataAccess\Entities\Direction.cs" />
+    <Compile Include="DataAccess\Entities\Favourite.cs" />
     <Compile Include="DataAccess\Entities\Line.cs" />
     <Compile Include="DataAccess\Entities\Settings.cs" />
     <Compile Include="DataAccess\Entities\Stop.cs" />
@@ -211,6 +213,7 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Assets\App_Data\" />
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>

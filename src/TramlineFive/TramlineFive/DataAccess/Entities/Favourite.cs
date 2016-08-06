@@ -6,20 +6,15 @@ using System.Threading.Tasks;
 
 namespace TramlineFive.DataAccess.Entities
 {
-    public class Direction : BaseEntity
+    public class Favourite : BaseEntity
     {
-        public Direction()
-        {
-            Days = new HashSet<Day>();
-        }
-
         public int GetId()
         {
             return ID;
         }
 
         public int ID { get; set; }
-        public string Name { get; set; }
-        public virtual ICollection<Day> Days { get; set; }
+
+        public virtual Stop Stop { get; set; }
     }
 }

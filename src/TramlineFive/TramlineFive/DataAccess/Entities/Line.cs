@@ -21,6 +21,6 @@ namespace TramlineFive.DataAccess.Entities
         public int ID { get; set; }
 
         public string Name { get; set; }
-        public ICollection<Direction> Directions { get; set; }
+        public virtual ICollection<Direction> Directions { get; set; }
     }
 }
