@@ -27,6 +27,8 @@ using Windows.UI.Xaml.Navigation;
 using Newtonsoft.Json;
 using TramlineFive.DataAccess.Entities;
 using Windows.Storage;
+using TramlineFive.DataAccess.Repositories;
+using TramlineFive.DataAccess;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
@@ -83,31 +85,19 @@ namespace TramlineFive
         {
             if (!loaded)
             {
+                await CopyDatabaseFileIfNeeded();
+                await Task.Run(() =>
+                {
+                    using (UnitOfWork uow = new UnitOfWork())
+                    {
+                        uow.Migrate();
+                    }
+                });
+
                 await SetStatusBar();
                 await SumcManager.Load();
 
                 loaded = true;
-            }
-        }
-
-        private async Task SetStatusBar()
-        {
-            if (ApiInformation.IsTypePresent("Windows.UI.ViewManagement.StatusBar"))
-            {
-
-                StatusBar statusBar = StatusBar.GetForCurrentView();
-                if (statusBar != null)
-                {
-                    statusBar.BackgroundOpacity = 1;
-                    statusBar.BackgroundColor = Color.FromArgb(0, 51, 153, 255);
-                    statusBar.ForegroundColor = Colors.White;
-
-                    StatusBarProgressIndicator indicator = statusBar.ProgressIndicator;
-                    await indicator.ShowAsync();
-                    indicator.ProgressValue = 0;
-
-                    indicator.Text = Strings.StatusBarText;
-                }
             }
         }
 
@@ -219,6 +209,45 @@ namespace TramlineFive
         private void btnSettings_Click(object sender, RoutedEventArgs e)
         {
             Frame.Navigate(typeof(Settings));
+        }
+
+        private async Task SetStatusBar()
+        {
+            if (ApiInformation.IsTypePresent("Windows.UI.ViewManagement.StatusBar"))
+            {
+
+                StatusBar statusBar = StatusBar.GetForCurrentView();
+                if (statusBar != null)
+                {
+                    statusBar.BackgroundOpacity = 1;
+                    statusBar.BackgroundColor = Color.FromArgb(0, 51, 153, 255);
+                    statusBar.ForegroundColor = Colors.White;
+
+                    StatusBarProgressIndicator indicator = statusBar.ProgressIndicator;
+                    await indicator.ShowAsync();
+                    indicator.ProgressValue = 0;
+
+                    indicator.Text = Strings.StatusBarText;
+                }
+            }
+        }
+
+        private async Task CopyDatabaseFileIfNeeded()
+        {
+            StorageFile dbFile =
+                await ApplicationData.Current.LocalFolder.TryGetItemAsync(TramlineFiveContext.DatabaseName) as StorageFile;
+
+            if (dbFile == null)
+            {
+                StorageFolder localFolder = ApplicationData.Current.LocalFolder;
+                Uri originalDbFileUri = new Uri($"ms-appx:///Assets/App_Data/{TramlineFiveContext.DatabaseName}");
+                var originalDbFile = await StorageFile.GetFileFromApplicationUriAsync(originalDbFileUri);
+
+                if (originalDbFile != null)
+                {
+                    dbFile = await originalDbFile.CopyAsync(localFolder, TramlineFiveContext.DatabaseName, NameCollisionOption.ReplaceExisting);
+                }
+            }
         }
 
         private bool loading;

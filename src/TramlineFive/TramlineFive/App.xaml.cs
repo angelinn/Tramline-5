@@ -44,10 +44,10 @@ namespace TramlineFive
         protected override void OnLaunched(LaunchActivatedEventArgs e)
         {
 #if DEBUG
-            if (System.Diagnostics.Debugger.IsAttached)
-            {
-                this.DebugSettings.EnableFrameRateCounter = true;
-            }
+                if (System.Diagnostics.Debugger.IsAttached)
+                {
+                    this.DebugSettings.EnableFrameRateCounter = true;
+                }
 #endif
             Frame rootFrame = Window.Current.Content as Frame;
 
@@ -107,24 +107,6 @@ namespace TramlineFive
             var deferral = e.SuspendingOperation.GetDeferral();
             //TODO: Save application state and stop any background activity
             deferral.Complete();
-        }
-
-        private async Task CopyDatabaseFileIfNeeded()
-        {
-            StorageFile dbFile = 
-                await ApplicationData.Current.LocalFolder.TryGetItemAsync(TramlineFiveContext.DatabaseName) as StorageFile;
-
-            if (dbFile == null)
-            {
-                StorageFolder localFolder = ApplicationData.Current.LocalFolder;
-                Uri originalDbFileUri = new Uri($"ms-appx:///Assets/App_Data/{TramlineFiveContext.DatabaseName}");
-                var originalDbFile = await StorageFile.GetFileFromApplicationUriAsync(originalDbFileUri);
-
-                if (originalDbFile != null)
-                {
-                    dbFile = await originalDbFile.CopyAsync(localFolder, TramlineFiveContext.DatabaseName, NameCollisionOption.ReplaceExisting);
-                }
-            }
         }
     }
 }

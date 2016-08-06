@@ -89,6 +89,7 @@
   </PropertyGroup>
   <ItemGroup>
     <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
+    <None Include="App.config" />
     <None Include="Assets\App_Data\grouped_201608062227.json" />
     <None Include="project.json" />
     <None Include="TramlineFive_TemporaryKey.pfx" />
