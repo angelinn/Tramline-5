@@ -114,15 +114,14 @@
     <Compile Include="DataAccess\Entities\Direction.cs" />
     <Compile Include="DataAccess\Entities\Favourite.cs" />
     <Compile Include="DataAccess\Entities\Line.cs" />
-    <Compile Include="DataAccess\Entities\Settings.cs" />
     <Compile Include="DataAccess\Entities\Stop.cs" />
     <Compile Include="DataAccess\Repositories\GenericRepository.cs" />
     <Compile Include="DataAccess\Repositories\IGenericRepository.cs" />
     <Compile Include="DataAccess\Repositories\UnitOfWork.cs" />
     <Compile Include="DataAccess\TramlineFiveContext.cs" />
-    <Compile Include="Migrations\20160806204138_MyFirstMigration.cs" />
-    <Compile Include="Migrations\20160806204138_MyFirstMigration.designer.cs">
-      <DependentUpon>20160806204138_MyFirstMigration.cs</DependentUpon>
+    <Compile Include="Migrations\20160806235456_MyFirstMigration.cs" />
+    <Compile Include="Migrations\20160806235456_MyFirstMigration.designer.cs">
+      <DependentUpon>20160806235456_MyFirstMigration.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\TramlineFiveContextModelSnapshot.cs" />
     <Compile Include="Schedules.xaml.cs">
@@ -226,9 +225,7 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Models\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <SDKReference Include="WindowsMobile, Version=10.0.10240.0">
       <Name>Windows Mobile Extensions for the UWP</Name>
