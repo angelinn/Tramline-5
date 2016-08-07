@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
+using TramlineFive.Common;
 using TramlineFive.DataAccess;
 using TramlineFive.DataAccess.Entities;
 using TramlineFive.DataAccess.Repositories;
@@ -32,6 +33,7 @@ namespace TramlineFive
         public Schedules()
         {
             this.InitializeComponent();
+            this.Transitions = AnimationManager.SetUpPageAnimation();
 
             LineViewModel = new LineViewModel();
             DataContext = LineViewModel;
