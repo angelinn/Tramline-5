@@ -76,9 +76,9 @@ namespace TramlineFive
             if (!loaded)
             {
                 await CopyDatabaseFileIfNeeded();
-
                 await SetStatusBar();
-                await SumcManager.Load();
+
+                SumcManager.Load();
 
                 loaded = true;
             }

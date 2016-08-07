@@ -9,14 +9,15 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.Storage;
+using Windows.UI.Xaml;
 
 namespace TramlineFive.Common
 {
     public static class SumcManager
     {
-        public static async Task Load()
+        public static void Load()
         {
-            await ReadCookie();
+            MAGIC_COOKIE_VALUE = ApplicationData.Current.LocalSettings.Values["cookie"] as string;
         }
 
         public static async Task<IEnumerable<ArrivalViewModel>> GetByStopAsync(string query)
@@ -146,10 +147,7 @@ namespace TramlineFive.Common
                     if (MAGIC_COOKIE_VALUE != cookie.Value)
                     {
                         MAGIC_COOKIE_VALUE = cookie.Value;
-
-                        StorageFolder folder = ApplicationData.Current.LocalFolder;
-                        StorageFile cookieFile = await folder.CreateFileAsync("kewl.txt", CreationCollisionOption.ReplaceExisting);
-                        await FileIO.WriteTextAsync(cookieFile, MAGIC_COOKIE_VALUE);
+                        ApplicationData.Current.LocalSettings.Values["cookie"] = MAGIC_COOKIE_VALUE;
                     }
 
                     return true;
