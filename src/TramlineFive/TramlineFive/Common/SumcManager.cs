@@ -8,8 +8,6 @@ using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
-using Windows.Storage;
-using Windows.UI.Xaml;
 
 namespace TramlineFive.Common
 {
@@ -17,7 +15,7 @@ namespace TramlineFive.Common
     {
         public static void Load()
         {
-            MAGIC_COOKIE_VALUE = ApplicationData.Current.LocalSettings.Values["cookie"] as string;
+            MAGIC_COOKIE_VALUE = SettingsManager.ReadValue("cookie") as string;
         }
 
         public static async Task<IEnumerable<ArrivalViewModel>> GetByStopAsync(string query)
@@ -58,7 +56,9 @@ namespace TramlineFive.Common
 
                 HttpResponseMessage response = await client.PostAsync(address, content);
 
-                await SaveCookie(handler.CookieContainer.GetCookies(address));
+                if (UpdateCookie(handler.CookieContainer.GetCookies(address)))
+                    SettingsManager.UpdateValue("cookie", MAGIC_COOKIE_VALUE);
+
                 return GetArrivals(await response.Content.ReadAsStringAsync());
             }
         }
@@ -119,26 +119,7 @@ namespace TramlineFive.Common
             return requiresCaptcha;
         }
 
-        private static async Task<bool> ReadCookie()
-        {
-            StorageFolder folder = ApplicationData.Current.LocalFolder;
-            StorageFile cookieFile = null;
-
-            try
-            {
-                cookieFile = await folder.GetFileAsync("kewl.txt");
-            }
-            catch (FileNotFoundException)
-            {
-                // It's ok, that means first boot of app is done
-                return false;
-            }
-
-            MAGIC_COOKIE_VALUE = await FileIO.ReadTextAsync(cookieFile);
-            return true;
-        }
-
-        private static async Task<bool> SaveCookie(CookieCollection cookies)
+        private static bool UpdateCookie(CookieCollection cookies)
         {
             foreach (Cookie cookie in cookies)
             {
@@ -147,7 +128,6 @@ namespace TramlineFive.Common
                     if (MAGIC_COOKIE_VALUE != cookie.Value)
                     {
                         MAGIC_COOKIE_VALUE = cookie.Value;
-                        ApplicationData.Current.LocalSettings.Values["cookie"] = MAGIC_COOKIE_VALUE;
                     }
 
                     return true;

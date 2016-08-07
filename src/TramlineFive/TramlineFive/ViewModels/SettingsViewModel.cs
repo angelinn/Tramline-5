@@ -13,11 +13,15 @@ namespace TramlineFive.ViewModels
         {
             get
             {
-                return SettingsManager.PushNotifications;
+                object value = SettingsManager.ReadValue("PushNotifications");
+                if (value == null)
+                    return false;
+
+                return (bool)value;
             }
             set
             {
-                SettingsManager.PushNotifications = value;
+                SettingsManager.UpdateValue("PushNotifications", value);
                 OnPropertyChanged("PushNotifications");
             }
         }
@@ -26,11 +30,15 @@ namespace TramlineFive.ViewModels
         {
             get
             {
-                return SettingsManager.LiveTile;
+                object value = SettingsManager.ReadValue("LiveTile");
+                if (value == null)
+                    return false;
+
+                return (bool)value;
             }
             set
             {
-                SettingsManager.LiveTile = value;
+                SettingsManager.UpdateValue("LiveTile", value);
                 OnPropertyChanged("LiveTile");
             }
         }
