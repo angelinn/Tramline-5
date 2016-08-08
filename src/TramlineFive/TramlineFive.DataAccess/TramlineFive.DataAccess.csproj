@@ -104,10 +104,10 @@
   </PropertyGroup>
   <ItemGroup>
     <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
-    <None Include="App.config" />
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DomainLogic\LineDO.cs" />
     <Compile Include="Entities\BaseEntity.cs" />
     <Compile Include="Entities\Day.cs" />
     <Compile Include="Entities\Direction.cs" />
@@ -115,9 +115,14 @@
     <Compile Include="Entities\Line.cs" />
     <Compile Include="Entities\Stop.cs" />
     <Compile Include="Extensions\DbSetClearExtension.cs" />
+    <Compile Include="Extensions\IQueryableIncludeMultiple.cs" />
     <Compile Include="Migrations\20160808111410_MyFirstMigration.cs" />
     <Compile Include="Migrations\20160808111410_MyFirstMigration.designer.cs">
       <DependentUpon>20160808111410_MyFirstMigration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\20160808181914_PublicKeyMigration.cs" />
+    <Compile Include="Migrations\20160808181914_PublicKeyMigration.designer.cs">
+      <DependentUpon>20160808181914_PublicKeyMigration.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\TramlineFiveContextModelSnapshot.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
