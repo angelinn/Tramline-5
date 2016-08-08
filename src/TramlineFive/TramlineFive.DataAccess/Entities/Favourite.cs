@@ -15,6 +15,6 @@ namespace TramlineFive.DataAccess.Entities
 
         public int ID { get; set; }
 
-        public virtual Stop Stop { get; set; }
+        public Stop Stop { get; set; }
     }
 }

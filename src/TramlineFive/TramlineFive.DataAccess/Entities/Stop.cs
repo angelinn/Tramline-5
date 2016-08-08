@@ -28,7 +28,8 @@ namespace TramlineFive.DataAccess.Entities
             }
         }
 
-        public Favourite Favourite { get; set; }
+        public int? DayID { get; set; }
+        public Day Day { get; set; }
 
         [NotMapped]
         public List<string> Timings { get; set; }

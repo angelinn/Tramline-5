@@ -16,5 +16,8 @@ namespace TramlineFive.DataAccess.Entities
         public int ID { get; set; }
         public string Type { get; set; }
         public List<Stop> Stops { get; set; }
+
+        public int? DirectionID { get; set; }
+        public Direction Direction { get; set; }
     }
 }
