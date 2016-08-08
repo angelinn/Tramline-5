@@ -101,8 +101,17 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Captcha.xaml.cs">
-      <DependentUpon>Captcha.xaml</DependentUpon>
+    <Compile Include="Dialogs\DayDialog.xaml.cs">
+      <DependentUpon>DayDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="TodaySchedule.xaml.cs">
+      <DependentUpon>TodaySchedule.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\CaptchaDialog.xaml.cs">
+      <DependentUpon>CaptchaDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\DirectionDialog.xaml.cs">
+      <DependentUpon>DirectionDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Schedules.xaml.cs">
       <DependentUpon>Schedules.xaml</DependentUpon>
@@ -185,7 +194,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Captcha.xaml">
+    <Page Include="Dialogs\DayDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="TodaySchedule.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Dialogs\CaptchaDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Dialogs\DirectionDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

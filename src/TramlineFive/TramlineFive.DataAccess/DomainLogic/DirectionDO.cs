@@ -14,7 +14,7 @@ namespace TramlineFive.DataAccess.DomainLogic
         {
             id = entity.ID;
             name = entity.Name;
-            days = entity.Days;
+            days = entity.Days?.Select(d => new DayDO(d));
         }
 
         public static async Task<IEnumerable<DirectionDO>> GetByLineId(int lineId)
@@ -29,6 +29,11 @@ namespace TramlineFive.DataAccess.DomainLogic
             });
         }
 
+        public async Task LoadDays()
+        {
+            days = await DayDO.GetByDirectionId(id);
+        }
+
         private int id;
 
         private string name;
@@ -40,8 +45,8 @@ namespace TramlineFive.DataAccess.DomainLogic
             }
         }
 
-        private IEnumerable<Day> days;
-        public IEnumerable<Day> Days
+        private IEnumerable<DayDO> days;
+        public IEnumerable<DayDO> Days
         {
             get
             {

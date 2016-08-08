@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using TramlineFive.Common;
 using TramlineFive.DataAccess;
 using TramlineFive.DataAccess.DomainLogic;
+using TramlineFive.Dialogs;
 using TramlineFive.ViewModels;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
@@ -62,7 +63,9 @@ namespace TramlineFive
         {
             LineDO line = e.ClickedItem as LineDO;
             await line.LoadDirections();
-            await new MessageDialog(String.Join(", ", line.Directions.Select(d => d.Name))).ShowAsync();
+
+            DirectionDialog dialog = new DirectionDialog(line.Directions);
+            await dialog.ShowAsync();
         }
     }
 }

@@ -20,6 +20,7 @@ using Windows.Storage;
 using TramlineFive.DataAccess;
 using Windows.UI.Xaml.Media;
 using TramlineFive.Common.Models;
+using TramlineFive.Dialogs;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
@@ -98,7 +99,7 @@ namespace TramlineFive
             try
             {
                 Arrivals.Clear();
-                IEnumerable<Arrival> arrivals = await SumcManager.GetByStopAsync(txtStopID.Text, new Captcha());
+                IEnumerable<Arrival> arrivals = await SumcManager.GetByStopAsync(txtStopID.Text, new CaptchaDialog());
 
                 if (arrivals?.Count() == 0)
                 {

@@ -107,6 +107,7 @@
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DomainLogic\DayDO.cs" />
     <Compile Include="DomainLogic\DirectionDO.cs" />
     <Compile Include="DomainLogic\LineDO.cs" />
     <Compile Include="Entities\BaseEntity.cs" />

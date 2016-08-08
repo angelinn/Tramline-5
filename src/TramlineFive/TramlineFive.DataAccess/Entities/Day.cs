@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TramlineFive.DataAccess.Entities
 {
-    public class Day
+    public class Day : BaseEntity
     {
         public int GetId()
         {

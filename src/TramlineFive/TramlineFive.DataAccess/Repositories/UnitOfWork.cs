@@ -67,6 +67,14 @@ namespace TramlineFive.DataAccess.Repositories
             }
         }
 
+        public IGenericRepository<Day> Days
+        {
+            get
+            {
+                return GetRepository<Day>();
+            }
+        }
+
         private IGenericRepository<T> GetRepository<T>() where T : class, BaseEntity
         {
             if (!repositories.ContainsKey(typeof(T)))
