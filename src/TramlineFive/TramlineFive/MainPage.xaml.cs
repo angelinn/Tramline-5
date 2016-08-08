@@ -97,7 +97,7 @@ namespace TramlineFive
             try
             {
                 Arrivals.Clear();
-                IEnumerable<ArrivalViewModel> arrivals = (await SumcManager.GetByStopAsync(txtStopID.Text)).Select(arrival => ArrivalViewModel.FromArrival(arrival));
+                IEnumerable<ArrivalViewModel> arrivals = (await SumcManager.GetByStopAsync(txtStopID.Text, new Captcha())).Select(arrival => ArrivalViewModel.FromArrival(arrival));
 
                 if (arrivals == null)
                 {

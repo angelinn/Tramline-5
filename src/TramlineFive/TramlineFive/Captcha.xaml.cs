@@ -16,19 +16,23 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
 using System.Threading.Tasks;
+using TramlineFive.Common.Models;
 
 // The Content Dialog item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
 namespace TramlineFive
 {
-    public sealed partial class Captcha : ContentDialog
+    public sealed partial class Captcha : ContentDialog, ICaptchaDialog
     {
         public string CaptchaString { get; set; }
 
-        public Captcha(string captchaUrl)
+        public Captcha()
         {
             this.InitializeComponent();
+        }
 
+        public void SetUrl(string captchaUrl)
+        {
             imgCaptcha.Source = new BitmapImage(new Uri(captchaUrl));
         }
 

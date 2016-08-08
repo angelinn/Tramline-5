@@ -18,7 +18,7 @@ namespace TramlineFive.Common
             MAGIC_COOKIE_VALUE = SettingsManager.ReadValue("cookie") as string;
         }
 
-        public static async Task<IEnumerable<Arrival>> GetByStopAsync(string query)
+        public static async Task<IEnumerable<Arrival>> GetByStopAsync(string query, ICaptchaDialog captchaDialog)
         {
             int queryNum;
             if (String.IsNullOrEmpty(query) || !Int32.TryParse(query, out queryNum))
@@ -46,10 +46,10 @@ namespace TramlineFive.Common
 
                 if (RequiresCaptcha(doc))
                 {
-                    //Captcha captchaDialog = new Captcha(captchaUrl);
-                    //await captchaDialog.ShowAsync();
+                    captchaDialog.SetUrl(captchaUrl);
+                    await captchaDialog.ShowAsync();
 
-                    //formQuery.Add(new KeyValuePair<string, string>(CAPTCHA_KEY, captchaDialog.CaptchaString));
+                    formQuery.Add(new KeyValuePair<string, string>(CAPTCHA_KEY, captchaDialog.CaptchaString));
                 }
 
                 FormUrlEncodedContent content = new FormUrlEncodedContent(formQuery);
