@@ -1,5 +1,4 @@
-﻿using TramlineFive.ViewModels;
-using HtmlAgilityPack;
+﻿using HtmlAgilityPack;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -8,6 +7,7 @@ using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using TramlineFive.Common.Models;
 
 namespace TramlineFive.Common
 {
@@ -18,7 +18,7 @@ namespace TramlineFive.Common
             MAGIC_COOKIE_VALUE = SettingsManager.ReadValue("cookie") as string;
         }
 
-        public static async Task<IEnumerable<ArrivalViewModel>> GetByStopAsync(string query)
+        public static async Task<IEnumerable<Arrival>> GetByStopAsync(string query)
         {
             int queryNum;
             if (String.IsNullOrEmpty(query) || !Int32.TryParse(query, out queryNum))
@@ -46,10 +46,10 @@ namespace TramlineFive.Common
 
                 if (RequiresCaptcha(doc))
                 {
-                    Captcha captchaDialog = new Captcha(captchaUrl);
-                    await captchaDialog.ShowAsync();
+                    //Captcha captchaDialog = new Captcha(captchaUrl);
+                    //await captchaDialog.ShowAsync();
 
-                    formQuery.Add(new KeyValuePair<string, string>(CAPTCHA_KEY, captchaDialog.CaptchaString));
+                    //formQuery.Add(new KeyValuePair<string, string>(CAPTCHA_KEY, captchaDialog.CaptchaString));
                 }
 
                 FormUrlEncodedContent content = new FormUrlEncodedContent(formQuery);
@@ -71,7 +71,7 @@ namespace TramlineFive.Common
                     .Select(n => new KeyValuePair<string, string>(n.Attributes["name"].Value, n.Attributes["value"].Value));
         }
 
-        private static IEnumerable<ArrivalViewModel> GetArrivals(string htmlString)
+        private static IEnumerable<Arrival> GetArrivals(string htmlString)
         {
             if (htmlString == null)
                 return null;
@@ -81,7 +81,7 @@ namespace TramlineFive.Common
             IEnumerable<HtmlNode> infos = doc.DocumentNode.Descendants()
                     .Where(d => d.GetAttributeValue("class", "").StartsWith("arr_info"));
 
-            List<ArrivalViewModel> arrivals = new List<ArrivalViewModel>();
+            List<Arrival> arrivals = new List<Arrival>();
             foreach (var info in infos)
             {
                 string title = info.Descendants().Where(d => d.OriginalName == "b").Select(n => n.InnerText).FirstOrDefault();
@@ -90,7 +90,7 @@ namespace TramlineFive.Common
                 int number;
                 if (Int32.TryParse(title, out number) && data.Length >= 4)
                 {
-                    arrivals.Add(new ArrivalViewModel
+                    arrivals.Add(new Arrival
                     {
                         VehicleNumber = Int32.Parse(title),
                         Timings = data[2].Trim().Split(','),

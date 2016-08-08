@@ -1,14 +1,24 @@
-﻿using TramlineFive.Common;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TramlineFive.Common.Models;
 
 namespace TramlineFive.ViewModels
 {
     public class ArrivalViewModel : NotifyingViewModel
     {
+        public static ArrivalViewModel FromArrival(Arrival arrival)
+        {
+            return new ArrivalViewModel
+            {
+                VehicleNumber = arrival.VehicleNumber,
+                Timings = arrival.Timings,
+                Direction = arrival.Direction
+            };
+        }
+
         private int vehicleNumber;
         public int VehicleNumber
         {
@@ -21,21 +31,6 @@ namespace TramlineFive.ViewModels
             {
                 vehicleNumber = value;
                 OnPropertyChanged("VehicleNumber");
-            }
-        }
-
-        private VehicleType vehicleType;
-        public VehicleType VehicleType
-        {
-            get
-            {
-                return vehicleType;
-            }
-
-            set
-            {
-                vehicleType = value;
-                OnPropertyChanged("VehicleType");
             }
         }
 

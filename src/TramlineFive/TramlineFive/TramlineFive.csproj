@@ -103,22 +103,6 @@
     <Compile Include="Captcha.xaml.cs">
       <DependentUpon>Captcha.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Common\AnimationManager.cs" />
-    <Compile Include="Common\Converters\TimingConverter.cs" />
-    <Compile Include="Common\Constants.cs" />
-    <Compile Include="Common\Extensions\DbSetClearExtension.cs" />
-    <Compile Include="Common\SettingsManager.cs" />
-    <Compile Include="Common\VersionManager.cs" />
-    <Compile Include="DataAccess\Entities\BaseEntity.cs" />
-    <Compile Include="DataAccess\Entities\Day.cs" />
-    <Compile Include="DataAccess\Entities\Direction.cs" />
-    <Compile Include="DataAccess\Entities\Favourite.cs" />
-    <Compile Include="DataAccess\Entities\Line.cs" />
-    <Compile Include="DataAccess\Entities\Stop.cs" />
-    <Compile Include="DataAccess\Repositories\GenericRepository.cs" />
-    <Compile Include="DataAccess\Repositories\IGenericRepository.cs" />
-    <Compile Include="DataAccess\Repositories\UnitOfWork.cs" />
-    <Compile Include="DataAccess\TramlineFiveContext.cs" />
     <Compile Include="Migrations\20160806235456_MyFirstMigration.cs" />
     <Compile Include="Migrations\20160806235456_MyFirstMigration.designer.cs">
       <DependentUpon>20160806235456_MyFirstMigration.cs</DependentUpon>
@@ -131,9 +115,6 @@
       <DependentUpon>Settings.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\ArrivalViewModel.cs" />
-    <Compile Include="Common\Exceptions\CaptchaLocationError.cs" />
-    <Compile Include="Common\SumcManager.cs" />
-    <Compile Include="Common\VehicleType.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
@@ -225,7 +206,16 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\TramlineFive.Common\TramlineFive.Common.csproj">
+      <Project>{10462496-11c5-4cf8-9f65-05f7f938dcba}</Project>
+      <Name>TramlineFive.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TramlineFive.DataAccess\TramlineFive.DataAccess.csproj">
+      <Project>{16082926-6ab9-46e0-9be9-37b301ae9281}</Project>
+      <Name>TramlineFive.DataAccess</Name>
+    </ProjectReference>
+  </ItemGroup>
   <ItemGroup>
     <SDKReference Include="WindowsMobile, Version=10.0.10240.0">
       <Name>Windows Mobile Extensions for the UWP</Name>
