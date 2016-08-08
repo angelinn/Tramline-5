@@ -12,6 +12,7 @@ using TramlineFive.DataAccess.Repositories;
 using TramlineFive.ViewModels;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -63,6 +64,19 @@ namespace TramlineFive
             {
                 prLines.IsEnabled = false;
                 prLines.Visibility = Visibility.Collapsed;
+            }
+        }
+
+        private async void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (e.AddedItems.Count > 0)
+            {
+                Line item = e.AddedItems.First() as Line;
+
+                using (UnitOfWork uow = new UnitOfWork())
+                {
+
+                }
             }
         }
     }
