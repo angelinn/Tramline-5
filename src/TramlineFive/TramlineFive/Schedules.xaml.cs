@@ -7,6 +7,7 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
 using TramlineFive.Common;
 using TramlineFive.DataAccess;
+using TramlineFive.DataAccess.DomainLogic;
 using TramlineFive.DataAccess.Entities;
 using TramlineFive.DataAccess.Repositories;
 using TramlineFive.ViewModels;
@@ -46,15 +47,7 @@ namespace TramlineFive
         {
             try
             {
-                List<Line> lines = null;
-                await Task.Run(() =>
-                {
-                    using (UnitOfWork uow = new UnitOfWork())
-                    {
-                        lines = uow.Lines.All().ToList();
-                    }
-                });
-                LineViewModel.Lines = lines;
+                LineViewModel.Lines = await LineDO.AllAsync();
             }
             catch (Exception ex)
             {
@@ -75,7 +68,9 @@ namespace TramlineFive
 
                 using (UnitOfWork uow = new UnitOfWork())
                 {
-
+                    var dirs = uow.Directions.Where(d => d.LineID == item.ID).ToList();
+                    var dirs_s = dirs.Select(d => d.Name).ToList();
+                    await new MessageDialog(String.Join(", ", dirs_s)).ShowAsync();
                 }
             }
         }

@@ -51,6 +51,14 @@ namespace TramlineFive.DataAccess.Repositories
             }
         }
 
+        public IGenericRepository<Direction> Directions
+        {
+            get
+            {
+                return GetRepository<Direction>();
+            }
+        }
+
         public IGenericRepository<Favourite> Favourites
         {
             get
