@@ -102,11 +102,6 @@
     <Compile Include="Captcha.xaml.cs">
       <DependentUpon>Captcha.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\20160806235456_MyFirstMigration.cs" />
-    <Compile Include="Migrations\20160806235456_MyFirstMigration.designer.cs">
-      <DependentUpon>20160806235456_MyFirstMigration.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\TramlineFiveContextModelSnapshot.cs" />
     <Compile Include="Schedules.xaml.cs">
       <DependentUpon>Schedules.xaml</DependentUpon>
     </Compile>
