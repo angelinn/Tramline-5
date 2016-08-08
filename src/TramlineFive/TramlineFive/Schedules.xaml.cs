@@ -8,8 +8,6 @@ using System.Threading.Tasks;
 using TramlineFive.Common;
 using TramlineFive.DataAccess;
 using TramlineFive.DataAccess.DomainLogic;
-using TramlineFive.DataAccess.Entities;
-using TramlineFive.DataAccess.Repositories;
 using TramlineFive.ViewModels;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
@@ -64,14 +62,9 @@ namespace TramlineFive
         {
             if (e.AddedItems.Count > 0)
             {
-                Line item = e.AddedItems.First() as Line;
-
-                using (UnitOfWork uow = new UnitOfWork())
-                {
-                    var dirs = uow.Directions.Where(d => d.LineID == item.ID).ToList();
-                    var dirs_s = dirs.Select(d => d.Name).ToList();
-                    await new MessageDialog(String.Join(", ", dirs_s)).ShowAsync();
-                }
+                LineDO line = e.AddedItems.First() as LineDO;
+                await line.LoadDirections();
+                await new MessageDialog(String.Join(", ", line.Directions.Select(d => d.Name))).ShowAsync();
             }
         }
     }

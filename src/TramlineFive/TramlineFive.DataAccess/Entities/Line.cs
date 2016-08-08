@@ -17,27 +17,5 @@ namespace TramlineFive.DataAccess.Entities
         
         public string Name { get; set; }
         public List<Direction> Directions { get; set; }
-
-        public override string ToString()
-        {
-            string[] split = Name.Split('/');
-            string type = String.Empty;
-
-            switch(split[0])
-            {
-                case "tramway":
-                    type = "Трамвай";
-                    break;
-                case "autobus":
-                    type = "Автобус";
-                    break;
-                case "trolleybus":
-                    type = "Тролей";
-                    break;
-                    
-            }
-
-            return $"{type} №{split[1]}";
-        }
     }
 }
