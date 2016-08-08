@@ -58,14 +58,11 @@ namespace TramlineFive
             }
         }
 
-        private async void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private async void ListView_ItemClick(object sender, ItemClickEventArgs e)
         {
-            if (e.AddedItems.Count > 0)
-            {
-                LineDO line = e.AddedItems.First() as LineDO;
-                await line.LoadDirections();
-                await new MessageDialog(String.Join(", ", line.Directions.Select(d => d.Name))).ShowAsync();
-            }
+            LineDO line = e.ClickedItem as LineDO;
+            await line.LoadDirections();
+            await new MessageDialog(String.Join(", ", line.Directions.Select(d => d.Name))).ShowAsync();
         }
     }
 }
