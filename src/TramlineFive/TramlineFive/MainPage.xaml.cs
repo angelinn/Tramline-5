@@ -19,6 +19,7 @@ using Windows.UI.Xaml.Navigation;
 using Windows.Storage;
 using TramlineFive.DataAccess;
 using Windows.UI.Xaml.Media;
+using TramlineFive.Common.Models;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
@@ -97,13 +98,7 @@ namespace TramlineFive
             try
             {
                 Arrivals.Clear();
-                IEnumerable<ArrivalViewModel> arrivals = (await SumcManager.GetByStopAsync(txtStopID.Text, new Captcha())).Select(arrival => ArrivalViewModel.FromArrival(arrival));
-
-                if (arrivals == null)
-                {
-                    await new MessageDialog(Strings.InvalidRequest).ShowAsync();
-                    return;
-                }
+                IEnumerable<Arrival> arrivals = await SumcManager.GetByStopAsync(txtStopID.Text, new Captcha());
 
                 if (arrivals?.Count() == 0)
                 {
@@ -111,10 +106,8 @@ namespace TramlineFive
                     return;
                 }
 
-
-                foreach (ArrivalViewModel arrival in arrivals)
-                    Arrivals.Add(arrival);
-
+                foreach (Arrival arrival in arrivals ?? Enumerable.Empty<Arrival>())
+                    Arrivals.Add(ArrivalViewModel.FromArrival(arrival));
             }
             catch (Exception ex)
             {
@@ -217,19 +210,27 @@ namespace TramlineFive
 
         private async Task CopyDatabaseFileIfNeeded()
         {
-            StorageFile dbFile =
-                await ApplicationData.Current.LocalFolder.TryGetItemAsync(TramlineFiveContext.DatabaseName) as StorageFile;
-
-            if (dbFile == null)
+            try
             {
-                StorageFolder localFolder = ApplicationData.Current.LocalFolder;
-                Uri originalDbFileUri = new Uri($"ms-appx:///Assets/App_Data/{TramlineFiveContext.DatabaseName}");
-                StorageFile originalDbFile = await StorageFile.GetFileFromApplicationUriAsync(originalDbFileUri);
+                StorageFile dbFile =
+                    await ApplicationData.Current.LocalFolder.TryGetItemAsync(TramlineFiveContext.DatabaseName) as StorageFile;
 
-                if (originalDbFile != null)
+                if (dbFile == null)
                 {
-                    dbFile = await originalDbFile.CopyAsync(localFolder, TramlineFiveContext.DatabaseName, NameCollisionOption.ReplaceExisting);
+                    StorageFolder localFolder = ApplicationData.Current.LocalFolder;
+                    Uri originalDbFileUri = new Uri($"ms-appx:///Assets/App_Data/{TramlineFiveContext.DatabaseName}");
+                    StorageFile originalDbFile = await StorageFile.GetFileFromApplicationUriAsync(originalDbFileUri);
+
+                    if (originalDbFile != null)
+                    {
+                        dbFile = await originalDbFile.CopyAsync(localFolder, TramlineFiveContext.DatabaseName, NameCollisionOption.ReplaceExisting);
+                    }
                 }
+            }
+            catch (System.IO.FileNotFoundException ex)
+            {
+                await new MessageDialog(Strings.DatabaseNotFound).ShowAsync();
+                throw ex;
             }
         }
 
