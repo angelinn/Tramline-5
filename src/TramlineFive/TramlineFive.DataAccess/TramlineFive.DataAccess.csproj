@@ -110,6 +110,7 @@
     <Compile Include="DomainLogic\DayDO.cs" />
     <Compile Include="DomainLogic\DirectionDO.cs" />
     <Compile Include="DomainLogic\LineDO.cs" />
+    <Compile Include="DomainLogic\StopDO.cs" />
     <Compile Include="Entities\BaseEntity.cs" />
     <Compile Include="Entities\Day.cs" />
     <Compile Include="Entities\Direction.cs" />

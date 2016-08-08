@@ -5,14 +5,13 @@
     xmlns:local="using:TramlineFive.Dialogs"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d"
-    Title="TITLE">
+    mc:Ignorable="d" >
 
     <StackPanel>
         <ListView ItemsSource="{Binding Days}" >
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <Button Content="{Binding Type}" Margin="0,20,0,0"/>
+                    <Button Content="{Binding Type}" Margin="0,20,0,0" Click="Button_Click"/>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>

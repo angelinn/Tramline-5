@@ -21,6 +21,8 @@ namespace TramlineFive.Dialogs
     public sealed partial class DayDialog : ContentDialog
     {
         public IEnumerable<DayDO> Days { get; set; }
+        public IEnumerable<StopDO> Stops { get; set; }
+
         public DayDialog(IEnumerable<DayDO> days)
         {
             this.InitializeComponent();
@@ -29,5 +31,13 @@ namespace TramlineFive.Dialogs
             DataContext = this;
         }
 
+        private async void Button_Click(object sender, RoutedEventArgs e)
+        {
+            string selected = (sender as Button).Content as string;
+            DayDO choice = Days.Where(d => d.Type == selected).First();
+            await choice.LoadStops();
+
+            Stops = choice.Stops;
+        }
     }
 }

@@ -22,6 +22,7 @@ namespace TramlineFive.Dialogs
     public sealed partial class DirectionDialog : ContentDialog
     {
         public IEnumerable<DirectionDO> Directions { get; set; }
+        public IEnumerable<StopDO> Stops { get; set; }
 
         public DirectionDialog(IEnumerable<DirectionDO> directions)
         {
@@ -38,7 +39,10 @@ namespace TramlineFive.Dialogs
             await choice.LoadDays();
 
             Hide();
-            await new DayDialog(choice.Days).ShowAsync();
+            DayDialog dialog = new DayDialog(choice.Days);
+            await dialog.ShowAsync();
+
+            Stops = dialog.Stops;
         }
     }
 }

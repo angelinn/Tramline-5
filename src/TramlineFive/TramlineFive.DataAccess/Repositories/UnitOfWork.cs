@@ -75,6 +75,14 @@ namespace TramlineFive.DataAccess.Repositories
             }
         }
 
+        public IGenericRepository<Stop> Stops
+        {
+            get
+            {
+                return GetRepository<Stop>();
+            }
+        }
+
         private IGenericRepository<T> GetRepository<T>() where T : class, BaseEntity
         {
             if (!repositories.ContainsKey(typeof(T)))
