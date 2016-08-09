@@ -7,7 +7,18 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <Page.TopAppBar>
+        <CommandBar Background="DodgerBlue">
+            <CommandBar.Content>
+                <TextBlock Name="txtTitle" FontWeight="Bold" Margin="12,14,0,0" Foreground="White"/>
+            </CommandBar.Content>
+        </CommandBar>
+    </Page.TopAppBar>
 
-    </Grid>
+    <StackPanel Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <StackPanel Margin="20,20,20,20">
+            <ComboBox ItemsSource="{Binding Stops}" PlaceholderText="Изберете спирка" DisplayMemberPath="Name" SelectionChanged="ComboBox_SelectionChanged" />
+            <TextBlock Name="txtTimings" TextWrapping="Wrap" Margin="0,20,0,0" />
+        </StackPanel>
+    </StackPanel>
 </Page>

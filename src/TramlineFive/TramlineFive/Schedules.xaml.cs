@@ -74,7 +74,8 @@ namespace TramlineFive
                 Frame.Navigate(typeof(Schedule), new Dictionary<string, object>
                 {
                     { "Direction", dialog.SelectedDirection },
-                    { "Day", dialog.SelectedDay }
+                    { "Day", dialog.SelectedDay },
+                    { "Line", line }
                 });
             }
         }
