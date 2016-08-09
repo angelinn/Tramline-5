@@ -103,8 +103,8 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="TodaySchedule.xaml.cs">
-      <DependentUpon>TodaySchedule.xaml</DependentUpon>
+    <Compile Include="Schedule.xaml.cs">
+      <DependentUpon>Schedule.xaml</DependentUpon>
     </Compile>
     <Compile Include="Dialogs\CaptchaDialog.xaml.cs">
       <DependentUpon>CaptchaDialog.xaml</DependentUpon>
@@ -193,7 +193,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="TodaySchedule.xaml">
+    <Page Include="Schedule.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

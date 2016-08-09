@@ -26,6 +26,9 @@ namespace TramlineFive.Dialogs
         public ObservableCollection<DirectionDO> Directions { get; set; }
         public ObservableCollection<DayDO> Days { get; set; }
 
+        public DirectionDO SelectedDirection { get; set; }
+        public DayDO SelectedDay { get; set; }
+
         public DirectionDialog(IEnumerable<DirectionDO> directions)
         {
             this.InitializeComponent();
@@ -35,21 +38,19 @@ namespace TramlineFive.Dialogs
             DataContext = this;
         }
 
-        private async void Button_Click(object sender, RoutedEventArgs e)
-        {
-            string selected = (sender as Button).Content as string;
-            DirectionDO choice = Directions.Where(d => d.Name == selected).First();
-            await choice.LoadDays();
-        }
-
         private async void cbDirections_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             cbDays.IsEnabled = true;
-            DirectionDO selected = e.AddedItems.First() as DirectionDO;
-            await selected.LoadDays();
+            SelectedDirection = e.AddedItems.First() as DirectionDO;
+            await SelectedDirection.LoadDays();
 
-            foreach (DayDO day in selected.Days)
+            foreach (DayDO day in SelectedDirection.Days)
                 Days.Add(day);
+        }
+
+        private void cbDays_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            SelectedDay = e.AddedItems.First() as DayDO;
         }
     }
 }

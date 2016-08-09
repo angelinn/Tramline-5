@@ -66,6 +66,12 @@ namespace TramlineFive
 
             DirectionDialog dialog = new DirectionDialog(line.Directions);
             await dialog.ShowAsync();
+
+            Frame.Navigate(typeof(Schedule), new Dictionary<string, object>
+            {
+                { "Direction", dialog.SelectedDirection },
+                { "Day", dialog.SelectedDay }
+            });
         }
     }
 }
