@@ -58,5 +58,10 @@ namespace TramlineFive.Dialogs
             if (SelectedDirection == null || SelectedDay == null)
                 args.Cancel = true;
         }
+
+        private void cbDays_SelectionChanged_1(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
     }
 }
