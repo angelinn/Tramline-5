@@ -22,5 +22,19 @@ namespace TramlineFive.ViewModels
                 OnPropertyChanged("Lines");
             }
         }
+
+        private IEnumerable<IGrouping<string, LineDO>> grouped;
+        public IEnumerable<IGrouping<string, LineDO>> Grouped
+        {
+            get
+            {
+                return grouped;
+            }
+            set
+            {
+                grouped = value;
+                OnPropertyChanged("Grouped");
+            }
+        }
     }
 }

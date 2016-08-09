@@ -7,6 +7,12 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
+    <Page.Resources>
+        <CollectionViewSource x:Key="collectionViewSource" IsSourceGrouped="True" Source="{Binding Grouped}" >
+
+        </CollectionViewSource>
+    </Page.Resources>
+
     <Page.TopAppBar>
         <CommandBar Background="DodgerBlue">
             <CommandBar.Content>
@@ -23,10 +29,10 @@
                             Height="100" 
                             Width="100" 
                             Visibility="Visible"
-                          IsActive="True"
+                            IsActive="True"
                             Margin="0,20,0,0"/>
-        
-            <ListView ItemsSource="{Binding Lines}" ItemClick="ListView_ItemClick" IsItemClickEnabled="True" SelectionMode="None">
+
+            <ListView ItemsSource="{Binding Source={StaticResource collectionViewSource}}" ItemClick="ListView_ItemClick" IsItemClickEnabled="True" SelectionMode="None">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <StackPanel>
@@ -34,6 +40,15 @@
                         </StackPanel>
                     </DataTemplate>
                 </ListView.ItemTemplate>
+                <ListView.GroupStyle>
+                    <GroupStyle>
+                        <GroupStyle.HeaderTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Key}" />
+                            </DataTemplate>
+                        </GroupStyle.HeaderTemplate>
+                    </GroupStyle>
+                </ListView.GroupStyle>
             </ListView>
         </StackPanel>
     </ScrollViewer>

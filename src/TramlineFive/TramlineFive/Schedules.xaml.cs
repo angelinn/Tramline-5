@@ -49,6 +49,8 @@ namespace TramlineFive
                 LineViewModel.Lines = (await LineDO.AllAsync()).Where(l => l.Type != null)
                                                                .OrderBy(l => l.Type)
                                                                .ThenBy(l => l.Number);
+
+                LineViewModel.Grouped = LineViewModel.Lines.GroupBy(l => l.Type);
             }
             catch (Exception ex)
             {
