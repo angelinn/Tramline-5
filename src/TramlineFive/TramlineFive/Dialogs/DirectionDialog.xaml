@@ -7,10 +7,11 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     Title="Избор на разписание"
-    PrimaryButtonText="Напред" >
+    PrimaryButtonText="Напред" 
+    PrimaryButtonClick="ContentDialog_PrimaryButtonClick">
 
     <StackPanel Margin="0,20,0,0">
         <ComboBox Name="cbDirections" ItemsSource="{Binding Directions}" DisplayMemberPath="Name" PlaceholderText="Избор на маршрут" SelectionChanged="cbDirections_SelectionChanged" />
-        <ComboBox Name="cbDays" ItemsSource="{Binding Days}" DisplayMemberPath="Type" PlaceholderText="Избор на ден" IsEnabled="False" Margin="0,10,0,0" SelectionChanged="cbDays_SelectionChanged" />
+        <ComboBox Name="cbDays" ItemsSource="{Binding Days}" DisplayMemberPath="Type" PlaceholderText="Избор на ден" IsEnabled="False" Margin="0,10,0,0" />
     </StackPanel>
 </ContentDialog>

@@ -52,5 +52,11 @@ namespace TramlineFive.Dialogs
         {
             SelectedDay = e.AddedItems.First() as DayDO;
         }
+
+        private void ContentDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
+        {
+            if (SelectedDirection == null || SelectedDay == null)
+                args.Cancel = true;
+        }
     }
 }
