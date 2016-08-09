@@ -46,7 +46,9 @@ namespace TramlineFive
         {
             try
             {
-                LineViewModel.Lines = await LineDO.AllAsync();
+                LineViewModel.Lines = (await LineDO.AllAsync()).Where(l => l.Type != null)
+                                                               .OrderBy(l => l.Type)
+                                                               .ThenBy(l => l.Number);
             }
             catch (Exception ex)
             {
@@ -65,13 +67,16 @@ namespace TramlineFive
             await line.LoadDirections();
 
             DirectionDialog dialog = new DirectionDialog(line.Directions);
-            await dialog.ShowAsync();
+            ContentDialogResult result = await dialog.ShowAsync();
 
-            Frame.Navigate(typeof(Schedule), new Dictionary<string, object>
+            if (result == ContentDialogResult.Primary)
             {
-                { "Direction", dialog.SelectedDirection },
-                { "Day", dialog.SelectedDay }
-            });
+                Frame.Navigate(typeof(Schedule), new Dictionary<string, object>
+                {
+                    { "Direction", dialog.SelectedDirection },
+                    { "Day", dialog.SelectedDay }
+                });
+            }
         }
     }
 }

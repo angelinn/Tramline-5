@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using TramlineFive.DataAccess.Entities;
@@ -13,8 +14,32 @@ namespace TramlineFive.DataAccess.DomainLogic
         public LineDO(Line entity)
         {
             id = entity.ID;
-            name = entity.Name;
+            name = WebUtility.UrlDecode(entity.Name);
             directions = entity.Directions?.Select(d => new DirectionDO(d));
+
+            string[] split = Name.Split('/');
+            switch (split[0])
+            {
+                case "tramway":
+                    type = "Трамвай";
+                    break;
+                case "autobus":
+                    type = "Автобус";
+                    break;
+                case "trolleybus":
+                    type = "Тролей";
+                    break;
+
+                default:
+                    type = null;
+                    break;
+            }
+
+            int tempNum;
+            if (Int32.TryParse(split[1], out tempNum))
+                number = tempNum;
+            else
+                number = Int32.Parse(split[1][0].ToString());
         }
 
         public static async Task<IEnumerable<LineDO>> AllAsync()
@@ -42,6 +67,24 @@ namespace TramlineFive.DataAccess.DomainLogic
             get
             {
                 return name;
+            }
+        }
+
+        private string type;
+        public string Type
+        {
+            get
+            {
+                return type;
+            }
+        }
+
+        private int number;
+        public int Number
+        {
+            get
+            {
+                return number;
             }
         }
 
