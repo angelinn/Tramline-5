@@ -9,6 +9,7 @@ using TramlineFive.Common;
 using TramlineFive.DataAccess;
 using TramlineFive.DataAccess.DomainLogic;
 using TramlineFive.Dialogs;
+using TramlineFive.Extensions;
 using TramlineFive.ViewModels;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
@@ -80,6 +81,20 @@ namespace TramlineFive
                     { "Line", line }
                 });
             }
+        }
+
+        private void AutoSuggestBox_TextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
+        {
+            if (args.Reason == AutoSuggestionBoxTextChangeReason.UserInput)
+            {
+                var matching = LineViewModel.Lines.Where(l => l.Name.Contains(sender.Text));
+                sender.ItemsSource = matching;
+            }
+        }
+
+        private void AutoSuggestBox_QuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
+        {
+
         }
     }
 }

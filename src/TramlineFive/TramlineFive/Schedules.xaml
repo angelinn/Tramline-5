@@ -21,8 +21,10 @@
         </CommandBar>
     </Page.TopAppBar>
 
-    <ScrollViewer Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <ScrollViewer Name="svMain" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <StackPanel Margin="0,0,0,25">
+            <AutoSuggestBox TextChanged="AutoSuggestBox_TextChanged" QuerySubmitted="AutoSuggestBox_QuerySubmitted" QueryIcon="Find" />
+
             <ProgressRing Name="prLines" 
                             HorizontalAlignment="Center" 
                             VerticalAlignment="Center" 
@@ -30,9 +32,9 @@
                             Width="100" 
                             Visibility="Visible"
                             IsActive="True"
-                            Margin="0,20,0,0"/>
+                            Margin="0,20,0,0" />
 
-            <ListView ItemsSource="{Binding Source={StaticResource collectionViewSource}}" ItemClick="ListView_ItemClick" IsItemClickEnabled="True" SelectionMode="None">
+            <ListView Name="lvLines" ItemsSource="{Binding Source={StaticResource collectionViewSource}}" ItemClick="ListView_ItemClick" IsItemClickEnabled="True" SelectionMode="None">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <StackPanel>
