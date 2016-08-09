@@ -103,9 +103,6 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Dialogs\DayDialog.xaml.cs">
-      <DependentUpon>DayDialog.xaml</DependentUpon>
-    </Compile>
     <Compile Include="TodaySchedule.xaml.cs">
       <DependentUpon>TodaySchedule.xaml</DependentUpon>
     </Compile>
@@ -193,10 +190,6 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Page Include="About.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Dialogs\DayDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

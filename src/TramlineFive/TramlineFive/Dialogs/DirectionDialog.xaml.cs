@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using TramlineFive.DataAccess.DomainLogic;
+using TramlineFive.ViewModels;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Popups;
@@ -21,13 +23,14 @@ namespace TramlineFive.Dialogs
 {
     public sealed partial class DirectionDialog : ContentDialog
     {
-        public IEnumerable<DirectionDO> Directions { get; set; }
-        public IEnumerable<StopDO> Stops { get; set; }
+        public ObservableCollection<DirectionDO> Directions { get; set; }
+        public ObservableCollection<DayDO> Days { get; set; }
 
         public DirectionDialog(IEnumerable<DirectionDO> directions)
         {
             this.InitializeComponent();
-            Directions = directions;
+            Directions = new ObservableCollection<DirectionDO>(directions);
+            Days = new ObservableCollection<DayDO>();
             
             DataContext = this;
         }
@@ -37,12 +40,16 @@ namespace TramlineFive.Dialogs
             string selected = (sender as Button).Content as string;
             DirectionDO choice = Directions.Where(d => d.Name == selected).First();
             await choice.LoadDays();
+        }
 
-            Hide();
-            DayDialog dialog = new DayDialog(choice.Days);
-            await dialog.ShowAsync();
+        private async void cbDirections_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            cbDays.IsEnabled = true;
+            DirectionDO selected = e.AddedItems.First() as DirectionDO;
+            await selected.LoadDays();
 
-            Stops = dialog.Stops;
+            foreach (DayDO day in selected.Days)
+                Days.Add(day);
         }
     }
 }

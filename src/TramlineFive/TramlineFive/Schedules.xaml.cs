@@ -66,8 +66,6 @@ namespace TramlineFive
 
             DirectionDialog dialog = new DirectionDialog(line.Directions);
             await dialog.ShowAsync();
-
-            await new MessageDialog(String.Join(", ", dialog.Stops.Select(s => s.Name))).ShowAsync();
         }
     }
 }
