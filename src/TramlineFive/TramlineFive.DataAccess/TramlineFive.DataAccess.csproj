@@ -109,6 +109,7 @@
   <ItemGroup>
     <Compile Include="DomainLogic\DayDO.cs" />
     <Compile Include="DomainLogic\DirectionDO.cs" />
+    <Compile Include="DomainLogic\FavouriteDO.cs" />
     <Compile Include="DomainLogic\LineDO.cs" />
     <Compile Include="DomainLogic\StopDO.cs" />
     <Compile Include="Entities\BaseEntity.cs" />

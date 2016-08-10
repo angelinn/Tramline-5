@@ -25,6 +25,7 @@ using TramlineFive.DataAccess.Entities;
 
 using Newtonsoft.Json;
 using TramlineFive.DataAccess.Repositories;
+using TramlineFive.DataAccess.DomainLogic;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
@@ -36,6 +37,7 @@ namespace TramlineFive
     public sealed partial class MainPage : Page
     {
         public ObservableCollection<ArrivalViewModel> Arrivals { get; set; }
+        public ObservableCollection<FavouriteDO> Favourites { get; set; }
         public VersionViewModel Version { get; set; }
 
         public MainPage()
@@ -43,6 +45,7 @@ namespace TramlineFive
             this.InitializeComponent();
 
             Arrivals = new ObservableCollection<ArrivalViewModel>();
+            Favourites = new ObservableCollection<FavouriteDO>();
             Version = new VersionViewModel();
 
             DataContext = this;
@@ -50,9 +53,6 @@ namespace TramlineFive
 
             Loaded += MainPage_Loaded;
             SystemNavigationManager.GetForCurrentView().BackRequested += MainPage_BackRequested;
-
-            
-
         }
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)
@@ -88,6 +88,8 @@ namespace TramlineFive
                 await SetStatusBar();
 
                 SumcManager.Load();
+                foreach (FavouriteDO favourite in await FavouriteDO.AllAsync())
+                    Favourites.Add(favourite);
 
                 loaded = true;
             }
@@ -240,6 +242,11 @@ namespace TramlineFive
                 await new MessageDialog(Strings.DatabaseNotFound).ShowAsync();
                 throw ex;
             }
+        }
+
+        private async void MenuFlyoutItem_Click(object sender, RoutedEventArgs e)
+        {
+            await FavouriteDO.Add(txtStopID.Text);
         }
 
         private bool loading;
