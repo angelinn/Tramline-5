@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TramlineFive.Common;
 
 namespace TramlineFive.DataAccess.Entities
 {
@@ -14,8 +15,9 @@ namespace TramlineFive.DataAccess.Entities
         }
 
         public int ID { get; set; }
-        
-        public string Name { get; set; }
+
+        public VehicleType Type { get; set; }
+        public string Number { get; set; }
         public List<Direction> Directions { get; set; }
     }
 }

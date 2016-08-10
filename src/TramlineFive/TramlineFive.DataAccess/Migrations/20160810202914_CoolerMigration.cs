@@ -4,29 +4,18 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace TramlineFive.DataAccess.Migrations
 {
-    public partial class MyFirstMigration : Migration
+    public partial class CoolerMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.CreateTable(
-                name: "Favourites",
-                columns: table => new
-                {
-                    ID = table.Column<int>(nullable: false)
-                        .Annotation("Autoincrement", true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Favourites", x => x.ID);
-                });
-
             migrationBuilder.CreateTable(
                 name: "Lines",
                 columns: table => new
                 {
                     ID = table.Column<int>(nullable: false)
                         .Annotation("Autoincrement", true),
-                    Name = table.Column<string>(nullable: true)
+                    Number = table.Column<string>(nullable: true),
+                    Type = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -79,8 +68,8 @@ namespace TramlineFive.DataAccess.Migrations
                 {
                     ID = table.Column<int>(nullable: false)
                         .Annotation("Autoincrement", true),
+                    Code = table.Column<string>(nullable: true),
                     DayID = table.Column<int>(nullable: true),
-                    FavouriteID = table.Column<int>(nullable: true),
                     Name = table.Column<string>(nullable: true),
                     TimingsAsString = table.Column<string>(nullable: true)
                 },
@@ -93,10 +82,24 @@ namespace TramlineFive.DataAccess.Migrations
                         principalTable: "Days",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Favourites",
+                columns: table => new
+                {
+                    ID = table.Column<int>(nullable: false)
+                        .Annotation("Autoincrement", true),
+                    LineName = table.Column<string>(nullable: true),
+                    StopID = table.Column<int>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Favourites", x => x.ID);
                     table.ForeignKey(
-                        name: "FK_Stops_Favourites_FavouriteID",
-                        column: x => x.FavouriteID,
-                        principalTable: "Favourites",
+                        name: "FK_Favourites_Stops_StopID",
+                        column: x => x.StopID,
+                        principalTable: "Stops",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -112,27 +115,26 @@ namespace TramlineFive.DataAccess.Migrations
                 column: "LineID");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Favourites_StopID",
+                table: "Favourites",
+                column: "StopID");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Stops_DayID",
                 table: "Stops",
                 column: "DayID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Stops_FavouriteID",
-                table: "Stops",
-                column: "FavouriteID",
-                unique: true);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "Favourites");
+
+            migrationBuilder.DropTable(
                 name: "Stops");
 
             migrationBuilder.DropTable(
                 name: "Days");
-
-            migrationBuilder.DropTable(
-                name: "Favourites");
 
             migrationBuilder.DropTable(
                 name: "Directions");

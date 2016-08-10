@@ -52,6 +52,8 @@ namespace TramlineFive.DataAccess.Migrations
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<string>("LineName");
+
                     b.Property<int?>("StopID");
 
                     b.HasKey("ID");
@@ -66,7 +68,9 @@ namespace TramlineFive.DataAccess.Migrations
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("Name");
+                    b.Property<string>("Number");
+
+                    b.Property<int>("Type");
 
                     b.HasKey("ID");
 
@@ -77,6 +81,8 @@ namespace TramlineFive.DataAccess.Migrations
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Code");
 
                     b.Property<int?>("DayID");
 
@@ -108,7 +114,7 @@ namespace TramlineFive.DataAccess.Migrations
             modelBuilder.Entity("TramlineFive.DataAccess.Entities.Favourite", b =>
                 {
                     b.HasOne("TramlineFive.DataAccess.Entities.Stop", "Stop")
-                        .WithMany()
+                        .WithMany("Favourites")
                         .HasForeignKey("StopID");
                 });
 

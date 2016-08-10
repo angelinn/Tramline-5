@@ -8,8 +8,8 @@ using TramlineFive.DataAccess;
 namespace TramlineFive.DataAccess.Migrations
 {
     [DbContext(typeof(TramlineFiveContext))]
-    [Migration("20160808181914_PublicKeyMigration")]
-    partial class PublicKeyMigration
+    [Migration("20160810202914_CoolerMigration")]
+    partial class CoolerMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -53,6 +53,8 @@ namespace TramlineFive.DataAccess.Migrations
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<string>("LineName");
+
                     b.Property<int?>("StopID");
 
                     b.HasKey("ID");
@@ -67,7 +69,9 @@ namespace TramlineFive.DataAccess.Migrations
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("Name");
+                    b.Property<string>("Number");
+
+                    b.Property<int>("Type");
 
                     b.HasKey("ID");
 
@@ -78,6 +82,8 @@ namespace TramlineFive.DataAccess.Migrations
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Code");
 
                     b.Property<int?>("DayID");
 
@@ -109,7 +115,7 @@ namespace TramlineFive.DataAccess.Migrations
             modelBuilder.Entity("TramlineFive.DataAccess.Entities.Favourite", b =>
                 {
                     b.HasOne("TramlineFive.DataAccess.Entities.Stop", "Stop")
-                        .WithMany()
+                        .WithMany("Favourites")
                         .HasForeignKey("StopID");
                 });
 

@@ -16,6 +16,8 @@ namespace TramlineFive.DataAccess.Entities
 
         public int ID { get; set; }
         public string Name { get; set; }
+        public string Code { get; set; }
+
         public string TimingsAsString
         {
             get
@@ -30,6 +32,8 @@ namespace TramlineFive.DataAccess.Entities
 
         public int? DayID { get; set; }
         public Day Day { get; set; }
+        
+        public List<Favourite> Favourites { get; set; }
 
         [NotMapped]
         public List<string> Timings { get; set; }

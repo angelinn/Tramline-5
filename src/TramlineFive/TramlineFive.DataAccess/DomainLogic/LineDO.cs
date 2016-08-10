@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using TramlineFive.Common;
 using TramlineFive.DataAccess.Entities;
 using TramlineFive.DataAccess.Repositories;
 
@@ -14,32 +15,15 @@ namespace TramlineFive.DataAccess.DomainLogic
         public LineDO(Line entity)
         {
             id = entity.ID;
-            name = WebUtility.UrlDecode(entity.Name);
+            numberString = WebUtility.UrlDecode(entity.Number);
             directions = entity.Directions?.Select(d => new DirectionDO(d));
-
-            string[] split = Name.Split('/');
-            switch (split[0])
-            {
-                case "tramway":
-                    type = "Трамвай";
-                    break;
-                case "autobus":
-                    type = "Автобус";
-                    break;
-                case "trolleybus":
-                    type = "Тролей";
-                    break;
-
-                default:
-                    type = null;
-                    break;
-            }
+            type = entity.Type;
 
             int tempNum;
-            if (Int32.TryParse(split[1], out tempNum))
+            if (Int32.TryParse(numberString, out tempNum))
                 number = tempNum;
             else
-                number = Int32.Parse(split[1][0].ToString());
+                number = Int32.Parse(numberString[0].ToString());
         }
 
         public static async Task<IEnumerable<LineDO>> AllAsync()
@@ -61,17 +45,8 @@ namespace TramlineFive.DataAccess.DomainLogic
 
         private int id;
 
-        private string name;
-        public string Name
-        {
-            get
-            {
-                return name;
-            }
-        }
-
-        private string type;
-        public string Type
+        private VehicleType type;
+        public VehicleType Type
         {
             get
             {
@@ -88,6 +63,15 @@ namespace TramlineFive.DataAccess.DomainLogic
             }
         }
 
+        private string numberString;
+        public string NumberString
+        {
+            get
+            {
+                return numberString;
+            }
+        }
+
         private IEnumerable<DirectionDO> directions;
         public IEnumerable<DirectionDO> Directions
         {
@@ -97,26 +81,26 @@ namespace TramlineFive.DataAccess.DomainLogic
             }
         }
 
+        public string TypeToString()
+        {
+            switch (type)
+            {
+                case VehicleType.Bus:
+                    return "Автобус";
+                case VehicleType.Tram:
+                    return "Трамвай";
+                case VehicleType.Trolley:
+                    return "Тролей";
+                default:
+                    return String.Empty;
+            }
+        }
+
         public override string ToString()
         {
-            string[] split = Name.Split('/');
-            string type = String.Empty;
+            string stringType = TypeToString();
 
-            switch (split[0])
-            {
-                case "tramway":
-                    type = "Трамвай";
-                    break;
-                case "autobus":
-                    type = "Автобус";
-                    break;
-                case "trolleybus":
-                    type = "Тролей";
-                    break;
-
-            }
-
-            return $"{type} {split[1]}";
+            return $"{stringType} {numberString}";
         }
     }
 }

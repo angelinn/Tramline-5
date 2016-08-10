@@ -25,6 +25,7 @@ namespace TramlineFive.DataAccess.Repositories
         {
             try
             {
+                context.Database.EnsureDeleted();
                 context.Database.Migrate();
             }
             catch (InvalidOperationException)

@@ -8,9 +8,7 @@
     mc:Ignorable="d">
 
     <Page.Resources>
-        <CollectionViewSource x:Key="collectionViewSource" IsSourceGrouped="True" Source="{Binding Grouped}" >
-
-        </CollectionViewSource>
+        <CollectionViewSource x:Key="collectionViewSource" IsSourceGrouped="True" Source="{Binding Grouped}" />
     </Page.Resources>
 
     <Page.TopAppBar>

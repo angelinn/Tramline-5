@@ -47,11 +47,11 @@ namespace TramlineFive
         {
             try
             {
-                LineViewModel.Lines = (await LineDO.AllAsync()).Where(l => l.Type != null)
+                LineViewModel.Lines = (await LineDO.AllAsync()).Where(l => l.Type != VehicleType.None)
                                                                .OrderBy(l => l.Type)
                                                                .ThenBy(l => l.Number);
 
-                LineViewModel.Grouped = LineViewModel.Lines.GroupBy(l => l.Type);
+                LineViewModel.Grouped = LineViewModel.Lines.GroupBy(l => l.TypeToString());
             }
             catch (Exception ex)
             {
@@ -87,8 +87,8 @@ namespace TramlineFive
         {
             if (args.Reason == AutoSuggestionBoxTextChangeReason.UserInput)
             {
-                var matching = LineViewModel.Lines.Where(l => l.Name.Contains(sender.Text));
-                sender.ItemsSource = matching;
+                //var matching = LineViewModel.Lines.Where(l => l.Name.Contains(sender.Text));
+                //sender.ItemsSource = matching;
             }
         }
 

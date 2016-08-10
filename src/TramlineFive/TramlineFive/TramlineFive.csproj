@@ -89,10 +89,10 @@
   </PropertyGroup>
   <ItemGroup>
     <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
+    <None Include="App.config" />
     <Content Include="Assets\App_Data\TramlineFive.db">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <None Include="App.config" />
     <None Include="project.json" />
     <None Include="TramlineFive_TemporaryKey.pfx" />
   </ItemGroup>

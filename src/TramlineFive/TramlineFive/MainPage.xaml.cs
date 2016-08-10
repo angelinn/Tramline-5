@@ -21,6 +21,10 @@ using TramlineFive.DataAccess;
 using Windows.UI.Xaml.Media;
 using TramlineFive.Common.Models;
 using TramlineFive.Dialogs;
+using TramlineFive.DataAccess.Entities;
+
+using Newtonsoft.Json;
+using TramlineFive.DataAccess.Repositories;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
@@ -46,6 +50,9 @@ namespace TramlineFive
 
             Loaded += MainPage_Loaded;
             SystemNavigationManager.GetForCurrentView().BackRequested += MainPage_BackRequested;
+
+            
+
         }
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)

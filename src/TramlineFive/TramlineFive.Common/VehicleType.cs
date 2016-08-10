@@ -8,7 +8,8 @@ namespace TramlineFive.Common
 {
     public enum VehicleType
     {
-        Bus = 1,
+        None = -1,
+        Bus,
         Tram,
         Trolley
     }
