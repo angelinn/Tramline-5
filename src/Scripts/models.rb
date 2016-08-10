@@ -11,7 +11,8 @@ class Arrival
 end
 
 class Line
-  attr_accessor :name
+  attr_accessor :type
+  attr_accessor :number
   attr_accessor :directions
 end
 
@@ -27,5 +28,6 @@ end
 
 class Stop
   attr_accessor :name
+  attr_accessor :code
   attr_accessor :timings
 end

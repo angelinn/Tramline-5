@@ -11,10 +11,14 @@ class Transformer
     end
   end
 
-  def self.to_csharp_ready_hash(hash)
+  def self.to_csharp_ready_hash(hash, stop_codes)
     hash.map do |line_key, directions|
       line = Line.new
-      line.name = line_key
+
+      split = line_key.split('/')
+      line.type = to_type(split[0])
+      line.number = split[1]
+
       line.directions = directions.map do |dir_key, days|
         dir = Direction.new
         dir.name = dir_key
@@ -24,6 +28,7 @@ class Transformer
           day.stops = stops.map do |arrival|
             stop = Stop.new
             stop.name = arrival.name
+            stop.code = stop_codes[stop.name]
             stop.timings = arrival.timings
             stop
           end.uniq { |stop| [stop.name, stop.timings] }
@@ -32,6 +37,19 @@ class Transformer
         dir
       end
       line
+    end
+  end
+
+  def self.to_type(string_type)
+    case string_type
+      when "autobus"
+        0
+      when "tramway"
+        1
+      when "trolleybus"
+        2
+      else
+        -1
     end
   end
 end
