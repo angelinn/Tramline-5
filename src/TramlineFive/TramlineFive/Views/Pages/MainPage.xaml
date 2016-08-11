@@ -138,6 +138,15 @@
 
                 <PivotItem Header="Любими">
                     <StackPanel>
+                        <ProgressRing Name="prFavourites" 
+                                      HorizontalAlignment="Center" 
+                                      VerticalAlignment="Center" 
+                                      Height="100" 
+                                      Width="100" 
+                                      Visibility="Visible"
+                                      IsActive="True"
+                                      Margin="0,20,0,0"/>
+                        
                         <ListView Name="lvFavourites" ItemsSource="{Binding Favourites}">
                             <ListView.ItemTemplate>
                                 <DataTemplate>

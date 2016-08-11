@@ -91,6 +91,8 @@ namespace TramlineFive.Views.Pages
                 foreach (FavouriteDO favourite in await FavouriteDO.AllAsync())
                     Favourites.Add(favourite);
 
+                prFavourites.IsActive = false;
+                prFavourites.Visibility = Visibility.Collapsed;
                 loaded = true;
             }
         }
