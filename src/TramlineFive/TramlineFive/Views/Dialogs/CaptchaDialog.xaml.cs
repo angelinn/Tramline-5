@@ -20,7 +20,7 @@ using TramlineFive.Common.Models;
 
 // The Content Dialog item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
-namespace TramlineFive.Dialogs
+namespace TramlineFive.Views.Dialogs
 {
     public sealed partial class CaptchaDialog : ContentDialog, ICaptchaDialog
     {

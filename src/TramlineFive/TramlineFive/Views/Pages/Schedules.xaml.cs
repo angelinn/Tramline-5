@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using TramlineFive.Common;
 using TramlineFive.DataAccess;
 using TramlineFive.DataAccess.DomainLogic;
-using TramlineFive.Dialogs;
+using TramlineFive.Views.Dialogs;
 using TramlineFive.Extensions;
 using TramlineFive.ViewModels;
 using Windows.Foundation;
@@ -24,7 +24,7 @@ using Windows.UI.Xaml.Navigation;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
-namespace TramlineFive
+namespace TramlineFive.Views.Pages
 {
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.

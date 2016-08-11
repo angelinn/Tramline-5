@@ -97,30 +97,30 @@
     <None Include="TramlineFive_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="About.xaml.cs">
+    <Compile Include="Views\Pages\About.xaml.cs">
       <DependentUpon>About.xaml</DependentUpon>
     </Compile>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Extensions\ScrollViewerScrollToElement.cs" />
-    <Compile Include="Schedule.xaml.cs">
+    <Compile Include="Views\Pages\Schedule.xaml.cs">
       <DependentUpon>Schedule.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Dialogs\CaptchaDialog.xaml.cs">
+    <Compile Include="Views\Dialogs\CaptchaDialog.xaml.cs">
       <DependentUpon>CaptchaDialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Dialogs\DirectionDialog.xaml.cs">
+    <Compile Include="Views\Dialogs\DirectionDialog.xaml.cs">
       <DependentUpon>DirectionDialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Schedules.xaml.cs">
+    <Compile Include="Views\Pages\Schedules.xaml.cs">
       <DependentUpon>Schedules.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Settings.xaml.cs">
+    <Compile Include="Views\Pages\Settings.xaml.cs">
       <DependentUpon>Settings.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\ArrivalViewModel.cs" />
-    <Compile Include="MainPage.xaml.cs">
+    <Compile Include="Views\Pages\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -190,31 +190,31 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="About.xaml">
+    <Page Include="Views\Pages\About.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Schedule.xaml">
+    <Page Include="Views\Pages\Schedule.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Dialogs\CaptchaDialog.xaml">
+    <Page Include="Views\Dialogs\CaptchaDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Dialogs\DirectionDialog.xaml">
+    <Page Include="Views\Dialogs\DirectionDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MainPage.xaml">
+    <Page Include="Views\Pages\MainPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Schedules.xaml">
+    <Page Include="Views\Pages\Schedules.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Settings.xaml">
+    <Page Include="Views\Pages\Settings.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

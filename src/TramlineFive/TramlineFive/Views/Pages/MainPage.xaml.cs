@@ -20,7 +20,7 @@ using Windows.Storage;
 using TramlineFive.DataAccess;
 using Windows.UI.Xaml.Media;
 using TramlineFive.Common.Models;
-using TramlineFive.Dialogs;
+using TramlineFive.Views.Dialogs;
 using TramlineFive.DataAccess.Entities;
 
 using Newtonsoft.Json;
@@ -29,7 +29,7 @@ using TramlineFive.DataAccess.DomainLogic;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
-namespace TramlineFive
+namespace TramlineFive.Views.Pages
 {
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
@@ -249,9 +249,6 @@ namespace TramlineFive
             await FavouriteDO.Add(txtStopID.Text);
         }
 
-        private bool loading;
-        private bool loaded;
-
         private async void spFavourite_Tapped(object sender, TappedRoutedEventArgs e)
         {
             txtStopID.Text = String.Format("{0:D4}", Int32.Parse((lvFavourites.SelectedItem as FavouriteDO).Code));
@@ -260,5 +257,8 @@ namespace TramlineFive
 
             pvMain.SelectedIndex = 0;
         }
+
+        private bool loading;
+        private bool loaded;
     }
 }
