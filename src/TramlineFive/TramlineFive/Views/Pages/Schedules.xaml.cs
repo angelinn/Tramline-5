@@ -37,8 +37,6 @@ namespace TramlineFive.Views.Pages
             this.InitializeComponent();
             this.Transitions = AnimationManager.SetUpPageAnimation();
 
-            NavigationCacheMode = NavigationCacheMode.Enabled;
-
             LineViewModel = new LineViewModel();
             DataContext = LineViewModel;
 
