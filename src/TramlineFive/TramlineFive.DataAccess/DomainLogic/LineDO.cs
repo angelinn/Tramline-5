@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TramlineFive.Common;
 using TramlineFive.DataAccess.Entities;
+using TramlineFive.DataAccess.Extensions;
 using TramlineFive.DataAccess.Repositories;
 
 namespace TramlineFive.DataAccess.DomainLogic
@@ -16,7 +17,7 @@ namespace TramlineFive.DataAccess.DomainLogic
         {
             id = entity.ID;
             numberString = WebUtility.UrlDecode(entity.Number);
-            directions = entity.Directions?.Select(d => new DirectionDO(d));
+            directions = entity.Directions?.Select(d => new DirectionDO(d)).ToList();
             type = entity.Type;
 
             int tempNum;
@@ -32,7 +33,7 @@ namespace TramlineFive.DataAccess.DomainLogic
             {
                 using (UnitOfWork uow = new UnitOfWork())
                 {
-                    IEnumerable<Line> lines = uow.Lines.All().ToList();
+                    IEnumerable<Line> lines = uow.Lines.All().IncludeMultiple(l => l.Directions).ToList();
                     return lines?.Select(l => new LineDO(l));
                 }
             });

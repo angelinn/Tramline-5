@@ -37,6 +37,7 @@
                     <DataTemplate>
                         <StackPanel>
                             <TextBlock Text="{Binding}" />
+                            <TextBlock Text="{Binding Directions[0].Name}" FontSize="12"/>
                         </StackPanel>
                     </DataTemplate>
                 </ListView.ItemTemplate>
