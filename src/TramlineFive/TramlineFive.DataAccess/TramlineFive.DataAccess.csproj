@@ -120,9 +120,9 @@
     <Compile Include="Entities\Stop.cs" />
     <Compile Include="Extensions\DbSetClearExtension.cs" />
     <Compile Include="Extensions\IQueryableIncludeMultiple.cs" />
-    <Compile Include="Migrations\20160810202914_CoolerMigration.cs" />
-    <Compile Include="Migrations\20160810202914_CoolerMigration.designer.cs">
-      <DependentUpon>20160810202914_CoolerMigration.cs</DependentUpon>
+    <Compile Include="Migrations\20160811204945_PerfectMigration.cs" />
+    <Compile Include="Migrations\20160811204945_PerfectMigration.designer.cs">
+      <DependentUpon>20160811204945_PerfectMigration.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\TramlineFiveContextModelSnapshot.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

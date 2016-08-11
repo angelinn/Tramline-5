@@ -252,13 +252,12 @@ namespace TramlineFive
         private bool loading;
         private bool loaded;
 
-        private async void spFavourite_Tapped(object sender, TappedRoutedEventArgs e)
+        private void spFavourite_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            pvMain.SelectedIndex = 0;
-            await Task.Delay(500);
-
             txtStopID.Text = (lvFavourites.SelectedItem as FavouriteDO).Code;
             btnStop_Click(this, new RoutedEventArgs());
+
+            pvMain.SelectedIndex = 0;
         }
     }
 }
