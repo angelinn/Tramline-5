@@ -11,7 +11,7 @@ class Transformer
     end
   end
 
-  def self.to_csharp_ready_hash(hash, stop_codes)
+  def self.to_csharp_ready_hash(hash)
     hash.map do |line_key, directions|
       line = Line.new
 
@@ -28,7 +28,7 @@ class Transformer
           day.stops = stops.map do |arrival|
             stop = Stop.new
             stop.name = arrival.name
-            stop.code = stop_codes[stop.name]
+            stop.code = arrival.code
             stop.timings = arrival.timings
             stop
           end.uniq { |stop| [stop.name, stop.timings] }

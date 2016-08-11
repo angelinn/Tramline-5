@@ -4,6 +4,7 @@ class Arrival
   attr_accessor :direction
   attr_accessor :day
   attr_accessor :timings
+  attr_accessor :code
 
   def initialize(line)
     @line = line
