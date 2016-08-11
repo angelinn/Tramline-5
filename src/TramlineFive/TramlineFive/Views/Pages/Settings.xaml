@@ -33,7 +33,7 @@
                 <ToggleSwitch IsOn="{Binding LiveTile, Mode=TwoWay}"/>
 
                 <TextBlock Text="Оценете приложението в Windows Store!" Margin="0,20,0,0" TextWrapping="Wrap" />
-                <Button Content="Оцени" Margin="0,10,0,20" Style="{StaticResource BlueButton}" Template="{StaticResource ButtonControlTemplate1}" />
+                <Button Content="Оцени" Margin="0,10,0,20" Style="{StaticResource BlueButton}" />
             
                 <TextBlock Text="Ако искате да прехвърлите любимите си спирки на друго устройство, използвайте бутона за извличане на настройки." TextWrapping="Wrap" />
                 
