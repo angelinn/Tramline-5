@@ -102,5 +102,23 @@ namespace TramlineFive.DataAccess.DomainLogic
 
             return $"{stringType} {numberString}";
         }
+
+        public int SortID
+        {
+            get
+            {
+                switch (type)
+                {
+                    case VehicleType.Bus:
+                        return 3;
+                    case VehicleType.Tram:
+                        return 1;
+                    case VehicleType.Trolley:
+                        return 2;
+                    default:
+                        return 4;
+                }
+            } 
+        }
     }
 }

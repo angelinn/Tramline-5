@@ -37,6 +37,8 @@ namespace TramlineFive.Views.Pages
             this.InitializeComponent();
             this.Transitions = AnimationManager.SetUpPageAnimation();
 
+            NavigationCacheMode = NavigationCacheMode.Enabled;
+
             LineViewModel = new LineViewModel();
             DataContext = LineViewModel;
 
@@ -48,7 +50,7 @@ namespace TramlineFive.Views.Pages
             try
             {
                 LineViewModel.Lines = (await LineDO.AllAsync()).Where(l => l.Type != VehicleType.None)
-                                                               .OrderBy(l => l.Type)
+                                                               .OrderBy(l => l.SortID)
                                                                .ThenBy(l => l.Number);
 
                 LineViewModel.Grouped = LineViewModel.Lines.GroupBy(l => l.TypeToString());
