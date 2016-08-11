@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace TramlineFive.DataAccess.Migrations
 {
-    public partial class CoolerMigration : Migration
+    public partial class PerfectMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -90,7 +90,6 @@ namespace TramlineFive.DataAccess.Migrations
                 {
                     ID = table.Column<int>(nullable: false)
                         .Annotation("Autoincrement", true),
-                    LineName = table.Column<string>(nullable: true),
                     StopID = table.Column<int>(nullable: true)
                 },
                 constraints: table =>

@@ -8,8 +8,8 @@ using TramlineFive.DataAccess;
 namespace TramlineFive.DataAccess.Migrations
 {
     [DbContext(typeof(TramlineFiveContext))]
-    [Migration("20160810202914_CoolerMigration")]
-    partial class CoolerMigration
+    [Migration("20160811204945_PerfectMigration")]
+    partial class PerfectMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -52,8 +52,6 @@ namespace TramlineFive.DataAccess.Migrations
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd();
-
-                    b.Property<string>("LineName");
 
                     b.Property<int?>("StopID");
 

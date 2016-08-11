@@ -52,8 +52,6 @@ namespace TramlineFive.DataAccess.Migrations
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("LineName");
-
                     b.Property<int?>("StopID");
 
                     b.HasKey("ID");
