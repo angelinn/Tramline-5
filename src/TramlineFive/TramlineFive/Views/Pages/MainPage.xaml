@@ -30,7 +30,7 @@
 
         <Style x:Key="HamburgerMenuButton" TargetType="Button" >
             <Setter Property="Background" Value="Transparent" />
-            <Setter Property="Margin" Value="-10,0,0,0" />
+            <Setter Property="Margin" Value="-10,10,0,0" />
             <Setter Property="Height" Value="50" />
             <Setter Property="Width" Value="210" />
             <Setter Property="HorizontalContentAlignment" Value="Left" />
@@ -81,17 +81,17 @@
                     </StackPanel>
                 </Button>
 
-                <Button Name="btnAbout" Click="btnAbout_Click" Style="{StaticResource HamburgerMenuButton}">
-                    <StackPanel Orientation="Horizontal">
-                        <Button Content="&#xE8EA;" Style="{StaticResource BarIcon}" />
-                        <TextBlock Text="Информация" Style="{StaticResource BarText}"/>
-                    </StackPanel>
-                </Button>
-
                 <Button Name="btnSettings" Click="btnSettings_Click" Style="{StaticResource HamburgerMenuButton}">
                     <StackPanel Orientation="Horizontal">
                         <Button Content="&#xE713;" Style="{StaticResource BarIcon}" />
                         <TextBlock Text="Настройки" Style="{StaticResource BarText}"/>
+                    </StackPanel>
+                </Button>
+
+                <Button Name="btnAbout" Click="btnAbout_Click" Style="{StaticResource HamburgerMenuButton}">
+                    <StackPanel Orientation="Horizontal">
+                        <Button Content="&#xE168;" Style="{StaticResource BarIcon}" />
+                        <TextBlock Text="Информация" Style="{StaticResource BarText}"/>
                     </StackPanel>
                 </Button>
 
