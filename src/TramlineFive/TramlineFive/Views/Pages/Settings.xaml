@@ -24,15 +24,21 @@
    
 
     <StackPanel Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" >
-        <StackPanel Margin="20,20,20,10">
-            <TextBlock Text="Позволи на приложението да изпраща push notification-и" Style="{StaticResource SettingTitle}"/>
-            <ToggleSwitch IsOn="{Binding PushNotifications, Mode=TwoWay}"  />
+        <ScrollViewer>
+            <StackPanel Margin="20,20,20,10">
+                <TextBlock Text="Позволи на приложението да изпраща push notification-и" Style="{StaticResource SettingTitle}"/>
+                <ToggleSwitch IsOn="{Binding PushNotifications, Mode=TwoWay}"  />
 
-            <TextBlock Text="Обновявай живата плочка на всеки 30 мин" Style="{StaticResource SettingTitle}"/>
-            <ToggleSwitch IsOn="{Binding LiveTile, Mode=TwoWay}"/>
+                <TextBlock Text="Обновявай живата плочка на всеки 30 мин" Style="{StaticResource SettingTitle}"/>
+                <ToggleSwitch IsOn="{Binding LiveTile, Mode=TwoWay}"/>
 
-            <Button Content="Извличане на настройки" Margin="0,20,0,0" Background="DodgerBlue" Foreground="White"/>
-
-        </StackPanel>
+                <TextBlock Text="Оценете приложението в Windows Store!" Margin="0,20,0,0" TextWrapping="Wrap" />
+                <Button Content="Оцени" Margin="0,10,0,20" Style="{StaticResource BlueButton}" Template="{StaticResource ButtonControlTemplate1}" />
+            
+                <TextBlock Text="Ако искате да прехвърлите любимите си спирки на друго устройство, използвайте бутона за извличане на настройки." TextWrapping="Wrap" />
+                
+                <Button Content="Извличане на настройки" Margin="0,10,0,0" Style="{StaticResource BlueButton}" />
+            </StackPanel>
+        </ScrollViewer>
     </StackPanel>
 </Page>
