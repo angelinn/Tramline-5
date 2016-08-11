@@ -26,6 +26,7 @@ using TramlineFive.DataAccess.Entities;
 using Newtonsoft.Json;
 using TramlineFive.DataAccess.Repositories;
 using TramlineFive.DataAccess.DomainLogic;
+using Windows.ApplicationModel.Core;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
@@ -76,7 +77,7 @@ namespace TramlineFive.Views.Pages
 
                 IUICommand result = await exitPrompt.ShowAsync();
                 if (result?.Label == Strings.Yes)
-                    rootFrame.GoBack();
+                    CoreApplication.Exit();
             }
         }
 
