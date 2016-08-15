@@ -91,10 +91,10 @@
                                       Visibility="Collapsed"
                                       Margin="0,20,0,0"/>
 
-                        <ListView ItemsSource="{Binding Arrivals}">
+                        <ListView ItemsSource="{Binding Arrivals}" Margin="0,10,0,0">
                             <ListView.ItemTemplate>
-                                <DataTemplate> 
-                                    <StackPanel Margin="0,10,0,0" Holding="ListViewItem_Holding" FlyoutBase.AttachedFlyout="{StaticResource LineFlyout}">
+                                <DataTemplate>
+                                    <StackPanel Holding="ListViewItem_Holding" FlyoutBase.AttachedFlyout="{StaticResource LineFlyout}" Height="50" Margin="0,10,0,0" >
                                         <StackPanel Orientation="Horizontal">
                                             <TextBlock Text="{Binding VehicleNumber}" Margin="0,0,5,0"/>
                                             <TextBlock Text="-" />
@@ -122,11 +122,11 @@
                                       Visibility="Visible"
                                       IsActive="True"
                                       Margin="0,20,0,0"/>
-                        
-                        <ListView Name="lvFavourites" ItemsSource="{Binding Favourites}">
+
+                        <ListView Name="lvFavourites" ItemsSource="{Binding Favourites}" SelectionChanged="lvFavourites_SelectionChanged" Margin="0,10,0,0">
                             <ListView.ItemTemplate>
                                 <DataTemplate>
-                                    <StackPanel Name="spFavourite" Orientation="Horizontal" Margin="0,10,0,0" Tapped="spFavourite_Tapped">
+                                    <StackPanel Orientation="Horizontal">
                                         <TextBlock Text="{Binding Name}" Margin="0,0,5,0" />
                                         <TextBlock Text="(" />
                                         <TextBlock Text="{Binding Code, Converter={StaticResource StopCodeConverter}}" />
