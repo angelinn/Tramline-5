@@ -97,6 +97,7 @@
     <None Include="TramlineFive_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Views\Dialogs\QuestionDialog.cs" />
     <Compile Include="Views\Pages\About.xaml.cs">
       <DependentUpon>About.xaml</DependentUpon>
     </Compile>

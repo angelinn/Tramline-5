@@ -72,9 +72,7 @@ namespace TramlineFive.Views.Pages
                 rootFrame.GoBack();
             else
             {
-                MessageDialog exitPrompt = new MessageDialog(Strings.PromptExit);
-                exitPrompt.Commands.Add(new UICommand(Strings.Yes));
-                exitPrompt.Commands.Add(new UICommand(Strings.No));
+                QuestionDialog exitPrompt = new QuestionDialog(Strings.PromptExit);
 
                 IUICommand result = await exitPrompt.ShowAsync();
                 if (result?.Label == Strings.Yes)
@@ -219,12 +217,10 @@ namespace TramlineFive.Views.Pages
 
         private async void btnSumc_Click(object sender, RoutedEventArgs e)
         {
-            MessageDialog sumcDialog = new MessageDialog(Strings.SumcRedirect);
-            sumcDialog.Commands.Add(new UICommand(Strings.Yes));
-            sumcDialog.Commands.Add(new UICommand(Strings.No));
+            QuestionDialog sumcDialog = new QuestionDialog(Strings.SumcRedirect);
 
             IUICommand result = await sumcDialog.ShowAsync();
-            if (result != null && result.Label == Strings.Yes)
+            if (result?.Label == Strings.Yes)
             {
                 Uri sumc = new Uri(Urls.Sumc);
                 await Launcher.LaunchUriAsync(sumc);
@@ -240,12 +236,10 @@ namespace TramlineFive.Views.Pages
 
         private async void btnFeedback_Click(object sender, RoutedEventArgs e)
         {
-            MessageDialog feedbackDialog = new MessageDialog(Strings.RequestOutlookRedirect);
-            feedbackDialog.Commands.Add(new UICommand(Strings.Yes));
-            feedbackDialog.Commands.Add(new UICommand(Strings.No));
+            QuestionDialog feedbackDialog = new QuestionDialog(Strings.RequestOutlookRedirect);
 
             IUICommand result = await feedbackDialog.ShowAsync();
-            if (result != null && result.Label == Strings.Yes)
+            if (result?.Label == Strings.Yes)
             {
                 Uri feedbackEmail = new Uri(Urls.DeveloperEmail);
                 await Launcher.LaunchUriAsync(feedbackEmail);
