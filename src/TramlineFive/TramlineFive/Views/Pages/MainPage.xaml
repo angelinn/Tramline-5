@@ -11,6 +11,7 @@
     <Page.Resources>
         <su:TimingConverter x:Key="TimingConverter" />
         <su:StopCodeConverter x:Key="StopCodeConverter" />
+        <su:StringFormatConverter x:Key="StringFormat" />
 
         <MenuFlyout x:Name="LineFlyout">
             <MenuFlyoutItem Text="Добави в любими" Click="MenuFlyoutItem_Click" />
@@ -81,7 +82,7 @@
                     <StackPanel>
                         <TextBlock Text="Код на спирка:" HorizontalAlignment="Center" />
                         <TextBox Name="txtStopID" HorizontalAlignment="Center" Margin="0,10,0,10" KeyDown="txtStopID_KeyDown" MaxWidth="64" />
-                        <Button Name="btnStop" Content="Търсене" Click="btnStop_Click" HorizontalAlignment="Center" Style="{StaticResource BlueButton}"/>
+                        <Button Name="btnStop" Content="Търсене" Click="btnStop_Click" HorizontalAlignment="Center" Style="{StaticResource BlueButton}" />
 
                         <ProgressRing Name="prVirtualTables" 
                                       HorizontalAlignment="Center" 
