@@ -76,7 +76,7 @@
 
 
         <SplitView.Content>
-            <Pivot Name="pvMain" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+            <Pivot Name="pvMain" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" SelectionChanged="pvMain_SelectionChanged">
                 <PivotItem Header="Виртуални табла">
                     <StackPanel>
                         <TextBlock Text="Код на спирка:" HorizontalAlignment="Center" />

@@ -56,6 +56,7 @@ namespace TramlineFive.Views.Pages
             SystemNavigationManager.GetForCurrentView().BackRequested += MainPage_BackRequested;
         }
 
+        // Prevents panel being invisibly open on other pages, causing double back click needed to go back
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
             base.OnNavigatedFrom(e);
@@ -252,15 +253,27 @@ namespace TramlineFive.Views.Pages
             await FavouriteDO.Add(txtStopID.Text);
         }
 
-        private async void lvFavourites_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void lvFavourites_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             txtStopID.Text = String.Format("{0:D4}", Int32.Parse((e.AddedItems[0] as FavouriteDO).Code));
-            btnStop_Click(this, new RoutedEventArgs());
-            await Task.Delay(500);
-
+            reload = true;
             pvMain.SelectedIndex = 0;
         }
 
+        private void pvMain_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (pvMain.SelectedIndex == 0)
+            {
+                pvMain.Focus(FocusState.Pointer);
+                if (reload && !String.IsNullOrEmpty(txtStopID.Text))
+                {
+                    btnStop_Click(this, new RoutedEventArgs());
+                    reload = false;
+                }
+            }
+        }
+
+        private bool reload;
         private bool loading;
         private bool loaded;
     }
