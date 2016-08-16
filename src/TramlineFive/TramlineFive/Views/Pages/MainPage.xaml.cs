@@ -88,14 +88,19 @@ namespace TramlineFive.Views.Pages
             {
                 await CopyDatabaseFileIfNeeded();
                 await SetStatusBar();
-                
-                foreach (FavouriteDO favourite in await FavouriteDO.AllAsync())
-                    Favourites.Add(favourite);
+
+                await LoadFavourites();
 
                 prFavourites.IsActive = false;
                 prFavourites.Visibility = Visibility.Collapsed;
                 loaded = true;
             }
+        }
+
+        private async Task LoadFavourites()
+        {
+            foreach (FavouriteDO favourite in await FavouriteDO.AllAsync())
+                Favourites.Add(favourite);
         }
 
         private async Task CopyDatabaseFileIfNeeded()
@@ -247,10 +252,19 @@ namespace TramlineFive.Views.Pages
             }
         }
 
-
         private async void MenuFlyoutItem_Click(object sender, RoutedEventArgs e)
         {
+            Favourites.Clear();
+            pvMain.SelectedIndex = 1;
+
+            prFavourites.IsActive = true;
+            prFavourites.Visibility = Visibility.Visible;
+
             await FavouriteDO.Add(txtStopID.Text);
+            await LoadFavourites();
+
+            prFavourites.IsActive = false;
+            prFavourites.Visibility = Visibility.Collapsed;
         }
 
         private void pvMain_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -265,6 +279,7 @@ namespace TramlineFive.Views.Pages
                 }
             }
         }
+
         private void lvFavourites_ItemClick(object sender, ItemClickEventArgs e)
         {
             txtStopID.Text = String.Format("{0:D4}", Int32.Parse((e.ClickedItem as FavouriteDO).Code));
