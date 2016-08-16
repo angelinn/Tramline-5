@@ -14,7 +14,6 @@ namespace TramlineFive.ViewModels
             VehicleNumber = arrival.VehicleNumber;
             Timings = arrival.Timings;
             Direction = arrival.Direction;
-            StopTitle = arrival.StopTitle;
         }
 
         private int vehicleNumber;
@@ -62,23 +61,6 @@ namespace TramlineFive.ViewModels
                 {
                     direction = value;
                     OnPropertyChanged("Direction");
-                }
-            }
-        }
-
-        private string stopTitle;
-        public string StopTitle
-        {
-            get
-            {
-                return stopTitle;
-            }
-            set
-            {
-                if (value != null)
-                {
-                    stopTitle = value;
-                    OnPropertyChanged("StopTitle");
                 }
             }
         }

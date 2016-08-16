@@ -186,6 +186,8 @@ namespace TramlineFive.Views.Pages
 
                 foreach (Arrival arrival in arrivals ?? Enumerable.Empty<Arrival>())
                     Arrivals.Add(new ArrivalViewModel(arrival));
+
+                txtStopTitle.Text = SumcParser.ParseStopTitle(arrivals.First().StopTitle);
             }
             catch (Exception ex)
             {
