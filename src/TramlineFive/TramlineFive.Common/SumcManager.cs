@@ -13,11 +13,6 @@ namespace TramlineFive.Common
 {
     public static class SumcManager
     {
-        public static void Load()
-        {
-            MAGIC_COOKIE_VALUE = SettingsManager.ReadValue("cookie") as string;
-        }
-
         public static async Task<IEnumerable<Arrival>> GetByStopAsync(string query, ICaptchaDialog captchaDialog)
         {
             int queryNum;
@@ -150,7 +145,7 @@ namespace TramlineFive.Common
         private const string SUBMIT_VALUE = "Провери";
         private const string CAPTCHA_KEY = "sc";
         private const string MAGIC_COOKIE_NAME = "alpocjengi";
-        private static string MAGIC_COOKIE_VALUE = "af64ddf454724184db77e2562c92a15a64d42171";
         private const string USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.106 Safari/537.36 OPR/38.0.2220.41";
+        private static string MAGIC_COOKIE_VALUE = SettingsManager.ReadValue("cookie") as string;
     }
 }

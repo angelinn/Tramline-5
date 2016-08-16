@@ -88,8 +88,7 @@ namespace TramlineFive.Views.Pages
             {
                 await CopyDatabaseFileIfNeeded();
                 await SetStatusBar();
-
-                SumcManager.Load();
+                
                 foreach (FavouriteDO favourite in await FavouriteDO.AllAsync())
                     Favourites.Add(favourite);
 
