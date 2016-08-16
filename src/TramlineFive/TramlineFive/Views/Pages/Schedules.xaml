@@ -21,7 +21,7 @@
 
     <ScrollViewer Name="svMain" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <StackPanel Margin="0,0,0,25">
-            <AutoSuggestBox TextChanged="AutoSuggestBox_TextChanged" SuggestionChosen="AutoSuggestBox_SuggestionChosen" QueryIcon="Find" Margin="5" />
+            <AutoSuggestBox PlaceholderText="Търсене" TextChanged="AutoSuggestBox_TextChanged" SuggestionChosen="AutoSuggestBox_SuggestionChosen" QueryIcon="Find" Margin="5" />
             
             <ProgressRing Name="prLines"
                           Style="{StaticResource Spinner}"
