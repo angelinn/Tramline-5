@@ -51,7 +51,7 @@ namespace TramlineFive.Views.Pages
                                                                .OrderBy(l => l.SortID)
                                                                .ThenBy(l => l.Number);
 
-                LineViewModel.Grouped = LineViewModel.Lines.GroupBy(l => l.TypeToString());
+                LineViewModel.Grouped = LineViewModel.Lines.GroupBy(l => l.TypeToString(true));
             }
             catch (Exception ex)
             {

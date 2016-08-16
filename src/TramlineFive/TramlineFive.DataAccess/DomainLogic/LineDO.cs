@@ -82,16 +82,16 @@ namespace TramlineFive.DataAccess.DomainLogic
             }
         }
 
-        public string TypeToString()
+        public string TypeToString(bool plural = false)
         {
             switch (type)
             {
                 case VehicleType.Bus:
-                    return "Автобус";
+                    return plural ? "Автобуси" : "Автобус";
                 case VehicleType.Tram:
-                    return "Трамвай";
+                    return plural ? "Трамваи" : "Трамвай";
                 case VehicleType.Trolley:
-                    return "Тролей";
+                    return plural ? "Тролеи" : "Тролей";
                 default:
                     return String.Empty;
             }
