@@ -66,7 +66,24 @@ namespace TramlineFive.Views.Pages
 
         private async void ListView_ItemClick(object sender, ItemClickEventArgs e)
         {
-            LineDO line = e.ClickedItem as LineDO;
+            await PromptForDirection(e.ClickedItem as LineDO);
+        }
+
+        private void AutoSuggestBox_TextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
+        {
+            if (args.Reason == AutoSuggestionBoxTextChangeReason.UserInput)
+            {
+                sender.ItemsSource = LineViewModel.Lines.Where(l => l.NumberString.Contains(sender.Text));
+            }
+        }
+
+        private async void AutoSuggestBox_SuggestionChosen(AutoSuggestBox sender, AutoSuggestBoxSuggestionChosenEventArgs args)
+        {
+            await PromptForDirection(args.SelectedItem as LineDO);
+        }
+
+        private async Task PromptForDirection(LineDO line)
+        {
             await line.LoadDirections();
 
             DirectionDialog dialog = new DirectionDialog(line.Directions);
@@ -81,20 +98,6 @@ namespace TramlineFive.Views.Pages
                     { "Line", line }
                 });
             }
-        }
-
-        private void AutoSuggestBox_TextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
-        {
-            if (args.Reason == AutoSuggestionBoxTextChangeReason.UserInput)
-            {
-                //var matching = LineViewModel.Lines.Where(l => l.Name.Contains(sender.Text));
-                //sender.ItemsSource = matching;
-            }
-        }
-
-        private void AutoSuggestBox_QuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
-        {
-
         }
     }
 }
