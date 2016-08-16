@@ -98,6 +98,68 @@ namespace TramlineFive.Views.Pages
             }
         }
 
+        private async Task CopyDatabaseFileIfNeeded()
+        {
+            try
+            {
+                StorageFile dbFile =
+                    await ApplicationData.Current.LocalFolder.TryGetItemAsync(TramlineFiveContext.DatabaseName) as StorageFile;
+
+                if (dbFile == null)
+                {
+                    StorageFolder localFolder = ApplicationData.Current.LocalFolder;
+                    Uri originalDbFileUri = new Uri($"ms-appx:///Assets/App_Data/{TramlineFiveContext.DatabaseName}");
+                    StorageFile originalDbFile = await StorageFile.GetFileFromApplicationUriAsync(originalDbFileUri);
+
+                    if (originalDbFile != null)
+                    {
+                        dbFile = await originalDbFile.CopyAsync(localFolder, TramlineFiveContext.DatabaseName, NameCollisionOption.ReplaceExisting);
+                    }
+                }
+            }
+            catch (System.IO.FileNotFoundException ex)
+            {
+                await new MessageDialog(Strings.DatabaseNotFound).ShowAsync();
+                throw ex;
+            }
+        }
+
+        private async Task SetStatusBar()
+        {
+            if (ApiInformation.IsTypePresent("Windows.UI.ViewManagement.StatusBar"))
+            {
+
+                StatusBar statusBar = StatusBar.GetForCurrentView();
+                if (statusBar != null)
+                {
+                    statusBar.BackgroundOpacity = 1;
+                    statusBar.BackgroundColor = Color.FromArgb(0, 51, 153, 255);
+                    statusBar.ForegroundColor = Colors.White;
+
+                    StatusBarProgressIndicator indicator = statusBar.ProgressIndicator;
+                    await indicator.ShowAsync();
+                    indicator.ProgressValue = 0;
+
+                    indicator.Text = Strings.StatusBarText;
+                }
+            }
+        }
+
+        private void btnAbout_Click(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(About));
+        }
+
+        private void btnSettings_Click(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(Settings));
+        }
+
+        private void btnSchedules_Click(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(Schedules));
+        }
+
         private async void btnStop_Click(object sender, RoutedEventArgs e)
         {
             if (loading)
@@ -185,78 +247,10 @@ namespace TramlineFive.Views.Pages
             }
         }
 
-        private void btnAbout_Click(object sender, RoutedEventArgs e)
-        {
-            Frame.Navigate(typeof(About));
-        }
-
-        private void btnSettings_Click(object sender, RoutedEventArgs e)
-        {
-            Frame.Navigate(typeof(Settings));
-        }
-
-        private void btnSchedules_Click(object sender, RoutedEventArgs e)
-        {
-            Frame.Navigate(typeof(Schedules));
-        }
-
-        private async Task SetStatusBar()
-        {
-            if (ApiInformation.IsTypePresent("Windows.UI.ViewManagement.StatusBar"))
-            {
-
-                StatusBar statusBar = StatusBar.GetForCurrentView();
-                if (statusBar != null)
-                {
-                    statusBar.BackgroundOpacity = 1;
-                    statusBar.BackgroundColor = Color.FromArgb(0, 51, 153, 255);
-                    statusBar.ForegroundColor = Colors.White;
-
-                    StatusBarProgressIndicator indicator = statusBar.ProgressIndicator;
-                    await indicator.ShowAsync();
-                    indicator.ProgressValue = 0;
-
-                    indicator.Text = Strings.StatusBarText;
-                }
-            }
-        }
-
-        private async Task CopyDatabaseFileIfNeeded()
-        {
-            try
-            {
-                StorageFile dbFile =
-                    await ApplicationData.Current.LocalFolder.TryGetItemAsync(TramlineFiveContext.DatabaseName) as StorageFile;
-
-                if (dbFile == null)
-                {
-                    StorageFolder localFolder = ApplicationData.Current.LocalFolder;
-                    Uri originalDbFileUri = new Uri($"ms-appx:///Assets/App_Data/{TramlineFiveContext.DatabaseName}");
-                    StorageFile originalDbFile = await StorageFile.GetFileFromApplicationUriAsync(originalDbFileUri);
-
-                    if (originalDbFile != null)
-                    {
-                        dbFile = await originalDbFile.CopyAsync(localFolder, TramlineFiveContext.DatabaseName, NameCollisionOption.ReplaceExisting);
-                    }
-                }
-            }
-            catch (System.IO.FileNotFoundException ex)
-            {
-                await new MessageDialog(Strings.DatabaseNotFound).ShowAsync();
-                throw ex;
-            }
-        }
 
         private async void MenuFlyoutItem_Click(object sender, RoutedEventArgs e)
         {
             await FavouriteDO.Add(txtStopID.Text);
-        }
-
-        private void lvFavourites_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            txtStopID.Text = String.Format("{0:D4}", Int32.Parse((e.AddedItems[0] as FavouriteDO).Code));
-            reload = true;
-            pvMain.SelectedIndex = 0;
         }
 
         private void pvMain_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -264,15 +258,22 @@ namespace TramlineFive.Views.Pages
             if (pvMain.SelectedIndex == 0)
             {
                 pvMain.Focus(FocusState.Pointer);
-                if (reload && !String.IsNullOrEmpty(txtStopID.Text))
+                if (reloadVirtualTable && !String.IsNullOrEmpty(txtStopID.Text))
                 {
                     btnStop_Click(this, new RoutedEventArgs());
-                    reload = false;
+                    reloadVirtualTable = false;
                 }
             }
         }
+        private void lvFavourites_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            txtStopID.Text = String.Format("{0:D4}", Int32.Parse((e.ClickedItem as FavouriteDO).Code));
 
-        private bool reload;
+            reloadVirtualTable = true;
+            pvMain.SelectedIndex = 0;
+        }
+
+        private bool reloadVirtualTable;
         private bool loading;
         private bool loaded;
     }
