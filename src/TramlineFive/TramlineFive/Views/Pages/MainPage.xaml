@@ -19,7 +19,7 @@
     </Page.Resources>
 
     <Page.TopAppBar>
-        <CommandBar Background="DodgerBlue" Foreground="White" >
+        <CommandBar Background="{ThemeResource AccentColour}" Foreground="White" >
             <CommandBar.Content>
                 <StackPanel Orientation="Horizontal">
                     <AppBarButton Click="OnHamburgerClick" Foreground="White" HorizontalAlignment="Left" Margin="-8,0,0,0">
@@ -40,7 +40,7 @@
                IsPaneOpen="False" 
                CompactPaneLength="50" 
                OpenPaneLength="200" 
-               PaneBackground="DodgerBlue">
+               PaneBackground="{ThemeResource AccentColour}">
 
         <SplitView.Pane>
             <StackPanel>
@@ -82,13 +82,10 @@
                     <StackPanel>
                         <TextBlock Text="Код на спирка:" HorizontalAlignment="Center" />
                         <TextBox Name="txtStopID" HorizontalAlignment="Center" Margin="0,10,0,10" KeyDown="txtStopID_KeyDown" MaxWidth="64" />
-                        <Button Name="btnStop" Content="Търсене" Click="btnStop_Click" HorizontalAlignment="Center" Style="{StaticResource BlueButton}" />
+                        <Button Name="btnStop" Content="Търсене" Click="btnStop_Click" HorizontalAlignment="Center" />
 
-                        <ProgressRing Name="prVirtualTables" 
-                                      HorizontalAlignment="Center" 
-                                      VerticalAlignment="Center" 
-                                      Height="100" 
-                                      Width="100" 
+                        <ProgressRing Name="prVirtualTables"
+                                      Style="{StaticResource Spinner}"
                                       Visibility="Collapsed"
                                       Margin="0,20,0,0"/>
 
@@ -115,10 +112,7 @@
                 <PivotItem Header="Любими">
                     <StackPanel>
                         <ProgressRing Name="prFavourites" 
-                                      HorizontalAlignment="Center" 
-                                      VerticalAlignment="Center" 
-                                      Height="100" 
-                                      Width="100" 
+                                      Style="{StaticResource Spinner}"
                                       Visibility="Visible"
                                       IsActive="True"
                                       Margin="0,20,0,0"/>

@@ -16,7 +16,7 @@
     </Page.Resources>
 
     <Page.TopAppBar>
-        <CommandBar Background="DodgerBlue">
+        <CommandBar Background="{ThemeResource AccentColour}">
             <CommandBar.Content>
                 <TextBlock Text="ИНФОРМАЦИЯ" FontWeight="Bold" Margin="12,14,0,0" Foreground="White"/>
             </CommandBar.Content>

@@ -8,7 +8,7 @@
     mc:Ignorable="d">
 
     <Page.TopAppBar>
-        <CommandBar Background="DodgerBlue">
+        <CommandBar Background="{ThemeResource AccentColour}">
             <CommandBar.Content>
                 <TextBlock Name="txtTitle" FontWeight="Bold" Margin="12,14,0,0" Foreground="White"/>
             </CommandBar.Content>

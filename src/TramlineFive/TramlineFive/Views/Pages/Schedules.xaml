@@ -12,7 +12,7 @@
     </Page.Resources>
 
     <Page.TopAppBar>
-        <CommandBar Background="DodgerBlue">
+        <CommandBar Background="{ThemeResource AccentColour}">
             <CommandBar.Content>
                 <TextBlock Text="РАЗПИСАНИЯ" FontWeight="Bold" Margin="12,14,0,0" Foreground="White"/>
             </CommandBar.Content>
@@ -23,14 +23,11 @@
         <StackPanel Margin="0,0,0,25">
             <AutoSuggestBox TextChanged="AutoSuggestBox_TextChanged" QuerySubmitted="AutoSuggestBox_QuerySubmitted" QueryIcon="Find" />
 
-            <ProgressRing Name="prLines" 
-                            HorizontalAlignment="Center" 
-                            VerticalAlignment="Center" 
-                            Height="100" 
-                            Width="100" 
-                            Visibility="Visible"
-                            IsActive="True"
-                            Margin="0,20,0,0" />
+            <ProgressRing Name="prLines"
+                          Style="{StaticResource Spinner}"
+                          Visibility="Visible"
+                          IsActive="True"
+                          Margin="0,20,0,0" />
 
             <ListView Name="lvLines" ItemsSource="{Binding Source={StaticResource collectionViewSource}}" ItemClick="ListView_ItemClick" IsItemClickEnabled="True" SelectionMode="None">
                 <ListView.ItemTemplate>

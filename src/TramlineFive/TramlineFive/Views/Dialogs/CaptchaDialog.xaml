@@ -8,11 +8,7 @@
     mc:Ignorable="d"
     PrimaryButtonText="Напред"
     PrimaryButtonClick="ContentDialog_PrimaryButtonClick">
-    
-    <ContentDialog.Resources>
-        <Style TargetType="Button" BasedOn="{StaticResource BlueButton}" />
-    </ContentDialog.Resources>
-    
+
     <StackPanel>
         <Image Name="imgCaptcha" Width="150" Height="90" Margin="0,20,0,20"/>
         <TextBox Name="txtCaptcha" />

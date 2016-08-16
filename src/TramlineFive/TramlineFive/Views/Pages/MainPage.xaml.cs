@@ -185,11 +185,11 @@ namespace TramlineFive.Views.Pages
                 }
 
                 foreach (Arrival arrival in arrivals ?? Enumerable.Empty<Arrival>())
-                    Arrivals.Add(ArrivalViewModel.FromArrival(arrival));
+                    Arrivals.Add(new ArrivalViewModel(arrival));
             }
             catch (Exception ex)
             {
-                Arrivals.Add(new ArrivalViewModel { Direction = ex.Message });
+                await new MessageDialog(ex.Message).ShowAsync();
             }
             finally
             {
