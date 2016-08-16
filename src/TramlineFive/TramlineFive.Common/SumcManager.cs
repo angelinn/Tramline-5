@@ -73,6 +73,12 @@ namespace TramlineFive.Common
 
             HtmlDocument doc = new HtmlDocument();
             doc.LoadHtml(htmlString);
+
+            IEnumerable<HtmlNode> boldNodes = doc.DocumentNode.Descendants().Where(d => d.OriginalName == "b");
+            string stopTitle = String.Empty;
+            if (boldNodes.Count() >= 3)
+                stopTitle = boldNodes.ToList()[2].InnerText;
+
             IEnumerable<HtmlNode> infos = doc.DocumentNode.Descendants()
                     .Where(d => d.GetAttributeValue("class", "").StartsWith("arr_info"));
 
@@ -89,7 +95,8 @@ namespace TramlineFive.Common
                     {
                         VehicleNumber = Int32.Parse(title),
                         Timings = data[2].Trim().Split(','),
-                        Direction = data[3].Trim()
+                        Direction = data[3].Trim(),
+                        StopTitle = stopTitle
                     });
                 }
             }

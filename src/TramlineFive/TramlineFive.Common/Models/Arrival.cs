@@ -11,5 +11,6 @@ namespace TramlineFive.Common.Models
         public int VehicleNumber { get; set; }
         public string[] Timings { get; set; }
         public string Direction { get; set; }
+        public string StopTitle { get; set; }
     }
 }
