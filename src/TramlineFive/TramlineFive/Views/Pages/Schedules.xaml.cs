@@ -84,9 +84,7 @@ namespace TramlineFive.Views.Pages
 
         private async Task PromptForDirection(LineDO line)
         {
-            await line.LoadDirections();
-
-            DirectionDialog dialog = new DirectionDialog(line.Directions);
+            DirectionDialog dialog = new DirectionDialog(line);
             ContentDialogResult result = await dialog.ShowAsync();
 
             if (result == ContentDialogResult.Primary)

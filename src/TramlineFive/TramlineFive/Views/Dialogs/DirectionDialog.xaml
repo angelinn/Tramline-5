@@ -11,7 +11,8 @@
     PrimaryButtonClick="ContentDialog_PrimaryButtonClick" >
     
     <StackPanel Margin="0,20,0,0">
-        <ComboBox Name="cbDirections" ItemsSource="{Binding Directions}" DisplayMemberPath="Name" PlaceholderText="Избор на маршрут" SelectionChanged="cbDirections_SelectionChanged" />
-        <ComboBox Name="cbDays" ItemsSource="{Binding Days}" DisplayMemberPath="Type" PlaceholderText="Избор на ден" IsEnabled="False" Margin="0,10,0,0" SelectionChanged="cbDays_SelectionChanged" />
+        <ProgressRing Name="prDirections"  Width="50" Height="50" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Visible" IsActive="True" />
+        <ComboBox Name="cbDirections" ItemsSource="{Binding Directions}" DisplayMemberPath="Name" PlaceholderText="Избор на маршрут" SelectionChanged="cbDirections_SelectionChanged" Visibility="Collapsed" />
+        <ComboBox Name="cbDays" ItemsSource="{Binding Days}" DisplayMemberPath="Type" PlaceholderText="Избор на ден" IsEnabled="False" Margin="0,10,0,0" SelectionChanged="cbDays_SelectionChanged" Visibility="Collapsed" />
     </StackPanel>
 </ContentDialog>

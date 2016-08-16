@@ -29,13 +29,33 @@ namespace TramlineFive.Views.Dialogs
         public DirectionDO SelectedDirection { get; set; }
         public DayDO SelectedDay { get; set; }
 
-        public DirectionDialog(IEnumerable<DirectionDO> directions)
+        public DirectionDialog(LineDO lineDO)
         {
             this.InitializeComponent();
-            Directions = new ObservableCollection<DirectionDO>(directions);
+
+            line = lineDO;
+            Directions = new ObservableCollection<DirectionDO>();
             Days = new ObservableCollection<DayDO>();
             
             DataContext = this;
+            Loaded += DirectionDialog_Loaded;
+        }
+
+        private async void DirectionDialog_Loaded(object sender, RoutedEventArgs e)
+        {
+            IsPrimaryButtonEnabled = false;
+
+            await line.LoadDirections();
+            foreach (DirectionDO dir in line.Directions)
+                Directions.Add(dir);
+
+            prDirections.IsEnabled = false;
+            prDirections.Visibility = Visibility.Collapsed;
+
+            IsPrimaryButtonEnabled = true;
+
+            cbDays.Visibility = Visibility.Visible;
+            cbDirections.Visibility = Visibility.Visible;
         }
 
         private async void cbDirections_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -59,9 +79,6 @@ namespace TramlineFive.Views.Dialogs
                 args.Cancel = true;
         }
 
-        private void cbDays_SelectionChanged_1(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
+        private LineDO line;
     }
 }
