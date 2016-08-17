@@ -14,6 +14,11 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using Windows.Storage.Pickers;
+using Windows.Storage;
+using Windows.UI.Popups;
+using TramlineFive.DataAccess.DomainLogic;
+using Newtonsoft.Json;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -30,6 +35,26 @@ namespace TramlineFive.Views.Pages
             
             this.DataContext = new SettingsViewModel();
             this.Transitions = AnimationManager.SetUpPageAnimation();
+        }
+
+        private async void btnExport_Click(object sender, RoutedEventArgs e)
+        {
+            FolderPicker picker = new FolderPicker();
+            StorageFolder folder = await picker.PickSingleFolderAsync();
+
+            if (folder != null)
+            {
+                string serialized = JsonConvert.SerializeObject(await FavouriteDO.AllAsync());
+                StorageFile file = await folder.CreateFileAsync($"{Strings.AppName}_{DateTime.Now.ToString(Formats.Timestamp)}.t5d");
+                await FileIO.WriteTextAsync(file, serialized);
+
+                await new MessageDialog($"{Formats.ExportSuccess} - {file.Name}").ShowAsync();
+            }
+        }
+
+        private void btnImport_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

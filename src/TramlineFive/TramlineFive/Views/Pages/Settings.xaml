@@ -21,24 +21,23 @@
             </CommandBar.Content>
         </CommandBar>
     </Page.TopAppBar>
-   
 
-    <StackPanel Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" >
-        <ScrollViewer>
-            <StackPanel Margin="20,20,20,10">
-                <TextBlock Text="Позволи на приложението да изпраща push notification-и" Style="{StaticResource SettingTitle}"/>
-                <ToggleSwitch IsOn="{Binding PushNotifications, Mode=TwoWay}"  />
 
-                <TextBlock Text="Обновявай живата плочка на всеки 30 мин" Style="{StaticResource SettingTitle}"/>
-                <ToggleSwitch IsOn="{Binding LiveTile, Mode=TwoWay}"/>
+    <ScrollViewer Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" >
+        <StackPanel Margin="20,20,20,25">
+            <TextBlock Text="Позволи на приложението да изпраща push notification-и" Style="{StaticResource SettingTitle}"/>
+            <ToggleSwitch IsOn="{Binding PushNotifications, Mode=TwoWay}"  />
 
-                <TextBlock Text="Оценете приложението в Windows Store!" Margin="0,20,0,0" TextWrapping="Wrap" />
-                <Button Content="Оцени" Margin="0,10,0,20" />
-            
-                <TextBlock Text="Ако искате да прехвърлите любимите си спирки на друго устройство, използвайте бутона за извличане на настройки." TextWrapping="Wrap" />
-                
-                <Button Content="Извличане на настройки" Margin="0,10,0,0" />
-            </StackPanel>
-        </ScrollViewer>
-    </StackPanel>
+            <TextBlock Text="Обновявай живата плочка на всеки 30 мин" Style="{StaticResource SettingTitle}"/>
+            <ToggleSwitch IsOn="{Binding LiveTile, Mode=TwoWay}"/>
+
+            <TextBlock Text="Оценете приложението в Windows Store!" Margin="0,20,0,0" TextWrapping="Wrap" />
+            <Button Content="Оцени" Margin="0,10,0,20" />
+
+            <TextBlock Text="Ако искате да прехвърлите любимите си спирки на друго устройство, използвайте бутона за извличане на данни." TextWrapping="Wrap" />
+
+            <Button Name="btnExport" Content="Извличане на данни" Margin="0,10,0,0" Click="btnExport_Click" />
+            <Button Name="btnImport" Content="Възстановяване на данни" Margin="0,10,0,0" Click="btnImport_Click" />
+        </StackPanel>
+    </ScrollViewer>
 </Page>

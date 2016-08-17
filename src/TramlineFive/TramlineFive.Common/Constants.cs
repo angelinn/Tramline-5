@@ -8,6 +8,7 @@ namespace TramlineFive.Common
 {
     public static class Strings
     {
+        public static string AppName = "Tramline-5";
         public static string StatusBarText = "Софийски градски транспорт";
         public static string NoResults = "Няма резултати";
         public static string RequestOutlookRedirect = "Ще бъдете прехвърлени към Outlook.";
@@ -24,5 +25,11 @@ namespace TramlineFive.Common
         public static string Sumc = "http://m.sofiatraffic.bg/";
         public static string DeveloperEmail = "mailto:angelin.nedelchev@outlook.com";
         public static string FeedbackEmail = "https://wantoo.io/no5/ideas/";
+    }
+
+    public static class Formats
+    {
+        public static string Timestamp = "yyyyMMddHHmmss";
+        public static string ExportSuccess = "Успешно запазване във файл";
     }
 }
