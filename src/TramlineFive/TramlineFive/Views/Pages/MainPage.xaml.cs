@@ -236,18 +236,6 @@ namespace TramlineFive.Views.Pages
             attached.ShowAt(senderElement);
         }
 
-        private async void btnFeedback_Click(object sender, RoutedEventArgs e)
-        {
-            QuestionDialog feedbackDialog = new QuestionDialog(Strings.RequestOutlookRedirect);
-
-            IUICommand result = await feedbackDialog.ShowAsync();
-            if (result?.Label == Strings.Yes)
-            {
-                Uri feedbackEmail = new Uri(Urls.DeveloperEmail);
-                await Launcher.LaunchUriAsync(feedbackEmail);
-            }
-        }
-
         private async void MenuFlyoutItem_Click(object sender, RoutedEventArgs e)
         {
             Favourites.Clear();

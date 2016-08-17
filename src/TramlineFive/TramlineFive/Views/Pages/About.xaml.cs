@@ -36,5 +36,15 @@ namespace TramlineFive.Views.Pages
 
             this.DataContext = new VersionViewModel();
         }
+
+        private async void btnEmail_Click(object sender, RoutedEventArgs e)
+        {
+            await Launcher.LaunchUriAsync(new Uri(Urls.DeveloperEmail));
+        }
+
+        private async void btnFeedback_Click(object sender, RoutedEventArgs e)
+        {
+            await Launcher.LaunchUriAsync(new Uri(Urls.FeedbackEmail));
+        }
     }
 }

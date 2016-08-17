@@ -9,9 +9,7 @@
 
     <Page.Resources>
         <Style x:Name="aboutText" TargetType="TextBlock">
-            <Setter Property="HorizontalAlignment" Value="Center" />
             <Setter Property="TextWrapping" Value="Wrap" />
-            <Setter Property="TextAlignment" Value="Center" />
         </Style>
     </Page.Resources>
 
@@ -23,13 +21,18 @@
         </CommandBar>
     </Page.TopAppBar>
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10,10,10,10">
-            <TextBlock Style="{StaticResource aboutText}" FontWeight="Bold">
-                <Run Text="Трамвай №5 за Windows - Версия: " />
+    <ScrollViewer Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <StackPanel HorizontalAlignment="Center" Margin="10,10,10,30">
+            <TextBlock FontSize="20" Text="Трамвай №5 за Windows" />
+            <TextBlock FontSize="20" >
+                <Run Text="Версия: " />
                 <Run Text="{Binding Version}" />
             </TextBlock>
-            <TextBlock Text="2016" Style="{StaticResource aboutText}" FontWeight="Bold" />
+
+            <Button Content="FAQ" Margin="0,20,0,10" IsEnabled="False" />
+            <Button Name="btnFeedback" Content="докладвай бъг/подобрение" Margin="0,0,0,10" Click="btnFeedback_Click"  />
+            <Button Name="btnEmail" Content="e-mail" Click="btnEmail_Click" />
+
             <TextBlock Style="{StaticResource aboutText}" Margin="0,20,0,20" Text="Universal Windows приложението предоставя информация за пристигането на колите на Софийски градски транспорт." />
 
             <TextBlock Text="Данните се извличат от" Style="{StaticResource aboutText}" />
@@ -39,8 +42,8 @@
                 </Hyperlink>
             </TextBlock>
             <TextBlock Text="Потребителят трябва да има право на избор!" Style="{StaticResource aboutText}" />
-            <TextBlock Text="На главната страница на приложението ще намерите линк към сайта на градска мобилност." Margin="0,20,0,0" Style="{StaticResource aboutText}" />
+            <TextBlock Text="На главната страница на приложението ще намерите линк към сайта &quot;Център за градска мобилност.&quot;" Margin="0,20,0,0" Style="{StaticResource aboutText}" />
 
         </StackPanel>
-    </Grid>
+    </ScrollViewer>
 </Page>

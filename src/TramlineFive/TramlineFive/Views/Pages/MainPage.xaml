@@ -51,13 +51,6 @@
                     </StackPanel>
                 </Button>
 
-                <Button Name="btnFeedback" Click="btnFeedback_Click" Style="{StaticResource HamburgerMenuButton}">
-                    <StackPanel Orientation="Horizontal">
-                        <Button Content="&#xE8CA;" Style="{StaticResource BarIcon}" />
-                        <TextBlock Text="Обратна връзка" Style="{StaticResource BarText}"/>
-                    </StackPanel>
-                </Button>
-
                 <Button Name="btnSettings" Click="btnSettings_Click" Style="{StaticResource HamburgerMenuButton}">
                     <StackPanel Orientation="Horizontal">
                         <Button Content="&#xE713;" Style="{StaticResource BarIcon}" />

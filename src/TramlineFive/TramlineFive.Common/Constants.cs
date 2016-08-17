@@ -23,5 +23,6 @@ namespace TramlineFive.Common
     {
         public static string Sumc = "http://m.sofiatraffic.bg/";
         public static string DeveloperEmail = "mailto:angelin.nedelchev@outlook.com";
+        public static string FeedbackEmail = "https://wantoo.io/no5/ideas/";
     }
 }
