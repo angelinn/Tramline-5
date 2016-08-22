@@ -1,68 +1,43 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TramlineFive.Common;
 using TramlineFive.Common.Models;
+using TramlineFive.Views.Dialogs;
+using Windows.UI.Popups;
 
 namespace TramlineFive.ViewModels
 {
-    public class ArrivalViewModel : NotifyingViewModel
+    public class ArrivalViewModel
     {
-        public ArrivalViewModel(Arrival arrival)
+        public ObservableCollection<Arrival> Arrivals { get; set; }
+        public StringViewModel StopTitle { get; set; }
+
+        public ArrivalViewModel()
         {
-            VehicleNumber = arrival.VehicleNumber;
-            Timings = arrival.Timings;
-            Direction = arrival.Direction;
+            Arrivals = new ObservableCollection<Arrival>();
+            StopTitle = new StringViewModel();
         }
 
-        private int vehicleNumber;
-        public int VehicleNumber
+        public async Task<bool> GetByStopCode(string stopCode)
         {
-            get
-            {
-                return vehicleNumber;
-            }
+            Arrivals.Clear();
+            StopTitle.Source = String.Empty;
 
-            set
-            {
-                vehicleNumber = value;
-                OnPropertyChanged("VehicleNumber");
-            }
-        }
+            IEnumerable<Arrival> arrivals = await SumcManager.GetByStopAsync(stopCode, new CaptchaDialog());
 
-        private string[] timings;
-        public string[] Timings
-        {
-            get
-            {
-                return timings;
-            }
-            set
-            {
-                if (value != null)
-                {
-                    timings = value;
-                    OnPropertyChanged("Timings");
-                }
-            }
-        }
+            if (arrivals?.Count() == 0)
+                return false;
 
-        private string direction;
-        public string Direction
-        {
-            get
-            {
-                return direction;
-            }
-            set
-            {
-                if (value != null)
-                {
-                    direction = value;
-                    OnPropertyChanged("Direction");
-                }
-            }
-        }
+            foreach (Arrival arrival in arrivals ?? Enumerable.Empty<Arrival>())
+                Arrivals.Add(arrival);
+
+            StopTitle.Source = SumcParser.ParseStopTitle(Arrivals.FirstOrDefault()?.StopTitle);
+
+            return true;
+        } 
     }
 }

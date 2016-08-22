@@ -2,7 +2,6 @@
 using TramlineFive.ViewModels;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using Windows.Foundation.Metadata;
@@ -21,10 +20,6 @@ using TramlineFive.DataAccess;
 using Windows.UI.Xaml.Media;
 using TramlineFive.Common.Models;
 using TramlineFive.Views.Dialogs;
-using TramlineFive.DataAccess.Entities;
-
-using Newtonsoft.Json;
-using TramlineFive.DataAccess.Repositories;
 using TramlineFive.DataAccess.DomainLogic;
 using Windows.ApplicationModel.Core;
 
@@ -37,17 +32,17 @@ namespace TramlineFive.Views.Pages
     /// </summary>
     public sealed partial class MainPage : Page
     {
-        public ObservableCollection<ArrivalViewModel> Arrivals { get; set; }
-        public ObservableCollection<FavouriteDO> Favourites { get; set; }
-        public VersionViewModel Version { get; set; }
+        public ArrivalViewModel ArrivalViewModel { get; set; }
+        public FavouritesViewModel FavouritesViewModel { get; set; }
+        public VersionViewModel VersionViewModel { get; set; }
 
         public MainPage()
         {
             this.InitializeComponent();
 
-            Arrivals = new ObservableCollection<ArrivalViewModel>();
-            Favourites = new ObservableCollection<FavouriteDO>();
-            Version = new VersionViewModel();
+            ArrivalViewModel = new ArrivalViewModel();
+            FavouritesViewModel = new FavouritesViewModel();
+            VersionViewModel = new VersionViewModel();
 
             DataContext = this;
             NavigationCacheMode = NavigationCacheMode.Enabled;
@@ -87,18 +82,12 @@ namespace TramlineFive.Views.Pages
                 await CopyDatabaseFileIfNeeded();
                 await SetStatusBar();
 
-                await LoadFavourites();
+                await FavouritesViewModel.LoadFavourites();
 
                 prFavourites.IsActive = false;
                 prFavourites.Visibility = Visibility.Collapsed;
                 loaded = true;
             }
-        }
-
-        private async Task LoadFavourites()
-        {
-            foreach (FavouriteDO favourite in await FavouriteDO.AllAsync())
-                Favourites.Add(favourite);
         }
 
         private async Task CopyDatabaseFileIfNeeded()
@@ -175,19 +164,8 @@ namespace TramlineFive.Views.Pages
 
             try
             {
-                Arrivals.Clear();
-                IEnumerable<Arrival> arrivals = await SumcManager.GetByStopAsync(txtStopID.Text, new CaptchaDialog());
-
-                if (arrivals?.Count() == 0)
-                {
+                if (!await ArrivalViewModel.GetByStopCode(txtStopID.Text))
                     await new MessageDialog(Strings.NoResults).ShowAsync();
-                    return;
-                }
-
-                foreach (Arrival arrival in arrivals ?? Enumerable.Empty<Arrival>())
-                    Arrivals.Add(new ArrivalViewModel(arrival));
-
-                txtStopTitle.Text = SumcParser.ParseStopTitle(arrivals.First().StopTitle);
             }
             catch (Exception ex)
             {
@@ -238,14 +216,14 @@ namespace TramlineFive.Views.Pages
 
         private async void MenuFlyoutItem_Click(object sender, RoutedEventArgs e)
         {
-            Favourites.Clear();
+            FavouritesViewModel.Favourites.Clear();
             pvMain.SelectedIndex = 1;
 
             prFavourites.IsActive = true;
             prFavourites.Visibility = Visibility.Visible;
 
-            await FavouriteDO.Add(txtStopID.Text);
-            await LoadFavourites();
+            await FavouritesViewModel.Add(txtStopID.Text);
+            await FavouritesViewModel.LoadFavourites();
 
             prFavourites.IsActive = false;
             prFavourites.Visibility = Visibility.Collapsed;
