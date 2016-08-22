@@ -46,5 +46,13 @@ namespace TramlineFive.Views.Pages
         {
             await Launcher.LaunchUriAsync(new Uri(Urls.FeedbackEmail));
         }
+
+        private void btnBack_Click(object sender, RoutedEventArgs e)
+        {
+            Frame rootFrame = Window.Current.Content as Frame;
+
+            if (rootFrame.CanGoBack)
+                rootFrame.GoBack();
+        }
     }
 }

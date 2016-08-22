@@ -14,7 +14,10 @@
     <Page.TopAppBar>
         <CommandBar Background="{ThemeResource AccentColour}">
             <CommandBar.Content>
-                <TextBlock Text="РАЗПИСАНИЯ" FontWeight="Bold" Margin="12,14,0,0" Foreground="White"/>
+                <StackPanel Orientation="Horizontal">
+                    <Button Name="btnBack" FontFamily="Segoe MDL2 Assets" Content="&#xE830;" Margin="5,12,0,0" FontWeight="Bold" Click="btnBack_Click" />
+                    <TextBlock Text="РАЗПИСАНИЯ" FontWeight="Bold" Margin="12,14,0,0" Foreground="White"/>
+                </StackPanel>
             </CommandBar.Content>
         </CommandBar>
     </Page.TopAppBar>

@@ -57,5 +57,13 @@ namespace TramlineFive.Views.Pages
             StopDO selected = e.AddedItems.First() as StopDO;
             txtTimings.Text = String.Join(", ", selected.Timings);
         }
+
+        private void btnBack_Click(object sender, RoutedEventArgs e)
+        {
+            Frame rootFrame = Window.Current.Content as Frame;
+
+            if (rootFrame.CanGoBack)
+                rootFrame.GoBack();
+        }
     }
 }
