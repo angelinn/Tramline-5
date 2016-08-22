@@ -38,7 +38,6 @@ namespace TramlineFive.Common
                 formQuery.Add(new KeyValuePair<string, string>(STOP_CODE, query));
                 formQuery.Add(new KeyValuePair<string, string>(SUBMIT, WebUtility.UrlEncode(SUBMIT_VALUE)));
 
-
                 if (RequiresCaptcha(doc))
                 {
                     captchaDialog.SetUrl(captchaUrl);
@@ -119,6 +118,12 @@ namespace TramlineFive.Common
             }
 
             return requiresCaptcha;
+        }
+
+        private static IEnumerable<char> GetOtherTransportTypes(HtmlDocument doc)
+        {
+            IEnumerable<HtmlNode> others = doc.DocumentNode.Descendants().Where(d => d.GetAttributeValue("onclick", "") != "");
+            return others.Select(o => o.Attributes["onclick"].Value[o.Attributes["onclick"].Value.Length - 3]);
         }
 
         private static bool UpdateCookie(CookieCollection cookies)
