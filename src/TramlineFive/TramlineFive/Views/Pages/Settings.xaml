@@ -37,7 +37,7 @@
             <TextBlock Text="Ако искате да прехвърлите любимите си спирки на друго устройство, използвайте бутона за извличане на данни." TextWrapping="Wrap" />
 
             <Button Name="btnExport" Content="Извличане на данни" Margin="0,10,0,0" Click="btnExport_Click" />
-            <Button Name="btnImport" Content="Възстановяване на данни" Margin="0,10,0,0" Click="btnImport_Click" />
+            <Button Name="btnImport" Content="Възстановяване на данни" Margin="0,10,0,0" Click="btnImport_Click" IsEnabled="False" />
         </StackPanel>
     </ScrollViewer>
 </Page>
