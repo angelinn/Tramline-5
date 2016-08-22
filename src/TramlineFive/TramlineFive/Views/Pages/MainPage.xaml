@@ -27,7 +27,7 @@
                             <FontIcon FontSize="25" Glyph="&#xE700;" />
                         </AppBarButton.Icon>
                     </AppBarButton>
-                    <TextBlock Text="{Binding Version.DisplayName}" FontWeight="Bold" Foreground="White" Margin="0,14,0,0" />
+                    <TextBlock Text="{Binding VersionViewModel.DisplayName}" FontWeight="Bold" Foreground="White" Margin="0,14,0,0" />
                 </StackPanel>
             </CommandBar.Content>
 
@@ -82,9 +82,9 @@
                                       Visibility="Collapsed"
                                       Margin="0,20,0,0"/>
 
-                        <TextBlock Name="txtStopTitle" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" TextWrapping="Wrap" Margin="0,15,0,0"/>
+                        <TextBlock Text="{Binding ArrivalViewModel.StopTitle.Source}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" TextWrapping="Wrap" Margin="0,15,0,0"/>
 
-                        <ListView ItemsSource="{Binding Arrivals}" Margin="0,10,0,0" >
+                        <ListView ItemsSource="{Binding ArrivalViewModel.Arrivals}" Margin="0,10,0,0" >
                             <ListView.ItemTemplate>
                                 <DataTemplate>
                                     <StackPanel Holding="ListViewItem_Holding" FlyoutBase.AttachedFlyout="{StaticResource LineFlyout}" Height="50" Margin="0,10,0,0" >
@@ -112,7 +112,7 @@
                                       IsActive="True"
                                       Margin="0,20,0,0"/>
 
-                        <ListView Name="lvFavourites" ItemsSource="{Binding Favourites}" ItemClick="lvFavourites_ItemClick" IsItemClickEnabled="True" SelectionMode="None" Margin="0,10,0,0">
+                        <ListView Name="lvFavourites" ItemsSource="{Binding FavouritesViewModel.Favourites}" ItemClick="lvFavourites_ItemClick" IsItemClickEnabled="True" SelectionMode="None" Margin="0,10,0,0">
                             <ListView.ItemTemplate>
                                 <DataTemplate>
                                     <StackPanel Orientation="Horizontal">
