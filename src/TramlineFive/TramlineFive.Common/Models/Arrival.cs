@@ -8,6 +8,7 @@ namespace TramlineFive.Common.Models
 {
     public class Arrival
     {
+        public string Type { get; set; }
         public int VehicleNumber { get; set; }
         public string[] Timings { get; set; }
         public string Direction { get; set; }

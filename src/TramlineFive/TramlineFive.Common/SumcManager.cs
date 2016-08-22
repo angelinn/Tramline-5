@@ -30,9 +30,9 @@ namespace TramlineFive.Common
                 handler.CookieContainer = cookies;
                 client.DefaultRequestHeaders.UserAgent.ParseAdd(USER_AGENT);
 
-                var getresult = await client.GetAsync(address);
+                HttpResponseMessage getResult = await client.GetAsync(address);
                 HtmlDocument doc = new HtmlDocument();
-                doc.Load(await getresult.Content.ReadAsStreamAsync());
+                doc.Load(await getResult.Content.ReadAsStreamAsync());
 
                 List<KeyValuePair<string, string>> formQuery = GetHiddenFields(doc).ToList();
                 formQuery.Add(new KeyValuePair<string, string>(STOP_CODE, query));
@@ -48,7 +48,6 @@ namespace TramlineFive.Common
                 }
 
                 FormUrlEncodedContent content = new FormUrlEncodedContent(formQuery);
-
                 HttpResponseMessage response = await client.PostAsync(address, content);
 
                 if (UpdateCookie(handler.CookieContainer.GetCookies(address)))
@@ -93,6 +92,7 @@ namespace TramlineFive.Common
                 {
                     arrivals.Add(new Arrival
                     {
+                        Type = SumcParser.ParseSumcVehicleType(info.Attributes["class"].Value.Last()),
                         VehicleNumber = Int32.Parse(title),
                         Timings = data[2].Trim().Split(','),
                         Direction = data[3].Trim(),

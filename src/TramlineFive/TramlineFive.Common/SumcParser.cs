@@ -17,5 +17,20 @@ namespace TramlineFive.Common
             string parsed = WebUtility.HtmlDecode(stopTitle);
             return parsed.Substring(parsed.IndexOf(".") + 1);
         }
+
+        public static string ParseSumcVehicleType(char type)
+        {
+            switch (type)
+            {
+                case '0':
+                    return "Трамвай";
+                case '1':
+                    return "Автобус";
+                case '2':
+                    return "Тролей";
+                default:
+                    return String.Empty;
+            }
+        }
    } 
 }
