@@ -68,11 +68,10 @@
             </StackPanel>
         </SplitView.Pane>
 
-
         <SplitView.Content>
             <Pivot Name="pvMain" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" SelectionChanged="pvMain_SelectionChanged">
                 <PivotItem Header="Виртуални табла">
-                    <Grid>
+                    <Grid Padding="0,0,0,10">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="1*" />
                             <RowDefinition Height="2*" />
