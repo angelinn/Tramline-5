@@ -15,6 +15,7 @@ namespace TramlineFive.Common
     {
         static SumcManager()
         {
+            HtmlNode.ElementsFlags.Remove("form");
             SessionCookieValue = SettingsManager.ReadValue("cookie") as string;
 
             CookieContainer cookies = new CookieContainer();
@@ -27,7 +28,7 @@ namespace TramlineFive.Common
             httpClient.DefaultRequestHeaders.UserAgent.ParseAdd(USER_AGENT);
         }
 
-        public static async Task<IEnumerable<Arrival>> GetByStopAsync(string query, ICaptchaDialog captchaDialog, string submitIndex = "")
+        public static async Task<VirtualTable> GetByStopAsync(string query, ICaptchaDialog captchaDialog, string submitIndex = "")
         {
             int queryNum;
             if (String.IsNullOrEmpty(query) || !Int32.TryParse(query, out queryNum))
@@ -37,7 +38,7 @@ namespace TramlineFive.Common
             HtmlDocument doc = new HtmlDocument();
             doc.Load(await getResult.Content.ReadAsStreamAsync());
 
-            List<KeyValuePair<string, string>> formQuery = FormManager.GetFormFields(doc);
+            List<KeyValuePair<string, string>> formQuery = FormManager.GetFormFields(doc.DocumentNode);
             formQuery.Add(new KeyValuePair<string, string>(STOP_CODE, query));
 
             if (RequiresCaptcha(doc))
@@ -53,31 +54,32 @@ namespace TramlineFive.Common
 
             UpdateCookie();
 
-            return ParseArrivals(await response.Content.ReadAsStringAsync(), query);
+            VirtualTable virtualTable = new VirtualTable();
+            
+            HtmlDocument responseHtml = new HtmlDocument();
+            responseHtml.LoadHtml(await response.Content.ReadAsStringAsync());
+
+            virtualTable.Arrivals = ParseArrivals(responseHtml.DocumentNode);
+            virtualTable.OtherTransportTypes = ParseOtherTransportTypes(responseHtml.DocumentNode).ToList();
+
+            return virtualTable;
         }
 
-        private static IEnumerable<Arrival> ParseArrivals(string htmlString, string query)
+        public static IEnumerable<FormUrlEncodedContent> ParseOtherTransportTypes(HtmlNode node)
         {
-            if (htmlString == null)
-                return null;
+            IEnumerable<HtmlNode> forms = node.Descendants().Where(d => d.Name == "form" && d.GetAttributeValue("name", "") != "").Skip(1);
+            foreach (HtmlNode form in forms)
+                yield return new FormUrlEncodedContent(FormManager.GetFormFields(form));
+        }
 
-            HtmlDocument doc = new HtmlDocument();
-            doc.LoadHtml(htmlString);
-
-            //List<IEnumerable<Arrival>> others = new List<IEnumerable<Arrival>>();
-            //IEnumerable<char> otherTypes = GetOtherTransportTypes(doc);
-            //foreach (char type in otherTypes)
-            //{
-            //    others.Add(await GetByStopAsync(query, null, type.ToString()));
-            //}
-
-            IEnumerable<HtmlNode> boldNodes = doc.DocumentNode.Descendants().Where(d => d.OriginalName == "b");
+        private static IEnumerable<Arrival> ParseArrivals(HtmlNode node)
+        {
+            IEnumerable<HtmlNode> boldNodes = node.Descendants().Where(d => d.OriginalName == "b");
             string stopTitle = String.Empty;
             if (boldNodes.Count() >= 3)
                 stopTitle = boldNodes.ToList()[2].InnerText;
 
-            IEnumerable<HtmlNode> infos = doc.DocumentNode.Descendants()
-                    .Where(d => d.GetAttributeValue("class", "").StartsWith("arr_info"));
+            IEnumerable<HtmlNode> infos = node.Descendants().Where(d => d.GetAttributeValue("class", "").StartsWith("arr_info"));
 
             List<Arrival> arrivals = new List<Arrival>();
             foreach (var info in infos)
@@ -117,11 +119,6 @@ namespace TramlineFive.Common
             }
 
             return requiresCaptcha;
-        }
-
-        private static IEnumerable<HtmlNode> GetOtherTransportForms(HtmlDocument doc)
-        {
-            return doc.DocumentNode.Descendants().Where(d => d.Name == "form" && d.GetAttributeValue("name", "") != "").Skip(1);
         }
 
         private static bool UpdateCookie()

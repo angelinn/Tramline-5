@@ -27,12 +27,12 @@ namespace TramlineFive.ViewModels
             Arrivals.Clear();
             StopTitle.Source = String.Empty;
 
-            IEnumerable<Arrival> arrivals = await SumcManager.GetByStopAsync(stopCode, new CaptchaDialog());
+            VirtualTable table = await SumcManager.GetByStopAsync(stopCode, new CaptchaDialog());
 
-            if (arrivals?.Count() == 0)
+            if (table?.Arrivals.Count() == 0)
                 return false;
 
-            foreach (Arrival arrival in arrivals ?? Enumerable.Empty<Arrival>())
+            foreach (Arrival arrival in table.Arrivals ?? Enumerable.Empty<Arrival>())
                 Arrivals.Add(arrival);
 
             StopTitle.Source = SumcParser.ParseStopTitle(Arrivals.FirstOrDefault()?.StopTitle);
