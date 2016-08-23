@@ -113,13 +113,14 @@
     <Compile Include="Converters\StringFormatConverter.cs" />
     <Compile Include="Converters\TimingConverter.cs" />
     <Compile Include="Exceptions\CaptchaLocationError.cs" />
+    <Compile Include="FormManager.cs" />
     <Compile Include="Models\Arrival.cs" />
     <Compile Include="Models\ICaptchaDialog.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SettingsManager.cs" />
     <Compile Include="SumcManager.cs" />
     <Compile Include="SumcParser.cs" />
-    <Compile Include="VehicleType.cs" />
+    <Compile Include="Models\VehicleType.cs" />
     <Compile Include="VersionManager.cs" />
     <EmbeddedResource Include="Properties\TramlineFive.Common.rd.xml" />
   </ItemGroup>

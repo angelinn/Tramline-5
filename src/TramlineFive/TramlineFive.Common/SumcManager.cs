@@ -13,64 +13,63 @@ namespace TramlineFive.Common
 {
     public static class SumcManager
     {
-        public static async Task<IEnumerable<Arrival>> GetByStopAsync(string query, ICaptchaDialog captchaDialog)
+        static SumcManager()
+        {
+            SessionCookieValue = SettingsManager.ReadValue("cookie") as string;
+
+            CookieContainer cookies = new CookieContainer();
+            cookies.Add(VT_URI, new Cookie(SESSION_COOKIE_NAME, SessionCookieValue));
+
+            httpClientHandler = new HttpClientHandler();
+            httpClientHandler.CookieContainer = cookies;
+
+            httpClient = new HttpClient(httpClientHandler);
+            httpClient.DefaultRequestHeaders.UserAgent.ParseAdd(USER_AGENT);
+        }
+
+        public static async Task<IEnumerable<Arrival>> GetByStopAsync(string query, ICaptchaDialog captchaDialog, string submitIndex = "")
         {
             int queryNum;
             if (String.IsNullOrEmpty(query) || !Int32.TryParse(query, out queryNum))
                 return null;
 
-            Uri address = new Uri(VIRTUAL_TABLES_URL);
+            HttpResponseMessage getResult = await httpClient.GetAsync(VT_URI);
+            HtmlDocument doc = new HtmlDocument();
+            doc.Load(await getResult.Content.ReadAsStreamAsync());
 
-            CookieContainer cookies = new CookieContainer();
-            cookies.Add(address, new Cookie(MAGIC_COOKIE_NAME, MAGIC_COOKIE_VALUE));
+            List<KeyValuePair<string, string>> formQuery = FormManager.GetFormFields(doc);
+            formQuery.Add(new KeyValuePair<string, string>(STOP_CODE, query));
 
-            using (HttpClientHandler handler = new HttpClientHandler())
-            using (HttpClient client = new HttpClient(handler))
+            if (RequiresCaptcha(doc))
             {
-                handler.CookieContainer = cookies;
-                client.DefaultRequestHeaders.UserAgent.ParseAdd(USER_AGENT);
+                captchaDialog.SetUrl(captchaUrl);
+                await captchaDialog.ShowAsync();
 
-                HttpResponseMessage getResult = await client.GetAsync(address);
-                HtmlDocument doc = new HtmlDocument();
-                doc.Load(await getResult.Content.ReadAsStreamAsync());
-
-                List<KeyValuePair<string, string>> formQuery = GetHiddenFields(doc).ToList();
-                formQuery.Add(new KeyValuePair<string, string>(STOP_CODE, query));
-                formQuery.Add(new KeyValuePair<string, string>(SUBMIT, WebUtility.UrlEncode(SUBMIT_VALUE)));
-
-                if (RequiresCaptcha(doc))
-                {
-                    captchaDialog.SetUrl(captchaUrl);
-                    await captchaDialog.ShowAsync();
-
-                    formQuery.Add(new KeyValuePair<string, string>(CAPTCHA_KEY, captchaDialog.CaptchaString));
-                }
-
-                FormUrlEncodedContent content = new FormUrlEncodedContent(formQuery);
-                HttpResponseMessage response = await client.PostAsync(address, content);
-
-                if (UpdateCookie(handler.CookieContainer.GetCookies(address)))
-                    SettingsManager.UpdateValue("cookie", MAGIC_COOKIE_VALUE);
-
-                return GetArrivals(await response.Content.ReadAsStringAsync());
+                formQuery.Add(new KeyValuePair<string, string>(CAPTCHA_KEY, captchaDialog.CaptchaString));
             }
+
+            FormUrlEncodedContent content = new FormUrlEncodedContent(formQuery);
+            HttpResponseMessage response = await httpClient.PostAsync(VT_URI, content);
+
+            UpdateCookie();
+
+            return ParseArrivals(await response.Content.ReadAsStringAsync(), query);
         }
 
-        private static IEnumerable<KeyValuePair<string, string>> GetHiddenFields(HtmlDocument root)
-        {
-            return root.DocumentNode.Descendants()
-                    .Where(d => d.Name == "input" && d.GetAttributeValue("type", "") == "hidden" &&
-                           d.Attributes.Contains("name") && d.Attributes.Contains("value"))
-                    .Select(n => new KeyValuePair<string, string>(n.Attributes["name"].Value, n.Attributes["value"].Value));
-        }
-
-        private static IEnumerable<Arrival> GetArrivals(string htmlString)
+        private static IEnumerable<Arrival> ParseArrivals(string htmlString, string query)
         {
             if (htmlString == null)
                 return null;
 
             HtmlDocument doc = new HtmlDocument();
             doc.LoadHtml(htmlString);
+
+            //List<IEnumerable<Arrival>> others = new List<IEnumerable<Arrival>>();
+            //IEnumerable<char> otherTypes = GetOtherTransportTypes(doc);
+            //foreach (char type in otherTypes)
+            //{
+            //    others.Add(await GetByStopAsync(query, null, type.ToString()));
+            //}
 
             IEnumerable<HtmlNode> boldNodes = doc.DocumentNode.Descendants().Where(d => d.OriginalName == "b");
             string stopTitle = String.Empty;
@@ -120,21 +119,21 @@ namespace TramlineFive.Common
             return requiresCaptcha;
         }
 
-        private static IEnumerable<char> GetOtherTransportTypes(HtmlDocument doc)
+        private static IEnumerable<HtmlNode> GetOtherTransportForms(HtmlDocument doc)
         {
-            IEnumerable<HtmlNode> others = doc.DocumentNode.Descendants().Where(d => d.GetAttributeValue("onclick", "") != "");
-            return others.Select(o => o.Attributes["onclick"].Value[o.Attributes["onclick"].Value.Length - 3]);
+            return doc.DocumentNode.Descendants().Where(d => d.Name == "form" && d.GetAttributeValue("name", "") != "").Skip(1);
         }
 
-        private static bool UpdateCookie(CookieCollection cookies)
+        private static bool UpdateCookie()
         {
-            foreach (Cookie cookie in cookies)
+            foreach (Cookie cookie in httpClientHandler.CookieContainer.GetCookies(VT_URI))
             {
-                if (cookie.Name == MAGIC_COOKIE_NAME)
+                if (cookie.Name == SESSION_COOKIE_NAME)
                 {
-                    if (MAGIC_COOKIE_VALUE != cookie.Value)
+                    if (SessionCookieValue != cookie.Value)
                     {
-                        MAGIC_COOKIE_VALUE = cookie.Value;
+                        SessionCookieValue = cookie.Value;
+                        SettingsManager.UpdateValue("cookie", SessionCookieValue);
                     }
 
                     return true;
@@ -145,19 +144,21 @@ namespace TramlineFive.Common
 
         public static void ResetCookie()
         {
-            MAGIC_COOKIE_VALUE = String.Empty;
+            SessionCookieValue = String.Empty;
         }
-
-        private static string captchaUrl;
 
         private const string BASE_URL = "http://m.sofiatraffic.bg";
         private const string VIRTUAL_TABLES_URL = "http://m.sofiatraffic.bg/vt";
         private const string STOP_CODE = "stopCode";
-        private const string SUBMIT = "submit";
-        private const string SUBMIT_VALUE = "Провери";
         private const string CAPTCHA_KEY = "sc";
-        private const string MAGIC_COOKIE_NAME = "alpocjengi";
+        private const string SESSION_COOKIE_NAME = "alpocjengi";
         private const string USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.106 Safari/537.36 OPR/38.0.2220.41";
-        private static string MAGIC_COOKIE_VALUE = SettingsManager.ReadValue("cookie") as string;
+
+        private static Uri VT_URI = new Uri(VIRTUAL_TABLES_URL);
+        private static string captchaUrl;
+        private static string SessionCookieValue;
+
+        private static HttpClient httpClient;
+        private static HttpClientHandler httpClientHandler;
     }
 }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TramlineFive.Common;
+using TramlineFive.Common.Models;
 
 namespace TramlineFive.DataAccess.Entities
 {
