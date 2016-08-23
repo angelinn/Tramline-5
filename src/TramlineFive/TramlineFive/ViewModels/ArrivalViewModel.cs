@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 using TramlineFive.Common;
 using TramlineFive.Common.Models;
 using TramlineFive.Views.Dialogs;
-using Windows.UI.Popups;
 
 namespace TramlineFive.ViewModels
 {
@@ -27,12 +26,12 @@ namespace TramlineFive.ViewModels
             Arrivals.Clear();
             StopTitle.Source = String.Empty;
 
-            VirtualTable table = await SumcManager.GetByStopAsync(stopCode, new CaptchaDialog());
+            IEnumerable<Arrival> arrivals = await SumcManager.GetByStopAsync(stopCode, new CaptchaDialog());
 
-            if (table?.Arrivals.Count() == 0)
+            if (arrivals?.Count() == 0)
                 return false;
 
-            foreach (Arrival arrival in table.Arrivals ?? Enumerable.Empty<Arrival>())
+            foreach (Arrival arrival in arrivals ?? Enumerable.Empty<Arrival>())
                 Arrivals.Add(arrival);
 
             StopTitle.Source = SumcParser.ParseStopTitle(Arrivals.FirstOrDefault()?.StopTitle);

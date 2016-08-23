@@ -28,7 +28,7 @@ namespace TramlineFive.Common
             httpClient.DefaultRequestHeaders.UserAgent.ParseAdd(USER_AGENT);
         }
 
-        public static async Task<VirtualTable> GetByStopAsync(string query, ICaptchaDialog captchaDialog, string submitIndex = "")
+        public static async Task<IEnumerable<Arrival>> GetByStopAsync(string query, ICaptchaDialog captchaDialog, string submitIndex = "")
         {
             int queryNum;
             if (String.IsNullOrEmpty(query) || !Int32.TryParse(query, out queryNum))
@@ -53,19 +53,34 @@ namespace TramlineFive.Common
             HttpResponseMessage response = await httpClient.PostAsync(VT_URI, content);
 
             UpdateCookie();
-
-            VirtualTable virtualTable = new VirtualTable();
             
             HtmlDocument responseHtml = new HtmlDocument();
             responseHtml.LoadHtml(await response.Content.ReadAsStringAsync());
 
-            virtualTable.Arrivals = ParseArrivals(responseHtml.DocumentNode);
-            virtualTable.OtherTransportTypes = ParseOtherTransportTypes(responseHtml.DocumentNode).ToList();
+            List<Arrival> arrivals = ParseArrivals(responseHtml.DocumentNode).ToList();
+            IEnumerable<FormUrlEncodedContent> formsData = ParseOtherTransportTypes(responseHtml.DocumentNode);
+            if (formsData.Count() > 0)
+                arrivals.AddRange(await GetOtherTransportTypes(formsData));
 
-            return virtualTable;
+            return arrivals;
         }
 
-        public static IEnumerable<FormUrlEncodedContent> ParseOtherTransportTypes(HtmlNode node)
+        private static async Task<IEnumerable<Arrival>> GetOtherTransportTypes(IEnumerable<FormUrlEncodedContent> formsData)
+        {
+            List<Arrival> more = new List<Arrival>();
+            HttpResponseMessage response = null;
+            HtmlDocument document = new HtmlDocument();
+
+            foreach (FormUrlEncodedContent formData in formsData)
+            {
+                response = await httpClient.PostAsync(VT_URI, formData);
+                document.LoadHtml(await response.Content.ReadAsStringAsync());
+                more.AddRange(ParseArrivals(document.DocumentNode));
+            }
+            return more;
+        }
+
+        private static IEnumerable<FormUrlEncodedContent> ParseOtherTransportTypes(HtmlNode node)
         {
             IEnumerable<HtmlNode> forms = node.Descendants().Where(d => d.Name == "form" && d.GetAttributeValue("name", "") != "").Skip(1);
             foreach (HtmlNode form in forms)
