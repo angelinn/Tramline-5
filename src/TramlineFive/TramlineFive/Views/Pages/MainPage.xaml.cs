@@ -253,5 +253,12 @@ namespace TramlineFive.Views.Pages
         private bool reloadVirtualTable;
         private bool loading;
         private bool loaded;
+
+        private async void btnRemoveFavourite_Click(object sender, RoutedEventArgs e)
+        {
+            FavouriteDO item = (sender as Button).DataContext as FavouriteDO;
+            await FavouritesViewModel.Remove(item);
+            lvFavourites.Items.Remove(item);
+        }
     }
 }

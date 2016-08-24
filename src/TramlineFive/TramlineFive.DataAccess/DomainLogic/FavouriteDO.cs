@@ -15,6 +15,7 @@ namespace TramlineFive.DataAccess.DomainLogic
         {
             code = entity.Stop.Code;
             name = entity.Stop.Name;
+            id = entity.ID;
         }
 
         public static async Task Add(string code)
@@ -35,6 +36,18 @@ namespace TramlineFive.DataAccess.DomainLogic
             });
         }
 
+        public static async Task Remove(FavouriteDO favourite)
+        {
+            await Task.Run(() =>
+            {
+                using (UnitOfWork uow = new UnitOfWork())
+                {
+                    uow.Favourites.Delete(favourite.id);
+                    uow.Save();
+                }
+            });
+        }
+
         public static async Task<IEnumerable<FavouriteDO>> AllAsync()
         {
             return await Task.Run(() =>
@@ -45,6 +58,8 @@ namespace TramlineFive.DataAccess.DomainLogic
                 }
             });
         }
+
+        private int id;
 
         private string code;
         public string Code
