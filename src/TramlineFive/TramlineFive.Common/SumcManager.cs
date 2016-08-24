@@ -28,7 +28,7 @@ namespace TramlineFive.Common
             httpClient.DefaultRequestHeaders.UserAgent.ParseAdd(USER_AGENT);
         }
 
-        public static async Task<IEnumerable<Arrival>> GetByStopAsync(string query, ICaptchaDialog captchaDialog, string submitIndex = "")
+        public static async Task<IEnumerable<Arrival>> GetByStopAsync(string query, Type captchaType, string submitIndex = "")
         {
             int queryNum;
             if (String.IsNullOrEmpty(query) || !Int32.TryParse(query, out queryNum))
@@ -43,6 +43,7 @@ namespace TramlineFive.Common
 
             if (RequiresCaptcha(doc))
             {
+                ICaptchaDialog captchaDialog = Activator.CreateInstance(captchaType) as ICaptchaDialog;
                 captchaDialog.SetUrl(captchaUrl);
                 await captchaDialog.ShowAsync();
 
