@@ -31,5 +31,6 @@ namespace TramlineFive.Common
     {
         public static string Timestamp = "yyyyMMddHHmmss";
         public static string ExportSuccess = "Успешно запазване във файл";
+        public static string ConfirmDeleteFavourite = "Премахване на '{0}' от любими?";
     }
 }

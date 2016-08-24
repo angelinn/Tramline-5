@@ -30,8 +30,8 @@ namespace TramlineFive.ViewModels
 
         public async Task Remove(FavouriteDO favourite)
         {
-            await FavouriteDO.Remove(favourite);
             Favourites.Remove(Favourites.Where(f => f.Code == favourite.Code).First());
+            await FavouriteDO.Remove(favourite);
         }
     }
 }

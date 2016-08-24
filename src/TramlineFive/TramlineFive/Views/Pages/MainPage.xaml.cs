@@ -249,16 +249,21 @@ namespace TramlineFive.Views.Pages
             reloadVirtualTable = true;
             pvMain.SelectedIndex = 0;
         }
+        private async void btnRemoveFavourite_Click(object sender, RoutedEventArgs e)
+        {
+            FavouriteDO item = (sender as Button).DataContext as FavouriteDO;
+            QuestionDialog confirmDeleteDialog = new QuestionDialog(String.Format(Formats.ConfirmDeleteFavourite, item.Name));
+
+            IUICommand result = await confirmDeleteDialog.ShowAsync();
+            if (result?.Label == Strings.Yes)
+            {
+                await FavouritesViewModel.Remove(item);
+                lvFavourites.Items.Remove(item);
+            }
+        }
 
         private bool reloadVirtualTable;
         private bool loading;
         private bool loaded;
-
-        private async void btnRemoveFavourite_Click(object sender, RoutedEventArgs e)
-        {
-            FavouriteDO item = (sender as Button).DataContext as FavouriteDO;
-            await FavouritesViewModel.Remove(item);
-            lvFavourites.Items.Remove(item);
-        }
     }
 }
