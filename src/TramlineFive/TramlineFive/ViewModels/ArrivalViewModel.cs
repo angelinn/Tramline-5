@@ -31,14 +31,18 @@ namespace TramlineFive.ViewModels
 
             IEnumerable<Arrival> arrivals = await SumcManager.GetByStopAsync(stopCode, typeof(CaptchaDialog));
 
-            if (arrivals?.Count() == 0)
-                return false;
+            if (arrivals != null)
+            {
 
-            foreach (Arrival arrival in arrivals ?? Enumerable.Empty<Arrival>())
-                Arrivals.Add(arrival);
+                if (arrivals.Count() == 0)
+                    return false;
 
-            StopTitle.Source = SumcParser.ParseStopTitle(Arrivals.FirstOrDefault()?.StopTitle);
-            AsOfTime.Source = "Данни от " + DateTime.Now.ToString("HH:mm");
+                foreach (Arrival arrival in arrivals)
+                    Arrivals.Add(arrival);
+
+                StopTitle.Source = SumcParser.ParseStopTitle(Arrivals.FirstOrDefault().StopTitle);
+                AsOfTime.Source = "Данни от " + DateTime.Now.ToString("HH:mm");
+            }
 
             return true;
         } 
