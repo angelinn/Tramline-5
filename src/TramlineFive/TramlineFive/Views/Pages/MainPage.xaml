@@ -14,11 +14,8 @@
         <su:StringFormatConverter x:Key="StringFormat" />
 
         <MenuFlyout x:Name="LineFlyout">
-            <MenuFlyoutItem day Text="Добави в любими" Click="MenuFlyoutItem_Click" />
+            <MenuFlyoutItem Text="Добави в любими" Click="MenuFlyoutItem_Click" />
         </MenuFlyout>
-        <Style TargetType="ListViewItem">
-            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-        </Style>
     </Page.Resources>
 
     <Page.TopAppBar>
@@ -115,16 +112,21 @@
                         <ProgressRing Name="prFavourites" Style="{StaticResource Spinner}" Visibility="Visible" IsActive="True" />
 
                         <ListView Name="lvFavourites" ItemsSource="{Binding FavouritesViewModel.Favourites}" ItemClick="lvFavourites_ItemClick" IsItemClickEnabled="True" SelectionMode="None">
+                            <ListView.Resources>
+                                <Style TargetType="ListViewItem">
+                                    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                                    <Setter Property="BorderThickness" Value="0,0,0,1" />
+                                    <Setter Property="BorderBrush" Value="LightGray" />
+                                </Style>
+                            </ListView.Resources>
                             <ListView.ItemTemplate>
                                 <DataTemplate>
-                                    <Grid> 
-                                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
-                                            <TextBlock Text="{Binding Name}" Margin="0,0,5,0" />
-                                            <TextBlock Text="(" />
-                                            <TextBlock Text="{Binding Code, Converter={StaticResource StopCodeConverter}}" />
-                                            <TextBlock Text=")" />
-                                        </StackPanel>
-                                        <Button HorizontalAlignment="Right" VerticalAlignment="Center" FontFamily="Segoe MDL2 Assets" Content="&#xE735;" FontSize="20" FontWeight="Bold" Background="Transparent" Foreground="Black"/>
+                                    <Grid>
+                                        <TextBlock VerticalAlignment="Center">
+                                             <Run Text="{Binding Name}" />
+                                            (<Run Text="{Binding Code, Converter={StaticResource StopCodeConverter}}" />)
+                                        </TextBlock>
+                                        <Button HorizontalAlignment="Right" VerticalAlignment="Center" FontFamily="Segoe MDL2 Assets" Content="&#xE8D9;" FontSize="20" FontWeight="Bold" Background="Transparent" Foreground="Black"/>
                                     </Grid>
                                 </DataTemplate>
                             </ListView.ItemTemplate>
