@@ -66,28 +66,140 @@ namespace TramlineFive.Views.Pages
             if (rootFrame.CanGoBack)
                 rootFrame.GoBack();
             else
-            {
-                QuestionDialog exitPrompt = new QuestionDialog(Strings.PromptExit);
-
-                IUICommand result = await exitPrompt.ShowAsync();
-                if (result?.Label == Strings.Yes)
-                    CoreApplication.Exit();
-            }
+                await new QuestionDialog(Strings.PromptExit, () => CoreApplication.Exit()).ShowAsync();
         }
 
         private async void MainPage_Loaded(object sender, RoutedEventArgs e)
         {
-            if (!loaded)
+            if (firstLoad)
             {
                 await CopyDatabaseFileIfNeeded();
                 await SetStatusBar();
 
-                await FavouritesViewModel.LoadFavourites();
-
-                prFavourites.IsActive = false;
-                prFavourites.Visibility = Visibility.Collapsed;
-                loaded = true;
+                firstLoad = false;
             }
+
+            await FavouritesViewModel.LoadFavourites();
+
+            prFavourites.IsActive = false;
+            prFavourites.Visibility = Visibility.Collapsed;
+        }
+
+        private async void btnStop_Click(object sender, RoutedEventArgs e)
+        {
+            if (!prVirtualTables.IsActive)
+            {
+                prVirtualTables.IsActive = true;
+                prVirtualTables.Visibility = Visibility.Visible;
+
+                try
+                {
+                    if (!await ArrivalViewModel.GetByStopCode(txtStopID.Text))
+                        await new MessageDialog(Strings.NoResults).ShowAsync();
+                }
+                catch (Exception ex)
+                {
+                    await new MessageDialog(ex.Message).ShowAsync();
+                }
+                finally
+                {
+                    prVirtualTables.IsActive = false;
+                    prVirtualTables.Visibility = Visibility.Collapsed;
+                }
+            }
+        }
+
+        private void txtStopID_KeyDown(object sender, KeyRoutedEventArgs e)
+        {
+            if (e.Key == VirtualKey.Enter)
+            {
+                btnStop_Click(this, new RoutedEventArgs());
+                InputPane.GetForCurrentView().TryHide();
+
+                e.Handled = true;
+            }
+        }
+
+        private async void btnSumc_Click(object sender, RoutedEventArgs e)
+        {
+            await new QuestionDialog(Strings.SumcRedirect, async () =>
+            {
+                Uri sumc = new Uri(Urls.Sumc);
+                await Launcher.LaunchUriAsync(sumc);
+            }).ShowAsync();
+        }
+
+        private void ListViewItem_Holding(object sender, HoldingRoutedEventArgs e)
+        {
+            FrameworkElement senderElement = sender as FrameworkElement;
+            FlyoutBase attached = FlyoutBase.GetAttachedFlyout(senderElement);
+            attached.ShowAt(senderElement);
+        }
+
+        private async void MenuFlyoutItem_Click(object sender, RoutedEventArgs e)
+        {
+            FavouritesViewModel.Favourites.Clear();
+            pvMain.SelectedIndex = 1;
+
+            prFavourites.IsActive = true;
+            prFavourites.Visibility = Visibility.Visible;
+
+            await FavouritesViewModel.Add(txtStopID.Text);
+            await FavouritesViewModel.LoadFavourites();
+
+            prFavourites.IsActive = false;
+            prFavourites.Visibility = Visibility.Collapsed;
+        }
+
+        private void pvMain_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (pvMain.SelectedIndex == 0)
+            {
+                pvMain.Focus(FocusState.Pointer);
+                if (reloadVirtualTable && !String.IsNullOrEmpty(txtStopID.Text))
+                {
+                    btnStop_Click(this, new RoutedEventArgs());
+                    reloadVirtualTable = false;
+                }
+            }
+        }
+
+        private void lvFavourites_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            txtStopID.Text = String.Format("{0:D4}", Int32.Parse((e.ClickedItem as FavouriteDO).Code));
+
+            reloadVirtualTable = true;
+            pvMain.SelectedIndex = 0;
+        }
+
+        private void OnHamburgerClick(object sender, RoutedEventArgs e)
+        {
+            svMain.IsPaneOpen = !svMain.IsPaneOpen;
+        }
+
+        private void btnAbout_Click(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(About));
+        }
+
+        private void btnSettings_Click(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(Settings));
+        }
+
+        private void btnSchedules_Click(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(Schedules));
+        }
+
+        private async void btnRemoveFavourite_Click(object sender, RoutedEventArgs e)
+        {
+            FavouriteDO item = (sender as Button).DataContext as FavouriteDO;
+            await new QuestionDialog(String.Format(Formats.ConfirmDeleteFavourite, item.Name), async () =>
+            {
+                await FavouritesViewModel.Remove(item);
+                lvFavourites.Items.Remove(item);
+            }).ShowAsync();
         }
 
         private async Task CopyDatabaseFileIfNeeded()
@@ -137,133 +249,7 @@ namespace TramlineFive.Views.Pages
             }
         }
 
-        private void btnAbout_Click(object sender, RoutedEventArgs e)
-        {
-            Frame.Navigate(typeof(About));
-        }
-
-        private void btnSettings_Click(object sender, RoutedEventArgs e)
-        {
-            Frame.Navigate(typeof(Settings));
-        }
-
-        private void btnSchedules_Click(object sender, RoutedEventArgs e)
-        {
-            Frame.Navigate(typeof(Schedules));
-        }
-
-        private async void btnStop_Click(object sender, RoutedEventArgs e)
-        {
-            if (loading)
-                return;
-
-            loading = true;
-
-            prVirtualTables.IsActive = true;
-            prVirtualTables.Visibility = Visibility.Visible;
-
-            try
-            {
-                if (!await ArrivalViewModel.GetByStopCode(txtStopID.Text))
-                    await new MessageDialog(Strings.NoResults).ShowAsync();
-            }
-            catch (Exception ex)
-            {
-                await new MessageDialog(ex.Message).ShowAsync();
-            }
-            finally
-            {
-                prVirtualTables.IsActive = false;
-                prVirtualTables.Visibility = Visibility.Collapsed;
-                loading = false;
-            }
-        }
-
-        private void txtStopID_KeyDown(object sender, KeyRoutedEventArgs e)
-        {
-            if (e.Key == VirtualKey.Enter)
-            {
-                btnStop_Click(this, new RoutedEventArgs());
-                InputPane.GetForCurrentView().TryHide();
-
-                e.Handled = true;
-            }
-        }
-
-        private void OnHamburgerClick(object sender, RoutedEventArgs e)
-        {
-            svMain.IsPaneOpen = !svMain.IsPaneOpen;
-        }
-
-        private async void btnSumc_Click(object sender, RoutedEventArgs e)
-        {
-            QuestionDialog sumcDialog = new QuestionDialog(Strings.SumcRedirect);
-
-            IUICommand result = await sumcDialog.ShowAsync();
-            if (result?.Label == Strings.Yes)
-            {
-                Uri sumc = new Uri(Urls.Sumc);
-                await Launcher.LaunchUriAsync(sumc);
-            }
-        }
-
-        private void ListViewItem_Holding(object sender, HoldingRoutedEventArgs e)
-        {
-            FrameworkElement senderElement = sender as FrameworkElement;
-            FlyoutBase attached = FlyoutBase.GetAttachedFlyout(senderElement);
-            attached.ShowAt(senderElement);
-        }
-
-        private async void MenuFlyoutItem_Click(object sender, RoutedEventArgs e)
-        {
-            FavouritesViewModel.Favourites.Clear();
-            pvMain.SelectedIndex = 1;
-
-            prFavourites.IsActive = true;
-            prFavourites.Visibility = Visibility.Visible;
-
-            await FavouritesViewModel.Add(txtStopID.Text);
-            await FavouritesViewModel.LoadFavourites();
-
-            prFavourites.IsActive = false;
-            prFavourites.Visibility = Visibility.Collapsed;
-        }
-
-        private void pvMain_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (pvMain.SelectedIndex == 0)
-            {
-                pvMain.Focus(FocusState.Pointer);
-                if (reloadVirtualTable && !String.IsNullOrEmpty(txtStopID.Text))
-                {
-                    btnStop_Click(this, new RoutedEventArgs());
-                    reloadVirtualTable = false;
-                }
-            }
-        }
-
-        private void lvFavourites_ItemClick(object sender, ItemClickEventArgs e)
-        {
-            txtStopID.Text = String.Format("{0:D4}", Int32.Parse((e.ClickedItem as FavouriteDO).Code));
-
-            reloadVirtualTable = true;
-            pvMain.SelectedIndex = 0;
-        }
-        private async void btnRemoveFavourite_Click(object sender, RoutedEventArgs e)
-        {
-            FavouriteDO item = (sender as Button).DataContext as FavouriteDO;
-            QuestionDialog confirmDeleteDialog = new QuestionDialog(String.Format(Formats.ConfirmDeleteFavourite, item.Name));
-
-            IUICommand result = await confirmDeleteDialog.ShowAsync();
-            if (result?.Label == Strings.Yes)
-            {
-                await FavouritesViewModel.Remove(item);
-                lvFavourites.Items.Remove(item);
-            }
-        }
-
         private bool reloadVirtualTable;
-        private bool loading;
-        private bool loaded;
+        private bool firstLoad = true;
     }
 }
