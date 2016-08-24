@@ -73,8 +73,8 @@
                 <PivotItem Header="Виртуални табла">
                     <Grid Padding="0,0,0,10">
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="1*" />
                             <RowDefinition Height="2*" />
+                            <RowDefinition Height="3*" />
                         </Grid.RowDefinitions>
                         
                         <ProgressRing Grid.Row="0" Grid.RowSpan="2" Name="prVirtualTables" Style="{StaticResource Spinner}" Visibility="Collapsed" />
@@ -84,11 +84,12 @@
                             <TextBox Name="txtStopID" HorizontalAlignment="Center" Margin="0,10,0,10" KeyDown="txtStopID_KeyDown" MaxWidth="64" />
                             <Button Name="btnStop" Content="Търсене" Click="btnStop_Click" HorizontalAlignment="Center" />
 
-                            <TextBlock Text="{Binding ArrivalViewModel.StopTitle.Source}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" TextWrapping="Wrap" Margin="0,15,0,0" />
+                            <TextBlock Text="{Binding ArrivalViewModel.StopTitle.Source}" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,15,0,0" />
+                            <TextBlock Text="{Binding ArrivalViewModel.AsOfTime.Source}" HorizontalAlignment="Center" />
                         </StackPanel>
                         
                         <Grid Grid.Row="1">
-                            <ListView ItemsSource="{Binding ArrivalViewModel.Arrivals}">
+                            <ListView ItemsSource="{Binding ArrivalViewModel.Arrivals}" SelectionMode="None">
                                 <ListView.ItemTemplate>
                                     <DataTemplate>
                                         <StackPanel Holding="ListViewItem_Holding" FlyoutBase.AttachedFlyout="{StaticResource LineFlyout}" Height="70" Margin="0,10,0,0" >
@@ -98,7 +99,7 @@
                                             </TextBlock>
 
                                             <TextBlock Text="{Binding Direction}" />
-                                            <TextBlock Text="{Binding Timings, Converter={StaticResource TimingConverter}}" />
+                                            <TextBlock Text="{Binding Timings, Converter={StaticResource TimingConverter}}" Foreground="DodgerBlue" FontWeight="Bold" />
                                         </StackPanel>
                                     </DataTemplate>
                                 </ListView.ItemTemplate>
@@ -126,7 +127,16 @@
                                              <Run Text="{Binding Name}" />
                                             (<Run Text="{Binding Code, Converter={StaticResource StopCodeConverter}}" />)
                                         </TextBlock>
-                                        <Button Name="btnRemoveFavourite" HorizontalAlignment="Right" VerticalAlignment="Center" FontFamily="Segoe MDL2 Assets" Content="&#xE8D9;" Padding="15" FontSize="20" Background="Transparent" Foreground="Black" Click="btnRemoveFavourite_Click"/>
+                                        <Button Name="btnRemoveFavourite" 
+                                                HorizontalAlignment="Right"
+                                                VerticalAlignment="Center"
+                                                FontFamily="Segoe MDL2 Assets"
+                                                Content="&#xE8D9;"
+                                                Padding="15"
+                                                FontSize="20"
+                                                Background="Transparent"
+                                                Foreground="Black"
+                                                Click="btnRemoveFavourite_Click"/>
                                     </Grid>
                                 </DataTemplate>
                             </ListView.ItemTemplate>
