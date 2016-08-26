@@ -4,14 +4,18 @@ using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
+using TramlineFive.Common;
 using TramlineFive.DataAccess;
 using TramlineFive.Views.Pages;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Foundation.Metadata;
 using Windows.Storage;
 using Windows.UI;
+using Windows.UI.Popups;
+using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -43,7 +47,7 @@ namespace TramlineFive
         /// will be used such as when the application is launched to open a specific file.
         /// </summary>
         /// <param name="e">Details about the launch request and process.</param>
-        protected override void OnLaunched(LaunchActivatedEventArgs e)
+        protected override async void OnLaunched(LaunchActivatedEventArgs e)
         {
 #if DEBUG
             if (System.Diagnostics.Debugger.IsAttached)
@@ -85,6 +89,9 @@ namespace TramlineFive
                 // Ensure the current window is active
                 Window.Current.Activate();
             }
+
+            await CopyDatabaseFileIfNeeded();
+            await SetStatusBar();
         }
 
         /// <summary>
@@ -109,6 +116,53 @@ namespace TramlineFive
             var deferral = e.SuspendingOperation.GetDeferral();
             //TODO: Save application state and stop any background activity
             deferral.Complete();
+        }
+
+        private async Task CopyDatabaseFileIfNeeded()
+        {
+            try
+            {
+                StorageFile dbFile =
+                    await ApplicationData.Current.LocalFolder.TryGetItemAsync(TramlineFiveContext.DatabaseName) as StorageFile;
+
+                if (dbFile == null)
+                {
+                    StorageFolder localFolder = ApplicationData.Current.LocalFolder;
+                    Uri originalDbFileUri = new Uri($"ms-appx:///Assets/App_Data/{TramlineFiveContext.DatabaseName}");
+                    StorageFile originalDbFile = await StorageFile.GetFileFromApplicationUriAsync(originalDbFileUri);
+
+                    if (originalDbFile != null)
+                    {
+                        dbFile = await originalDbFile.CopyAsync(localFolder, TramlineFiveContext.DatabaseName, NameCollisionOption.ReplaceExisting);
+                    }
+                }
+            }
+            catch (FileNotFoundException ex)
+            {
+                await new MessageDialog(Strings.DatabaseNotFound).ShowAsync();
+                throw ex;
+            }
+        }
+
+        private async Task SetStatusBar()
+        {
+            if (ApiInformation.IsTypePresent("Windows.UI.ViewManagement.StatusBar"))
+            {
+
+                StatusBar statusBar = StatusBar.GetForCurrentView();
+                if (statusBar != null)
+                {
+                    statusBar.BackgroundOpacity = 1;
+                    statusBar.BackgroundColor = Color.FromArgb(0, 51, 153, 255);
+                    statusBar.ForegroundColor = Colors.White;
+
+                    StatusBarProgressIndicator indicator = statusBar.ProgressIndicator;
+                    await indicator.ShowAsync();
+                    indicator.ProgressValue = 0;
+
+                    indicator.Text = Strings.StatusBarText;
+                }
+            }
         }
     }
 }

@@ -71,15 +71,7 @@ namespace TramlineFive.Views.Pages
 
         private async void MainPage_Loaded(object sender, RoutedEventArgs e)
         {
-            if (firstLoad)
-            {
-                await CopyDatabaseFileIfNeeded();
-                await SetStatusBar();
-                await FavouritesViewModel.LoadFavourites();
-
-                firstLoad = false;
-            }
-
+            await FavouritesViewModel.LoadFavourites();
 
             prFavourites.IsActive = false;
             prFavourites.Visibility = Visibility.Collapsed;
@@ -145,7 +137,7 @@ namespace TramlineFive.Views.Pages
             prFavourites.Visibility = Visibility.Visible;
 
             await FavouritesViewModel.Add(txtStopID.Text);
-            await FavouritesViewModel.LoadFavourites();
+            await FavouritesViewModel.LoadFavourites(true);
 
             prFavourites.IsActive = false;
             prFavourites.Visibility = Visibility.Collapsed;
@@ -198,55 +190,7 @@ namespace TramlineFive.Views.Pages
             await new QuestionDialog(String.Format(Formats.ConfirmDeleteFavourite, item.Name), async () =>
             {
                 await FavouritesViewModel.Remove(item);
-                lvFavourites.Items.Remove(item);
             }).ShowAsync();
-        }
-
-        private async Task CopyDatabaseFileIfNeeded()
-        {
-            try
-            {
-                StorageFile dbFile =
-                    await ApplicationData.Current.LocalFolder.TryGetItemAsync(TramlineFiveContext.DatabaseName) as StorageFile;
-
-                if (dbFile == null)
-                {
-                    StorageFolder localFolder = ApplicationData.Current.LocalFolder;
-                    Uri originalDbFileUri = new Uri($"ms-appx:///Assets/App_Data/{TramlineFiveContext.DatabaseName}");
-                    StorageFile originalDbFile = await StorageFile.GetFileFromApplicationUriAsync(originalDbFileUri);
-
-                    if (originalDbFile != null)
-                    {
-                        dbFile = await originalDbFile.CopyAsync(localFolder, TramlineFiveContext.DatabaseName, NameCollisionOption.ReplaceExisting);
-                    }
-                }
-            }
-            catch (System.IO.FileNotFoundException ex)
-            {
-                await new MessageDialog(Strings.DatabaseNotFound).ShowAsync();
-                throw ex;
-            }
-        }
-
-        private async Task SetStatusBar()
-        {
-            if (ApiInformation.IsTypePresent("Windows.UI.ViewManagement.StatusBar"))
-            {
-
-                StatusBar statusBar = StatusBar.GetForCurrentView();
-                if (statusBar != null)
-                {
-                    statusBar.BackgroundOpacity = 1;
-                    statusBar.BackgroundColor = Color.FromArgb(0, 51, 153, 255);
-                    statusBar.ForegroundColor = Colors.White;
-
-                    StatusBarProgressIndicator indicator = statusBar.ProgressIndicator;
-                    await indicator.ShowAsync();
-                    indicator.ProgressValue = 0;
-
-                    indicator.Text = Strings.StatusBarText;
-                }
-            }
         }
 
         private bool reloadVirtualTable;
