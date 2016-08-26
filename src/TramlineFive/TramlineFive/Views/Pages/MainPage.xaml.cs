@@ -75,11 +75,11 @@ namespace TramlineFive.Views.Pages
             {
                 await CopyDatabaseFileIfNeeded();
                 await SetStatusBar();
+                await FavouritesViewModel.LoadFavourites();
 
                 firstLoad = false;
             }
 
-            await FavouritesViewModel.LoadFavourites();
 
             prFavourites.IsActive = false;
             prFavourites.Visibility = Visibility.Collapsed;
