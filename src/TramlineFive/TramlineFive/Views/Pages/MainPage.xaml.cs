@@ -114,11 +114,7 @@ namespace TramlineFive.Views.Pages
 
         private async void btnSumc_Click(object sender, RoutedEventArgs e)
         {
-            await new QuestionDialog(Strings.SumcRedirect, async () =>
-            {
-                Uri sumc = new Uri(Urls.Sumc);
-                await Launcher.LaunchUriAsync(sumc);
-            }).ShowAsync();
+            await new QuestionDialog(Strings.SumcRedirect, async () => await Launcher.LaunchUriAsync(new Uri(Urls.Sumc))).ShowAsync();
         }
 
         private void ListViewItem_Holding(object sender, HoldingRoutedEventArgs e)
@@ -187,13 +183,9 @@ namespace TramlineFive.Views.Pages
         private async void btnRemoveFavourite_Click(object sender, RoutedEventArgs e)
         {
             FavouriteDO item = (sender as Button).DataContext as FavouriteDO;
-            await new QuestionDialog(String.Format(Formats.ConfirmDeleteFavourite, item.Name), async () =>
-            {
-                await FavouritesViewModel.Remove(item);
-            }).ShowAsync();
+            await new QuestionDialog(String.Format(Formats.ConfirmDeleteFavourite, item.Name), async () => await FavouritesViewModel.Remove(item)).ShowAsync();
         }
 
         private bool reloadVirtualTable;
-        private bool firstLoad = true;
     }
 }
