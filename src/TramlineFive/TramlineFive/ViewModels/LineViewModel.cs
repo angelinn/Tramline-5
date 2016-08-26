@@ -9,8 +9,8 @@ namespace TramlineFive.ViewModels
 {
     public class LineViewModel : NotifyingViewModel
     {
-        private IEnumerable<LineDO> lines;
-        public IEnumerable<LineDO> Lines
+        private List<LineDO> lines;
+        public List<LineDO> Lines
         {
             get
             {

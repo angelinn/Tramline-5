@@ -28,7 +28,7 @@ namespace TramlineFive.Common
             httpClient.DefaultRequestHeaders.UserAgent.ParseAdd(USER_AGENT);
         }
 
-        public static async Task<IEnumerable<Arrival>> GetByStopAsync(string query, Type captchaType, string submitIndex = "")
+        public static async Task<List<Arrival>> GetByStopAsync(string query, Type captchaType, string submitIndex = "")
         {
             int queryNum;
             if (String.IsNullOrEmpty(query) || !Int32.TryParse(query, out queryNum))
@@ -58,7 +58,7 @@ namespace TramlineFive.Common
             HtmlDocument responseHtml = new HtmlDocument();
             responseHtml.LoadHtml(await response.Content.ReadAsStringAsync());
 
-            List<Arrival> arrivals = ParseArrivals(responseHtml.DocumentNode).ToList();
+            List<Arrival> arrivals = ParseArrivals(responseHtml.DocumentNode);
             IEnumerable<FormUrlEncodedContent> formsData = ParseOtherTransportTypes(responseHtml.DocumentNode);
             if (formsData.Count() > 0)
                 arrivals.AddRange(await GetOtherTransportTypes(formsData));
@@ -66,7 +66,7 @@ namespace TramlineFive.Common
             return arrivals;
         }
 
-        private static async Task<IEnumerable<Arrival>> GetOtherTransportTypes(IEnumerable<FormUrlEncodedContent> formsData)
+        private static async Task<List<Arrival>> GetOtherTransportTypes(IEnumerable<FormUrlEncodedContent> formsData)
         {
             List<Arrival> more = new List<Arrival>();
             HttpResponseMessage response = null;
@@ -88,7 +88,7 @@ namespace TramlineFive.Common
                 yield return new FormUrlEncodedContent(FormManager.GetFormFields(form));
         }
 
-        private static IEnumerable<Arrival> ParseArrivals(HtmlNode node)
+        private static List<Arrival> ParseArrivals(HtmlNode node)
         {
             IEnumerable<HtmlNode> boldNodes = node.Descendants().Where(d => d.OriginalName == "b");
             string stopTitle = String.Empty;

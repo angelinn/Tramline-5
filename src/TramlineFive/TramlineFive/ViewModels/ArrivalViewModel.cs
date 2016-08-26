@@ -29,12 +29,12 @@ namespace TramlineFive.ViewModels
             StopTitle.Source = String.Empty;
             AsOfTime.Source = String.Empty;
 
-            IEnumerable<Arrival> arrivals = await SumcManager.GetByStopAsync(stopCode, typeof(CaptchaDialog));
+            List<Arrival> arrivals = await SumcManager.GetByStopAsync(stopCode, typeof(CaptchaDialog));
 
             if (arrivals != null)
             {
 
-                if (arrivals.Count() == 0)
+                if (arrivals.Count == 0)
                     return false;
 
                 foreach (Arrival arrival in arrivals)
