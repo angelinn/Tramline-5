@@ -86,7 +86,7 @@ namespace TramlineFive.Views.Pages
 
                 try
                 {
-                    if (!await ArrivalViewModel.GetByStopCode(txtStopID.Text))
+                    if (!await ArrivalViewModel.GetByStopCode(asbStopCode.Text))
                         await new MessageDialog(Strings.NoResults).ShowAsync();
                 }
                 catch (Exception ex)
@@ -132,7 +132,7 @@ namespace TramlineFive.Views.Pages
             prFavourites.IsActive = true;
             prFavourites.Visibility = Visibility.Visible;
 
-            await FavouritesViewModel.Add(txtStopID.Text);
+            await FavouritesViewModel.Add(asbStopCode.Text);
             await FavouritesViewModel.LoadFavourites(true);
 
             prFavourites.IsActive = false;
@@ -144,7 +144,7 @@ namespace TramlineFive.Views.Pages
             if (pvMain.SelectedIndex == 0)
             {
                 pvMain.Focus(FocusState.Pointer);
-                if (reloadVirtualTable && !String.IsNullOrEmpty(txtStopID.Text))
+                if (reloadVirtualTable && !String.IsNullOrEmpty(asbStopCode.Text))
                 {
                     btnStop_Click(this, new RoutedEventArgs());
                     reloadVirtualTable = false;
@@ -154,7 +154,7 @@ namespace TramlineFive.Views.Pages
 
         private void lvFavourites_ItemClick(object sender, ItemClickEventArgs e)
         {
-            txtStopID.Text = String.Format("{0:D4}", Int32.Parse((e.ClickedItem as FavouriteDO).Code));
+            asbStopCode.Text = String.Format("{0:D4}", Int32.Parse((e.ClickedItem as FavouriteDO).Code));
 
             reloadVirtualTable = true;
             pvMain.SelectedIndex = 0;
@@ -187,5 +187,10 @@ namespace TramlineFive.Views.Pages
         }
 
         private bool reloadVirtualTable;
+
+        private void asbStopCode_QuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
+        {
+            btnStop_Click(sender, new RoutedEventArgs());
+        }
     }
 }
