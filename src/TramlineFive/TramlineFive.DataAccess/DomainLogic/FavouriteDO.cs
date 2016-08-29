@@ -25,6 +25,13 @@ namespace TramlineFive.DataAccess.DomainLogic
                 using (UnitOfWork uow = new UnitOfWork())
                 {
                     int intCode = Int32.Parse(code);
+
+                    if (uow.Favourites.All()
+                                      .IncludeMultiple(f => f.Stop)
+                                      .Where(s => s.Stop.Code == intCode.ToString())
+                                      .FirstOrDefault() != null)
+                        return;
+
                     Favourite favourite = new Favourite
                     {
                         StopID = uow.Stops.Where(s => s.Code == intCode.ToString()).First().ID

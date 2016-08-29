@@ -152,6 +152,16 @@ namespace TramlineFive.Views.Pages
             await new QuestionDialog(String.Format(Formats.ConfirmDeleteFavourite, item.Name), async () => await FavouritesViewModel.Remove(item)).ShowAsync();
         }
 
+        private async void asbStopCode_QuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
+        {
+            await QueryVirtualTableAsync();
+        }
+
+        private async void btnFavourite_Click(object sender, RoutedEventArgs e)
+        {
+            await AddFavouriteAsync();
+        }
+
         private async Task AddFavouriteAsync()
         {
             FavouritesViewModel.Favourites.Clear();
@@ -189,16 +199,6 @@ namespace TramlineFive.Views.Pages
                     prVirtualTables.Visibility = Visibility.Collapsed;
                 }
             }
-        }
-
-        private async void asbStopCode_QuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
-        {
-            await QueryVirtualTableAsync();
-        }
-
-        private async void btnFavourite_Click(object sender, RoutedEventArgs e)
-        {
-            await AddFavouriteAsync();
         }
 
         private bool reloadVirtualTable;
