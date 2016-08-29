@@ -77,38 +77,14 @@ namespace TramlineFive.Views.Pages
             prFavourites.Visibility = Visibility.Collapsed;
         }
 
-        private async void btnStop_Click(object sender, RoutedEventArgs e)
-        {
-            if (!prVirtualTables.IsActive)
-            {
-                prVirtualTables.IsActive = true;
-                prVirtualTables.Visibility = Visibility.Visible;
-
-                try
-                {
-                    if (!await ArrivalViewModel.GetByStopCode(asbStopCode.Text))
-                        await new MessageDialog(Strings.NoResults).ShowAsync();
-                }
-                catch (Exception ex)
-                {
-                    await new MessageDialog(ex.Message).ShowAsync();
-                }
-                finally
-                {
-                    prVirtualTables.IsActive = false;
-                    prVirtualTables.Visibility = Visibility.Collapsed;
-                }
-            }
-        }
-
-        private void txtStopID_KeyDown(object sender, KeyRoutedEventArgs e)
+        private async void asbStopCode_KeyUp(object sender, KeyRoutedEventArgs e)
         {
             if (e.Key == VirtualKey.Enter)
             {
-                btnStop_Click(this, new RoutedEventArgs());
                 InputPane.GetForCurrentView().TryHide();
-
                 e.Handled = true;
+
+                await StartQuery();
             }
         }
 
@@ -139,14 +115,14 @@ namespace TramlineFive.Views.Pages
             prFavourites.Visibility = Visibility.Collapsed;
         }
 
-        private void pvMain_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private async void pvMain_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (pvMain.SelectedIndex == 0)
             {
                 pvMain.Focus(FocusState.Pointer);
                 if (reloadVirtualTable && !String.IsNullOrEmpty(asbStopCode.Text))
                 {
-                    btnStop_Click(this, new RoutedEventArgs());
+                    await StartQuery();
                     reloadVirtualTable = false;
                 }
             }
@@ -186,11 +162,35 @@ namespace TramlineFive.Views.Pages
             await new QuestionDialog(String.Format(Formats.ConfirmDeleteFavourite, item.Name), async () => await FavouritesViewModel.Remove(item)).ShowAsync();
         }
 
-        private bool reloadVirtualTable;
-
-        private void asbStopCode_QuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
+        private async Task StartQuery()
         {
-            btnStop_Click(sender, new RoutedEventArgs());
+            if (!prVirtualTables.IsActive)
+            {
+                prVirtualTables.IsActive = true;
+                prVirtualTables.Visibility = Visibility.Visible;
+
+                try
+                {
+                    if (!await ArrivalViewModel.GetByStopCode(asbStopCode.Text))
+                        await new MessageDialog(Strings.NoResults).ShowAsync();
+                }
+                catch (Exception ex)
+                {
+                    await new MessageDialog(ex.Message).ShowAsync();
+                }
+                finally
+                {
+                    prVirtualTables.IsActive = false;
+                    prVirtualTables.Visibility = Visibility.Collapsed;
+                }
+            }
         }
+
+        private async void asbStopCode_QuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
+        {
+            await StartQuery();
+        }
+
+        private bool reloadVirtualTable;
     }
 }

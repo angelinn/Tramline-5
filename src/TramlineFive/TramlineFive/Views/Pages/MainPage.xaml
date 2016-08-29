@@ -80,7 +80,7 @@
                         <ProgressRing Grid.Row="0" Grid.RowSpan="2" Name="prVirtualTables" Style="{StaticResource Spinner}" Visibility="Collapsed" />
 
                         <StackPanel Grid.Row="0">
-                            <AutoSuggestBox Name="asbStopCode" PlaceholderText="Код на спирка" QueryIcon="Find" QuerySubmitted="asbStopCode_QuerySubmitted" Margin="0,15,0,15" />
+                            <AutoSuggestBox Name="asbStopCode" KeyUp="asbStopCode_KeyUp" PlaceholderText="Код на спирка" QueryIcon="Find" QuerySubmitted="asbStopCode_QuerySubmitted" Margin="0,15,0,15" />
 
                             <TextBlock Text="{Binding ArrivalViewModel.StopTitle.Source}" FontWeight="Bold" HorizontalAlignment="Center" />
                             <TextBlock Text="{Binding ArrivalViewModel.AsOfTime.Source}" HorizontalAlignment="Center" />
