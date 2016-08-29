@@ -15,10 +15,6 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Navigation;
-using Windows.Storage;
-using TramlineFive.DataAccess;
-using Windows.UI.Xaml.Media;
-using TramlineFive.Common.Models;
 using TramlineFive.Views.Dialogs;
 using TramlineFive.DataAccess.DomainLogic;
 using Windows.ApplicationModel.Core;
@@ -77,7 +73,7 @@ namespace TramlineFive.Views.Pages
             prFavourites.Visibility = Visibility.Collapsed;
         }
 
-        private async void asbStopCode_KeyUp(object sender, KeyRoutedEventArgs e)
+        private async void btnStopCode_KeyUp(object sender, KeyRoutedEventArgs e)
         {
             if (e.Key == VirtualKey.Enter)
             {
@@ -110,7 +106,7 @@ namespace TramlineFive.Views.Pages
             if (pvMain.SelectedIndex == 0)
             {
                 pvMain.Focus(FocusState.Pointer);
-                if (reloadVirtualTable && !String.IsNullOrEmpty(asbStopCode.Text))
+                if (reloadVirtualTable && !String.IsNullOrEmpty(txtStopCode.Text))
                 {
                     await QueryVirtualTableAsync();
                     reloadVirtualTable = false;
@@ -120,7 +116,7 @@ namespace TramlineFive.Views.Pages
 
         private void lvFavourites_ItemClick(object sender, ItemClickEventArgs e)
         {
-            asbStopCode.Text = String.Format("{0:D4}", Int32.Parse((e.ClickedItem as FavouriteDO).Code));
+            txtStopCode.Text = String.Format("{0:D4}", Int32.Parse((e.ClickedItem as FavouriteDO).Code));
 
             reloadVirtualTable = true;
             pvMain.SelectedIndex = 0;
@@ -152,7 +148,7 @@ namespace TramlineFive.Views.Pages
             await new QuestionDialog(String.Format(Formats.ConfirmDeleteFavourite, item.Name), async () => await FavouritesViewModel.Remove(item)).ShowAsync();
         }
 
-        private async void asbStopCode_QuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
+        private async void btnStopCode_Click(object sender, RoutedEventArgs e)
         {
             await QueryVirtualTableAsync();
         }
@@ -170,7 +166,7 @@ namespace TramlineFive.Views.Pages
             prFavourites.IsActive = true;
             prFavourites.Visibility = Visibility.Visible;
 
-            await FavouritesViewModel.Add(asbStopCode.Text);
+            await FavouritesViewModel.Add(txtStopCode.Text);
             await FavouritesViewModel.LoadFavourites(true);
 
             prFavourites.IsActive = false;
@@ -186,7 +182,7 @@ namespace TramlineFive.Views.Pages
 
                 try
                 {
-                    if (!await ArrivalViewModel.GetByStopCode(asbStopCode.Text))
+                    if (!await ArrivalViewModel.GetByStopCode(txtStopCode.Text))
                         await new MessageDialog(Strings.NoResults).ShowAsync();
                 }
                 catch (Exception ex)

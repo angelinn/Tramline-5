@@ -66,7 +66,6 @@
                         <TextBlock Text="Информация" Style="{StaticResource BarText}"/>
                     </StackPanel>
                 </Button>
-
             </StackPanel>
         </SplitView.Pane>
 
@@ -82,8 +81,10 @@
                         <ProgressRing Grid.Row="0" Grid.RowSpan="2" Name="prVirtualTables" Style="{StaticResource Spinner}" Visibility="Collapsed" />
 
                         <StackPanel Grid.Row="0">
-                            <AutoSuggestBox Name="asbStopCode" KeyUp="asbStopCode_KeyUp" PlaceholderText="Код на спирка" QueryIcon="Find" QuerySubmitted="asbStopCode_QuerySubmitted" Margin="0,15,0,15" />
-
+                            <Grid>
+                                <TextBox Name="txtStopCode" PlaceholderText="Код на спирка" Margin="0,15,0,15" Style="{StaticResource SearchTextBox}" />
+                                <Button Name="btnStopCode" KeyUp="btnStopCode_KeyUp" Click="btnStopCode_Click" FontFamily="Segoe MDL2 Assets" Content="&#xE71E;" Background="Transparent" Foreground="Black" HorizontalAlignment="Right" />
+                            </Grid>
 
                             <Grid BorderThickness="0,1,0,1" BorderBrush="Gray" Visibility="{Binding ArrivalViewModel.VirtualTable.IsQueried, Converter={StaticResource BoolToVisibility}}">
                                 <Grid.ColumnDefinitions>
@@ -122,7 +123,7 @@
                                             </TextBlock>
 
                                             <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding Direction}" />
-                                            <TextBlock FontWeight="Bold" Grid.Row="2" Grid.ColumnSpan="2" Text="{Binding Timings, Converter={StaticResource TimingConverter}}" Foreground="#0066CC" />
+                                            <TextBlock FontWeight="Bold" Grid.Row="2" Grid.ColumnSpan="2" Text="{Binding Timings, Converter={StaticResource TimingConverter}}" Foreground="DodgerBlue" />
                                         </Grid>
                                     </DataTemplate>
                                 </ListView.ItemTemplate>
