@@ -84,7 +84,7 @@ namespace TramlineFive.Views.Pages
                 InputPane.GetForCurrentView().TryHide();
                 e.Handled = true;
 
-                await StartQuery();
+                await QueryVirtualTableAsync();
             }
         }
 
@@ -102,17 +102,7 @@ namespace TramlineFive.Views.Pages
 
         private async void MenuFlyoutItem_Click(object sender, RoutedEventArgs e)
         {
-            FavouritesViewModel.Favourites.Clear();
-            pvMain.SelectedIndex = 1;
-
-            prFavourites.IsActive = true;
-            prFavourites.Visibility = Visibility.Visible;
-
-            await FavouritesViewModel.Add(asbStopCode.Text);
-            await FavouritesViewModel.LoadFavourites(true);
-
-            prFavourites.IsActive = false;
-            prFavourites.Visibility = Visibility.Collapsed;
+            await AddFavouriteAsync();
         }
 
         private async void pvMain_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -122,7 +112,7 @@ namespace TramlineFive.Views.Pages
                 pvMain.Focus(FocusState.Pointer);
                 if (reloadVirtualTable && !String.IsNullOrEmpty(asbStopCode.Text))
                 {
-                    await StartQuery();
+                    await QueryVirtualTableAsync();
                     reloadVirtualTable = false;
                 }
             }
@@ -162,7 +152,22 @@ namespace TramlineFive.Views.Pages
             await new QuestionDialog(String.Format(Formats.ConfirmDeleteFavourite, item.Name), async () => await FavouritesViewModel.Remove(item)).ShowAsync();
         }
 
-        private async Task StartQuery()
+        private async Task AddFavouriteAsync()
+        {
+            FavouritesViewModel.Favourites.Clear();
+            pvMain.SelectedIndex = 1;
+
+            prFavourites.IsActive = true;
+            prFavourites.Visibility = Visibility.Visible;
+
+            await FavouritesViewModel.Add(asbStopCode.Text);
+            await FavouritesViewModel.LoadFavourites(true);
+
+            prFavourites.IsActive = false;
+            prFavourites.Visibility = Visibility.Collapsed;
+        }
+
+        private async Task QueryVirtualTableAsync()
         {
             if (!prVirtualTables.IsActive)
             {
@@ -188,7 +193,12 @@ namespace TramlineFive.Views.Pages
 
         private async void asbStopCode_QuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
         {
-            await StartQuery();
+            await QueryVirtualTableAsync();
+        }
+
+        private async void btnFavourite_Click(object sender, RoutedEventArgs e)
+        {
+            await AddFavouriteAsync();
         }
 
         private bool reloadVirtualTable;

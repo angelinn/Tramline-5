@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TramlineFive.Common;
 using TramlineFive.Common.Models;
+using TramlineFive.DataAccess.DomainLogic;
 using TramlineFive.Views.Dialogs;
 
 namespace TramlineFive.ViewModels
@@ -13,21 +14,18 @@ namespace TramlineFive.ViewModels
     public class ArrivalViewModel
     {
         public ObservableCollection<Arrival> Arrivals { get; set; }
-        public StringViewModel StopTitle { get; set; }
-        public StringViewModel AsOfTime { get; set; }
+        public VirtualTableDO VirtualTable { get; set; }
 
         public ArrivalViewModel()
         {
             Arrivals = new ObservableCollection<Arrival>();
-            StopTitle = new StringViewModel();
-            AsOfTime = new StringViewModel();
+            VirtualTable = new VirtualTableDO();
         }
 
         public async Task<bool> GetByStopCode(string stopCode)
         {
             Arrivals.Clear();
-            StopTitle.Source = String.Empty;
-            AsOfTime.Source = String.Empty;
+            VirtualTable.IsQueried = false;
 
             List<Arrival> arrivals = await SumcManager.GetByStopAsync(stopCode, typeof(CaptchaDialog));
 
@@ -40,8 +38,9 @@ namespace TramlineFive.ViewModels
                 foreach (Arrival arrival in arrivals)
                     Arrivals.Add(arrival);
 
-                StopTitle.Source = SumcParser.ParseStopTitle(Arrivals.FirstOrDefault().StopTitle);
-                AsOfTime.Source = "Данни от " + DateTime.Now.ToString("HH:mm");
+                VirtualTable.StopTitle = SumcParser.ParseStopTitle(Arrivals.FirstOrDefault().StopTitle);
+                VirtualTable.AsOfTime = "Данни от " + DateTime.Now.ToString("HH:mm");
+                VirtualTable.IsQueried = true;
             }
 
             return true;

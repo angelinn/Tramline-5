@@ -7,7 +7,7 @@ using TramlineFive.DataAccess.DomainLogic;
 
 namespace TramlineFive.ViewModels
 {
-    public class LineViewModel : NotifyingViewModel
+    public class LineViewModel : NotifyingModel
     {
         private IEnumerable<LineDO> lines;
         public IEnumerable<LineDO> Lines

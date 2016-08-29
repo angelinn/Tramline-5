@@ -12,6 +12,7 @@
         <su:TimingConverter x:Key="TimingConverter" />
         <su:StopCodeConverter x:Key="StopCodeConverter" />
         <su:StringFormatConverter x:Key="StringFormat" />
+        <su:BoolToVisibilityConverter x:Key="BoolToVisibility" />
 
         <MenuFlyout x:Name="LineFlyout">
             <MenuFlyoutItem Text="Добави в любими" Click="MenuFlyoutItem_Click" />
@@ -82,8 +83,20 @@
                         <StackPanel Grid.Row="0">
                             <AutoSuggestBox Name="asbStopCode" KeyUp="asbStopCode_KeyUp" PlaceholderText="Код на спирка" QueryIcon="Find" QuerySubmitted="asbStopCode_QuerySubmitted" Margin="0,15,0,15" />
 
-                            <TextBlock Text="{Binding ArrivalViewModel.StopTitle.Source}" FontWeight="Bold" HorizontalAlignment="Center" />
-                            <TextBlock Text="{Binding ArrivalViewModel.AsOfTime.Source}" HorizontalAlignment="Center" />
+
+                            <Grid BorderThickness="0,1,0,1" BorderBrush="LightGray" Visibility="{Binding ArrivalViewModel.VirtualTable.IsQueried, Converter={StaticResource BoolToVisibility}}">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="4*" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                            
+                            
+                                <StackPanel Grid.Column="0" VerticalAlignment="Center">
+                                    <TextBlock Text="{Binding ArrivalViewModel.VirtualTable.StopTitle}" FontWeight="Bold" HorizontalAlignment="Center" />
+                                    <TextBlock Text="{Binding ArrivalViewModel.VirtualTable.AsOfTime}" HorizontalAlignment="Center" />
+                                </StackPanel>
+                                <Button Grid.Column="1" Name="btnFavourite" Padding="10" FontFamily="Segoe MDL2 Assets" FontSize="25" Content="&#xE734;" Background="Transparent" Foreground="Black" HorizontalAlignment="Right" Click="btnFavourite_Click" />
+                            </Grid>
                         </StackPanel>
                         
                         <Grid Grid.Row="1">

@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TramlineFive.ViewModels
+namespace TramlineFive.DataAccess.DomainLogic
 {
-    public abstract class NotifyingViewModel : INotifyPropertyChanged
+    public abstract class NotifyingModel : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
 

@@ -111,7 +111,9 @@
     <Compile Include="DomainLogic\DirectionDO.cs" />
     <Compile Include="DomainLogic\FavouriteDO.cs" />
     <Compile Include="DomainLogic\LineDO.cs" />
+    <Compile Include="DomainLogic\NotifyingModel.cs" />
     <Compile Include="DomainLogic\StopDO.cs" />
+    <Compile Include="DomainLogic\VirtualTableDO.cs" />
     <Compile Include="Entities\BaseEntity.cs" />
     <Compile Include="Entities\Day.cs" />
     <Compile Include="Entities\Direction.cs" />

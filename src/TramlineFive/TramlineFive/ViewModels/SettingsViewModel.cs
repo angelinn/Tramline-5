@@ -4,10 +4,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TramlineFive.DataAccess.DomainLogic;
 
 namespace TramlineFive.ViewModels
 {
-    public class SettingsViewModel : NotifyingViewModel
+    public class SettingsViewModel : NotifyingModel
     {
         public bool PushNotifications
         {
