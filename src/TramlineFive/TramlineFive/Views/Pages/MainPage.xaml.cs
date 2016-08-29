@@ -73,7 +73,7 @@ namespace TramlineFive.Views.Pages
             prFavourites.Visibility = Visibility.Collapsed;
         }
 
-        private async void btnStopCode_KeyUp(object sender, KeyRoutedEventArgs e)
+        private async void txtStopCode_KeyDown(object sender, KeyRoutedEventArgs e)
         {
             if (e.Key == VirtualKey.Enter)
             {

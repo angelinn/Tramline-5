@@ -82,8 +82,8 @@
 
                         <StackPanel Grid.Row="0">
                             <Grid>
-                                <TextBox Name="txtStopCode" PlaceholderText="Код на спирка" Margin="0,15,0,15" Style="{StaticResource SearchTextBox}" />
-                                <Button Name="btnStopCode" KeyUp="btnStopCode_KeyUp" Click="btnStopCode_Click" FontFamily="Segoe MDL2 Assets" Content="&#xE71E;" Background="Transparent" Foreground="Black" HorizontalAlignment="Right" />
+                                <TextBox Name="txtStopCode" PlaceholderText="Код на спирка" KeyDown="txtStopCode_KeyDown" Margin="0,15,0,15" Style="{StaticResource SearchTextBox}" />
+                                <Button Name="btnStopCode" Click="btnStopCode_Click" FontFamily="Segoe MDL2 Assets" Content="&#xE71E;" Background="Transparent" Foreground="Black" HorizontalAlignment="Right" />
                             </Grid>
 
                             <Grid BorderThickness="0,1,0,1" BorderBrush="Gray" Visibility="{Binding ArrivalViewModel.VirtualTable.IsQueried, Converter={StaticResource BoolToVisibility}}">
@@ -112,8 +112,8 @@
                                                 <RowDefinition />
                                             </Grid.RowDefinitions>
                                             <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="58" />
                                                 <ColumnDefinition Width="*" />
-                                                <ColumnDefinition Width="4*" />
                                             </Grid.ColumnDefinitions>
 
                                             <Image Grid.RowSpan="2" Source="{Binding Type, Converter={StaticResource UrlToImageSource}}" HorizontalAlignment="Left"/>
@@ -123,7 +123,7 @@
                                             </TextBlock>
 
                                             <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding Direction}" />
-                                            <TextBlock FontWeight="Bold" Grid.Row="2" Grid.ColumnSpan="2" Text="{Binding Timings, Converter={StaticResource TimingConverter}}" Foreground="DodgerBlue" />
+                                            <TextBlock FontWeight="Bold" Grid.Row="2" Grid.ColumnSpan="2" Text="{Binding Timings, Converter={StaticResource TimingConverter}}" />
                                         </Grid>
                                     </DataTemplate>
                                 </ListView.ItemTemplate>
