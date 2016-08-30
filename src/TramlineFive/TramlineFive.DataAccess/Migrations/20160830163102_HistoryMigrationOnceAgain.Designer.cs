@@ -8,8 +8,8 @@ using TramlineFive.DataAccess;
 namespace TramlineFive.DataAccess.Migrations
 {
     [DbContext(typeof(TramlineFiveContext))]
-    [Migration("20160830160035_HistoryMigration")]
-    partial class HistoryMigration
+    [Migration("20160830163102_HistoryMigrationOnceAgain")]
+    partial class HistoryMigrationOnceAgain
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -60,6 +60,22 @@ namespace TramlineFive.DataAccess.Migrations
                     b.HasIndex("StopID");
 
                     b.ToTable("Favourites");
+                });
+
+            modelBuilder.Entity("TramlineFive.DataAccess.Entities.History", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int?>("StopID");
+
+                    b.Property<DateTime?>("TimeStamp");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("StopID");
+
+                    b.ToTable("History");
                 });
 
             modelBuilder.Entity("TramlineFive.DataAccess.Entities.Line", b =>
@@ -114,6 +130,13 @@ namespace TramlineFive.DataAccess.Migrations
                 {
                     b.HasOne("TramlineFive.DataAccess.Entities.Stop", "Stop")
                         .WithMany("Favourites")
+                        .HasForeignKey("StopID");
+                });
+
+            modelBuilder.Entity("TramlineFive.DataAccess.Entities.History", b =>
+                {
+                    b.HasOne("TramlineFive.DataAccess.Entities.Stop", "Stop")
+                        .WithMany()
                         .HasForeignKey("StopID");
                 });
 

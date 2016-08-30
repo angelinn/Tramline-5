@@ -30,6 +30,7 @@ namespace TramlineFive.Views.Pages
     {
         public ArrivalViewModel ArrivalViewModel { get; set; }
         public FavouritesViewModel FavouritesViewModel { get; set; }
+        public HistoryViewModel HistoryViewModel { get; set; }
         public VersionViewModel VersionViewModel { get; set; }
 
         public MainPage()
@@ -38,6 +39,7 @@ namespace TramlineFive.Views.Pages
 
             ArrivalViewModel = new ArrivalViewModel();
             FavouritesViewModel = new FavouritesViewModel();
+            HistoryViewModel = new HistoryViewModel();
             VersionViewModel = new VersionViewModel();
 
             DataContext = this;
@@ -67,7 +69,8 @@ namespace TramlineFive.Views.Pages
 
         private async void MainPage_Loaded(object sender, RoutedEventArgs e)
         {
-            await FavouritesViewModel.LoadFavourites();
+            await FavouritesViewModel.LoadFavouritesAsync();
+            await HistoryViewModel.LoadHistoryAsync();
 
             prFavourites.IsActive = false;
             prFavourites.Visibility = Visibility.Collapsed;
@@ -172,8 +175,8 @@ namespace TramlineFive.Views.Pages
             prFavourites.IsActive = true;
             prFavourites.Visibility = Visibility.Visible;
 
-            await FavouritesViewModel.Add(txtStopCode.Text);
-            await FavouritesViewModel.LoadFavourites(true);
+            await FavouritesViewModel.AddAsync(txtStopCode.Text);
+            await FavouritesViewModel.LoadFavouritesAsync(true);
 
             prFavourites.IsActive = false;
             prFavourites.Visibility = Visibility.Collapsed;

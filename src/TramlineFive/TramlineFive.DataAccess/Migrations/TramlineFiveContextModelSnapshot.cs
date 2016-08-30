@@ -61,6 +61,22 @@ namespace TramlineFive.DataAccess.Migrations
                     b.ToTable("Favourites");
                 });
 
+            modelBuilder.Entity("TramlineFive.DataAccess.Entities.History", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int?>("StopID");
+
+                    b.Property<DateTime?>("TimeStamp");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("StopID");
+
+                    b.ToTable("History");
+                });
+
             modelBuilder.Entity("TramlineFive.DataAccess.Entities.Line", b =>
                 {
                     b.Property<int>("ID")
@@ -113,6 +129,13 @@ namespace TramlineFive.DataAccess.Migrations
                 {
                     b.HasOne("TramlineFive.DataAccess.Entities.Stop", "Stop")
                         .WithMany("Favourites")
+                        .HasForeignKey("StopID");
+                });
+
+            modelBuilder.Entity("TramlineFive.DataAccess.Entities.History", b =>
+                {
+                    b.HasOne("TramlineFive.DataAccess.Entities.Stop", "Stop")
+                        .WithMany()
                         .HasForeignKey("StopID");
                 });
 

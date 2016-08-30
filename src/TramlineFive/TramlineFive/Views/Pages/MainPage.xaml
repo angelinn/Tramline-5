@@ -169,6 +169,15 @@
                     </Grid>
                 </PivotItem>
                 <PivotItem Header="История">
+                    <Grid>
+                        <ListView ItemsSource="{Binding HistoryViewModel.History}">
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Name}" />
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                    </Grid>
                     
                 </PivotItem>
             </Pivot>

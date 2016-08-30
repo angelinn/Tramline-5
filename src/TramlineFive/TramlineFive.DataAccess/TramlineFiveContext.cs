@@ -17,6 +17,7 @@ namespace TramlineFive.DataAccess
         public DbSet<Stop> Stops { get; set; }
 
         public DbSet<Favourite> Favourites { get; set; }
+        public DbSet<History> History { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

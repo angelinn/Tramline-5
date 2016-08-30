@@ -16,5 +16,16 @@ namespace TramlineFive.ViewModels
         {
             History = new ObservableCollection<HistoryDO>();
         }
+
+        public async Task AddHistoryAsync(string code)
+        {
+            await HistoryDO.Add(code);
+        }
+
+        public async Task LoadHistoryAsync()
+        {
+            foreach (HistoryDO history in await HistoryDO.AllAsync())
+                History.Add(history);
+        }
     }
 }

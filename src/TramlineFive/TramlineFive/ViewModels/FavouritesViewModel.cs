@@ -17,7 +17,7 @@ namespace TramlineFive.ViewModels
             Favourites = new ObservableCollection<FavouriteDO>();
         }
 
-        public async Task LoadFavourites(bool force = false)
+        public async Task LoadFavouritesAsync(bool force = false)
         {
             if (Favourites.Count == 0 || force)
             {
@@ -26,7 +26,7 @@ namespace TramlineFive.ViewModels
             }
         }
 
-        public async Task Add(string code)
+        public async Task AddAsync(string code)
         {
             await FavouriteDO.Add(code);
         }

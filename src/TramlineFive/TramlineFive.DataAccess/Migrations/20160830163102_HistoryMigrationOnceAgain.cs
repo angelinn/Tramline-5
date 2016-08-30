@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace TramlineFive.DataAccess.Migrations
 {
-    public partial class HistoryMigration : Migration
+    public partial class HistoryMigrationOnceAgain : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -103,6 +103,26 @@ namespace TramlineFive.DataAccess.Migrations
                         onDelete: ReferentialAction.Restrict);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "History",
+                columns: table => new
+                {
+                    ID = table.Column<int>(nullable: false)
+                        .Annotation("Autoincrement", true),
+                    StopID = table.Column<int>(nullable: true),
+                    TimeStamp = table.Column<DateTime>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_History", x => x.ID);
+                    table.ForeignKey(
+                        name: "FK_History_Stops_StopID",
+                        column: x => x.StopID,
+                        principalTable: "Stops",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_Days_DirectionID",
                 table: "Days",
@@ -119,6 +139,11 @@ namespace TramlineFive.DataAccess.Migrations
                 column: "StopID");
 
             migrationBuilder.CreateIndex(
+                name: "IX_History_StopID",
+                table: "History",
+                column: "StopID");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Stops_DayID",
                 table: "Stops",
                 column: "DayID");
@@ -128,6 +153,9 @@ namespace TramlineFive.DataAccess.Migrations
         {
             migrationBuilder.DropTable(
                 name: "Favourites");
+
+            migrationBuilder.DropTable(
+                name: "History");
 
             migrationBuilder.DropTable(
                 name: "Stops");
