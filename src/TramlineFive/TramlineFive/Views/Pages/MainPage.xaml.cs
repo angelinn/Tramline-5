@@ -146,6 +146,9 @@ namespace TramlineFive.Views.Pages
         {
             FavouriteDO item = (sender as Button).DataContext as FavouriteDO;
             await new QuestionDialog(String.Format(Formats.ConfirmDeleteFavourite, item.Name), async () => await FavouritesViewModel.Remove(item)).ShowAsync();
+
+            if (FavouritesViewModel.Favourites.Count == 0)
+                txtNoFavourites.Visibility = Visibility.Visible;
         }
 
         private async void btnStopCode_Click(object sender, RoutedEventArgs e)
@@ -171,6 +174,9 @@ namespace TramlineFive.Views.Pages
 
             prFavourites.IsActive = false;
             prFavourites.Visibility = Visibility.Collapsed;
+
+            if (FavouritesViewModel.Favourites.Count == 0)
+                txtNoFavourites.Visibility = Visibility.Visible;
         }
 
         private async Task QueryVirtualTableAsync()
