@@ -72,10 +72,10 @@
         <SplitView.Content>
             <Pivot Name="pvMain" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" SelectionChanged="pvMain_SelectionChanged">
                 <PivotItem Header="Виртуални табла">
-                    <Grid Padding="0,0,0,10">
+                    <Grid Padding="0,0,0,20">
                         <Grid.RowDefinitions>
+                            <RowDefinition Height="1*" />
                             <RowDefinition Height="2*" />
-                            <RowDefinition Height="5*" />
                         </Grid.RowDefinitions>
                         
                         <ProgressRing Grid.Row="0" Grid.RowSpan="2" Name="prVirtualTables" Style="{StaticResource Spinner}" Visibility="Collapsed" />
@@ -86,18 +86,18 @@
                                 <Button Name="btnStopCode" Click="btnStopCode_Click" FontFamily="Segoe MDL2 Assets" Content="&#xE71E;" Background="Transparent" Foreground="Black" HorizontalAlignment="Right" />
                             </Grid>
 
-                            <Grid BorderThickness="0,1,0,1" BorderBrush="Gray" Visibility="{Binding ArrivalViewModel.VirtualTable.IsQueried, Converter={StaticResource BoolToVisibility}}">
+                            <Grid Background="#CC3399FF" BorderBrush="DodgerBlue" BorderThickness="1" Padding="10" Visibility="{Binding ArrivalViewModel.VirtualTable.IsQueried, Converter={StaticResource BoolToVisibility}}">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="4*" />
                                     <ColumnDefinition Width="*" />
                                 </Grid.ColumnDefinitions>
                             
                             
-                                <StackPanel Grid.Column="0" VerticalAlignment="Center">
-                                    <TextBlock Text="{Binding ArrivalViewModel.VirtualTable.StopTitle}" FontWeight="Bold" HorizontalAlignment="Center" TextTrimming="Clip" />
-                                    <TextBlock Text="{Binding ArrivalViewModel.VirtualTable.AsOfTime}" HorizontalAlignment="Center" />
+                                <StackPanel Grid.Column="0">
+                                    <TextBlock Foreground="White" FontWeight="Bold" Text="{Binding ArrivalViewModel.VirtualTable.StopTitle}" HorizontalAlignment="Center" TextTrimming="Clip" />
+                                    <TextBlock Foreground="White" Text="{Binding ArrivalViewModel.VirtualTable.AsOfTime}" HorizontalAlignment="Center" />
                                 </StackPanel>
-                                <Button Grid.Column="1" Name="btnFavourite" Padding="10" FontFamily="Segoe MDL2 Assets" FontSize="25" Content="&#xE734;" Background="Transparent" Foreground="Black" HorizontalAlignment="Right" Click="btnFavourite_Click" />
+                                <Button Grid.Column="1" Name="btnFavourite" Padding="10" FontFamily="Segoe MDL2 Assets" FontSize="25" Content="&#xE734;" Background="Transparent" Foreground="White" HorizontalAlignment="Right" Margin="0,-5,0,0" Click="btnFavourite_Click" />
                             </Grid>
                         </StackPanel>
                         
@@ -105,7 +105,7 @@
                             <ListView ItemsSource="{Binding ArrivalViewModel.Arrivals}" SelectionMode="None">
                                 <ListView.ItemTemplate>
                                     <DataTemplate>
-                                        <Grid Holding="ListViewItem_Holding" FlyoutBase.AttachedFlyout="{StaticResource LineFlyout}" Height="70" Margin="0,10,0,0" >
+                                        <Grid Holding="ListViewItem_Holding" FlyoutBase.AttachedFlyout="{StaticResource LineFlyout}" Height="80" Padding="0,10,0,10" >
                                             <Grid.RowDefinitions>
                                                 <RowDefinition />
                                                 <RowDefinition />
