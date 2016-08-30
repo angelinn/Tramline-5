@@ -71,6 +71,9 @@ namespace TramlineFive.Views.Pages
 
             prFavourites.IsActive = false;
             prFavourites.Visibility = Visibility.Collapsed;
+
+            if (FavouritesViewModel.Favourites.Count == 0)
+                txtNoFavourites.Visibility = Visibility.Visible;
         }
 
         private async void txtStopCode_KeyDown(object sender, KeyRoutedEventArgs e)

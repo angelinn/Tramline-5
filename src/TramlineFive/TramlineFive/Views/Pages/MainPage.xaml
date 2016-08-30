@@ -134,7 +134,7 @@
 
                 <PivotItem Header="Любими">
                     <Grid Padding="0,10,0,10">
-                        <TextBlock Name="txtNoFavourites" Text="Тази секция е самотна... добавете нещо..." FontSize="20" TextWrapping="Wrap" Foreground="Gray" FontStyle="Italic" Visibility="Collapsed" />
+                        <TextBlock Name="txtNoFavourites" Text="Тази секция е самотна... добавете спирка..." FontSize="20" TextWrapping="Wrap" Foreground="Gray" FontStyle="Italic" Visibility="Collapsed" />
                         <ProgressRing Name="prFavourites" Style="{StaticResource Spinner}" Visibility="Visible" IsActive="True" />
 
                         <ListView Name="lvFavourites" ItemsSource="{Binding FavouritesViewModel.Favourites}" ItemClick="lvFavourites_ItemClick" IsItemClickEnabled="True" SelectionMode="None">
