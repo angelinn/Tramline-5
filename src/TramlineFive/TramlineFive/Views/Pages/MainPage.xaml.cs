@@ -206,6 +206,8 @@ namespace TramlineFive.Views.Pages
                     prVirtualTables.IsActive = false;
                     prVirtualTables.Visibility = Visibility.Collapsed;
                 }
+
+                await HistoryViewModel.AddHistoryAsync(txtStopCode.Text);
             }
         }
 

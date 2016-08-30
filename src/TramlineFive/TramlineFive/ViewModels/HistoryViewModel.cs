@@ -20,6 +20,7 @@ namespace TramlineFive.ViewModels
         public async Task AddHistoryAsync(string code)
         {
             await HistoryDO.Add(code);
+            await LoadHistoryAsync();
         }
 
         public async Task LoadHistoryAsync()

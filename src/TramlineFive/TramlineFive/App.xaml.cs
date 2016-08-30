@@ -126,7 +126,7 @@ namespace TramlineFive
                 StorageFile dbFile =
                     await ApplicationData.Current.LocalFolder.TryGetItemAsync(TramlineFiveContext.DatabaseName) as StorageFile;
 
-                if (dbFile != null)
+                if (dbFile == null)
                 {
                     StorageFolder localFolder = ApplicationData.Current.LocalFolder;
                     Uri originalDbFileUri = new Uri($"ms-appx:///Assets/App_Data/{TramlineFiveContext.DatabaseName}");
