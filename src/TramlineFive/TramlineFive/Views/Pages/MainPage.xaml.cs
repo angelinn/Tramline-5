@@ -178,8 +178,8 @@ namespace TramlineFive.Views.Pages
             prFavourites.IsActive = false;
             prFavourites.Visibility = Visibility.Collapsed;
 
-            if (FavouritesViewModel.Favourites.Count == 0)
-                txtNoFavourites.Visibility = Visibility.Visible;
+            if (FavouritesViewModel.Favourites.Count > 0)
+                txtNoFavourites.Visibility = Visibility.Collapsed;
         }
 
         private async Task QueryVirtualTableAsync()

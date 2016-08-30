@@ -168,6 +168,9 @@
                         </ListView>
                     </Grid>
                 </PivotItem>
+                <PivotItem Header="История">
+                    
+                </PivotItem>
             </Pivot>
         </SplitView.Content>
     </SplitView>

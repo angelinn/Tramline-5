@@ -110,6 +110,7 @@
     <Compile Include="DomainLogic\DayDO.cs" />
     <Compile Include="DomainLogic\DirectionDO.cs" />
     <Compile Include="DomainLogic\FavouriteDO.cs" />
+    <Compile Include="DomainLogic\HistoryDO.cs" />
     <Compile Include="DomainLogic\LineDO.cs" />
     <Compile Include="DomainLogic\NotifyingModel.cs" />
     <Compile Include="DomainLogic\StopDO.cs" />
@@ -118,6 +119,7 @@
     <Compile Include="Entities\Day.cs" />
     <Compile Include="Entities\Direction.cs" />
     <Compile Include="Entities\Favourite.cs" />
+    <Compile Include="Entities\History.cs" />
     <Compile Include="Entities\Line.cs" />
     <Compile Include="Entities\Stop.cs" />
     <Compile Include="Extensions\DbSetClearExtension.cs" />

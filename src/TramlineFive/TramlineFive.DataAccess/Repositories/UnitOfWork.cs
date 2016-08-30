@@ -84,6 +84,14 @@ namespace TramlineFive.DataAccess.Repositories
             }
         }
 
+        public IGenericRepository<History> HistoryEntries
+        {
+            get
+            {
+                return GetRepository<History>();
+            }
+        }
+
         private IGenericRepository<T> GetRepository<T>() where T : class, BaseEntity
         {
             if (!repositories.ContainsKey(typeof(T)))
