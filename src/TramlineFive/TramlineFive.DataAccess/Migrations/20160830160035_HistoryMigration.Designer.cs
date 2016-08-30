@@ -8,8 +8,8 @@ using TramlineFive.DataAccess;
 namespace TramlineFive.DataAccess.Migrations
 {
     [DbContext(typeof(TramlineFiveContext))]
-    [Migration("20160811204945_PerfectMigration")]
-    partial class PerfectMigration
+    [Migration("20160830160035_HistoryMigration")]
+    partial class HistoryMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

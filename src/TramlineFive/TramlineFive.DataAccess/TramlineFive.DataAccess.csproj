@@ -124,9 +124,9 @@
     <Compile Include="Entities\Stop.cs" />
     <Compile Include="Extensions\DbSetClearExtension.cs" />
     <Compile Include="Extensions\IQueryableIncludeMultiple.cs" />
-    <Compile Include="Migrations\20160811204945_PerfectMigration.cs" />
-    <Compile Include="Migrations\20160811204945_PerfectMigration.designer.cs">
-      <DependentUpon>20160811204945_PerfectMigration.cs</DependentUpon>
+    <Compile Include="Migrations\20160830160035_HistoryMigration.cs" />
+    <Compile Include="Migrations\20160830160035_HistoryMigration.designer.cs">
+      <DependentUpon>20160830160035_HistoryMigration.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\TramlineFiveContextModelSnapshot.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

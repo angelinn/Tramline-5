@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace TramlineFive.DataAccess.Migrations
 {
-    public partial class PerfectMigration : Migration
+    public partial class HistoryMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
