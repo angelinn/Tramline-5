@@ -18,6 +18,7 @@ namespace TramlineFive.Common
         public static string PromptExit = "Изход?";
         public static string InvalidRequest = "Невалиден номер на спирка.";
         public static string DatabaseNotFound = "Базата от данни не беше открита. Приложението не може да продължи.";
+        public static string HistoryCleared = "Историята е изчистена успешно.";
     }
 
     public static class Urls

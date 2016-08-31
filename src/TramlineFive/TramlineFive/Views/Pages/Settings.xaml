@@ -37,8 +37,15 @@
             <TextBlock Text="Оценете приложението в Windows Store!" Margin="0,20,0,0" TextWrapping="Wrap" />
             <Button Content="Оцени" Margin="0,10,0,20" />
 
-            <TextBlock Text="Ако приложението се забавя, може да изчистите историята на търсенията" Margin="0,20,0,0" TextWrapping="Wrap" />
-            <Button Name="btnClearHistory" Content="Изчисти история" Margin="0,10,0,20" Click="btnClearHistory_Click" />
+            <TextBlock Text="Ако приложението се забавя, може да изчистите историята на търсенията" TextWrapping="Wrap" />
+            <Button Name="btnClearHistory" Margin="0,10,0,20" Click="btnClearHistory_Click">
+                <Button.Content>
+                    <Grid>
+                        <ProgressRing Name="prClearHistory" IsActive="False" Visibility="Collapsed" />
+                        <TextBlock Text="Изчисти история" />
+                    </Grid>
+                </Button.Content>
+            </Button>
 
             <TextBlock Text="Ако искате да прехвърлите любимите си спирки на друго устройство, използвайте бутона за извличане на данни." TextWrapping="Wrap" />
 

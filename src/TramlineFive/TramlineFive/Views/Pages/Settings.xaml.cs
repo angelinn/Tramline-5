@@ -69,8 +69,16 @@ namespace TramlineFive.Views.Pages
 
         private async void btnClearHistory_Click(object sender, RoutedEventArgs e)
         {
+            btnClearHistory.IsEnabled = false;
+            prClearHistory.IsActive = true;
+            prClearHistory.Visibility = Visibility.Visible;
+
             await SettingsViewModel.ClearHistoryAsync();
-            await new MessageDialog("Историята е изчистена успешно.").ShowAsync();
+            await new MessageDialog(Strings.HistoryCleared).ShowAsync();
+
+            btnClearHistory.IsEnabled = true;
+            prClearHistory.IsActive = false;
+            prClearHistory.Visibility = Visibility.Collapsed;
         }
     }
 }
