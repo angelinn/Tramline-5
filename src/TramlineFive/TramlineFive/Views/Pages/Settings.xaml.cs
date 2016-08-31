@@ -19,6 +19,10 @@ using Windows.Storage;
 using Windows.UI.Popups;
 using TramlineFive.DataAccess.DomainLogic;
 using Newtonsoft.Json;
+using Windows.Data.Xml.Dom;
+using Windows.UI.Notifications;
+using NotificationsExtensions.Toasts;
+using NotificationsExtensions;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -74,7 +78,19 @@ namespace TramlineFive.Views.Pages
             prClearHistory.Visibility = Visibility.Visible;
 
             await SettingsViewModel.ClearHistoryAsync();
-            await new MessageDialog(Strings.HistoryCleared).ShowAsync();
+
+            ToastBindingGeneric text = new ToastBindingGeneric();
+            text.Children.Add(new AdaptiveText() { Text = Strings.HistoryCleared });
+            ToastContent cont = new ToastContent()
+            {
+                Scenario = ToastScenario.Default,
+                Visual = new ToastVisual()
+                {
+                    BindingGeneric = text
+                },
+            };
+
+            ToastNotificationManager.CreateToastNotifier().Show(new ToastNotification(cont.GetXml()));
 
             btnClearHistory.IsEnabled = true;
             prClearHistory.IsActive = false;
