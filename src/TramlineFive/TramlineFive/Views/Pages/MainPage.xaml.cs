@@ -70,16 +70,17 @@ namespace TramlineFive.Views.Pages
         private async void MainPage_Loaded(object sender, RoutedEventArgs e)
         {
             await FavouritesViewModel.LoadFavouritesAsync();
-            await HistoryViewModel.LoadHistoryAsync();
-
-            prHistory.IsActive = false;
-            prHistory.Visibility = Visibility.Collapsed;
 
             prFavourites.IsActive = false;
             prFavourites.Visibility = Visibility.Collapsed;
 
             if (FavouritesViewModel.Favourites.Count == 0)
                 txtNoFavourites.Visibility = Visibility.Visible;
+
+            await HistoryViewModel.LoadHistoryAsync();
+
+            prHistory.IsActive = false;
+            prHistory.Visibility = Visibility.Collapsed;
 
             if (HistoryViewModel.History.Count == 0)
                 txtNoHistory.Visibility = Visibility.Visible;
@@ -197,15 +198,13 @@ namespace TramlineFive.Views.Pages
             {
                 prVirtualTables.IsActive = true;
                 prVirtualTables.Visibility = Visibility.Visible;
-                prFavourites.IsActive = true;
-                prVirtualTables.Visibility = Visibility.Visible;
+                prHistory.IsActive = true;
+                prHistory.Visibility = Visibility.Visible;
 
                 try
                 {
                     if (!await ArrivalViewModel.GetByStopCode(txtStopCode.Text))
                         await new MessageDialog(Strings.NoResults).ShowAsync();
-
-                    await HistoryViewModel.AddHistoryAsync(txtStopCode.Text);
                 }
                 catch (Exception ex)
                 {
@@ -215,10 +214,11 @@ namespace TramlineFive.Views.Pages
                 {
                     prVirtualTables.IsActive = false;
                     prVirtualTables.Visibility = Visibility.Collapsed;
-                    prFavourites.IsActive = false;
-                    prVirtualTables.Visibility = Visibility.Collapsed;
                 }
 
+                await HistoryViewModel.AddHistoryAsync(txtStopCode.Text);
+                prHistory.IsActive = false;
+                prHistory.Visibility = Visibility.Collapsed;
             }
         }
 

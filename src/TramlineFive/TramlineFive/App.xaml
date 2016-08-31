@@ -60,8 +60,8 @@
             <Style x:Key="Spinner" TargetType="ProgressRing">
                 <Setter Property="HorizontalAlignment" Value="Center" />
                 <Setter Property="VerticalAlignment" Value="Center" />
-                <Setter Property="Height" Value="100" />
-                <Setter Property="Width" Value="100" />
+                <Setter Property="Height" Value="80" />
+                <Setter Property="Width" Value="80" />
             </Style>
             <Style x:Key="SearchTextBox" TargetType="TextBox">
                 <Setter Property="MinWidth" Value="{ThemeResource TextControlThemeMinWidth}"/>
