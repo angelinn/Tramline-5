@@ -29,11 +29,13 @@ namespace TramlineFive.Views.Pages
     /// </summary>
     public sealed partial class Settings : Page
     {
+        public SettingsViewModel SettingsViewModel { get; private set; }
         public Settings()
         {
             this.InitializeComponent();
-            
-            this.DataContext = new SettingsViewModel();
+
+            SettingsViewModel = new SettingsViewModel();
+            this.DataContext = SettingsViewModel;
             this.Transitions = AnimationManager.SetUpPageAnimation();
         }
 
@@ -63,6 +65,12 @@ namespace TramlineFive.Views.Pages
 
             if (rootFrame.CanGoBack)
                 rootFrame.GoBack();
+        }
+
+        private async void btnClearHistory_Click(object sender, RoutedEventArgs e)
+        {
+            await SettingsViewModel.ClearHistoryAsync();
+            await new MessageDialog("Историята е изчистена успешно.").ShowAsync();
         }
     }
 }

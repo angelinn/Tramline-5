@@ -12,6 +12,7 @@ namespace TramlineFive.DataAccess.Repositories
         IQueryable<T> All();
         IQueryable<T> Where(Expression<Func<T, bool>> filter);
         T FindById(int id);
+        void Clear();
 
         void Add(T entity);
         void Delete(int id);

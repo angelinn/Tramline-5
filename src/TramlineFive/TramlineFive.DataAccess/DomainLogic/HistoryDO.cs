@@ -62,6 +62,18 @@ namespace TramlineFive.DataAccess.DomainLogic
             });
         }
 
+        public static async Task ClearAllAsync()
+        {
+            await Task.Run(() =>
+            {
+                using (UnitOfWork uow = new UnitOfWork())
+                {
+                    uow.HistoryEntries.Clear();
+                    uow.Save();
+                }
+            });
+        }
+
         private int id;
 
         private string code;

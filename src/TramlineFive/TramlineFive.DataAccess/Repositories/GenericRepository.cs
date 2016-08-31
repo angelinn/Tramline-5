@@ -7,6 +7,7 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using TramlineFive.DataAccess;
+using TramlineFive.Common.Extensions;
 
 namespace TramlineFive.DataAccess.Repositories
 {
@@ -51,6 +52,11 @@ namespace TramlineFive.DataAccess.Repositories
         public IQueryable<T> Where(Expression<Func<T, bool>> filter)
         {
             return context.Set<T>().Where(filter);
+        }
+
+        public void Clear()
+        {
+            context.Set<T>().Clear();
         }
 
         protected virtual void Dispose(bool disposing)

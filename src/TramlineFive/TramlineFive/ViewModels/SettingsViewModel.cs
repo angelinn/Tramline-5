@@ -43,5 +43,10 @@ namespace TramlineFive.ViewModels
                 OnPropertyChanged("LiveTile");
             }
         }
+
+        public async Task ClearHistoryAsync()
+        {
+            await HistoryDO.ClearAllAsync();
+        }
     }
 }
