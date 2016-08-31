@@ -171,6 +171,8 @@
                 </PivotItem>
                 <PivotItem Header="История">
                     <Grid>
+                        <TextBlock Name="txtNoHistory" Text="Тази секция е самотна... потърсете спирка..." FontSize="20" TextWrapping="Wrap" Foreground="Gray" FontStyle="Italic" Visibility="Collapsed" />
+                        <ProgressRing Name="prHistory" Style="{StaticResource Spinner}" IsActive="True"  />
                         <ListView Name="lvHistory" ItemsSource="{Binding HistoryViewModel.History}" IsItemClickEnabled="True" SelectionMode="Single" ItemClick="lvHistory_ItemClick">
                             <ListView.ItemTemplate>
                                 <DataTemplate>

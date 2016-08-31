@@ -72,11 +72,17 @@ namespace TramlineFive.Views.Pages
             await FavouritesViewModel.LoadFavouritesAsync();
             await HistoryViewModel.LoadHistoryAsync();
 
+            prHistory.IsActive = false;
+            prHistory.Visibility = Visibility.Collapsed;
+
             prFavourites.IsActive = false;
             prFavourites.Visibility = Visibility.Collapsed;
 
             if (FavouritesViewModel.Favourites.Count == 0)
                 txtNoFavourites.Visibility = Visibility.Visible;
+
+            if (HistoryViewModel.History.Count == 0)
+                txtNoHistory.Visibility = Visibility.Visible;
         }
 
         private async void txtStopCode_KeyDown(object sender, KeyRoutedEventArgs e)
@@ -191,11 +197,15 @@ namespace TramlineFive.Views.Pages
             {
                 prVirtualTables.IsActive = true;
                 prVirtualTables.Visibility = Visibility.Visible;
+                prFavourites.IsActive = true;
+                prVirtualTables.Visibility = Visibility.Visible;
 
                 try
                 {
                     if (!await ArrivalViewModel.GetByStopCode(txtStopCode.Text))
                         await new MessageDialog(Strings.NoResults).ShowAsync();
+
+                    await HistoryViewModel.AddHistoryAsync(txtStopCode.Text);
                 }
                 catch (Exception ex)
                 {
@@ -205,9 +215,10 @@ namespace TramlineFive.Views.Pages
                 {
                     prVirtualTables.IsActive = false;
                     prVirtualTables.Visibility = Visibility.Collapsed;
+                    prFavourites.IsActive = false;
+                    prVirtualTables.Visibility = Visibility.Collapsed;
                 }
 
-                await HistoryViewModel.AddHistoryAsync(txtStopCode.Text);
             }
         }
 
