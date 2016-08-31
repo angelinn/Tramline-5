@@ -25,7 +25,9 @@ namespace TramlineFive.ViewModels
 
         public async Task LoadHistoryAsync()
         {
-            foreach (HistoryDO history in await HistoryDO.AllAsync())
+            History.Clear();
+
+            foreach (HistoryDO history in (await HistoryDO.AllAsync()).Reverse())
                 History.Add(history);
         }
     }

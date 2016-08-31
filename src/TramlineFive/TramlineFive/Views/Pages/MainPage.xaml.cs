@@ -211,6 +211,14 @@ namespace TramlineFive.Views.Pages
             }
         }
 
+        private void lvHistory_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            txtStopCode.Text = String.Format("{0:D4}", Int32.Parse((e.ClickedItem as HistoryDO).Code));
+
+            reloadVirtualTable = true;
+            pvMain.SelectedIndex = 0;
+        }
+
         private bool reloadVirtualTable;
     }
 }

@@ -110,6 +110,7 @@
     <Compile Include="AnimationManager.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="Converters\BoolToVisibilityConverter.cs" />
+    <Compile Include="Converters\DateTimeConverter.cs" />
     <Compile Include="Converters\StopCodeConverter.cs" />
     <Compile Include="Converters\StringFormatConverter.cs" />
     <Compile Include="Converters\TimingConverter.cs" />
