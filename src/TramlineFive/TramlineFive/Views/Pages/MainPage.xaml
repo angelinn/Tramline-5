@@ -175,7 +175,7 @@
                             <ListView.ItemTemplate>
                                 <DataTemplate>
                                     <StackPanel Orientation="Horizontal" >
-                                        <Button Margin="-15,4,5,0" FontFamily="Segoe MDL2 Assets" Background="Transparent" Foreground="Black" Content="&#xE913;" FontSize="40" />
+                                        <Button Margin="-15,4,5,0" IsHitTestVisible="False" FontFamily="Segoe MDL2 Assets" Background="Transparent" Foreground="Black" Content="&#xE913;" FontSize="40" />
 
                                         <StackPanel VerticalAlignment="Center">
                                             <TextBlock>
