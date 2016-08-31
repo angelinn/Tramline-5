@@ -198,8 +198,6 @@ namespace TramlineFive.Views.Pages
             {
                 prVirtualTables.IsActive = true;
                 prVirtualTables.Visibility = Visibility.Visible;
-                prHistory.IsActive = true;
-                prHistory.Visibility = Visibility.Visible;
 
                 try
                 {
@@ -216,6 +214,8 @@ namespace TramlineFive.Views.Pages
                     prVirtualTables.Visibility = Visibility.Collapsed;
                 }
 
+                prHistory.IsActive = true;
+                prHistory.Visibility = Visibility.Visible;
                 await HistoryViewModel.AddHistoryAsync(txtStopCode.Text);
                 prHistory.IsActive = false;
                 prHistory.Visibility = Visibility.Collapsed;
