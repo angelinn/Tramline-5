@@ -215,8 +215,7 @@ namespace TramlineFive.Views.Pages
                 }
 
                 await HistoryViewModel.AddHistoryAsync(txtStopCode.Text);
-                if (HistoryViewModel.History.Count == 0)
-                    txtNoHistory.Visibility = Visibility.Visible;
+                txtNoHistory.Visibility = HistoryViewModel.History.Count == 0 ? Visibility.Visible : Visibility.Collapsed;
             }
         }
 
