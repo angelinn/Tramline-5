@@ -118,13 +118,23 @@ namespace TramlineFive.Views.Pages
         {
             if (pvMain.SelectedIndex == 0)
             {
-                pvMain.Focus(FocusState.Pointer);
+                Focus(FocusState.Programmatic);
                 if (reloadVirtualTable && !String.IsNullOrEmpty(txtStopCode.Text))
                 {
                     await QueryVirtualTableAsync();
                     reloadVirtualTable = false;
                 }
             }
+        }
+
+        private void LoseFocus(object sender)
+        {
+            var control = sender as Control;
+            var isTabStop = control.IsTabStop;
+            control.IsTabStop = false;
+            control.IsEnabled = false;
+            control.IsEnabled = true;
+            control.IsTabStop = isTabStop;
         }
 
         private void lvFavourites_ItemClick(object sender, ItemClickEventArgs e)
