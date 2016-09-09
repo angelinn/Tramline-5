@@ -209,8 +209,10 @@ namespace TramlineFive.Views.Pages
                     prVirtualTables.Visibility = Visibility.Collapsed;
                 }
 
+                pbHistory.Visibility = Visibility.Visible;
                 await HistoryViewModel.AddHistoryAsync(txtStopCode.Text);
                 txtNoHistory.Visibility = HistoryViewModel.History.Count == 0 ? Visibility.Visible : Visibility.Collapsed;
+                pbHistory.Visibility = Visibility.Collapsed;
             }
         }
 
