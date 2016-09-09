@@ -176,12 +176,15 @@ namespace TramlineFive.Views.Pages
 
         private async Task AddFavouriteAsync()
         {
+            pbFavourites.Visibility = Visibility.Visible;
             pvMain.SelectedIndex = 1;
 
             await FavouritesViewModel.AddAsync(txtStopCode.Text);
 
             if (FavouritesViewModel.Favourites.Count > 0)
                 txtNoFavourites.Visibility = Visibility.Collapsed;
+
+            pbFavourites.Visibility = Visibility.Collapsed;
         }
 
         private async Task QueryVirtualTableAsync()

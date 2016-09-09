@@ -137,7 +137,8 @@
                     <Grid Padding="0,10,0,10">
                         <TextBlock Name="txtNoFavourites" Text="Тази секция е самотна... добавете спирка..." FontSize="20" TextWrapping="Wrap" Foreground="Gray" FontStyle="Italic" Visibility="Collapsed" />
                         <ProgressRing Name="prFavourites" Style="{StaticResource Spinner}" Visibility="Visible" IsActive="True" />
-
+                        <ProgressBar Name="pbFavourites" VerticalAlignment="Top" Visibility="Collapsed" IsIndeterminate="True" />
+                        
                         <ListView Name="lvFavourites" ItemsSource="{Binding FavouritesViewModel.Favourites}" ItemClick="lvFavourites_ItemClick" IsItemClickEnabled="True" SelectionMode="None">
                             <ListView.Resources>
                                 <Style TargetType="ListViewItem">
