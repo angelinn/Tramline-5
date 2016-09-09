@@ -28,7 +28,9 @@ namespace TramlineFive.ViewModels
 
         public async Task AddAsync(string code)
         {
-            await FavouriteDO.Add(code);
+            FavouriteDO added = await FavouriteDO.Add(code);
+            if (added != null)
+                Favourites.Insert(0, added);
         }
 
         public async Task Remove(FavouriteDO favourite)

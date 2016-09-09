@@ -18,9 +18,9 @@ namespace TramlineFive.DataAccess.DomainLogic
             id = entity.ID;
         }
 
-        public static async Task Add(string code)
+        public static async Task<FavouriteDO> Add(string code)
         {
-            await Task.Run(() =>
+            return await Task.Run(() =>
             {
                 using (UnitOfWork uow = new UnitOfWork())
                 {
@@ -29,18 +29,18 @@ namespace TramlineFive.DataAccess.DomainLogic
                                                        .IncludeMultiple(f => f.Stop)
                                                        .Where(s => s.Stop.Code == intCode.ToString())
                                                        .FirstOrDefault();
+                    if (existing != null)
+                        return null;
 
-                    if (existing == null)
+                    Favourite favourite = new Favourite
                     {
+                        StopID = uow.Stops.Where(s => s.Code == intCode.ToString()).First().ID
+                    };
 
-                        Favourite favourite = new Favourite
-                        {
-                            StopID = uow.Stops.Where(s => s.Code == intCode.ToString()).First().ID
-                        };
+                    uow.Favourites.Add(favourite);
+                    uow.Save();
 
-                        uow.Favourites.Add(favourite);
-                        uow.Save();
-                    }
+                    return new FavouriteDO(favourite);
                 };
             });
         }

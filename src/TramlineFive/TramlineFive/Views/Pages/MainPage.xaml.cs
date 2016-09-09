@@ -127,16 +127,6 @@ namespace TramlineFive.Views.Pages
             }
         }
 
-        private void LoseFocus(object sender)
-        {
-            var control = sender as Control;
-            var isTabStop = control.IsTabStop;
-            control.IsTabStop = false;
-            control.IsEnabled = false;
-            control.IsEnabled = true;
-            control.IsTabStop = isTabStop;
-        }
-
         private void lvFavourites_ItemClick(object sender, ItemClickEventArgs e)
         {
             txtStopCode.Text = String.Format("{0:D4}", Int32.Parse((e.ClickedItem as FavouriteDO).Code));
@@ -186,17 +176,9 @@ namespace TramlineFive.Views.Pages
 
         private async Task AddFavouriteAsync()
         {
-            FavouritesViewModel.Favourites.Clear();
             pvMain.SelectedIndex = 1;
 
-            prFavourites.IsActive = true;
-            prFavourites.Visibility = Visibility.Visible;
-
             await FavouritesViewModel.AddAsync(txtStopCode.Text);
-            await FavouritesViewModel.LoadFavouritesAsync(true);
-
-            prFavourites.IsActive = false;
-            prFavourites.Visibility = Visibility.Collapsed;
 
             if (FavouritesViewModel.Favourites.Count > 0)
                 txtNoFavourites.Visibility = Visibility.Collapsed;
