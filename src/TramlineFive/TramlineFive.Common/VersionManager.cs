@@ -17,7 +17,7 @@ namespace TramlineFive.Common
                 if (version == null)
                 {
                     PackageVersion packageVersion = Package.Current.Id.Version;
-                    version = String.Format("{0}.{1}.{2}", packageVersion.Major, packageVersion.Minor, packageVersion.Build);
+                    version = $"{packageVersion.Major}.{packageVersion.Minor}.{packageVersion.Build}";
                 }
                 return version;
             }
