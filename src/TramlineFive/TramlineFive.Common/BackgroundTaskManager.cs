@@ -20,6 +20,7 @@ namespace TramlineFive.Common
             builder.SetTrigger(new TimeTrigger(REFRESH_TIME_MINUTES, false));
 
             BackgroundTaskRegistration registration = builder.Register();
+            return true;
         }
 
         public static async Task<bool> UnregisterBackgroundTaskAsync()
