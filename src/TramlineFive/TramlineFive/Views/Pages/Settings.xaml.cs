@@ -90,7 +90,10 @@ namespace TramlineFive.Views.Pages
                 },
             };
 
-            ToastNotificationManager.CreateToastNotifier().Show(new ToastNotification(cont.GetXml()));
+            ToastNotification notification = new ToastNotification(cont.GetXml());
+            notification.ExpirationTime = DateTime.Now.AddSeconds(3);
+
+            ToastNotificationManager.CreateToastNotifier().Show(notification);
 
             btnClearHistory.IsEnabled = true;
             prClearHistory.IsActive = false;
