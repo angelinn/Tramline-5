@@ -105,11 +105,14 @@ namespace TramlineFive.Views.Pages
             SettingsViewModel.LiveTile = tsLiveTile.IsOn;
 
             tsLiveTile.IsEnabled = false;
-            
+
             if (tsLiveTile.IsEnabled)
-                await BackgroundTaskManager.RegisterBackgroundTaskAsync();
-            else
-                await BackgroundTaskManager.UnregisterBackgroundTaskAsync();
+            {
+                if (!await BackgroundTaskManager.RegisterBackgroundTaskAsync())
+                    tsLiveTile.IsOn = !tsLiveTile.IsOn;
+            }
+            else if (!await BackgroundTaskManager.UnregisterBackgroundTaskAsync())
+                tsLiveTile.IsOn = !tsLiveTile.IsOn;
 
             tsLiveTile.IsEnabled = true;
         }

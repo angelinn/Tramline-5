@@ -9,9 +9,10 @@ namespace TramlineFive.Common
 {
     public static class BackgroundTaskManager
     {
-        public static async Task RegisterBackgroundTaskAsync()
+        public static async Task<bool> RegisterBackgroundTaskAsync()
         {
-            await UnregisterBackgroundTaskAsync();
+            if (!await UnregisterBackgroundTaskAsync())
+                return false;
 
             BackgroundTaskBuilder builder = new BackgroundTaskBuilder();
             builder.Name = TASK_NAME;
@@ -21,19 +22,20 @@ namespace TramlineFive.Common
             BackgroundTaskRegistration registration = builder.Register();
         }
 
-        public static async Task UnregisterBackgroundTaskAsync()
+        public static async Task<bool> UnregisterBackgroundTaskAsync()
         {
             BackgroundAccessStatus accessStatus = await BackgroundExecutionManager.RequestAccessAsync();
-            if (accessStatus == BackgroundAccessStatus.AllowedMayUseActiveRealTimeConnectivity || accessStatus == BackgroundAccessStatus.AllowedWithAlwaysOnRealTimeConnectivity)
+            if (accessStatus != BackgroundAccessStatus.AllowedMayUseActiveRealTimeConnectivity && accessStatus != BackgroundAccessStatus.AllowedWithAlwaysOnRealTimeConnectivity)
+                return false;
+
+            foreach (var task in BackgroundTaskRegistration.AllTasks)
             {
-                foreach (var task in BackgroundTaskRegistration.AllTasks)
+                if (task.Value.Name == TASK_NAME)
                 {
-                    if (task.Value.Name == TASK_NAME)
-                    {
-                        task.Value.Unregister(true);
-                    }
+                    task.Value.Unregister(true);
                 }
             }
+            return true;
         }
 
         private const string TASK_NAME = "FavouriteStopBackgroundTask";
