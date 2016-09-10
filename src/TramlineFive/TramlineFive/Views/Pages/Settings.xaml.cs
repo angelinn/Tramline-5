@@ -19,7 +19,6 @@ using Windows.Storage;
 using Windows.UI.Popups;
 using TramlineFive.DataAccess.DomainLogic;
 using Newtonsoft.Json;
-using Windows.Data.Xml.Dom;
 using Windows.UI.Notifications;
 using NotificationsExtensions.Toasts;
 using NotificationsExtensions;
@@ -51,7 +50,7 @@ namespace TramlineFive.Views.Pages
             if (folder != null)
             {
                 string serialized = JsonConvert.SerializeObject(await FavouriteDO.AllAsync());
-                StorageFile file = await folder.CreateFileAsync($"{Strings.AppName}_{DateTime.Now.ToString(Formats.Timestamp)}.t5d");
+                StorageFile file = await folder.CreateFileAsync($"{Strings.AppName}_{DateTime.Now.ToString(Formats.Timestamp)}.{Strings.BackupExtension}");
                 await FileIO.WriteTextAsync(file, serialized);
 
                 await new MessageDialog($"{Formats.ExportSuccess} - {file.Name}").ShowAsync();
