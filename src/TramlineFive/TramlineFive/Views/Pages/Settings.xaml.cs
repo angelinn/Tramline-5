@@ -102,19 +102,22 @@ namespace TramlineFive.Views.Pages
 
         private async void tsLiveTile_Toggled(object sender, RoutedEventArgs e)
         {
-            SettingsViewModel.LiveTile = tsLiveTile.IsOn;
-
-            tsLiveTile.IsEnabled = false;
-
-            if (tsLiveTile.IsEnabled)
+            if (SettingsViewModel.LiveTile != tsLiveTile.IsOn)
             {
-                if (!await BackgroundTaskManager.RegisterBackgroundTaskAsync())
-                    tsLiveTile.IsOn = !tsLiveTile.IsOn;
-            }
-            else if (!await BackgroundTaskManager.UnregisterBackgroundTaskAsync())
-                tsLiveTile.IsOn = !tsLiveTile.IsOn;
+                tsLiveTile.IsEnabled = false;
 
-            tsLiveTile.IsEnabled = true;
+                if (tsLiveTile.IsOn)
+                {
+                    if (!await BackgroundTaskManager.RegisterBackgroundTaskAsync())
+                        tsLiveTile.IsOn = !tsLiveTile.IsOn;
+                }
+                else if (!await BackgroundTaskManager.UnregisterBackgroundTaskAsync())
+                    tsLiveTile.IsOn = !tsLiveTile.IsOn;
+
+                tsLiveTile.IsEnabled = true;
+
+                SettingsViewModel.LiveTile = tsLiveTile.IsOn;
+            }
         }
     }
 }
