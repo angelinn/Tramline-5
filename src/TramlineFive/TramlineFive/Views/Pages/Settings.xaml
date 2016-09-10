@@ -31,8 +31,8 @@
             <TextBlock Text="Позволи на приложението да изпраща push notification-и" Style="{StaticResource SettingTitle}"/>
             <ToggleSwitch IsOn="{Binding PushNotifications, Mode=TwoWay}"  />
 
-            <TextBlock Text="Обновявай живата плочка на всеки 30 мин" Style="{StaticResource SettingTitle}"/>
-            <ToggleSwitch IsOn="{Binding LiveTile, Mode=TwoWay}"/>
+            <TextBlock Text="Обновявай живата плочка на всеки час" Style="{StaticResource SettingTitle}"/>
+            <ToggleSwitch Name="tsLiveTile" IsOn="{Binding LiveTile}" Toggled="tsLiveTile_Toggled"/>
 
             <TextBlock Text="Оценете приложението в Windows Store!" Margin="0,20,0,0" TextWrapping="Wrap" />
             <Button Content="Оцени" Margin="0,10,0,20" />

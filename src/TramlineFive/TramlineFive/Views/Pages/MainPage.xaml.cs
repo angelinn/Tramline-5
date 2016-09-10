@@ -57,30 +57,10 @@ namespace TramlineFive.Views.Pages
             svMain.IsPaneOpen = false;
         }
 
-        protected override void OnNavigatedTo(NavigationEventArgs e)
+        protected async override void OnNavigatedTo(NavigationEventArgs e)
         {
-            RegisterBackgroundTask();
-        }
-
-        private async void RegisterBackgroundTask()
-        {
-            var accessStatus = await BackgroundExecutionManager.RequestAccessAsync();
-            if (accessStatus == BackgroundAccessStatus.AllowedMayUseActiveRealTimeConnectivity || accessStatus == BackgroundAccessStatus.AllowedWithAlwaysOnRealTimeConnectivity)
-            {
-                foreach (var task in BackgroundTaskRegistration.AllTasks)
-                {
-                    if (task.Value.Name == "FavouriteStopBackgroundTask")
-                    {
-                        task.Value.Unregister(true);
-                    }
-                }
-            }
-
-            BackgroundTaskBuilder builder = new BackgroundTaskBuilder();
-            builder.Name = "FavouriteStopBackgroundTask";
-            builder.TaskEntryPoint = "BackgroundTasks.FavouriteStopBackgroundTask";
-            builder.SetTrigger(new TimeTrigger(60, false));
-            var registration = builder.Register();
+            if ((bool)SettingsManager.ReadValue("LiveTile"))
+                await BackgroundTaskManager.RegisterBackgroundTaskAsync();
         }
 
         private async void MainPage_BackRequested(object sender, BackRequestedEventArgs e)

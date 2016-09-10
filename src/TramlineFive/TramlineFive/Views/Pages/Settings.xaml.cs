@@ -22,6 +22,7 @@ using Newtonsoft.Json;
 using Windows.UI.Notifications;
 using NotificationsExtensions.Toasts;
 using NotificationsExtensions;
+using System.Threading.Tasks;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -97,6 +98,20 @@ namespace TramlineFive.Views.Pages
             btnClearHistory.IsEnabled = true;
             prClearHistory.IsActive = false;
             prClearHistory.Visibility = Visibility.Collapsed;
+        }
+
+        private async void tsLiveTile_Toggled(object sender, RoutedEventArgs e)
+        {
+            SettingsViewModel.LiveTile = tsLiveTile.IsOn;
+
+            tsLiveTile.IsEnabled = false;
+            
+            if (tsLiveTile.IsEnabled)
+                await BackgroundTaskManager.RegisterBackgroundTaskAsync();
+            else
+                await BackgroundTaskManager.UnregisterBackgroundTaskAsync();
+
+            tsLiveTile.IsEnabled = true;
         }
     }
 }
