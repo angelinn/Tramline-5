@@ -17,7 +17,7 @@ namespace TramlineFive.Common.Converters
 
         public object ConvertBack(object value, Type targetType, object parameter, string language)
         {
-            return String.Empty;
+            throw new NotImplementedException();
         }
     }
 }

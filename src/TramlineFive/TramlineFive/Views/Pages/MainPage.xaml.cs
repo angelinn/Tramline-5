@@ -57,12 +57,6 @@ namespace TramlineFive.Views.Pages
             svMain.IsPaneOpen = false;
         }
 
-        protected async override void OnNavigatedTo(NavigationEventArgs e)
-        {
-            if ((bool)SettingsManager.ReadValue("LiveTile"))
-                await BackgroundTaskManager.RegisterBackgroundTaskAsync();
-        }
-
         private async void MainPage_BackRequested(object sender, BackRequestedEventArgs e)
         {
             Frame rootFrame = Window.Current.Content as Frame;
