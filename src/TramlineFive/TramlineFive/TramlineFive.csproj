@@ -139,6 +139,11 @@
   <ItemGroup>
     <Content Include="Assets\Bus-64.png" />
     <Content Include="Assets\Store\360.png" />
+    <Content Include="Assets\Store\BadgeLogo.scale-100.png" />
+    <Content Include="Assets\Store\BadgeLogo.scale-125.png" />
+    <Content Include="Assets\Store\BadgeLogo.scale-150.png" />
+    <Content Include="Assets\Store\BadgeLogo.scale-200.png" />
+    <Content Include="Assets\Store\BadgeLogo.scale-400.png" />
     <Content Include="Assets\Store\NewStoreLogo.scale-100.png" />
     <Content Include="Assets\Store\NewStoreLogo.scale-125.png" />
     <Content Include="Assets\Store\NewStoreLogo.scale-150.png" />
@@ -223,6 +228,10 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\BackgroundTasks\BackgroundTasks.csproj">
+      <Project>{5331f49c-a6ca-44fa-ab1a-c6d67352b33d}</Project>
+      <Name>BackgroundTasks</Name>
+    </ProjectReference>
     <ProjectReference Include="..\TramlineFive.Common\TramlineFive.Common.csproj">
       <Project>{10462496-11c5-4cf8-9f65-05f7f938dcba}</Project>
       <Name>TramlineFive.Common</Name>

@@ -18,6 +18,7 @@ using Windows.UI.Xaml.Navigation;
 using TramlineFive.Views.Dialogs;
 using TramlineFive.DataAccess.DomainLogic;
 using Windows.ApplicationModel.Core;
+using Windows.ApplicationModel.Background;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
@@ -54,6 +55,32 @@ namespace TramlineFive.Views.Pages
         {
             base.OnNavigatedFrom(e);
             svMain.IsPaneOpen = false;
+        }
+
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            RegisterBackgroundTask();
+        }
+
+        private async void RegisterBackgroundTask()
+        {
+            var accessStatus = await BackgroundExecutionManager.RequestAccessAsync();
+            if (accessStatus == BackgroundAccessStatus.AllowedMayUseActiveRealTimeConnectivity || accessStatus == BackgroundAccessStatus.AllowedWithAlwaysOnRealTimeConnectivity)
+            {
+                foreach (var task in BackgroundTaskRegistration.AllTasks)
+                {
+                    if (task.Value.Name == "FavouriteStopBackgroundTask")
+                    {
+                        task.Value.Unregister(true);
+                    }
+                }
+            }
+
+            BackgroundTaskBuilder builder = new BackgroundTaskBuilder();
+            builder.Name = "FavouriteStopBackgroundTask";
+            builder.TaskEntryPoint = "BackgroundTasks.FavouriteStopBackgroundTask";
+            builder.SetTrigger(new TimeTrigger(60, false));
+            var registration = builder.Register();
         }
 
         private async void MainPage_BackRequested(object sender, BackRequestedEventArgs e)
