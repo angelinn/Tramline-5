@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Background;
+using Windows.UI.Notifications;
 
 namespace TramlineFive.Common
 {
@@ -36,6 +37,8 @@ namespace TramlineFive.Common
                     task.Value.Unregister(true);
                 }
             }
+
+            TileUpdateManager.CreateTileUpdaterForApplication().Clear();
             return true;
         }
 

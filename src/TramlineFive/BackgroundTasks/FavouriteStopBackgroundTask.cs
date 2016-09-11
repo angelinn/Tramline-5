@@ -41,11 +41,16 @@ namespace BackgroundTasks
                 tileXml.GetElementsByTagName("text")[0].InnerText = SumcParser.ParseStopTitle(title);
                 tileXml.GetElementsByTagName("text")[1].InnerText = String.Join(", ", arrival.Timings);
 
-                updater.Update(new TileNotification(tileXml));
+                TileNotification timings = new TileNotification(tileXml);
+                timings.ExpirationTime = DateTime.Now.AddHours(1);
+
+                updater.Update(timings);
                 if (itemCount++ > 5)
                     break;
             }
-            updater.Update(new TileNotification(xml));
+            TileNotification defaultTile = new TileNotification(xml);
+            defaultTile.ExpirationTime = DateTime.Now.AddHours(1);
+            updater.Update(defaultTile);
         }
     }
 }
