@@ -46,7 +46,7 @@ namespace TramlineFive.Views.Pages
             Loaded += Settings_Loaded;
         }
 
-        private void Settings_Loaded(object sender, RoutedEventArgs e)
+        private async void Settings_Loaded(object sender, RoutedEventArgs e)
         {
             var list = new List<object>();
             foreach (int r in Enum.GetValues(typeof(VehicleType)))
@@ -58,7 +58,20 @@ namespace TramlineFive.Views.Pages
             cbTypes.ItemsSource = list;
             cbTypes.DisplayMemberPath = "Name";
             cbTypes.SelectedValuePath = "Value";
-            cbTypes.SelectedIndex = 0;
+
+            object type = SettingsManager.ReadValue("FavouriteType");
+            cbTypes.SelectedIndex = (type == null) ? 0 : (int)type;
+
+            object line = SettingsManager.ReadValue("FavouriteLine");
+            txtLine.Text = line == null ? String.Empty : line as string;
+
+            object index = SettingsManager.ReadValue("FavouriteIndex");
+            if (index != null)
+            {
+                await Up();
+                cbStops.SelectedIndex = (int)index;
+            }
+
         }
 
         private async void btnExport_Click(object sender, RoutedEventArgs e)
@@ -140,6 +153,11 @@ namespace TramlineFive.Views.Pages
 
         private async void txtLine_LostFocus(object sender, RoutedEventArgs e)
         {
+            await Up();
+        }
+
+        private async Task Up()
+        {
             int testVariable;
 
             if (Int32.TryParse(txtLine.Text, out testVariable))
@@ -159,8 +177,15 @@ namespace TramlineFive.Views.Pages
 
         private void cbStops_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            SettingsManager.UpdateValue("Favourite", (cbStops.SelectedItem as StopDO).Code);
-            tsLiveTile.IsOn = true;
+            if ((cbStops.SelectedItem as StopDO).Code != SettingsManager.ReadValue("Favourite") as string)
+            {
+                SettingsManager.UpdateValue("Favourite", (cbStops.SelectedItem as StopDO).Code);
+                SettingsManager.UpdateValue("FavouriteIndex", cbStops.SelectedIndex);
+                SettingsManager.UpdateValue("FavouriteType", cbTypes.SelectedIndex);
+                SettingsManager.UpdateValue("FavouriteLine", txtLine.Text);
+
+                tsLiveTile.IsOn = true;
+            }
         }
     }
 }
