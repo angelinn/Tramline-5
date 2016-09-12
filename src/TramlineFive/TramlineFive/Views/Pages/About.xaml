@@ -46,7 +46,6 @@
             </TextBlock>
             <TextBlock Text="Потребителят трябва да има право на избор!" Style="{StaticResource aboutText}" />
             <TextBlock Text="На главната страница на приложението ще намерите линк към сайта &quot;Център за градска мобилност.&quot;" Margin="0,20,0,0" Style="{StaticResource aboutText}" />
-
         </StackPanel>
     </ScrollViewer>
 </Page>

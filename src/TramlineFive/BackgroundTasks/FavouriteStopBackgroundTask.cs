@@ -19,38 +19,59 @@ namespace BackgroundTasks
             BackgroundTaskDeferral deferral = taskInstance.GetDeferral();
             List<Arrival> arrivals = await SumcManager.GetByStopAsync("2193", null);
 
-            UpdateTile(arrivals);
+            UpdateTiles(arrivals);
             deferral.Complete();
         }
 
-        private void UpdateTile(List<Arrival> arrivals)
+        private void UpdateTiles(List<Arrival> arrivals)
         {
             var updater = TileUpdateManager.CreateTileUpdaterForApplication();
             updater.EnableNotificationQueue(true);
             updater.Clear();
 
-            XmlDocument xml = TileUpdateManager.GetTemplateContent(TileTemplateType.TileWide310x150Image);
-            ((XmlElement)xml.GetElementsByTagName("image")[0]).SetAttribute("src", "ms-appx:///Assets/Store/Wide310x150Logo.scale-400.png");
-
-            int itemCount = 1;
+            int itemCount = 0;
 
             foreach (Arrival arrival in arrivals)
             {
-                XmlDocument tileXml = TileUpdateManager.GetTemplateContent(TileTemplateType.TileWide310x150Text03);
                 string title = arrivals.First().StopTitle;
-                tileXml.GetElementsByTagName("text")[0].InnerText = SumcParser.ParseStopTitle(title) + "\n" + String.Join(", ", arrival.Timings);
-                //tileXml.GetElementsByTagName("text")[1].InnerText = String.Join(", ", arrival.Timings);
+                string message = $"{arrival.Type} {arrival.VehicleNumber}\n{SumcParser.ParseStopTitle(title)}\n{String.Join(", ", arrival.Timings)}";
 
-                TileNotification timings = new TileNotification(tileXml);
-                timings.ExpirationTime = DateTime.Now.AddHours(1);
+                TileNotification wide = CreateWideNotification(message);
+                TileNotification square = CreateSquareNotification(message);
 
-                updater.Update(timings);
+                updater.Update(wide);
+                updater.Update(square);
                 if (itemCount++ > 5)
                     break;
             }
-            TileNotification defaultTile = new TileNotification(xml);
-            defaultTile.ExpirationTime = DateTime.Now.AddHours(1);
-            updater.Update(defaultTile);
+        }
+
+        private TileNotification CreateWideNotification(string message)
+        {
+            XmlDocument tileXml = TileUpdateManager.GetTemplateContent(TileTemplateType.TileWide310x150PeekImage03);
+            ((XmlElement)tileXml.GetElementsByTagName("image")[0]).SetAttribute("src", "ms-appx:///Assets/Store/Wide310x150Logo.scale-400.png");
+            tileXml.GetElementsByTagName("text")[0].InnerText = message;
+
+            TileNotification notification = new TileNotification(tileXml);
+
+            notification.ExpirationTime = DateTime.Now.AddHours(1);
+            return notification;
+        }
+
+        private TileNotification CreateSquareNotification(string message)
+        {
+            XmlDocument tileXml = TileUpdateManager.GetTemplateContent(TileTemplateType.TileSquare150x150PeekImageAndText03);
+            string[] split = message.Split('\n');
+
+            ((XmlElement)tileXml.GetElementsByTagName("image")[0]).SetAttribute("src", "ms-appx:///Assets/Store/Square150x150Logo.scale-400.png");
+            tileXml.GetElementsByTagName("text")[0].InnerText = split[0];
+            tileXml.GetElementsByTagName("text")[1].InnerText = split[1];
+            tileXml.GetElementsByTagName("text")[2].InnerText = split[2];
+
+            TileNotification notification = new TileNotification(tileXml);
+
+            notification.ExpirationTime = DateTime.Now.AddHours(1);
+            return notification;
         }
     }
 }

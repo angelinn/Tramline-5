@@ -15,7 +15,7 @@ namespace TramlineFive.Common
                 return String.Empty;
 
             string parsed = WebUtility.HtmlDecode(stopTitle);
-            return parsed.Substring(parsed.IndexOf(".") + 1);
+            return parsed.Substring(parsed.IndexOf(".") + 1).Trim();
         }
 
         public static string ParseSumcVehicleType(char type)
