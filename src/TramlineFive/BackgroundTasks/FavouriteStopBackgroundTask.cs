@@ -17,7 +17,7 @@ namespace BackgroundTasks
         public async void Run(IBackgroundTaskInstance taskInstance)
         {
             BackgroundTaskDeferral deferral = taskInstance.GetDeferral();
-            List<Arrival> arrivals = await SumcManager.GetByStopAsync("2193", null);
+            List<Arrival> arrivals = await SumcManager.GetByStopAsync(SettingsManager.ReadValue("Favourite") as string, null);
 
             UpdateTiles(arrivals);
             deferral.Complete();
@@ -43,7 +43,7 @@ namespace BackgroundTasks
                 updater.Update(square);
                 if (itemCount++ > 5)
                     break;
-            }
+           } 
         }
 
         private TileNotification CreateWideNotification(string message)

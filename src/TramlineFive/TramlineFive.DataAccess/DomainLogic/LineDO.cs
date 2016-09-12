@@ -44,6 +44,26 @@ namespace TramlineFive.DataAccess.DomainLogic
             directions = await DirectionDO.GetByLineId(id);
         }
 
+        public static async Task<IEnumerable<StopDO>> FetchByVehicleAsync(VehicleType type, string number)
+        {
+            using (UnitOfWork uow = new UnitOfWork())
+            {
+                Line chosen = uow.Lines.Where(l => l.Type == type && l.Number == number).FirstOrDefault();
+                if (chosen == null)
+                    return null;
+
+                LineDO domain = new LineDO(chosen);
+
+                await domain.LoadDirections();
+                DirectionDO direction = domain.directions.First();
+                await direction.LoadDays();
+                DayDO day = direction.Days.First();
+                await day.LoadStops();
+
+                return day.Stops;
+            }
+        }
+
         private int id;
 
         private VehicleType type;
@@ -84,17 +104,7 @@ namespace TramlineFive.DataAccess.DomainLogic
 
         public string TypeToString(bool plural = false)
         {
-            switch (type)
-            {
-                case VehicleType.Bus:
-                    return plural ? "Автобуси" : "Автобус";
-                case VehicleType.Tram:
-                    return plural ? "Трамваи" : "Трамвай";
-                case VehicleType.Trolley:
-                    return plural ? "Тролеи" : "Тролей";
-                default:
-                    return String.Empty;
-            }
+            return VehicleTypeManager.TypeToString(type, plural);
         }
 
         public override string ToString()

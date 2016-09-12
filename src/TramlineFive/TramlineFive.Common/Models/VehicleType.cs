@@ -13,4 +13,22 @@ namespace TramlineFive.Common.Models
         Tram,
         Trolley
     }
+
+    public static class VehicleTypeManager
+    {
+        public static string TypeToString(VehicleType type, bool plural = false)
+        {
+            switch (type)
+            {
+                case VehicleType.Bus:
+                    return plural ? "Автобуси" : "Автобус";
+                case VehicleType.Tram:
+                    return plural ? "Трамваи" : "Трамвай";
+                case VehicleType.Trolley:
+                    return plural ? "Тролеи" : "Тролей";
+                default:
+                    return String.Empty;
+            }
+        }
+    }
 }

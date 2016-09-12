@@ -14,6 +14,7 @@ namespace TramlineFive.DataAccess.DomainLogic
         {
             id = entity.ID;
             name = entity.Name;
+            code = entity.Code;
             timings = entity.Timings;
         }
 
@@ -37,6 +38,15 @@ namespace TramlineFive.DataAccess.DomainLogic
             get
             {
                 return name;
+            }
+        }
+
+        private string code;
+        public string Code
+        {
+            get
+            {
+                return code;
             }
         }
 

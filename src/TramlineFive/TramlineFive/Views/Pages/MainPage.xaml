@@ -135,7 +135,7 @@
 
                 <PivotItem Header="Любими">
                     <Grid Padding="0,10,0,10">
-                        <TextBlock Name="txtNoFavourites" Text="Тази секция е самотна... добавете спирка..." FontSize="20" TextWrapping="Wrap" Foreground="Gray" FontStyle="Italic" Visibility="Collapsed" />
+                        <TextBlock Name="txtNoFavourites" Text="Тази секция е самотна... добавете спирка..." FontSize="20" TextWrapping="Wrap" Foreground="Gray" FontStyle="Italic" Visibility="Collapsed" Margin="0,20,0,0" />
                         <ProgressRing Name="prFavourites" Style="{StaticResource Spinner}" Visibility="Visible" IsActive="True" Margin="0,0,0,38" />
                         <ProgressBar Name="pbFavourites" VerticalAlignment="Top" Visibility="Collapsed" IsIndeterminate="True" />
 
@@ -173,7 +173,7 @@
                 
                 <PivotItem Header="История">
                     <Grid>
-                        <TextBlock Name="txtNoHistory" Text="Тази секция е самотна... потърсете спирка..." FontSize="20" TextWrapping="Wrap" Foreground="Gray" FontStyle="Italic" Visibility="Collapsed" />
+                        <TextBlock Name="txtNoHistory" Text="Тази секция е самотна... потърсете спирка..." FontSize="20" TextWrapping="Wrap" Foreground="Gray" FontStyle="Italic" Visibility="Collapsed" Margin="0,20,0,0" />
                         <ProgressRing Name="prHistory" Style="{StaticResource Spinner}" IsActive="True" Margin="0,0,0,28" />
                         <ProgressBar Name="pbHistory" VerticalAlignment="Top" Visibility="Collapsed" IsIndeterminate="True" />
                         <ListView Name="lvHistory" ItemsSource="{Binding HistoryViewModel.History}" IsItemClickEnabled="True" SelectionMode="None" ItemClick="lvHistory_ItemClick">

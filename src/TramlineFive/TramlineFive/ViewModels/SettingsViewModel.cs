@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TramlineFive.DataAccess.DomainLogic;
+using TramlineFive.DataAccess.Repositories;
 
 namespace TramlineFive.ViewModels
 {
@@ -47,6 +48,14 @@ namespace TramlineFive.ViewModels
         public async Task ClearHistoryAsync()
         {
             await HistoryDO.ClearAllAsync();
+        }
+
+        public async Task FetchLinesAsync(string code)
+        {
+            using (UnitOfWork uow = new UnitOfWork())
+            {
+                
+            }
         }
     }
 }

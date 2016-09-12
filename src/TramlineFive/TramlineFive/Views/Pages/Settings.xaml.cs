@@ -23,6 +23,7 @@ using Windows.UI.Notifications;
 using NotificationsExtensions.Toasts;
 using NotificationsExtensions;
 using System.Threading.Tasks;
+using TramlineFive.Common.Models;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -41,6 +42,23 @@ namespace TramlineFive.Views.Pages
             SettingsViewModel = new SettingsViewModel();
             this.DataContext = SettingsViewModel;
             this.Transitions = AnimationManager.SetUpPageAnimation();
+
+            Loaded += Settings_Loaded;
+        }
+
+        private void Settings_Loaded(object sender, RoutedEventArgs e)
+        {
+            var list = new List<object>();
+            foreach (int r in Enum.GetValues(typeof(VehicleType)))
+            {
+                if (r >= 0)
+                    list.Add(new { Name = VehicleTypeManager.TypeToString((VehicleType)Enum.ToObject(typeof(VehicleType), r)), Value = r });
+            }
+
+            cbTypes.ItemsSource = list;
+            cbTypes.DisplayMemberPath = "Name";
+            cbTypes.SelectedValuePath = "Value";
+            cbTypes.SelectedIndex = 0;
         }
 
         private async void btnExport_Click(object sender, RoutedEventArgs e)
@@ -118,6 +136,31 @@ namespace TramlineFive.Views.Pages
 
                 SettingsViewModel.LiveTile = tsLiveTile.IsOn;
             }
+        }
+
+        private async void txtLine_LostFocus(object sender, RoutedEventArgs e)
+        {
+            int testVariable;
+
+            if (Int32.TryParse(txtLine.Text, out testVariable))
+            {
+                cbStops.IsEnabled = true;
+                IEnumerable<StopDO> stops = await LineDO.FetchByVehicleAsync((VehicleType)cbTypes.SelectedValue, txtLine.Text);
+
+                if (stops != null)
+                {
+                    cbStops.DisplayMemberPath = "Name";
+                    cbStops.ItemsSource = stops;
+
+                    tsLiveTile.IsEnabled = true;
+                }
+            }
+        }
+
+        private void cbStops_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            SettingsManager.UpdateValue("Favourite", (cbStops.SelectedItem as StopDO).Code);
+            tsLiveTile.IsOn = true;
         }
     }
 }
