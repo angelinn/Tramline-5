@@ -25,7 +25,7 @@
     </Page.TopAppBar>
 
     <ScrollViewer Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <StackPanel HorizontalAlignment="Center" Margin="10,10,10,30">
+        <StackPanel Margin="15,15,15,30">
             <TextBlock FontSize="20" Text="Трамвай №5 за Windows" />
             <TextBlock FontSize="20" >
                 <Run Text="Версия: " />
