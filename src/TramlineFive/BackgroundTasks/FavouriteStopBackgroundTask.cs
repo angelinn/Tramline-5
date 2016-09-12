@@ -36,10 +36,10 @@ namespace BackgroundTasks
 
             foreach (Arrival arrival in arrivals)
             {
-                XmlDocument tileXml = TileUpdateManager.GetTemplateContent(TileTemplateType.TileWide310x150Text01);
+                XmlDocument tileXml = TileUpdateManager.GetTemplateContent(TileTemplateType.TileWide310x150Text03);
                 string title = arrivals.First().StopTitle;
-                tileXml.GetElementsByTagName("text")[0].InnerText = SumcParser.ParseStopTitle(title);
-                tileXml.GetElementsByTagName("text")[1].InnerText = String.Join(", ", arrival.Timings);
+                tileXml.GetElementsByTagName("text")[0].InnerText = SumcParser.ParseStopTitle(title) + "\n" + String.Join(", ", arrival.Timings);
+                //tileXml.GetElementsByTagName("text")[1].InnerText = String.Join(", ", arrival.Timings);
 
                 TileNotification timings = new TileNotification(tileXml);
                 timings.ExpirationTime = DateTime.Now.AddHours(1);
