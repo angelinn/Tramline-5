@@ -49,7 +49,7 @@ namespace BackgroundTasks
         private TileNotification CreateWideNotification(string message)
         {
             XmlDocument tileXml = TileUpdateManager.GetTemplateContent(TileTemplateType.TileWide310x150PeekImage03);
-            ((XmlElement)tileXml.GetElementsByTagName("image")[0]).SetAttribute("src", "ms-appx:///Assets/Store/Wide310x150Logo.scale-400.png");
+            ((XmlElement)tileXml.GetElementsByTagName("image")[0]).SetAttribute("src", WIDE_LOGO_SRC);
             tileXml.GetElementsByTagName("text")[0].InnerText = message;
 
             TileNotification notification = new TileNotification(tileXml);
@@ -63,7 +63,7 @@ namespace BackgroundTasks
             XmlDocument tileXml = TileUpdateManager.GetTemplateContent(TileTemplateType.TileSquare150x150PeekImageAndText03);
             string[] split = message.Split('\n');
 
-            ((XmlElement)tileXml.GetElementsByTagName("image")[0]).SetAttribute("src", "ms-appx:///Assets/Store/Square150x150Logo.scale-400.png");
+            ((XmlElement)tileXml.GetElementsByTagName("image")[0]).SetAttribute("src", SQUARE_LOGO_SRC);
             tileXml.GetElementsByTagName("text")[0].InnerText = split[0];
             tileXml.GetElementsByTagName("text")[1].InnerText = split[1];
             tileXml.GetElementsByTagName("text")[2].InnerText = split[2];
@@ -73,5 +73,8 @@ namespace BackgroundTasks
             notification.ExpirationTime = DateTime.Now.AddHours(1);
             return notification;
         }
+
+        private const string WIDE_LOGO_SRC = "ms-appx:///Assets/Store/Wide310x150Logo.scale-400.png";
+        private const string SQUARE_LOGO_SRC = "ms-appx:///Assets/Store/Square150x150Logo.scale-400.png";
     }
 }
