@@ -11,8 +11,7 @@ namespace TramlineFive.Common.Converters
     {
         public object Convert(object value, Type targetType, object parameter, string language)
         {
-            string code = value as string;
-            return String.Format("{0:D4}", Int32.Parse(code));
+            return CommonManager.ToStopCode(value as string);
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, string language)

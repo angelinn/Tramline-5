@@ -15,11 +15,11 @@ namespace TramlineFive.ViewModels
         {
             get
             {
-                object value = SettingsManager.ReadValue("PushNotifications");
+                string value = SettingsManager.ReadValue("PushNotifications");
                 if (value == null)
                     return false;
 
-                return (bool)value;
+                return Boolean.Parse(value);
             }
             set
             {
@@ -32,11 +32,11 @@ namespace TramlineFive.ViewModels
         {
             get
             {
-                object value = SettingsManager.ReadValue("LiveTile");
+                string value = SettingsManager.ReadValue("LiveTile");
                 if (value == null)
                     return false;
 
-                return (bool)value;
+                return Boolean.Parse(value);
             }
             set
             {

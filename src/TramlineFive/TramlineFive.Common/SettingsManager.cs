@@ -11,12 +11,17 @@ namespace TramlineFive.Common
     {
         public static void UpdateValue(string key, object value)
         {
-            ApplicationData.Current.LocalSettings.Values[key] = value;
+            ApplicationData.Current.LocalSettings.Values[key] = value?.ToString();
         }
 
-        public static object ReadValue(string key)
+        public static string ReadValue(string key)
         {
-            return ApplicationData.Current.LocalSettings.Values[key];
+            return ApplicationData.Current.LocalSettings.Values[key] as string;
+        }
+
+        public static void ClearValue(string key)
+        {
+            UpdateValue(key, null);
         }
     }
 }

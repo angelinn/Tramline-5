@@ -19,21 +19,26 @@ namespace BackgroundTasks
             BackgroundTaskDeferral deferral = taskInstance.GetDeferral();
             List<Arrival> arrivals = await SumcManager.GetByStopAsync(SettingsManager.ReadValue("Favourite") as string, null);
 
-            UpdateTiles(arrivals);
+            foreach (Arrival arrival in arrivals)
+            {
+                if (arrival.Type == SettingsManager.ReadValue("FavouriteType") && arrival.VehicleNumber.ToString() == SettingsManager.ReadValue("FavouriteLine"))
+                {
+                    UpdateTiles(arrival);
+                    break;
+                }
+            }
             deferral.Complete();
         }
 
-        private void UpdateTiles(List<Arrival> arrivals)
+        private void UpdateTiles(Arrival arrival)
         {
-            var updater = TileUpdateManager.CreateTileUpdaterForApplication();
+            TileUpdater updater = TileUpdateManager.CreateTileUpdaterForApplication();
             updater.EnableNotificationQueue(true);
             updater.Clear();
 
-            int itemCount = 0;
-
-            foreach (Arrival arrival in arrivals)
+            if (arrival != null)
             {
-                string title = arrivals.First().StopTitle;
+                string title = arrival.StopTitle;
                 string message = $"{arrival.Type} {arrival.VehicleNumber}\n{SumcParser.ParseStopTitle(title)}\n{String.Join(", ", arrival.Timings)}";
 
                 TileNotification wide = CreateWideNotification(message);
@@ -41,9 +46,7 @@ namespace BackgroundTasks
 
                 updater.Update(wide);
                 updater.Update(square);
-                if (itemCount++ > 5)
-                    break;
-           } 
+            }
         }
 
         private TileNotification CreateWideNotification(string message)
