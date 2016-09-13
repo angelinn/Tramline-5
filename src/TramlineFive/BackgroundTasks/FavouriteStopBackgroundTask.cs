@@ -19,9 +19,12 @@ namespace BackgroundTasks
             BackgroundTaskDeferral deferral = taskInstance.GetDeferral();
             List<Arrival> arrivals = await SumcManager.GetByStopAsync(SettingsManager.ReadValue("Favourite") as string, null);
 
+            string type = SumcParser.ParseSumcVehicleType(SettingsManager.ReadValue("FavouriteType")[0]);
+            string line = SettingsManager.ReadValue("FavouriteLine");
+
             foreach (Arrival arrival in arrivals)
             {
-                if (arrival.Type == SettingsManager.ReadValue("FavouriteType") && arrival.VehicleNumber.ToString() == SettingsManager.ReadValue("FavouriteLine"))
+                if (arrival.Type == type && arrival.VehicleNumber.ToString() == line)
                 {
                     UpdateTiles(arrival);
                     break;

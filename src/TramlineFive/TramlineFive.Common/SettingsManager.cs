@@ -9,9 +9,13 @@ namespace TramlineFive.Common
 {
     public static class SettingsManager
     {
-        public static void UpdateValue(string key, object value)
+        public static bool UpdateValue(string key, object value)
         {
+            if (ApplicationData.Current.LocalSettings.Values[key]?.ToString() == value?.ToString())
+                return false;
+
             ApplicationData.Current.LocalSettings.Values[key] = value?.ToString();
+            return true;
         }
 
         public static string ReadValue(string key)
@@ -19,9 +23,9 @@ namespace TramlineFive.Common
             return ApplicationData.Current.LocalSettings.Values[key] as string;
         }
 
-        public static void ClearValue(string key)
+        public static bool ClearValue(string key)
         {
-            UpdateValue(key, null);
+            return UpdateValue(key, null);
         }
     }
 }

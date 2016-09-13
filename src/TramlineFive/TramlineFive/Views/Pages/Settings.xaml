@@ -34,12 +34,13 @@
             <TextBlock Text="Можете да изберете любима линия, чиито пристигания да виждате на жива плочка (обновява се на всеки час)" Style="{StaticResource SettingTitle}"/>
             <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
                 <ComboBox Name="cbTypes" VerticalAlignment="Center" />
-                <TextBox Name="txtLine" PlaceholderText="№" Margin="10,0,0,0" VerticalAlignment="Center" TextAlignment="Center" MinWidth="50" LostFocus="txtLine_LostFocus" />
+                <TextBox Name="txtLine" PlaceholderText="№" Margin="10,0,0,0" VerticalAlignment="Center" TextAlignment="Center" MinWidth="50" />
             </StackPanel>
 
-            <ComboBox Name="cbStops" PlaceholderText="Изберете спирка" Margin="0,10,0,0" IsEnabled="False" SelectionChanged="cbStops_SelectionChanged" />
+            <Button Name="txtSearchStops" Content="Зареди спирки" Click="txtSearchStops_Click" Margin="0,10,0,0" />
+            <ComboBox Name="cbStops" PlaceholderText="Изберете спирка" Margin="0,10,0,0" IsEnabled="False" />
 
-            <ToggleSwitch Name="tsLiveTile" IsOn="{Binding LiveTile}" Toggled="tsLiveTile_Toggled" IsEnabled="False"/>
+            <ToggleSwitch Name="tsLiveTile" IsOn="{Binding LiveTile}" Toggled="tsLiveTile_Toggled" />
 
             <TextBlock Text="Оценете приложението в Windows Store!" Margin="0,20,0,0" TextWrapping="Wrap" />
             <Button Content="Оцени" Margin="0,10,0,20" />
