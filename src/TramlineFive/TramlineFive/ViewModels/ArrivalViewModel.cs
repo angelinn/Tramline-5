@@ -40,7 +40,7 @@ namespace TramlineFive.ViewModels
                     Arrivals.Add(arrival);
 
                 VirtualTable.StopTitle = ParseManager.ParseStopTitle(Arrivals.FirstOrDefault().StopTitle);
-                VirtualTable.AsOfTime = "Данни от " + DateTime.Now.ToString("HH:mm");
+                VirtualTable.AsOfTime = $"{Formats.DataFromTime} {DateTime.Now.ToString("HH:mm")}";
                 VirtualTable.IsQueried = true;
             }
 

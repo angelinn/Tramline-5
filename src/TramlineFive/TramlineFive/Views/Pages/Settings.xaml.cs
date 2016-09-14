@@ -56,14 +56,14 @@ namespace TramlineFive.Views.Pages
 
         private async Task UpdateFavouriteStopFromSettingsAsync()
         {
-            string type = SettingsManager.ReadValue("FavouriteType");
+            string type = SettingsManager.ReadValue(SettingsKeys.FavouriteType);
 
             cbTypes.SelectedIndex = (type == null) ? 0 : (int)VehicleTypeManager.Destringify(type);
 
-            string line = SettingsManager.ReadValue("FavouriteLine");
+            string line = SettingsManager.ReadValue(SettingsKeys.FavouriteLine);
             txtLine.Text = line ?? String.Empty;
 
-            string index = SettingsManager.ReadValue("FavouriteIndex");
+            string index = SettingsManager.ReadValue(SettingsKeys.FavouriteIndex);
             if (index != null)
             {
                 await FetchStopsAsync();
@@ -153,22 +153,22 @@ namespace TramlineFive.Views.Pages
                 tsLiveTile.IsEnabled = false;
                 string converted = ParseManager.ToStopCode((cbStops.SelectedItem as StopDO).Code);
 
-                if (tsLiveTile.IsOn && converted != SettingsManager.ReadValue("Favourite"))
+                if (tsLiveTile.IsOn && converted != SettingsManager.ReadValue(SettingsKeys.FavouriteStopCode))
                 {
-                    SettingsManager.UpdateValue("Favourite", converted);
-                    SettingsManager.UpdateValue("FavouriteIndex", cbStops.SelectedIndex);
-                    SettingsManager.UpdateValue("FavouriteType", ((NameValueObject)(cbTypes.SelectedItem)).Name);
-                    SettingsManager.UpdateValue("FavouriteLine", txtLine.Text);
+                    SettingsManager.UpdateValue(SettingsKeys.FavouriteStopCode, converted);
+                    SettingsManager.UpdateValue(SettingsKeys.FavouriteIndex, cbStops.SelectedIndex);
+                    SettingsManager.UpdateValue(SettingsKeys.FavouriteType, ((NameValueObject)(cbTypes.SelectedItem)).Name);
+                    SettingsManager.UpdateValue(SettingsKeys.FavouriteLine, txtLine.Text);
 
                     if (!await BackgroundTaskManager.RegisterBackgroundTaskAsync())
                         tsLiveTile.IsOn = !tsLiveTile.IsOn;
                 }
                 else if (await BackgroundTaskManager.UnregisterBackgroundTaskAsync())
                 {
-                    SettingsManager.ClearValue("Favourite");
-                    SettingsManager.ClearValue("FavouriteLine");
-                    SettingsManager.ClearValue("FavouriteType");
-                    SettingsManager.ClearValue("FavouriteIndex");
+                    SettingsManager.ClearValue(SettingsKeys.FavouriteStopCode);
+                    SettingsManager.ClearValue(SettingsKeys.FavouriteLine);
+                    SettingsManager.ClearValue(SettingsKeys.FavouriteType);
+                    SettingsManager.ClearValue(SettingsKeys.FavouriteIndex);
 
                     await UpdateFavouriteStopFromSettingsAsync();
                     cbStops.IsEnabled = false;

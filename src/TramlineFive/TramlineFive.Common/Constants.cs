@@ -34,5 +34,16 @@ namespace TramlineFive.Common
         public static string Timestamp = "yyyyMMddHHmmss";
         public static string ExportSuccess = "Успешно запазване във файл";
         public static string ConfirmDeleteFavourite = "Премахване на '{0}' от любими?";
+        public static string DataFromTime = "Данни от";
+    }
+
+    public static class SettingsKeys
+    {
+        public static string LiveTile = "LiveTile";
+        public static string PushNotifications = "PushNotifications";
+        public static string FavouriteStopCode = "Favourite";
+        public static string FavouriteIndex = "FavouriteIndex";
+        public static string FavouriteType = "FavouriteType";
+        public static string FavouriteLine = "FavouriteLine";
     }
 }
