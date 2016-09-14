@@ -9,7 +9,6 @@ namespace TramlineFive.Common.Managers
 {
     public static class VersionManager
     {
-        private static string version;
         public static string Version
         {
             get
@@ -30,5 +29,7 @@ namespace TramlineFive.Common.Managers
                 return Package.Current.DisplayName;
             }
         }
+
+        private static string version;
     }
 }

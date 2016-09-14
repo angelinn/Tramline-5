@@ -38,15 +38,15 @@ namespace TramlineFive.Views.Pages
         {
             this.InitializeComponent();
 
-            ArrivalViewModel = new ArrivalViewModel();
-            FavouritesViewModel = new FavouritesViewModel();
-            HistoryViewModel = new HistoryViewModel();
-            VersionViewModel = new VersionViewModel();
+            this.ArrivalViewModel = new ArrivalViewModel();
+            this.FavouritesViewModel = new FavouritesViewModel();
+            this.HistoryViewModel = new HistoryViewModel();
+            this.VersionViewModel = new VersionViewModel();
 
-            DataContext = this;
-            NavigationCacheMode = NavigationCacheMode.Enabled;
+            this.DataContext = this;
+            this.NavigationCacheMode = NavigationCacheMode.Enabled;
 
-            Loaded += MainPage_Loaded;
+            this.Loaded += MainPage_Loaded;
             SystemNavigationManager.GetForCurrentView().BackRequested += MainPage_BackRequested;
         }
 

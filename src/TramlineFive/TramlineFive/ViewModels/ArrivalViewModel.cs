@@ -39,7 +39,7 @@ namespace TramlineFive.ViewModels
                 foreach (Arrival arrival in arrivals)
                     Arrivals.Add(arrival);
 
-                VirtualTable.StopTitle = SumcParser.ParseStopTitle(Arrivals.FirstOrDefault().StopTitle);
+                VirtualTable.StopTitle = ParseManager.ParseStopTitle(Arrivals.FirstOrDefault().StopTitle);
                 VirtualTable.AsOfTime = "Данни от " + DateTime.Now.ToString("HH:mm");
                 VirtualTable.IsQueried = true;
             }

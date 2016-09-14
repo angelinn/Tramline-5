@@ -35,12 +35,12 @@ namespace TramlineFive.Views.Pages
         public Schedules()
         {
             this.InitializeComponent();
-            this.Transitions = AnimationManager.SetUpPageAnimation();
+            this.Transitions = AnimationManager.GeneratePageTransitions();
 
-            LineViewModel = new LineViewModel();
-            DataContext = LineViewModel;
+            this.LineViewModel = new LineViewModel();
+            this.DataContext = LineViewModel;
 
-            Loaded += Schedules_Loaded;
+            this.Loaded += Schedules_Loaded;
         }
 
         private async void Schedules_Loaded(object sender, RoutedEventArgs e)
@@ -51,7 +51,7 @@ namespace TramlineFive.Views.Pages
                                                                .OrderBy(l => l.SortID)
                                                                .ThenBy(l => l.Number);
 
-                LineViewModel.Grouped = LineViewModel.Lines.GroupBy(l => l.TypeToString(true));
+                LineViewModel.Grouped = LineViewModel.Lines.GroupBy(l => VehicleTypeManager.Stringify(l.Type, true));
             }
             catch (Exception ex)
             {

@@ -33,9 +33,9 @@ namespace TramlineFive.Views.Pages
         public Schedule()
         {
             this.InitializeComponent();
-            Stops = new ObservableCollection<StopDO>();
+            this.Stops = new ObservableCollection<StopDO>();
 
-            DataContext = this;
+            this.DataContext = this;
         }
 
         protected override async void OnNavigatedTo(NavigationEventArgs e)

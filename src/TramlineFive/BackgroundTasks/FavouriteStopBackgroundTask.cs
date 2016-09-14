@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TramlineFive.Common;
-using TramlineFive.Common.Converters;
 using TramlineFive.Common.Managers;
 using TramlineFive.Common.Models;
 using Windows.ApplicationModel.Background;
@@ -43,7 +41,7 @@ namespace BackgroundTasks
             if (arrival != null)
             {
                 string title = arrival.StopTitle;
-                string message = $"{arrival.Type} {arrival.VehicleNumber}\n{SumcParser.ParseStopTitle(title)}\n{String.Join(", ", arrival.Timings)}";
+                string message = $"{arrival.Type} {arrival.VehicleNumber}\n{ParseManager.ParseStopTitle(title)}\n{String.Join(", ", arrival.Timings)}";
 
                 TileNotification wide = CreateWideNotification(message);
                 TileNotification square = CreateSquareNotification(message);

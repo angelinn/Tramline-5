@@ -103,16 +103,9 @@ namespace TramlineFive.DataAccess.DomainLogic
             }
         }
 
-        public string TypeToString(bool plural = false)
-        {
-            return VehicleTypeManager.TypeToString(type, plural);
-        }
-
         public override string ToString()
         {
-            string stringType = TypeToString();
-
-            return $"{stringType} {numberString}";
+            return $"{VehicleTypeManager.Stringify(type)} {numberString}";
         }
 
         public int SortID

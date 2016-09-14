@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Data;
 
-namespace TramlineFive.Common.Converters
+namespace TramlineFive.Converters
 {
     public class BoolToVisibilityConverter : IValueConverter
     {

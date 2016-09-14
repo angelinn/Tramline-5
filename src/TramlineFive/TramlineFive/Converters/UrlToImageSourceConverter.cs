@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Media.Imaging;
 
-namespace TramlineFive.Common.Converters
+namespace TramlineFive.Converters
 {
     public class UrlToImageSourceConverter : IValueConverter
     {

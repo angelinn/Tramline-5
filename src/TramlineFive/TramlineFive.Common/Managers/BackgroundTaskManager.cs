@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Windows.ApplicationModel.Background;
 using Windows.UI.Notifications;
 
-namespace TramlineFive.Common
+namespace TramlineFive.Common.Managers
 {
     public static class BackgroundTaskManager
     {

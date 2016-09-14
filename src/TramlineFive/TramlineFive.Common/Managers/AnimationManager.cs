@@ -9,16 +9,24 @@ namespace TramlineFive.Common.Managers
 {
     public static class AnimationManager
     {
-        public static TransitionCollection SetUpPageAnimation()
+        public static TransitionCollection GeneratePageTransitions()
         {
-            TransitionCollection collection = new TransitionCollection();
-            NavigationThemeTransition theme = new NavigationThemeTransition();
+            if (transitions == null)
+            {
+                TransitionCollection collection = new TransitionCollection();
+                NavigationThemeTransition theme = new NavigationThemeTransition();
 
-            ContinuumNavigationTransitionInfo info = new ContinuumNavigationTransitionInfo();
-            
-            theme.DefaultNavigationTransitionInfo = info;
-            collection.Add(theme);
-            return collection;
+                ContinuumNavigationTransitionInfo info = new ContinuumNavigationTransitionInfo();
+
+                theme.DefaultNavigationTransitionInfo = info;
+                collection.Add(theme);
+
+                transitions = collection;
+            }
+
+            return transitions;
         }
+
+        private static TransitionCollection transitions;
     }
 }

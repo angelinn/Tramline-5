@@ -108,7 +108,7 @@ namespace TramlineFive.Common.Managers
                 {
                     arrivals.Add(new Arrival
                     {
-                        Type = SumcParser.ParseSumcVehicleType(info.Attributes["class"].Value.Last()),
+                        Type = ParseManager.ParseSumcVehicleType(info.Attributes["class"].Value.Last()),
                         VehicleNumber = Int32.Parse(title),
                         Timings = data[2].Trim().Split(','),
                         Direction = data[3].Trim(),

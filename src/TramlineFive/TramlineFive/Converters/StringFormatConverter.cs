@@ -1,22 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.UI.Xaml.Data;
 
-namespace TramlineFive.Common.Converters
+namespace TramlineFive.Converters
 {
-    public class DateTimeConverter : IValueConverter
+    public class StringFormatConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, string language)
         {
-            DateTime? date = value as DateTime?;
-            if (date == null)
-                return String.Empty;
+            string formatString = parameter as string;
+            if (!String.IsNullOrEmpty(formatString))
+                return String.Format(formatString, value);
 
-            return date.Value.ToString("dd MMMM HH:mm");
+            return value.ToString();
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, string language)

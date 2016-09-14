@@ -33,7 +33,7 @@ namespace TramlineFive.Views.Pages
         public About()
         {
             this.InitializeComponent();
-            this.Transitions = AnimationManager.SetUpPageAnimation();
+            this.Transitions = AnimationManager.GeneratePageTransitions();
 
             this.DataContext = new VersionViewModel();
         }

@@ -41,11 +41,11 @@ namespace TramlineFive.Views.Pages
         {
             this.InitializeComponent();
 
-            SettingsViewModel = new SettingsViewModel();
+            this.SettingsViewModel = new SettingsViewModel();
             this.DataContext = SettingsViewModel;
-            this.Transitions = AnimationManager.SetUpPageAnimation();
+            this.Transitions = AnimationManager.GeneratePageTransitions();
 
-            Loaded += Settings_Loaded;
+            this.Loaded += Settings_Loaded;
         }
 
         private async void Settings_Loaded(object sender, RoutedEventArgs e)
@@ -151,7 +151,7 @@ namespace TramlineFive.Views.Pages
                 }
 
                 tsLiveTile.IsEnabled = false;
-                string converted = CommonManager.ToStopCode((cbStops.SelectedItem as StopDO).Code);
+                string converted = ParseManager.ToStopCode((cbStops.SelectedItem as StopDO).Code);
 
                 if (tsLiveTile.IsOn && converted != SettingsManager.ReadValue("Favourite"))
                 {

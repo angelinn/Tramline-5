@@ -9,21 +9,6 @@ namespace TramlineFive.Common.Managers
 {
     public static class VehicleTypeManager
     {
-        public static string TypeToString(VehicleType type, bool plural = false)
-        {
-            switch (type)
-            {
-                case VehicleType.Bus:
-                    return plural ? "Автобуси" : "Автобус";
-                case VehicleType.Tram:
-                    return plural ? "Трамваи" : "Трамвай";
-                case VehicleType.Trolley:
-                    return plural ? "Тролеи" : "Тролей";
-                default:
-                    return String.Empty;
-            }
-        }
-
         public static string Stringify(VehicleType type, bool plural = false)
         {
             switch (type)

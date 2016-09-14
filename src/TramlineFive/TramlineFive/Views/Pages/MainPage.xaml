@@ -5,7 +5,7 @@
     xmlns:local="using:TramlineFive"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:su="using:TramlineFive.Common.Converters"
+    xmlns:su="using:TramlineFive.Converters"
     mc:Ignorable="d" >
 
     <Page.Resources>
