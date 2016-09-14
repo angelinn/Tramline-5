@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TramlineFive.Common;
 using TramlineFive.Common.Managers;
 using TramlineFive.Common.Models;
 using Windows.ApplicationModel.Background;
@@ -16,19 +17,24 @@ namespace BackgroundTasks
         public async void Run(IBackgroundTaskInstance taskInstance)
         {
             BackgroundTaskDeferral deferral = taskInstance.GetDeferral();
-            List<Arrival> arrivals = await SumcManager.GetByStopAsync(SettingsManager.ReadValue("Favourite") as string, null);
 
-            string type = SettingsManager.ReadValue("FavouriteType");
-            string line = SettingsManager.ReadValue("FavouriteLine");
-
-            foreach (Arrival arrival in arrivals)
+            if (DateTime.Now.Hour > MORNING_QUIET_HOUR)
             {
-                if (arrival.Type == type && arrival.VehicleNumber.ToString() == line)
+                List<Arrival> arrivals = await SumcManager.GetByStopAsync(SettingsManager.ReadValue(SettingsKeys.FavouriteStopCode) as string, null);
+
+                string type = SettingsManager.ReadValue(SettingsKeys.FavouriteType);
+                string line = SettingsManager.ReadValue(SettingsKeys.FavouriteLine);
+
+                foreach (Arrival arrival in arrivals)
                 {
-                    UpdateTiles(arrival);
-                    break;
+                    if (arrival.Type == type && arrival.VehicleNumber.ToString() == line)
+                    {
+                        UpdateTiles(arrival);
+                        break;
+                    }
                 }
             }
+
             deferral.Complete();
         }
 
@@ -78,7 +84,8 @@ namespace BackgroundTasks
             notification.ExpirationTime = DateTime.Now.AddHours(1);
             return notification;
         }
-
+        
+        private const int MORNING_QUIET_HOUR = 5;
         private const string WIDE_LOGO_SRC = "ms-appx:///Assets/Store/Wide310x150Logo.scale-400.png";
         private const string SQUARE_LOGO_SRC = "ms-appx:///Assets/Store/Square150x150Logo.scale-400.png";
     }
