@@ -25,7 +25,7 @@
         <CommandBar Background="{ThemeResource AccentColour}" Foreground="White" >
             <CommandBar.Content>
                 <StackPanel Orientation="Horizontal">
-                    <AppBarButton Click="OnHamburgerClick" Foreground="White" HorizontalAlignment="Left" Margin="-8,0,0,0">
+                    <AppBarButton Click="OnHamburgerClick" Foreground="White" HorizontalAlignment="Left" Margin="-8,-2,0,0">
                         <AppBarButton.Icon>
                             <FontIcon FontSize="25" Glyph="&#xE700;" />
                         </AppBarButton.Icon>
