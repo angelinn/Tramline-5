@@ -62,11 +62,7 @@ namespace TramlineFive.DataAccess.DomainLogic
                 foreach (DirectionDO direction in domain.Directions)
                 {
                     await direction.LoadDays();
-                    foreach (DayDO day in direction.Days)
-                    {
-                        await day.LoadStops();
-                        result.AddRange(day.Stops);
-                    }
+                    result.AddRange(direction.Days.First().Stops);
                 }
 
                 return result;
