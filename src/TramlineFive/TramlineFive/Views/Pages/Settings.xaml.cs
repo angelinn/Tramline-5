@@ -179,8 +179,6 @@ namespace TramlineFive.Views.Pages
                     SettingsManager.ClearValue(SettingsKeys.FavouriteStopCode);
                     SettingsManager.ClearValue(SettingsKeys.FavouriteLine);
                     SettingsManager.ClearValue(SettingsKeys.FavouriteType);
-
-                    UpdateFavouriteStopFromSettingsAsync();
                 }
                 else
                     tsLiveTile.IsOn = !tsLiveTile.IsOn;

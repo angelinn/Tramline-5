@@ -45,7 +45,7 @@ namespace TramlineFive.DataAccess.DomainLogic
             directions = await DirectionDO.GetByLineId(id);
         }
 
-        public static async Task<IEnumerable<StopDO>> FetchByVehicleAsync(VehicleType type, string number)
+        public static async Task<List<StopDO>> FetchByVehicleAsync(VehicleType type, string number)
         {
             using (UnitOfWork uow = new UnitOfWork())
             {
@@ -75,7 +75,7 @@ namespace TramlineFive.DataAccess.DomainLogic
 
         public static async Task<bool> DoesStopAt(VehicleType type, string number, string stopCode)
         {
-            IEnumerable<StopDO> stops = await FetchByVehicleAsync(type, number);
+            List<StopDO> stops = await FetchByVehicleAsync(type, number);
             return stops.Any(s => ParseManager.ToStopCode(s.Code) == stopCode);
         }
 
