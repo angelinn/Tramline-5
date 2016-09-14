@@ -24,6 +24,8 @@ using NotificationsExtensions.Toasts;
 using NotificationsExtensions;
 using System.Threading.Tasks;
 using TramlineFive.Common.Models;
+using TramlineFive.Common.Extensions;
+using TramlineFive.Common.Managers;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -55,7 +57,8 @@ namespace TramlineFive.Views.Pages
         private async Task UpdateFavouriteStopFromSettingsAsync()
         {
             string type = SettingsManager.ReadValue("FavouriteType");
-            cbTypes.SelectedIndex = (type == null) ? 0 : Int32.Parse(type);
+
+            cbTypes.SelectedIndex = (type == null) ? 0 : (int)VehicleTypeManager.Destringify(type);
 
             string line = SettingsManager.ReadValue("FavouriteLine");
             txtLine.Text = line ?? String.Empty;
@@ -64,20 +67,16 @@ namespace TramlineFive.Views.Pages
             if (index != null)
             {
                 await FetchStopsAsync();
-                cbStops.SelectedIndex = Int32.Parse(index);
+                int idx = Int32.Parse(index);
+
+                if (cbStops.Items.Count >= idx)
+                    cbStops.SelectedIndex = Int32.Parse(index);
             }
         }
 
         private void FillTypesComboBox()
         {
-            List<object> list = new List<object>();
-            foreach (int enumValue in Enum.GetValues(typeof(VehicleType)))
-            {
-                if (enumValue >= 0)
-                    list.Add(new { Name = VehicleTypeManager.TypeToString((VehicleType)Enum.ToObject(typeof(VehicleType), enumValue)), Value = enumValue });
-            }
-
-            cbTypes.ItemsSource = list;
+            cbTypes.ItemsSource = VehicleTypeManager.GetNameValuePair();
             cbTypes.DisplayMemberPath = "Name";
             cbTypes.SelectedValuePath = "Value";
         }
@@ -145,7 +144,7 @@ namespace TramlineFive.Views.Pages
 
             if (SettingsViewModel.LiveTile != tsLiveTile.IsOn)
             {
-                if (!allFieldsFilled)
+                if (!allFieldsFilled && !tsLiveTile.IsOn)
                 {
                     tsLiveTile.IsOn = !tsLiveTile.IsOn;
                     return;
@@ -158,7 +157,7 @@ namespace TramlineFive.Views.Pages
                 {
                     SettingsManager.UpdateValue("Favourite", converted);
                     SettingsManager.UpdateValue("FavouriteIndex", cbStops.SelectedIndex);
-                    SettingsManager.UpdateValue("FavouriteType", cbTypes.SelectedItem);
+                    SettingsManager.UpdateValue("FavouriteType", ((NameValueObject)(cbTypes.SelectedItem)).Name);
                     SettingsManager.UpdateValue("FavouriteLine", txtLine.Text);
 
                     if (!await BackgroundTaskManager.RegisterBackgroundTaskAsync())
@@ -203,9 +202,17 @@ namespace TramlineFive.Views.Pages
             }
         }
 
-        private async void txtSearchStops_Click(object sender, RoutedEventArgs e)
+        private async void btnSearchStops_Click(object sender, RoutedEventArgs e)
         {
+            prSearchStops.IsActive = true;
+            prSearchStops.Visibility = Visibility.Visible;
+            btnSearchStops.IsEnabled = false;
+
             await FetchStopsAsync();
+
+            prSearchStops.IsActive = false;
+            prSearchStops.Visibility = Visibility.Collapsed;
+            btnSearchStops.IsEnabled = true;
         }
     }
 }

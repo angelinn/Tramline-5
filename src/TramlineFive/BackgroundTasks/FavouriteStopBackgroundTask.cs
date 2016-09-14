@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TramlineFive.Common;
 using TramlineFive.Common.Converters;
+using TramlineFive.Common.Managers;
 using TramlineFive.Common.Models;
 using Windows.ApplicationModel.Background;
 using Windows.Data.Xml.Dom;
@@ -19,7 +20,7 @@ namespace BackgroundTasks
             BackgroundTaskDeferral deferral = taskInstance.GetDeferral();
             List<Arrival> arrivals = await SumcManager.GetByStopAsync(SettingsManager.ReadValue("Favourite") as string, null);
 
-            string type = SumcParser.ParseSumcVehicleType(SettingsManager.ReadValue("FavouriteType")[0]);
+            string type = SettingsManager.ReadValue("FavouriteType");
             string line = SettingsManager.ReadValue("FavouriteLine");
 
             foreach (Arrival arrival in arrivals)

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TramlineFive.Common;
+using TramlineFive.Common.Managers;
 using TramlineFive.Common.Models;
 using TramlineFive.DataAccess.DomainLogic;
 using TramlineFive.Views.Dialogs;

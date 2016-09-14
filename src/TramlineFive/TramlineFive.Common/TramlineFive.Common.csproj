@@ -107,9 +107,9 @@
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AnimationManager.cs" />
+    <Compile Include="Managers\AnimationManager.cs" />
     <Compile Include="BackgroundTaskManager.cs" />
-    <Compile Include="CommonManager.cs" />
+    <Compile Include="Managers\CommonManager.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="Converters\BoolToVisibilityConverter.cs" />
     <Compile Include="Converters\DateTimeConverter.cs" />
@@ -117,17 +117,21 @@
     <Compile Include="Converters\StringFormatConverter.cs" />
     <Compile Include="Converters\TimingConverter.cs" />
     <Compile Include="Converters\UrlToImageSourceConverter.cs" />
-    <Compile Include="Exceptions\CaptchaLocationError.cs" />
-    <Compile Include="FormManager.cs" />
+    <Compile Include="Managers\FormManager.cs" />
+    <Compile Include="Managers\VehicleTypeManager.cs" />
     <Compile Include="Models\Arrival.cs" />
     <Compile Include="Models\ICaptchaDialog.cs" />
+    <Compile Include="Models\NameValueObject.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SettingsManager.cs" />
-    <Compile Include="SumcManager.cs" />
+    <Compile Include="Managers\SettingsManager.cs" />
+    <Compile Include="Managers\SumcManager.cs" />
     <Compile Include="SumcParser.cs" />
     <Compile Include="Models\VehicleType.cs" />
-    <Compile Include="VersionManager.cs" />
+    <Compile Include="Managers\VersionManager.cs" />
     <EmbeddedResource Include="Properties\TramlineFive.Common.rd.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Extensions\" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

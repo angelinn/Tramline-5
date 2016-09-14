@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TramlineFive.Common.Managers;
 using Windows.UI.Xaml.Data;
 
 namespace TramlineFive.Common.Converters

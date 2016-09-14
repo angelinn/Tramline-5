@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Windows.UI.Xaml.Media.Animation;
 
-namespace TramlineFive.Common
+namespace TramlineFive.Common.Managers
 {
     public static class AnimationManager
     {

@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TramlineFive.DataAccess.DomainLogic;
 using TramlineFive.DataAccess.Repositories;
+using TramlineFive.Common.Managers;
 
 namespace TramlineFive.ViewModels
 {

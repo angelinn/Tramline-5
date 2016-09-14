@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Windows.Storage;
 
-namespace TramlineFive.Common
+namespace TramlineFive.Common.Managers
 {
     public static class SettingsManager
     {

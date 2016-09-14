@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Windows.ApplicationModel;
 
-namespace TramlineFive.Common
+namespace TramlineFive.Common.Managers
 {
     public static class VersionManager
     {

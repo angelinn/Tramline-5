@@ -6,11 +6,9 @@ using System.Threading.Tasks;
 
 namespace TramlineFive.Common.Models
 {
-    public enum VehicleType
+    public struct NameValueObject
     {
-        None = -1,
-        Bus,
-        Tram,
-        Trolley
+        public string Name { get; set; }
+        public object Value { get; set; }
     }
 }
