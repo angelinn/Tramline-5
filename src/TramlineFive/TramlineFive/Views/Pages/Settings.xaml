@@ -37,15 +37,7 @@
                 <TextBox Name="txtLine" PlaceholderText="№" Margin="10,0,0,0" VerticalAlignment="Center" TextAlignment="Center" MinWidth="50" />
             </StackPanel>
 
-            <Button Name="btnSearchStops" Click="btnSearchStops_Click" Margin="0,10,0,0">
-                <Button.Content>
-                    <Grid>
-                        <TextBlock Text="Зареди спирки" />
-                        <ProgressRing Name="prSearchStops" IsActive="False" Visibility="Collapsed" />
-                    </Grid>
-                </Button.Content>
-            </Button>
-            <ComboBox Name="cbStops" PlaceholderText="Изберете спирка" Margin="0,10,0,0" IsEnabled="False" />
+            <TextBox Name="txtCode" PlaceholderText="Код на спирка" Margin="0,10,0,0" Width="130" HorizontalAlignment="Left" />
 
             <ToggleSwitch Name="tsLiveTile" IsOn="{Binding LiveTile}" Toggled="tsLiveTile_Toggled" />
 

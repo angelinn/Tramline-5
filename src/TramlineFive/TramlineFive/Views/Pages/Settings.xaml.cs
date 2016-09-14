@@ -24,7 +24,6 @@ using NotificationsExtensions.Toasts;
 using NotificationsExtensions;
 using System.Threading.Tasks;
 using TramlineFive.Common.Models;
-using TramlineFive.Common.Extensions;
 using TramlineFive.Common.Managers;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
@@ -48,30 +47,22 @@ namespace TramlineFive.Views.Pages
             this.Loaded += Settings_Loaded;
         }
 
-        private async void Settings_Loaded(object sender, RoutedEventArgs e)
+        private void Settings_Loaded(object sender, RoutedEventArgs e)
         {
             FillTypesComboBox();
-            await UpdateFavouriteStopFromSettingsAsync();
+            UpdateFavouriteStopFromSettingsAsync();
         }
 
-        private async Task UpdateFavouriteStopFromSettingsAsync()
+        private void UpdateFavouriteStopFromSettingsAsync()
         {
             string type = SettingsManager.ReadValue(SettingsKeys.FavouriteType);
-
             cbTypes.SelectedIndex = (type == null) ? 0 : (int)VehicleTypeManager.Destringify(type);
 
             string line = SettingsManager.ReadValue(SettingsKeys.FavouriteLine);
             txtLine.Text = line ?? String.Empty;
 
-            string index = SettingsManager.ReadValue(SettingsKeys.FavouriteIndex);
-            if (index != null)
-            {
-                await FetchStopsAsync();
-                int idx = Int32.Parse(index);
-
-                if (cbStops.Items.Count >= idx)
-                    cbStops.SelectedIndex = Int32.Parse(index);
-            }
+            string code = SettingsManager.ReadValue(SettingsKeys.FavouriteStopCode);
+            txtCode.Text = code ?? String.Empty;
         }
 
         private void FillTypesComboBox()
@@ -140,23 +131,21 @@ namespace TramlineFive.Views.Pages
 
         private async void tsLiveTile_Toggled(object sender, RoutedEventArgs e)
         {
-            bool allFieldsFilled = !String.IsNullOrEmpty(txtLine.Text) && cbStops.SelectedItem != null;
-
             if (SettingsViewModel.LiveTile != tsLiveTile.IsOn)
             {
-                if (!allFieldsFilled && !tsLiveTile.IsOn)
+                if (String.IsNullOrEmpty(txtLine.Text) && tsLiveTile.IsOn)
                 {
+                    await Task.Delay(200);
+
                     tsLiveTile.IsOn = !tsLiveTile.IsOn;
                     return;
                 }
 
                 tsLiveTile.IsEnabled = false;
-                string converted = ParseManager.ToStopCode((cbStops.SelectedItem as StopDO).Code);
 
-                if (tsLiveTile.IsOn && converted != SettingsManager.ReadValue(SettingsKeys.FavouriteStopCode))
+                if (tsLiveTile.IsOn && txtCode.Text != SettingsManager.ReadValue(SettingsKeys.FavouriteStopCode))
                 {
-                    SettingsManager.UpdateValue(SettingsKeys.FavouriteStopCode, converted);
-                    SettingsManager.UpdateValue(SettingsKeys.FavouriteIndex, cbStops.SelectedIndex);
+                    SettingsManager.UpdateValue(SettingsKeys.FavouriteStopCode, txtCode.Text);
                     SettingsManager.UpdateValue(SettingsKeys.FavouriteType, ((NameValueObject)(cbTypes.SelectedItem)).Name);
                     SettingsManager.UpdateValue(SettingsKeys.FavouriteLine, txtLine.Text);
 
@@ -168,11 +157,8 @@ namespace TramlineFive.Views.Pages
                     SettingsManager.ClearValue(SettingsKeys.FavouriteStopCode);
                     SettingsManager.ClearValue(SettingsKeys.FavouriteLine);
                     SettingsManager.ClearValue(SettingsKeys.FavouriteType);
-                    SettingsManager.ClearValue(SettingsKeys.FavouriteIndex);
 
-                    await UpdateFavouriteStopFromSettingsAsync();
-                    cbStops.IsEnabled = false;
-                    cbStops.SelectedIndex = -1;
+                    UpdateFavouriteStopFromSettingsAsync();
                 }
                 else
                     tsLiveTile.IsOn = !tsLiveTile.IsOn;
@@ -181,38 +167,6 @@ namespace TramlineFive.Views.Pages
 
                 SettingsViewModel.LiveTile = tsLiveTile.IsOn;
             }
-        }
-
-        private async Task FetchStopsAsync()
-        {
-            int testVariable;
-
-            if (Int32.TryParse(txtLine.Text, out testVariable))
-            {
-                cbStops.IsEnabled = true;
-                IEnumerable<StopDO> stops = await LineDO.FetchByVehicleAsync((VehicleType)cbTypes.SelectedValue, txtLine.Text);
-
-                if (stops != null)
-                {
-                    cbStops.DisplayMemberPath = "Name";
-                    cbStops.ItemsSource = stops;
-
-                    tsLiveTile.IsEnabled = true;
-                }
-            }
-        }
-
-        private async void btnSearchStops_Click(object sender, RoutedEventArgs e)
-        {
-            prSearchStops.IsActive = true;
-            prSearchStops.Visibility = Visibility.Visible;
-            btnSearchStops.IsEnabled = false;
-
-            await FetchStopsAsync();
-
-            prSearchStops.IsActive = false;
-            prSearchStops.Visibility = Visibility.Collapsed;
-            btnSearchStops.IsEnabled = true;
         }
     }
 }

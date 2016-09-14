@@ -42,7 +42,6 @@ namespace TramlineFive.Common
         public static string LiveTile = "LiveTile";
         public static string PushNotifications = "PushNotifications";
         public static string FavouriteStopCode = "Favourite";
-        public static string FavouriteIndex = "FavouriteIndex";
         public static string FavouriteType = "FavouriteType";
         public static string FavouriteLine = "FavouriteLine";
     }
