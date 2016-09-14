@@ -53,16 +53,30 @@ namespace TramlineFive.DataAccess.DomainLogic
                 if (chosen == null)
                     return null;
 
+                List<StopDO> result = new List<StopDO>();
+
                 LineDO domain = new LineDO(chosen);
 
                 await domain.LoadDirections();
-                DirectionDO direction = domain.directions.First();
-                await direction.LoadDays();
-                DayDO day = direction.Days.First();
-                await day.LoadStops();
 
-                return day.Stops;
+                foreach (DirectionDO direction in domain.Directions)
+                {
+                    await direction.LoadDays();
+                    foreach (DayDO day in direction.Days)
+                    {
+                        await day.LoadStops();
+                        result.AddRange(day.Stops);
+                    }
+                }
+
+                return result;
             }
+        }
+
+        public static async Task<bool> DoesStopAt(VehicleType type, string number, string stopCode)
+        {
+            IEnumerable<StopDO> stops = await FetchByVehicleAsync(type, number);
+            return stops.Any(s => ParseManager.ToStopCode(s.Code) == stopCode);
         }
 
         private int id;

@@ -50,13 +50,5 @@ namespace TramlineFive.ViewModels
         {
             await HistoryDO.ClearAllAsync();
         }
-
-        public async Task FetchLinesAsync(string code)
-        {
-            using (UnitOfWork uow = new UnitOfWork())
-            {
-                
-            }
-        }
     }
 }

@@ -131,22 +131,44 @@ namespace TramlineFive.Views.Pages
 
         private async void tsLiveTile_Toggled(object sender, RoutedEventArgs e)
         {
+
             if (SettingsViewModel.LiveTile != tsLiveTile.IsOn)
             {
                 if (String.IsNullOrEmpty(txtLine.Text) && tsLiveTile.IsOn)
                 {
+                    // Simulate attempt to turn on
                     await Task.Delay(200);
-
                     tsLiveTile.IsOn = !tsLiveTile.IsOn;
                     return;
                 }
 
                 tsLiveTile.IsEnabled = false;
 
+                // Give the UI time to refresh
+                await Task.Delay(50);
+
                 if (tsLiveTile.IsOn && txtCode.Text != SettingsManager.ReadValue(SettingsKeys.FavouriteStopCode))
                 {
+                    prCheckingStop.IsActive = true;
+                    prCheckingStop.Visibility = Visibility.Visible;
+
+                    NameValueObject type = (NameValueObject)(cbTypes.SelectedItem);
+                    bool stopExists = await LineDO.DoesStopAt((VehicleType)type.Value, txtLine.Text, txtCode.Text);
+
+                    prCheckingStop.IsActive = false;
+                    prCheckingStop.Visibility = Visibility.Collapsed;
+
+                    if (!stopExists)
+                    {
+                        await new MessageDialog($"{type.Name} №{txtLine.Text} не спира на спирка с код {txtCode.Text}").ShowAsync();
+                        tsLiveTile.IsOn = !tsLiveTile.IsOn;
+                        tsLiveTile.IsEnabled = true;
+
+                        return;
+                    }
+
                     SettingsManager.UpdateValue(SettingsKeys.FavouriteStopCode, txtCode.Text);
-                    SettingsManager.UpdateValue(SettingsKeys.FavouriteType, ((NameValueObject)(cbTypes.SelectedItem)).Name);
+                    SettingsManager.UpdateValue(SettingsKeys.FavouriteType, type.Name);
                     SettingsManager.UpdateValue(SettingsKeys.FavouriteLine, txtLine.Text);
 
                     if (!await BackgroundTaskManager.RegisterBackgroundTaskAsync())
