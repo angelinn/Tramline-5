@@ -105,6 +105,7 @@
     <Compile Include="Converters\UrlToImageSourceConverter.cs" />
     <Compile Include="ViewModels\FavouritesViewModel.cs" />
     <Compile Include="ViewModels\HistoryViewModel.cs" />
+    <Compile Include="ViewModels\ScheduleViewModel.cs" />
     <Compile Include="Views\Dialogs\QuestionDialog.cs" />
     <Compile Include="Views\Pages\About.xaml.cs">
       <DependentUpon>About.xaml</DependentUpon>

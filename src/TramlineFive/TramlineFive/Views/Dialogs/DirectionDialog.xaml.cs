@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using TramlineFive.Common.Managers;
 using TramlineFive.DataAccess.DomainLogic;
 using TramlineFive.ViewModels;
 using Windows.Foundation;
@@ -23,19 +24,14 @@ namespace TramlineFive.Views.Dialogs
 {
     public sealed partial class DirectionDialog : ContentDialog
     {
-        public ObservableCollection<DirectionDO> Directions { get; set; }
-        public ObservableCollection<DayDO> Days { get; set; }
 
-        public DirectionDO SelectedDirection { get; set; }
-        public DayDO SelectedDay { get; set; }
+        public ScheduleViewModel ScheduleViewModel { get; private set; }
 
-        public DirectionDialog(LineDO lineDO)
+        public DirectionDialog(ScheduleViewModel scheduleViewModel)
         {
             this.InitializeComponent();
 
-            line = lineDO;
-            Directions = new ObservableCollection<DirectionDO>();
-            Days = new ObservableCollection<DayDO>();
+            ScheduleViewModel = scheduleViewModel;
             
             DataContext = this;
             Loaded += DirectionDialog_Loaded;
@@ -45,40 +41,33 @@ namespace TramlineFive.Views.Dialogs
         {
             IsPrimaryButtonEnabled = false;
 
-            await line.LoadDirections();
-            foreach (DirectionDO dir in line.Directions)
-                Directions.Add(dir);
+            await ScheduleViewModel.LoadChoosableData();
 
-            prDirections.IsEnabled = false;
-            prDirections.Visibility = Visibility.Collapsed;
+            lvDirections.SelectedIndex = 0;
+            lvDays.SelectedIndex = 0;
+
+            UIManager.DisableControl(prDirections);
 
             IsPrimaryButtonEnabled = true;
 
-            cbDays.Visibility = Visibility.Visible;
-            cbDirections.Visibility = Visibility.Visible;
+            UIManager.ShowControl(lvDirections);
+            UIManager.ShowControl(lvDays);
         }
 
-        private async void cbDirections_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void cbDirections_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            cbDays.IsEnabled = true;
-            SelectedDirection = e.AddedItems.First() as DirectionDO;
-            await SelectedDirection.LoadDays();
-
-            foreach (DayDO day in SelectedDirection.Days)
-                Days.Add(day);
+            ScheduleViewModel.SelectedDirection = e.AddedItems.First() as DirectionDO;
         }
 
         private void cbDays_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            SelectedDay = e.AddedItems.First() as DayDO;
+            ScheduleViewModel.SelectedDay = e.AddedItems.First() as DayDO;
         }
 
         private void ContentDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
-            if (SelectedDirection == null || SelectedDay == null)
+            if (!ScheduleViewModel.IsValid())
                 args.Cancel = true;
         }
-
-        private LineDO line;
     }
 }
