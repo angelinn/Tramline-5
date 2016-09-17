@@ -20,41 +20,42 @@ namespace BackgroundTasks
 
             if (DateTime.Now.Hour > MORNING_QUIET_HOUR)
             {
-                List<Arrival> arrivals = await SumcManager.GetByStopAsync(SettingsManager.ReadValue(SettingsKeys.FavouriteStopCode) as string, null);
-
-                string type = SettingsManager.ReadValue(SettingsKeys.FavouriteType);
-                string line = SettingsManager.ReadValue(SettingsKeys.FavouriteLine);
-
-                foreach (Arrival arrival in arrivals)
+                try
                 {
-                    if (arrival.Type == type && arrival.VehicleNumber.ToString() == line)
+                    List<Arrival> arrivals = await SumcManager.GetByStopAsync(SettingsManager.ReadValue(SettingsKeys.FavouriteStopCode) as string, null);
+
+                    string type = SettingsManager.ReadValue(SettingsKeys.FavouriteType);
+                    string line = SettingsManager.ReadValue(SettingsKeys.FavouriteLine);
+
+                    foreach (Arrival arrival in arrivals)
                     {
-                        UpdateTiles(arrival);
-                        break;
+                        if (arrival.Type == type && arrival.VehicleNumber.ToString() == line)
+                        {
+                            UpdateTiles($"{arrival.Type} {arrival.VehicleNumber}\n{ParseManager.ParseStopTitle(arrival.StopTitle)}\n{String.Join(", ", arrival.Timings)}");
+                            break;
+                        }
                     }
+                }
+                catch (ArgumentNullException)
+                {
+                    UpdateTiles("Моля въведете Captcha.");
                 }
             }
 
             deferral.Complete();
         }
 
-        private void UpdateTiles(Arrival arrival)
+        private void UpdateTiles(string message)
         {
             TileUpdater updater = TileUpdateManager.CreateTileUpdaterForApplication();
             updater.EnableNotificationQueue(true);
             updater.Clear();
+            
+            TileNotification wide = CreateWideNotification(message);
+            TileNotification square = CreateSquareNotification(message);
 
-            if (arrival != null)
-            {
-                string title = arrival.StopTitle;
-                string message = $"{arrival.Type} {arrival.VehicleNumber}\n{ParseManager.ParseStopTitle(title)}\n{String.Join(", ", arrival.Timings)}";
-
-                TileNotification wide = CreateWideNotification(message);
-                TileNotification square = CreateSquareNotification(message);
-
-                updater.Update(wide);
-                updater.Update(square);
-            }
+            updater.Update(wide);
+            updater.Update(square);
         }
 
         private TileNotification CreateWideNotification(string message)
@@ -76,8 +77,8 @@ namespace BackgroundTasks
 
             ((XmlElement)tileXml.GetElementsByTagName("image")[0]).SetAttribute("src", SQUARE_LOGO_SRC);
             tileXml.GetElementsByTagName("text")[0].InnerText = split[0];
-            tileXml.GetElementsByTagName("text")[1].InnerText = split[1];
-            tileXml.GetElementsByTagName("text")[2].InnerText = split[2];
+            tileXml.GetElementsByTagName("text")[1].InnerText = split.Length > 1 ? split[1] : String.Empty;
+            tileXml.GetElementsByTagName("text")[2].InnerText = split.Length > 2 ? split[2] : String.Empty;
 
             TileNotification notification = new TileNotification(tileXml);
 
