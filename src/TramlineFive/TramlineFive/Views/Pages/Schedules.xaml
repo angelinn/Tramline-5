@@ -12,7 +12,7 @@
     </Page.Resources>
 
     <Page.TopAppBar>
-        <CommandBar Background="{ThemeResource AccentColour}">
+        <CommandBar Background="{ThemeResource SystemAccentColor}">
             <CommandBar.Content>
                 <StackPanel Orientation="Horizontal">
                     <Button Name="btnBack" FontFamily="Segoe MDL2 Assets" Content="&#xE830;" Padding="15" FontSize="20" FontWeight="Bold" Click="btnBack_Click" Margin="0,-2,0,0" />

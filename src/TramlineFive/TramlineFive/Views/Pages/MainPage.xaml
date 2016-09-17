@@ -22,7 +22,7 @@
     </Page.Resources>
 
     <Page.TopAppBar>
-        <CommandBar Background="{ThemeResource AccentColour}" Foreground="White" >
+        <CommandBar Background="{ThemeResource SystemAccentColor}" Foreground="White" >
             <CommandBar.Content>
                 <StackPanel Orientation="Horizontal">
                     <AppBarButton Click="OnHamburgerClick" Foreground="White" HorizontalAlignment="Left" Margin="-8,-2,0,0">
@@ -43,7 +43,7 @@
                IsPaneOpen="False" 
                CompactPaneLength="50" 
                OpenPaneLength="200" 
-               PaneBackground="{ThemeResource AccentColour}">
+               PaneBackground="{ThemeResource SystemAccentColor}">
 
         <SplitView.Pane>
             <StackPanel>

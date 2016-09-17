@@ -9,19 +9,18 @@
         <ResourceDictionary>
             <ResourceDictionary.ThemeDictionaries>
                 <ResourceDictionary x:Key="Default">
-                    <SolidColorBrush x:Key="SystemControlHighlightAccentBrush" Color="DodgerBlue" />
+                    <Color x:Key="SystemAccentColor">DodgerBlue</Color>
                 </ResourceDictionary>
                 <ResourceDictionary x:Key="Dark">
-                    <SolidColorBrush x:Key="SystemControlHighlightAccentBrush" Color="DodgerBlue" />
+                    <Color x:Key="SystemAccentColor">DodgerBlue</Color>
                 </ResourceDictionary>
                 <ResourceDictionary x:Key="Light">
-                    <SolidColorBrush x:Key="SystemControlHighlightAccentBrush" Color="DodgerBlue" />
-                    <SolidColorBrush x:Key="AccentColour" Color="DodgerBlue" />
+                    <Color x:Key="SystemAccentColor">DodgerBlue</Color>
                 </ResourceDictionary>
             </ResourceDictionary.ThemeDictionaries>
 
             <Style TargetType="Button">
-                <Setter Property="Background" Value="{ThemeResource AccentColour}" />
+                <Setter Property="Background" Value="{ThemeResource SystemAccentColor}" />
                 <Setter Property="Foreground" Value="White" />
             </Style>
 
