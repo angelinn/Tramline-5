@@ -16,6 +16,12 @@ namespace TramlineFive.ViewModels
         public DirectionDO SelectedDirection { get; set; }
         public DayDO SelectedDay { get; set; }
 
+        public ScheduleViewModel()
+        {
+            Directions = new ObservableCollection<DirectionDO>();
+            Days = new ObservableCollection<DayDO>();
+        }
+
         public ScheduleViewModel(LineDO line)
         {
             this.line = line;
@@ -40,6 +46,11 @@ namespace TramlineFive.ViewModels
         public bool IsValid()
         {
             return (SelectedDirection != null && SelectedDay != null);
+        }
+
+        public void UpdateFrom(ScheduleViewModel other)
+        {
+            line = other.line;
         }
 
         private LineDO line;

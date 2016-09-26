@@ -64,9 +64,9 @@ namespace TramlineFive.Views.Pages
             }
         }
 
-        private async void ListView_ItemClick(object sender, ItemClickEventArgs e)
+        private void ListView_ItemClick(object sender, ItemClickEventArgs e)
         {
-            await PromptForDirection(new ScheduleViewModel(e.ClickedItem as LineDO));
+            PromptForDirection(new ScheduleViewModel(e.ClickedItem as LineDO));
         }
 
         private void AutoSuggestBox_TextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
@@ -77,25 +77,26 @@ namespace TramlineFive.Views.Pages
             }
         }
 
-        private async void AutoSuggestBox_SuggestionChosen(AutoSuggestBox sender, AutoSuggestBoxSuggestionChosenEventArgs args)
+        private void AutoSuggestBox_SuggestionChosen(AutoSuggestBox sender, AutoSuggestBoxSuggestionChosenEventArgs args)
         {
-            await PromptForDirection(new ScheduleViewModel(args.SelectedItem as LineDO));
+            PromptForDirection(new ScheduleViewModel(args.SelectedItem as LineDO));
         }
 
-        private async Task PromptForDirection(ScheduleViewModel scheduleViewModel)
+        private void PromptForDirection(ScheduleViewModel scheduleViewModel)
         {
-            DirectionDialog dialog = new DirectionDialog(scheduleViewModel);
-            ContentDialogResult result = await dialog.ShowAsync();
+            Frame.Navigate(typeof(ChooseSchedule), scheduleViewModel);
+            //DirectionDialog dialog = new DirectionDialog(scheduleViewModel);
+            //ContentDialogResult result = await dialog.ShowAsync();
 
-            if (result == ContentDialogResult.Primary)
-            {
-                Frame.Navigate(typeof(Schedule), new Dictionary<string, object>
-                {
-                    { "Direction", dialog.ScheduleViewModel.SelectedDirection },
-                    { "Day", dialog.ScheduleViewModel.SelectedDay },
-                    { "ScheduleViewModel", scheduleViewModel }
-                });
-            }
+            //if (result == ContentDialogResult.Primary)
+            //{
+            //    Frame.Navigate(typeof(Schedule), new Dictionary<string, object>
+            //    {
+            //        { "Direction", dialog.ScheduleViewModel.SelectedDirection },
+            //        { "Day", dialog.ScheduleViewModel.SelectedDay },
+            //        { "ScheduleViewModel", scheduleViewModel }
+            //    });
+            //}
         }
 
         private void btnBack_Click(object sender, RoutedEventArgs e)

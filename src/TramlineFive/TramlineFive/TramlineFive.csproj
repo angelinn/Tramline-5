@@ -114,14 +114,14 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Extensions\ScrollViewerScrollToElement.cs" />
+    <Compile Include="Views\Pages\ChooseSchedule.xaml.cs">
+      <DependentUpon>ChooseSchedule.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Pages\Schedule.xaml.cs">
       <DependentUpon>Schedule.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Dialogs\CaptchaDialog.xaml.cs">
       <DependentUpon>CaptchaDialog.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Dialogs\DirectionDialog.xaml.cs">
-      <DependentUpon>DirectionDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Pages\Schedules.xaml.cs">
       <DependentUpon>Schedules.xaml</DependentUpon>
@@ -209,15 +209,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\Pages\ChooseSchedule.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\Pages\Schedule.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Dialogs\CaptchaDialog.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Dialogs\DirectionDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

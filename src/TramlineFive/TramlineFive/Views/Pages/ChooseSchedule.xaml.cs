@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -9,7 +8,6 @@ using TramlineFive.DataAccess.DomainLogic;
 using TramlineFive.ViewModels;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
-using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -18,28 +16,35 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
-// The Content Dialog item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
+// The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
-namespace TramlineFive.Views.Dialogs
+namespace TramlineFive.Views.Pages
 {
-    public sealed partial class DirectionDialog : ContentDialog
+    /// <summary>
+    /// An empty page that can be used on its own or navigated to within a Frame.
+    /// </summary>
+    public sealed partial class ChooseSchedule : Page
     {
-
         public ScheduleViewModel ScheduleViewModel { get; private set; }
 
-        public DirectionDialog(ScheduleViewModel scheduleViewModel)
+        public ChooseSchedule()
         {
             this.InitializeComponent();
+            ScheduleViewModel = new ScheduleViewModel();
 
-            ScheduleViewModel = scheduleViewModel;
-            
             DataContext = this;
             Loaded += DirectionDialog_Loaded;
         }
 
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
+            ScheduleViewModel.UpdateFrom(e.Parameter as ScheduleViewModel);
+        }
+
         private async void DirectionDialog_Loaded(object sender, RoutedEventArgs e)
         {
-            IsPrimaryButtonEnabled = false;
+            //IsPrimaryButtonEnabled = false;
 
             await ScheduleViewModel.LoadChoosableData();
 
@@ -48,7 +53,7 @@ namespace TramlineFive.Views.Dialogs
 
             UIManager.DisableControl(prDirections);
 
-            IsPrimaryButtonEnabled = true;
+            //IsPrimaryButtonEnabled = true;
 
             UIManager.ShowControl(lvDirections);
             UIManager.ShowControl(lvDays);
@@ -64,10 +69,12 @@ namespace TramlineFive.Views.Dialogs
             ScheduleViewModel.SelectedDay = e.AddedItems.First() as DayDO;
         }
 
-        private void ContentDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
+        private void btnOpenSchedule_Click(object sender, RoutedEventArgs e)
         {
-            if (!ScheduleViewModel.IsValid())
-                args.Cancel = true;
+            if (ScheduleViewModel.IsValid())
+            {
+
+            }
         }
     }
 }
