@@ -17,7 +17,6 @@ using Windows.UI.Xaml.Navigation;
 using Windows.Storage.Pickers;
 using Windows.Storage;
 using Windows.UI.Popups;
-using TramlineFive.DataAccess.DomainLogic;
 using Newtonsoft.Json;
 using Windows.UI.Notifications;
 using NotificationsExtensions.Toasts;
@@ -79,7 +78,7 @@ namespace TramlineFive.Views.Pages
 
             if (folder != null)
             {
-                string serialized = JsonConvert.SerializeObject(await FavouriteDO.AllAsync());
+                string serialized = await SettingsViewModel.GetSerializedFavourites();
                 StorageFile file = await folder.CreateFileAsync($"{Strings.AppName}_{DateTime.Now.ToString(Formats.Timestamp)}.{Strings.BackupExtension}");
                 await FileIO.WriteTextAsync(file, serialized);
 
@@ -153,7 +152,7 @@ namespace TramlineFive.Views.Pages
                     prCheckingStop.Visibility = Visibility.Visible;
 
                     NameValueObject type = (NameValueObject)(cbTypes.SelectedItem);
-                    bool stopExists = await LineDO.DoesStopAt((VehicleType)type.Value, txtLine.Text, txtCode.Text);
+                    bool stopExists = await SettingsViewModel.DoesStopExist((VehicleType)type.Value, txtLine.Text, txtCode.Text);
 
                     prCheckingStop.IsActive = false;
                     prCheckingStop.Visibility = Visibility.Collapsed;

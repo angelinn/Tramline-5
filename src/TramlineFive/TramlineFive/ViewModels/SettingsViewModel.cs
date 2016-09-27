@@ -8,6 +8,8 @@ using TramlineFive.DataAccess.DomainLogic;
 using TramlineFive.DataAccess.Repositories;
 using TramlineFive.Common.Managers;
 using TramlineFive.ViewModels.Wrappers;
+using Newtonsoft.Json;
+using TramlineFive.Common.Models;
 
 namespace TramlineFive.ViewModels
 {
@@ -50,6 +52,16 @@ namespace TramlineFive.ViewModels
         public async Task ClearHistoryAsync()
         {
             await HistoryDO.ClearAllAsync();
+        }
+
+        public async Task<string> GetSerializedFavourites()
+        {
+            return JsonConvert.SerializeObject(await FavouriteDO.AllAsync());
+        }
+
+        public async Task<bool> DoesStopExist(VehicleType type, string line, string code)
+        {
+            return await LineDO.DoesStopAt(type, line, code);
         }
     }
 }
