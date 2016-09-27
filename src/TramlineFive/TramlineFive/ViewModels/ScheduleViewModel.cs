@@ -15,6 +15,13 @@ namespace TramlineFive.ViewModels
 
         public DirectionDO SelectedDirection { get; set; }
         public DayDO SelectedDay { get; set; }
+        public LineDO SelectedLine
+        {
+            get
+            {
+                return line;
+            }
+        }
 
         public ScheduleViewModel()
         {

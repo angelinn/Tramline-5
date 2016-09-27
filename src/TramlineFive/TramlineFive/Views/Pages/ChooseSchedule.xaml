@@ -17,7 +17,7 @@
         <ProgressRing Name="prDirections" Style="{StaticResource Spinner}" Visibility="Visible" IsActive="True" />
         
         <StackPanel Margin="0,10,0,0">
-            <ListView Name="lvDirections" ItemsSource="{Binding ScheduleViewModel.Directions}" SelectionMode="Single" BorderThickness="1" BorderBrush="DodgerBlue" Background="White" Visibility="Collapsed">
+            <ListView Name="lvDirections" ItemsSource="{Binding Directions}" SelectedItem="{Binding SelectedDirection, Mode=TwoWay}" SelectionMode="Single" BorderThickness="1" BorderBrush="DodgerBlue" Background="White" Visibility="Collapsed">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <TextBlock Text="{Binding Name}" />
@@ -25,7 +25,7 @@
                 </ListView.ItemTemplate>
             </ListView>
 
-            <ListView Name="lvDays" ItemsSource="{Binding ScheduleViewModel.Days}" SelectionMode="Single" BorderThickness="1" BorderBrush="DodgerBlue" Background="White" Visibility="Collapsed" Margin="0,30,0,0">
+            <ListView Name="lvDays" ItemsSource="{Binding Days}" SelectedItem="{Binding SelectedDay, Mode=TwoWay}" SelectionMode="Single" BorderThickness="1" BorderBrush="DodgerBlue" Background="White" Visibility="Collapsed" Margin="0,30,0,0">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <TextBlock Text="{Binding Type}" />

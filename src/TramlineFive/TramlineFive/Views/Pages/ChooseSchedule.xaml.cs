@@ -30,10 +30,10 @@ namespace TramlineFive.Views.Pages
         public ChooseSchedule()
         {
             this.InitializeComponent();
-            ScheduleViewModel = new ScheduleViewModel();
+            this.ScheduleViewModel = new ScheduleViewModel();
 
-            DataContext = this;
-            Loaded += DirectionDialog_Loaded;
+            this.DataContext = ScheduleViewModel;
+            this.Loaded += DirectionDialog_Loaded;
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -59,21 +59,16 @@ namespace TramlineFive.Views.Pages
             UIManager.ShowControl(lvDays);
         }
 
-        private void cbDirections_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            ScheduleViewModel.SelectedDirection = e.AddedItems.First() as DirectionDO;
-        }
-
-        private void cbDays_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            ScheduleViewModel.SelectedDay = e.AddedItems.First() as DayDO;
-        }
-
         private void btnOpenSchedule_Click(object sender, RoutedEventArgs e)
         {
             if (ScheduleViewModel.IsValid())
             {
-
+                Frame.Navigate(typeof(Schedule), new Dictionary<string, object>()
+                {
+                    { "Direction", ScheduleViewModel.SelectedDirection },
+                    { "Day", ScheduleViewModel.SelectedDay },
+                    { "Line", ScheduleViewModel.SelectedLine }
+                });
             }
         }
     }
