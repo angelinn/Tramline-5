@@ -5,16 +5,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TramlineFive.DataAccess.DomainLogic;
+using TramlineFive.ViewModels.Wrappers;
 
 namespace TramlineFive.ViewModels
 {
     public class FavouritesViewModel
     {
-        public ObservableCollection<FavouriteDO> Favourites { get; set; }
+        public IList<FavouriteViewModel> Favourites { get; set; }
 
         public FavouritesViewModel()
         {
-            Favourites = new ObservableCollection<FavouriteDO>();
+            Favourites = new ObservableCollection<FavouriteViewModel>();
         }
 
         public async Task LoadFavouritesAsync(bool force = false)
@@ -22,7 +23,7 @@ namespace TramlineFive.ViewModels
             if (Favourites.Count == 0 || force)
             {
                 foreach (FavouriteDO favourite in await FavouriteDO.AllAsync())
-                    Favourites.Add(favourite);
+                    Favourites.Add(new FavouriteViewModel(favourite));
             }
         }
 
@@ -30,13 +31,13 @@ namespace TramlineFive.ViewModels
         {
             FavouriteDO added = await FavouriteDO.Add(code);
             if (added != null)
-                Favourites.Insert(0, added);
+                Favourites.Insert(0, new FavouriteViewModel(added));
         }
 
-        public async Task Remove(FavouriteDO favourite)
+        public async Task Remove(FavouriteViewModel favourite)
         {
             Favourites.Remove(Favourites.Where(f => f.Code == favourite.Code).First());
-            await FavouriteDO.Remove(favourite);
+            await FavouriteViewModel.Remove(favourite);
         }
     }
 }

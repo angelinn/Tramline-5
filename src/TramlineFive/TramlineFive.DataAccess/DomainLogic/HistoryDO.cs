@@ -11,12 +11,16 @@ namespace TramlineFive.DataAccess.DomainLogic
 {
     public class HistoryDO
     {
+        public string Code { get; private set; }
+        public string Name { get; private set; }
+        public DateTime? TimeStamp { get; private set; }
+
         public HistoryDO(History entity)
         {
-            code = entity.Stop.Code;
-            name = entity.Stop.Name;
             id = entity.ID;
-            timeStamp = entity.TimeStamp;
+            Code = entity.Stop.Code;
+            Name = entity.Stop.Name;
+            TimeStamp = entity.TimeStamp;
         }
 
         public static async Task<HistoryDO> Add(string code)
@@ -77,32 +81,5 @@ namespace TramlineFive.DataAccess.DomainLogic
         }
 
         private int id;
-
-        private string code;
-        public string Code
-        {
-            get
-            {
-                return code;
-            }
-        }
-
-        private string name;
-        public string Name
-        {
-            get
-            {
-                return name;
-            }
-        }
-
-        private DateTime? timeStamp;
-        public DateTime? TimeStamp
-        {
-            get
-            {
-                return timeStamp;
-            }
-        }
     }
 }

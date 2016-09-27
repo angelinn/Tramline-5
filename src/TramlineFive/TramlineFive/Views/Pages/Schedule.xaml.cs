@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using TramlineFive.DataAccess.DomainLogic;
 using TramlineFive.ViewModels;
 using TramlineFive.ViewModels.Wrappers;
 using Windows.Foundation;

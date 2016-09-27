@@ -13,8 +13,8 @@ namespace TramlineFive.DataAccess.DomainLogic
     {
         public FavouriteDO(Favourite entity)
         {
-            code = entity.Stop.Code;
-            name = entity.Stop.Name;
+            Code = entity.Stop.Code;
+            Name = entity.Stop.Name;
             id = entity.ID;
         }
 
@@ -70,22 +70,8 @@ namespace TramlineFive.DataAccess.DomainLogic
 
         private int id;
 
-        private string code;
-        public string Code
-        {
-            get
-            {
-                return code;
-            }
-        }
+        public string Code { get; private set; }
 
-        private string name;
-        public string Name
-        {
-            get
-            {
-                return name;
-            }
-        }
+        public string Name { get; private set; }
     }
 }

@@ -16,8 +16,8 @@ using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Navigation;
 using TramlineFive.Views.Dialogs;
-using TramlineFive.DataAccess.DomainLogic;
 using Windows.ApplicationModel.Core;
+using TramlineFive.ViewModels.Wrappers;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
@@ -123,7 +123,7 @@ namespace TramlineFive.Views.Pages
 
         private void OnFavouritesItemClick(object sender, ItemClickEventArgs e)
         {
-            txtStopCode.Text = String.Format("{0:D4}", Int32.Parse((e.ClickedItem as FavouriteDO).Code));
+            txtStopCode.Text = String.Format("{0:D4}", Int32.Parse((e.ClickedItem as FavouriteViewModel).Code));
 
             reloadVirtualTable = true;
             pvMain.SelectedIndex = 0;
@@ -151,7 +151,7 @@ namespace TramlineFive.Views.Pages
 
         private async void OnRemoveFavouriteClick(object sender, RoutedEventArgs e)
         {
-            FavouriteDO item = (sender as Button).DataContext as FavouriteDO;
+            FavouriteViewModel item = (sender as Button).DataContext as FavouriteViewModel;
             await new QuestionDialog(String.Format(Formats.ConfirmDeleteFavourite, item.Name), async () => await HomeViewModel.FavouritesViewModel.Remove(item)).ShowAsync();
 
             if (HomeViewModel.FavouritesViewModel.Favourites.Count == 0)
@@ -212,7 +212,7 @@ namespace TramlineFive.Views.Pages
 
         private void OnHistoryItemClick(object sender, ItemClickEventArgs e)
         {
-            txtStopCode.Text = String.Format("{0:D4}", Int32.Parse((e.ClickedItem as HistoryDO).Code));
+            txtStopCode.Text = String.Format("{0:D4}", Int32.Parse((e.ClickedItem as HistoryEntryViewModel).Code));
 
             reloadVirtualTable = true;
             pvMain.SelectedIndex = 0;

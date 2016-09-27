@@ -104,12 +104,14 @@
     <Compile Include="Converters\TimingConverter.cs" />
     <Compile Include="Converters\UrlToImageSourceConverter.cs" />
     <Compile Include="ViewModels\FavouritesViewModel.cs" />
+    <Compile Include="ViewModels\Wrappers\HistoryEntryViewModel.cs" />
     <Compile Include="ViewModels\HistoryViewModel.cs" />
     <Compile Include="ViewModels\HomeViewModel.cs" />
     <Compile Include="ViewModels\Wrappers\BaseViewModel.cs" />
     <Compile Include="ViewModels\ScheduleChooserViewModel.cs" />
     <Compile Include="ViewModels\Wrappers\DayViewModel.cs" />
     <Compile Include="ViewModels\Wrappers\DirectionViewModel.cs" />
+    <Compile Include="ViewModels\Wrappers\FavouriteViewModel.cs" />
     <Compile Include="ViewModels\Wrappers\LineViewModel.cs" />
     <Compile Include="ViewModels\Wrappers\StopViewModel.cs" />
     <Compile Include="ViewModels\VirtualTableViewModel.cs" />
