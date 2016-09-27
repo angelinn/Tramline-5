@@ -111,7 +111,7 @@
     <Compile Include="ViewModels\Wrappers\DirectionViewModel.cs" />
     <Compile Include="ViewModels\Wrappers\LineViewModel.cs" />
     <Compile Include="ViewModels\Wrappers\StopViewModel.cs" />
-    <Compile Include="ViewModels\Wrappers\VirtualTableViewModel.cs" />
+    <Compile Include="ViewModels\VirtualTableViewModel.cs" />
     <Compile Include="Views\Dialogs\QuestionDialog.cs" />
     <Compile Include="Views\Pages\About.xaml.cs">
       <DependentUpon>About.xaml</DependentUpon>
@@ -135,7 +135,6 @@
     <Compile Include="Views\Pages\Settings.xaml.cs">
       <DependentUpon>Settings.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ViewModels\ArrivalViewModel.cs" />
     <Compile Include="Views\Pages\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>

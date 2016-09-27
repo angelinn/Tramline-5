@@ -29,7 +29,7 @@ namespace TramlineFive.Views.Pages
     /// </summary>
     public sealed partial class MainPage : Page
     {
-        public ArrivalViewModel ArrivalViewModel { get; set; }
+        public VirtualTableViewModel ArrivalViewModel { get; set; }
         public FavouritesViewModel FavouritesViewModel { get; set; }
         public HistoryViewModel HistoryViewModel { get; set; }
         public VersionViewModel VersionViewModel { get; set; }
@@ -38,7 +38,7 @@ namespace TramlineFive.Views.Pages
         {
             this.InitializeComponent();
 
-            this.ArrivalViewModel = new ArrivalViewModel();
+            this.ArrivalViewModel = new VirtualTableViewModel();
             this.FavouritesViewModel = new FavouritesViewModel();
             this.HistoryViewModel = new HistoryViewModel();
             this.VersionViewModel = new VersionViewModel();
