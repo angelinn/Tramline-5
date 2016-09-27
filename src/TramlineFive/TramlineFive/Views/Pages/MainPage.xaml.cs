@@ -152,7 +152,8 @@ namespace TramlineFive.Views.Pages
         private async void OnRemoveFavouriteClick(object sender, RoutedEventArgs e)
         {
             FavouriteViewModel item = (sender as Button).DataContext as FavouriteViewModel;
-            await new QuestionDialog(String.Format(Formats.ConfirmDeleteFavourite, item.Name), async () => await HomeViewModel.FavouritesViewModel.Remove(item)).ShowAsync();
+            await new QuestionDialog(String.Format(Formats.ConfirmDeleteFavourite, item.Name),
+                async () => await HomeViewModel.FavouritesViewModel.Remove(item)).ShowAsync();
 
             if (HomeViewModel.FavouritesViewModel.Favourites.Count == 0)
                 txtNoFavourites.Visibility = Visibility.Visible;
@@ -204,7 +205,9 @@ namespace TramlineFive.Views.Pages
                 }
 
                 pbHistory.Visibility = Visibility.Visible;
+
                 await HomeViewModel.HistoryViewModel.AddHistoryAsync(txtStopCode.Text);
+
                 txtNoHistory.Visibility = HomeViewModel.HistoryViewModel.History.Count == 0 ? Visibility.Visible : Visibility.Collapsed;
                 pbHistory.Visibility = Visibility.Collapsed;
             }

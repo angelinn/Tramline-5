@@ -23,34 +23,36 @@
     </Page.TopAppBar>
 
     <ScrollViewer Name="svMain" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <StackPanel Margin="0,0,0,25">
-            <AutoSuggestBox PlaceholderText="Търсене" TextChanged="OnTextChanged" SuggestionChosen="OnSuggestionChosen" QueryIcon="Find" Margin="5" />
-            
+        <Grid>
             <ProgressRing Name="prLines"
                           Style="{StaticResource Spinner}"
                           Visibility="Visible"
                           IsActive="True"
                           Margin="0,20,0,0" />
+            
+            <StackPanel Margin="0,0,0,25">
+                <AutoSuggestBox PlaceholderText="Търсене" TextChanged="OnTextChanged" SuggestionChosen="OnSuggestionChosen" QueryIcon="Find" Margin="5" />
 
-            <ListView Name="lvLines" ItemsSource="{Binding Source={StaticResource collectionViewSource}}" ItemClick="OnSchedulesItemClick" IsItemClickEnabled="True" SelectionMode="None">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <StackPanel>
-                            <TextBlock Text="{Binding FriendlyName}" />
-                            <TextBlock Text="{Binding Route}" FontSize="12"/>
-                        </StackPanel>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-                <ListView.GroupStyle>
-                    <GroupStyle>
-                        <GroupStyle.HeaderTemplate>
-                            <DataTemplate>
-                                <TextBlock Text="{Binding Key}" />
-                            </DataTemplate>
-                        </GroupStyle.HeaderTemplate>
-                    </GroupStyle>
-                </ListView.GroupStyle>
-            </ListView>
-        </StackPanel>
+                <ListView Name="lvLines" ItemsSource="{Binding Source={StaticResource collectionViewSource}}" ItemClick="OnSchedulesItemClick" IsItemClickEnabled="True" SelectionMode="None">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel>
+                                <TextBlock Text="{Binding FriendlyName}" />
+                                <TextBlock Text="{Binding Route}" FontSize="12"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                    <ListView.GroupStyle>
+                        <GroupStyle>
+                            <GroupStyle.HeaderTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Key}" />
+                                </DataTemplate>
+                            </GroupStyle.HeaderTemplate>
+                        </GroupStyle>
+                    </ListView.GroupStyle>
+                </ListView>
+            </StackPanel>
+        </Grid>
     </ScrollViewer>
 </Page>
