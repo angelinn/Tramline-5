@@ -4,7 +4,6 @@ using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using TramlineFive.Common.Managers;
-using TramlineFive.DataAccess.DomainLogic;
 using TramlineFive.ViewModels;
 using Windows.Foundation;
 using Windows.Foundation.Collections;

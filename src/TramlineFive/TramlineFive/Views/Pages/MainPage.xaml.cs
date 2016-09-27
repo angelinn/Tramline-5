@@ -18,7 +18,6 @@ using Windows.UI.Xaml.Navigation;
 using TramlineFive.Views.Dialogs;
 using TramlineFive.DataAccess.DomainLogic;
 using Windows.ApplicationModel.Core;
-using Windows.ApplicationModel.Background;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
