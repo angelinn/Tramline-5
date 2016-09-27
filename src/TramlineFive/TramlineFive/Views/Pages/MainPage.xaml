@@ -185,7 +185,7 @@
                                         <StackPanel VerticalAlignment="Center">
                                             <TextBlock>
                                                     <Run Text="{Binding Name}" />
-                                                    (<Run Text="{Binding Code}" />)
+                                                    (<Run Text="{Binding Code, Converter={StaticResource StopCodeConverter}}" />)
                                             </TextBlock>
                                             <TextBlock Text="{Binding TimeStamp, Converter={StaticResource DateTimeConverter}}" FontSize="13" />
                                         </StackPanel>
