@@ -89,7 +89,7 @@ namespace TramlineFive.Views.Pages
 
         private void btnImport_Click(object sender, RoutedEventArgs e)
         {
-
+            throw new NotSupportedException();
         }
 
         private void btnBack_Click(object sender, RoutedEventArgs e)

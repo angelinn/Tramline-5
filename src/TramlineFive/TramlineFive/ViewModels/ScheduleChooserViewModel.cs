@@ -8,11 +8,11 @@ using TramlineFive.DataAccess.DomainLogic;
 
 namespace TramlineFive.ViewModels
 {
-    public class ScheduleViewModel
+    public class ScheduleChooserViewModel
     {
         public ObservableCollection<DirectionDO> Directions { get; set; }
         public ObservableCollection<DayDO> Days { get; set; }
-
+        
         public DirectionDO SelectedDirection { get; set; }
         public DayDO SelectedDay { get; set; }
         public LineDO SelectedLine
@@ -23,13 +23,13 @@ namespace TramlineFive.ViewModels
             }
         }
 
-        public ScheduleViewModel()
+        public ScheduleChooserViewModel()
         {
             Directions = new ObservableCollection<DirectionDO>();
             Days = new ObservableCollection<DayDO>();
         }
 
-        public ScheduleViewModel(LineDO line)
+        public ScheduleChooserViewModel(LineDO line)
         {
             this.line = line;
 
@@ -55,7 +55,7 @@ namespace TramlineFive.ViewModels
             return (SelectedDirection != null && SelectedDay != null);
         }
 
-        public void UpdateFrom(ScheduleViewModel other)
+        public void UpdateFrom(ScheduleChooserViewModel other)
         {
             line = other.line;
         }

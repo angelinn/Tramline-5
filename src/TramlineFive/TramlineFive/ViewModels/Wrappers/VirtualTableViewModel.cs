@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TramlineFive.DataAccess.DomainLogic
+namespace TramlineFive.ViewModels.Wrappers
 {
-    public class VirtualTableDO : NotifyingModel
+    public class VirtualTableViewModel : BaseViewModel
     {
         private string stopTitle;
         public string StopTitle

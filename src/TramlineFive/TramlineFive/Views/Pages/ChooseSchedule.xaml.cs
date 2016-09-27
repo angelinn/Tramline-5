@@ -25,27 +25,19 @@ namespace TramlineFive.Views.Pages
     /// </summary>
     public sealed partial class ChooseSchedule : Page
     {
-        public ScheduleViewModel ScheduleViewModel { get; private set; }
+        public ScheduleChooserViewModel ScheduleViewModel { get; private set; }
 
         public ChooseSchedule()
         {
             this.InitializeComponent();
-            this.ScheduleViewModel = new ScheduleViewModel();
+            this.ScheduleViewModel = new ScheduleChooserViewModel();
 
             this.DataContext = ScheduleViewModel;
-            this.Loaded += DirectionDialog_Loaded;
+            this.Loaded += OnLoaded;
         }
 
-        protected override void OnNavigatedTo(NavigationEventArgs e)
+        private async void OnLoaded(object sender, RoutedEventArgs e)
         {
-            base.OnNavigatedTo(e);
-            ScheduleViewModel.UpdateFrom(e.Parameter as ScheduleViewModel);
-        }
-
-        private async void DirectionDialog_Loaded(object sender, RoutedEventArgs e)
-        {
-            //IsPrimaryButtonEnabled = false;
-
             await ScheduleViewModel.LoadChoosableData();
 
             lvDirections.SelectedIndex = 0;
@@ -53,13 +45,19 @@ namespace TramlineFive.Views.Pages
 
             UIManager.DisableControl(prDirections);
 
-            //IsPrimaryButtonEnabled = true;
+            btnOpenSchedule.Visibility = Visibility.Visible;
 
             UIManager.ShowControl(lvDirections);
             UIManager.ShowControl(lvDays);
         }
 
-        private void btnOpenSchedule_Click(object sender, RoutedEventArgs e)
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
+            ScheduleViewModel.UpdateFrom(e.Parameter as ScheduleChooserViewModel);
+        }
+
+        private void OnOpenScheduleClicked(object sender, RoutedEventArgs e)
         {
             if (ScheduleViewModel.IsValid())
             {

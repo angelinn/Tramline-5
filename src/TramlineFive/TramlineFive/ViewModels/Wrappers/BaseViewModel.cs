@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TramlineFive.DataAccess.DomainLogic
+namespace TramlineFive.ViewModels.Wrappers
 {
     public abstract class NotifyingModel : INotifyPropertyChanged
     {

@@ -33,7 +33,7 @@
                 </ListView.ItemTemplate>
             </ListView>
 
-            <Button Name="btnOpenSchedule" Content="Напред" Click="btnOpenSchedule_Click" />
+            <Button Name="btnOpenSchedule" Content="Напред" Click="OnOpenScheduleClicked" Visibility="Collapsed" />
         </StackPanel>
     </Grid>
 </Page>

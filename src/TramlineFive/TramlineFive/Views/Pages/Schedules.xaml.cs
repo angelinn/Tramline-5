@@ -66,7 +66,7 @@ namespace TramlineFive.Views.Pages
 
         private void ListView_ItemClick(object sender, ItemClickEventArgs e)
         {
-            PromptForDirection(new ScheduleViewModel(e.ClickedItem as LineDO));
+            PromptForDirection(new ScheduleChooserViewModel(e.ClickedItem as LineDO));
         }
 
         private void AutoSuggestBox_TextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
@@ -79,10 +79,10 @@ namespace TramlineFive.Views.Pages
 
         private void AutoSuggestBox_SuggestionChosen(AutoSuggestBox sender, AutoSuggestBoxSuggestionChosenEventArgs args)
         {
-            PromptForDirection(new ScheduleViewModel(args.SelectedItem as LineDO));
+            PromptForDirection(new ScheduleChooserViewModel(args.SelectedItem as LineDO));
         }
 
-        private void PromptForDirection(ScheduleViewModel scheduleViewModel)
+        private void PromptForDirection(ScheduleChooserViewModel scheduleViewModel)
         {
             Frame.Navigate(typeof(ChooseSchedule), scheduleViewModel);
             //DirectionDialog dialog = new DirectionDialog(scheduleViewModel);
