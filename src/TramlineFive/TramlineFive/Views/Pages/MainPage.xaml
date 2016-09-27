@@ -17,7 +17,7 @@
         <su:DateTimeConverter x:Key="DateTimeConverter" />
 
         <MenuFlyout x:Name="LineFlyout">
-            <MenuFlyoutItem Text="Добави в любими" Click="MenuFlyoutItem_Click" />
+            <MenuFlyoutItem Text="Добави в любими" Click="OnFlyoutItemClick" />
         </MenuFlyout>
     </Page.Resources>
 
@@ -34,7 +34,7 @@
                 </StackPanel>
             </CommandBar.Content>
 
-            <AppBarButton Name="btnSumc" Icon="Globe" Label="m.sumc.bg" Foreground="White" Click="btnSumc_Click" />
+            <AppBarButton Name="btnSumc" Icon="Globe" Label="m.sumc.bg" Foreground="White" Click="OnSumcClick" />
         </CommandBar>
     </Page.TopAppBar>
 
@@ -47,21 +47,21 @@
 
         <SplitView.Pane>
             <StackPanel>
-                <Button Name="btnSchedules" Click="btnSchedules_Click" Style="{StaticResource HamburgerMenuButton}">
+                <Button Name="btnSchedules" Click="OnSchedulesClick" Style="{StaticResource HamburgerMenuButton}">
                     <StackPanel Orientation="Horizontal">
                         <Button Content="&#xE8A1;" Style="{StaticResource BarIcon}" />
                         <TextBlock Text="Разписания" Style="{StaticResource BarText}" />
                     </StackPanel>
                 </Button>
 
-                <Button Name="btnSettings" Click="btnSettings_Click" Style="{StaticResource HamburgerMenuButton}">
+                <Button Name="btnSettings" Click="OnSettingsClick" Style="{StaticResource HamburgerMenuButton}">
                     <StackPanel Orientation="Horizontal">
                         <Button Content="&#xE713;" Style="{StaticResource BarIcon}" />
                         <TextBlock Text="Настройки" Style="{StaticResource BarText}"/>
                     </StackPanel>
                 </Button>
 
-                <Button Name="btnAbout" Click="btnAbout_Click" Style="{StaticResource HamburgerMenuButton}">
+                <Button Name="btnAbout" Click="OnAboutClick" Style="{StaticResource HamburgerMenuButton}">
                     <StackPanel Orientation="Horizontal">
                         <Button Content="&#xE168;" Style="{StaticResource BarIcon}" />
                         <TextBlock Text="Информация" Style="{StaticResource BarText}"/>
@@ -71,7 +71,7 @@
         </SplitView.Pane>
 
         <SplitView.Content>
-            <Pivot Name="pvMain" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" SelectionChanged="pvMain_SelectionChanged">
+            <Pivot Name="pvMain" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" SelectionChanged="OnPivotSelectionChanged">
                 <PivotItem Header="Виртуални табла">
                     <Grid Padding="0,0,0,20">
                         <Grid.RowDefinitions>
@@ -83,8 +83,8 @@
 
                         <StackPanel Grid.Row="0">
                             <Grid>
-                                <TextBox Name="txtStopCode" PlaceholderText="Код на спирка" KeyDown="txtStopCode_KeyDown" Margin="0,15,0,15" Style="{StaticResource SearchTextBox}" />
-                                <Button Name="btnStopCode" Click="btnStopCode_Click" FontFamily="Segoe MDL2 Assets" Content="&#xE71E;" Background="Transparent" Foreground="Black" HorizontalAlignment="Right" />
+                                <TextBox Name="txtStopCode" PlaceholderText="Код на спирка" KeyDown="OnStopCodeKeyDown" Margin="0,15,0,15" Style="{StaticResource SearchTextBox}" />
+                                <Button Name="btnStopCode" Click="OnStopCodeClick" FontFamily="Segoe MDL2 Assets" Content="&#xE71E;" Background="Transparent" Foreground="Black" HorizontalAlignment="Right" />
                             </Grid>
 
                             <Grid Background="#CC3399FF" BorderBrush="DodgerBlue" BorderThickness="1" Padding="10" Visibility="{Binding VirtualTableViewModel.IsQueried, Converter={StaticResource BoolToVisibility}}">
@@ -98,7 +98,7 @@
                                     <TextBlock Foreground="White" FontWeight="Bold" Text="{Binding VirtualTableViewModel.StopTitle}" HorizontalAlignment="Center" TextTrimming="Clip" />
                                     <TextBlock Foreground="White" Text="{Binding VirtualTableViewModel.AsOfTime}" HorizontalAlignment="Center" />
                                 </StackPanel>
-                                <Button Grid.Column="1" Name="btnFavourite" Padding="10" FontFamily="Segoe MDL2 Assets" FontSize="25" Content="&#xE734;" Background="Transparent" Foreground="White" HorizontalAlignment="Right" Margin="0,-5,0,0" Click="btnFavourite_Click" />
+                                <Button Grid.Column="1" Name="btnFavourite" Padding="10" FontFamily="Segoe MDL2 Assets" FontSize="25" Content="&#xE734;" Background="Transparent" Foreground="White" HorizontalAlignment="Right" Margin="0,-5,0,0" Click="OnAddFavouriteClick" />
                             </Grid>
                         </StackPanel>
                         
@@ -106,7 +106,7 @@
                             <ListView ItemsSource="{Binding VirtualTableViewModel.Arrivals}" SelectionMode="None">
                                 <ListView.ItemTemplate>
                                     <DataTemplate>
-                                        <Grid Holding="ListViewItem_Holding" FlyoutBase.AttachedFlyout="{StaticResource LineFlyout}" Height="80" Padding="0,10,0,10" >
+                                        <Grid Holding="OnArrivalHolding" FlyoutBase.AttachedFlyout="{StaticResource LineFlyout}" Height="80" Padding="0,10,0,10" >
                                             <Grid.RowDefinitions>
                                                 <RowDefinition />
                                                 <RowDefinition />
@@ -139,7 +139,7 @@
                         <ProgressRing Name="prFavourites" Style="{StaticResource Spinner}" Visibility="Visible" IsActive="True" Margin="0,0,0,38" />
                         <ProgressBar Name="pbFavourites" VerticalAlignment="Top" Visibility="Collapsed" IsIndeterminate="True" />
 
-                        <ListView Name="lvFavourites" ItemsSource="{Binding FavouritesViewModel.Favourites}" ItemClick="lvFavourites_ItemClick" IsItemClickEnabled="True" SelectionMode="None">
+                        <ListView Name="lvFavourites" ItemsSource="{Binding FavouritesViewModel.Favourites}" ItemClick="OnFavouritesItemClick" IsItemClickEnabled="True" SelectionMode="None">
                             <ListView.Resources>
                                 <Style TargetType="ListViewItem">
                                     <Setter Property="HorizontalContentAlignment" Value="Stretch" />
@@ -163,7 +163,7 @@
                                                 FontSize="20"
                                                 Background="Transparent"
                                                 Foreground="Black"
-                                                Click="btnRemoveFavourite_Click"/>
+                                                Click="OnRemoveFavouriteClick"/>
                                     </Grid>
                                 </DataTemplate>
                             </ListView.ItemTemplate>
@@ -176,7 +176,7 @@
                         <TextBlock Name="txtNoHistory" Text="Тази секция е самотна... потърсете спирка..." FontSize="20" TextWrapping="Wrap" Foreground="Gray" FontStyle="Italic" Visibility="Collapsed" Margin="0,20,0,0" />
                         <ProgressRing Name="prHistory" Style="{StaticResource Spinner}" IsActive="True" Margin="0,0,0,28" />
                         <ProgressBar Name="pbHistory" VerticalAlignment="Top" Visibility="Collapsed" IsIndeterminate="True" />
-                        <ListView Name="lvHistory" ItemsSource="{Binding HistoryViewModel.History}" IsItemClickEnabled="True" SelectionMode="None" ItemClick="lvHistory_ItemClick">
+                        <ListView Name="lvHistory" ItemsSource="{Binding HistoryViewModel.History}" IsItemClickEnabled="True" SelectionMode="None" ItemClick="OnHistoryItemClick">
                             <ListView.ItemTemplate>
                                 <DataTemplate>
                                     <StackPanel Orientation="Horizontal" >

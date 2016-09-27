@@ -38,17 +38,17 @@ namespace TramlineFive.Views.Pages
             this.DataContext = new VersionViewModel();
         }
 
-        private async void btnEmail_Click(object sender, RoutedEventArgs e)
+        private async void OnEmailClick(object sender, RoutedEventArgs e)
         {
             await Launcher.LaunchUriAsync(new Uri(Urls.DeveloperEmail));
         }
 
-        private async void btnFeedback_Click(object sender, RoutedEventArgs e)
+        private async void OnFeedbackClick(object sender, RoutedEventArgs e)
         {
             await Launcher.LaunchUriAsync(new Uri(Urls.FeedbackEmail));
         }
 
-        private void btnBack_Click(object sender, RoutedEventArgs e)
+        private void OnBackClick(object sender, RoutedEventArgs e)
         {
             Frame rootFrame = Window.Current.Content as Frame;
 

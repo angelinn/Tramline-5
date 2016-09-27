@@ -17,7 +17,7 @@
         <CommandBar Background="{ThemeResource SystemAccentColor}">
             <CommandBar.Content>
                 <StackPanel Orientation="Horizontal">
-                    <Button Name="btnBack" FontFamily="Segoe MDL2 Assets" Content="&#xE830;" Padding="15" FontSize="20" FontWeight="Bold" Click="btnBack_Click" Margin="0,-2,0,0"/>
+                    <Button Name="btnBack" FontFamily="Segoe MDL2 Assets" Content="&#xE830;" Padding="15" FontSize="20" FontWeight="Bold" Click="OnBackClick" Margin="0,-2,0,0"/>
                     <TextBlock Text="ИНФОРМАЦИЯ" FontWeight="Bold" Margin="0,14,0,0" Foreground="White"/>
                 </StackPanel>
             </CommandBar.Content>
@@ -33,8 +33,8 @@
             </TextBlock>
 
             <Button Content="FAQ" Margin="0,20,0,10" IsEnabled="False" />
-            <Button Name="btnFeedback" Content="докладвай бъг/подобрение" Margin="0,0,0,10" Click="btnFeedback_Click"  />
-            <Button Name="btnEmail" Content="e-mail" Click="btnEmail_Click" />
+            <Button Name="btnFeedback" Content="докладвай бъг/подобрение" Margin="0,0,0,10" Click="OnFeedbackClick"  />
+            <Button Name="btnEmail" Content="e-mail" Click="OnEmailClick" />
 
             <TextBlock Style="{StaticResource aboutText}" Margin="0,20,0,20" Text="Universal Windows приложението предоставя информация за пристигането на колите на Софийски градски транспорт." />
 

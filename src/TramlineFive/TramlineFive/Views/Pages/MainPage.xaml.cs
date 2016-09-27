@@ -39,8 +39,8 @@ namespace TramlineFive.Views.Pages
             this.DataContext = HomeViewModel;
             this.NavigationCacheMode = NavigationCacheMode.Enabled;
 
-            this.Loaded += MainPage_Loaded;
-            SystemNavigationManager.GetForCurrentView().BackRequested += MainPage_BackRequested;
+            this.Loaded += OnLoaded;
+            SystemNavigationManager.GetForCurrentView().BackRequested += OnBackRequested;
         }
 
         // Prevents panel being invisibly open on other pages, causing double back click needed to go back
@@ -50,7 +50,7 @@ namespace TramlineFive.Views.Pages
             svMain.IsPaneOpen = false;
         }
 
-        private async void MainPage_BackRequested(object sender, BackRequestedEventArgs e)
+        private async void OnBackRequested(object sender, BackRequestedEventArgs e)
         {
             Frame rootFrame = Window.Current.Content as Frame;
             e.Handled = true;
@@ -61,7 +61,7 @@ namespace TramlineFive.Views.Pages
                 await new QuestionDialog(Strings.PromptExit, () => CoreApplication.Exit()).ShowAsync();
         }
 
-        private async void MainPage_Loaded(object sender, RoutedEventArgs e)
+        private async void OnLoaded(object sender, RoutedEventArgs e)
         {
             await HomeViewModel.FavouritesViewModel.LoadFavouritesAsync();
 
@@ -80,7 +80,7 @@ namespace TramlineFive.Views.Pages
                 txtNoHistory.Visibility = Visibility.Visible;
         }
 
-        private async void txtStopCode_KeyDown(object sender, KeyRoutedEventArgs e)
+        private async void OnStopCodeKeyDown(object sender, KeyRoutedEventArgs e)
         {
             if (e.Key == VirtualKey.Enter)
             {
@@ -91,24 +91,24 @@ namespace TramlineFive.Views.Pages
             }
         }
 
-        private async void btnSumc_Click(object sender, RoutedEventArgs e)
+        private async void OnSumcClick(object sender, RoutedEventArgs e)
         {
             await new QuestionDialog(Strings.SumcRedirect, async () => await Launcher.LaunchUriAsync(new Uri(Urls.Sumc))).ShowAsync();
         }
 
-        private void ListViewItem_Holding(object sender, HoldingRoutedEventArgs e)
+        private void OnArrivalHolding(object sender, HoldingRoutedEventArgs e)
         {
             FrameworkElement senderElement = sender as FrameworkElement;
             FlyoutBase attached = FlyoutBase.GetAttachedFlyout(senderElement);
             attached.ShowAt(senderElement);
         }
 
-        private async void MenuFlyoutItem_Click(object sender, RoutedEventArgs e)
+        private async void OnFlyoutItemClick(object sender, RoutedEventArgs e)
         {
             await AddFavouriteAsync();
         }
 
-        private async void pvMain_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private async void OnPivotSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (pvMain.SelectedIndex == 0)
             {
@@ -121,7 +121,7 @@ namespace TramlineFive.Views.Pages
             }
         }
 
-        private void lvFavourites_ItemClick(object sender, ItemClickEventArgs e)
+        private void OnFavouritesItemClick(object sender, ItemClickEventArgs e)
         {
             txtStopCode.Text = String.Format("{0:D4}", Int32.Parse((e.ClickedItem as FavouriteDO).Code));
 
@@ -134,22 +134,22 @@ namespace TramlineFive.Views.Pages
             svMain.IsPaneOpen = !svMain.IsPaneOpen;
         }
 
-        private void btnAbout_Click(object sender, RoutedEventArgs e)
+        private void OnAboutClick(object sender, RoutedEventArgs e)
         {
             Frame.Navigate(typeof(About));
         }
 
-        private void btnSettings_Click(object sender, RoutedEventArgs e)
+        private void OnSettingsClick(object sender, RoutedEventArgs e)
         {
             Frame.Navigate(typeof(Settings));
         }
 
-        private void btnSchedules_Click(object sender, RoutedEventArgs e)
+        private void OnSchedulesClick(object sender, RoutedEventArgs e)
         {
             Frame.Navigate(typeof(Schedules));
         }
 
-        private async void btnRemoveFavourite_Click(object sender, RoutedEventArgs e)
+        private async void OnRemoveFavouriteClick(object sender, RoutedEventArgs e)
         {
             FavouriteDO item = (sender as Button).DataContext as FavouriteDO;
             await new QuestionDialog(String.Format(Formats.ConfirmDeleteFavourite, item.Name), async () => await HomeViewModel.FavouritesViewModel.Remove(item)).ShowAsync();
@@ -158,12 +158,12 @@ namespace TramlineFive.Views.Pages
                 txtNoFavourites.Visibility = Visibility.Visible;
         }
 
-        private async void btnStopCode_Click(object sender, RoutedEventArgs e)
+        private async void OnStopCodeClick(object sender, RoutedEventArgs e)
         {
             await QueryVirtualTableAsync();
         }
 
-        private async void btnFavourite_Click(object sender, RoutedEventArgs e)
+        private async void OnAddFavouriteClick(object sender, RoutedEventArgs e)
         {
             await AddFavouriteAsync();
         }
@@ -210,7 +210,7 @@ namespace TramlineFive.Views.Pages
             }
         }
 
-        private void lvHistory_ItemClick(object sender, ItemClickEventArgs e)
+        private void OnHistoryItemClick(object sender, ItemClickEventArgs e)
         {
             txtStopCode.Text = String.Format("{0:D4}", Int32.Parse((e.ClickedItem as HistoryDO).Code));
 
