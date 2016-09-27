@@ -87,7 +87,7 @@
                                 <Button Name="btnStopCode" Click="btnStopCode_Click" FontFamily="Segoe MDL2 Assets" Content="&#xE71E;" Background="Transparent" Foreground="Black" HorizontalAlignment="Right" />
                             </Grid>
 
-                            <Grid Background="#CC3399FF" BorderBrush="DodgerBlue" BorderThickness="1" Padding="10" Visibility="{Binding ArrivalViewModel.IsQueried, Converter={StaticResource BoolToVisibility}}">
+                            <Grid Background="#CC3399FF" BorderBrush="DodgerBlue" BorderThickness="1" Padding="10" Visibility="{Binding VirtualTableViewModel.IsQueried, Converter={StaticResource BoolToVisibility}}">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="4*" />
                                     <ColumnDefinition Width="*" />
@@ -95,15 +95,15 @@
                             
                             
                                 <StackPanel Grid.Column="0">
-                                    <TextBlock Foreground="White" FontWeight="Bold" Text="{Binding ArrivalViewModel.StopTitle}" HorizontalAlignment="Center" TextTrimming="Clip" />
-                                    <TextBlock Foreground="White" Text="{Binding ArrivalViewModel.AsOfTime}" HorizontalAlignment="Center" />
+                                    <TextBlock Foreground="White" FontWeight="Bold" Text="{Binding VirtualTableViewModel.StopTitle}" HorizontalAlignment="Center" TextTrimming="Clip" />
+                                    <TextBlock Foreground="White" Text="{Binding VirtualTableViewModel.AsOfTime}" HorizontalAlignment="Center" />
                                 </StackPanel>
                                 <Button Grid.Column="1" Name="btnFavourite" Padding="10" FontFamily="Segoe MDL2 Assets" FontSize="25" Content="&#xE734;" Background="Transparent" Foreground="White" HorizontalAlignment="Right" Margin="0,-5,0,0" Click="btnFavourite_Click" />
                             </Grid>
                         </StackPanel>
                         
                         <Grid Grid.Row="1">
-                            <ListView ItemsSource="{Binding ArrivalViewModel.Arrivals}" SelectionMode="None">
+                            <ListView ItemsSource="{Binding VirtualTableViewModel.Arrivals}" SelectionMode="None">
                                 <ListView.ItemTemplate>
                                     <DataTemplate>
                                         <Grid Holding="ListViewItem_Holding" FlyoutBase.AttachedFlyout="{StaticResource LineFlyout}" Height="80" Padding="0,10,0,10" >
@@ -194,7 +194,6 @@
                             </ListView.ItemTemplate>
                         </ListView>
                     </Grid>
-                    
                 </PivotItem>
             </Pivot>
         </SplitView.Content>

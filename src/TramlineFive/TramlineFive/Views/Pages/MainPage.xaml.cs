@@ -28,21 +28,15 @@ namespace TramlineFive.Views.Pages
     /// </summary>
     public sealed partial class MainPage : Page
     {
-        public VirtualTableViewModel ArrivalViewModel { get; set; }
-        public FavouritesViewModel FavouritesViewModel { get; set; }
-        public HistoryViewModel HistoryViewModel { get; set; }
-        public VersionViewModel VersionViewModel { get; set; }
+        public HomeViewModel HomeViewModel { get; private set; }
 
         public MainPage()
         {
             this.InitializeComponent();
 
-            this.ArrivalViewModel = new VirtualTableViewModel();
-            this.FavouritesViewModel = new FavouritesViewModel();
-            this.HistoryViewModel = new HistoryViewModel();
-            this.VersionViewModel = new VersionViewModel();
+            this.HomeViewModel = new HomeViewModel();
 
-            this.DataContext = this;
+            this.DataContext = HomeViewModel;
             this.NavigationCacheMode = NavigationCacheMode.Enabled;
 
             this.Loaded += MainPage_Loaded;
@@ -69,20 +63,20 @@ namespace TramlineFive.Views.Pages
 
         private async void MainPage_Loaded(object sender, RoutedEventArgs e)
         {
-            await FavouritesViewModel.LoadFavouritesAsync();
+            await HomeViewModel.FavouritesViewModel.LoadFavouritesAsync();
 
             prFavourites.IsActive = false;
             prFavourites.Visibility = Visibility.Collapsed;
 
-            if (FavouritesViewModel.Favourites.Count == 0)
+            if (HomeViewModel.FavouritesViewModel.Favourites.Count == 0)
                 txtNoFavourites.Visibility = Visibility.Visible;
 
-            await HistoryViewModel.LoadHistoryAsync();
+            await HomeViewModel.HistoryViewModel.LoadHistoryAsync();
 
             prHistory.IsActive = false;
             prHistory.Visibility = Visibility.Collapsed;
 
-            if (HistoryViewModel.History.Count == 0)
+            if (HomeViewModel.HistoryViewModel.History.Count == 0)
                 txtNoHistory.Visibility = Visibility.Visible;
         }
 
@@ -158,9 +152,9 @@ namespace TramlineFive.Views.Pages
         private async void btnRemoveFavourite_Click(object sender, RoutedEventArgs e)
         {
             FavouriteDO item = (sender as Button).DataContext as FavouriteDO;
-            await new QuestionDialog(String.Format(Formats.ConfirmDeleteFavourite, item.Name), async () => await FavouritesViewModel.Remove(item)).ShowAsync();
+            await new QuestionDialog(String.Format(Formats.ConfirmDeleteFavourite, item.Name), async () => await HomeViewModel.FavouritesViewModel.Remove(item)).ShowAsync();
 
-            if (FavouritesViewModel.Favourites.Count == 0)
+            if (HomeViewModel.FavouritesViewModel.Favourites.Count == 0)
                 txtNoFavourites.Visibility = Visibility.Visible;
         }
 
@@ -179,9 +173,9 @@ namespace TramlineFive.Views.Pages
             pbFavourites.Visibility = Visibility.Visible;
             pvMain.SelectedIndex = 1;
 
-            await FavouritesViewModel.AddAsync(txtStopCode.Text);
+            await HomeViewModel.FavouritesViewModel.AddAsync(txtStopCode.Text);
 
-            if (FavouritesViewModel.Favourites.Count > 0)
+            if (HomeViewModel.FavouritesViewModel.Favourites.Count > 0)
                 txtNoFavourites.Visibility = Visibility.Collapsed;
 
             pbFavourites.Visibility = Visibility.Collapsed;
@@ -196,7 +190,7 @@ namespace TramlineFive.Views.Pages
 
                 try
                 {
-                    if (!await ArrivalViewModel.GetByStopCode(txtStopCode.Text))
+                    if (!await HomeViewModel.VirtualTableViewModel.GetByStopCode(txtStopCode.Text))
                         await new MessageDialog(Strings.NoResults).ShowAsync();
                 }
                 catch (Exception ex)
@@ -210,8 +204,8 @@ namespace TramlineFive.Views.Pages
                 }
 
                 pbHistory.Visibility = Visibility.Visible;
-                await HistoryViewModel.AddHistoryAsync(txtStopCode.Text);
-                txtNoHistory.Visibility = HistoryViewModel.History.Count == 0 ? Visibility.Visible : Visibility.Collapsed;
+                await HomeViewModel.HistoryViewModel.AddHistoryAsync(txtStopCode.Text);
+                txtNoHistory.Visibility = HomeViewModel.HistoryViewModel.History.Count == 0 ? Visibility.Visible : Visibility.Collapsed;
                 pbHistory.Visibility = Visibility.Collapsed;
             }
         }
