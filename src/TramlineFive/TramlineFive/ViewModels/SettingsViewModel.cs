@@ -7,10 +7,11 @@ using System.Threading.Tasks;
 using TramlineFive.DataAccess.DomainLogic;
 using TramlineFive.DataAccess.Repositories;
 using TramlineFive.Common.Managers;
+using TramlineFive.ViewModels.Wrappers;
 
 namespace TramlineFive.ViewModels
 {
-    public class SettingsViewModel : NotifyingModel
+    public class SettingsViewModel : BaseViewModel
     {
         public bool PushNotifications
         {
@@ -25,7 +26,7 @@ namespace TramlineFive.ViewModels
             set
             {
                 SettingsManager.UpdateValue(SettingsKeys.PushNotifications, value);
-                OnPropertyChanged(SettingsKeys.PushNotifications);
+                OnPropertyChanged();
             }
         }
 
@@ -42,7 +43,7 @@ namespace TramlineFive.ViewModels
             set
             {
                 SettingsManager.UpdateValue(SettingsKeys.LiveTile, value);
-                OnPropertyChanged(SettingsKeys.LiveTile);
+                OnPropertyChanged();
             }
         }
 

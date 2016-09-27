@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using TramlineFive.Common;
 using TramlineFive.Common.Managers;
 using TramlineFive.Common.Models;
-using TramlineFive.DataAccess.DomainLogic;
+using TramlineFive.ViewModels.Wrappers;
 using TramlineFive.Views.Dialogs;
 
 namespace TramlineFive.ViewModels
@@ -15,12 +15,12 @@ namespace TramlineFive.ViewModels
     public class ArrivalViewModel
     {
         public ObservableCollection<Arrival> Arrivals { get; set; }
-        public VirtualTableDO VirtualTable { get; set; }
+        public VirtualTableViewModel VirtualTable { get; set; }
 
         public ArrivalViewModel()
         {
             Arrivals = new ObservableCollection<Arrival>();
-            VirtualTable = new VirtualTableDO();
+            VirtualTable = new VirtualTableViewModel();
         }
 
         public async Task<bool> GetByStopCode(string stopCode)

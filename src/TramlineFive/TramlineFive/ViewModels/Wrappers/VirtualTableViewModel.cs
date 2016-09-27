@@ -18,7 +18,7 @@ namespace TramlineFive.ViewModels.Wrappers
             set
             {
                 stopTitle = value;
-                OnPropertyChanged("StopTitle");
+                OnPropertyChanged();
             }
         }
 
@@ -32,7 +32,7 @@ namespace TramlineFive.ViewModels.Wrappers
             set
             {
                 asOfTime = value;
-                OnPropertyChanged("AsOfTime");
+                OnPropertyChanged();
             }
         }
 
@@ -46,7 +46,7 @@ namespace TramlineFive.ViewModels.Wrappers
             set
             {
                 isQueried = value;
-                OnPropertyChanged("IsQueried");
+                OnPropertyChanged();
             }
         }
     }

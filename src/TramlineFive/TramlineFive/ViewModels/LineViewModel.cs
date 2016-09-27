@@ -4,10 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TramlineFive.DataAccess.DomainLogic;
+using TramlineFive.ViewModels.Wrappers;
 
 namespace TramlineFive.ViewModels
 {
-    public class LineViewModel : NotifyingModel
+    public class LineViewModel : BaseViewModel
     {
         private IEnumerable<LineDO> lines;
         public IEnumerable<LineDO> Lines
@@ -19,7 +20,7 @@ namespace TramlineFive.ViewModels
             set
             {
                 lines = value;
-                OnPropertyChanged("Lines");
+                OnPropertyChanged();
             }
         }
 
@@ -33,7 +34,7 @@ namespace TramlineFive.ViewModels
             set
             {
                 grouped = value;
-                OnPropertyChanged("Grouped");
+                OnPropertyChanged();
             }
         }
     }
