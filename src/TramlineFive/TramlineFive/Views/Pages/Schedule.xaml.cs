@@ -48,13 +48,13 @@ namespace TramlineFive.Views.Pages
                 Stops.Add(stop);
         }
 
-        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             StopViewModel selected = e.AddedItems.First() as StopViewModel;
             txtTimings.Text = String.Join(", ", selected.Timings);
         }
 
-        private void btnBack_Click(object sender, RoutedEventArgs e)
+        private void OnBackClick(object sender, RoutedEventArgs e)
         {
             Frame rootFrame = Window.Current.Content as Frame;
 

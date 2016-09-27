@@ -30,7 +30,7 @@
                             <FontIcon FontSize="25" Glyph="&#xE700;" />
                         </AppBarButton.Icon>
                     </AppBarButton>
-                    <TextBlock Text="{Binding VersionViewModel.DisplayName}" FontWeight="Bold" Foreground="White" Margin="0,14,0,0" />
+                    <TextBlock Text="{Binding VersionViewModel.DisplayName}" Style="{StaticResource Title}" />
                 </StackPanel>
             </CommandBar.Content>
 

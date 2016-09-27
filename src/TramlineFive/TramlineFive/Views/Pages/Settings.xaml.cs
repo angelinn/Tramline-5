@@ -44,10 +44,10 @@ namespace TramlineFive.Views.Pages
             this.DataContext = SettingsViewModel;
             this.Transitions = AnimationManager.GeneratePageTransitions();
 
-            this.Loaded += Settings_Loaded;
+            this.Loaded += OnLoaded;
         }
 
-        private void Settings_Loaded(object sender, RoutedEventArgs e)
+        private void OnLoaded(object sender, RoutedEventArgs e)
         {
             FillTypesComboBox();
             UpdateFavouriteStopFromSettingsAsync();
@@ -72,7 +72,7 @@ namespace TramlineFive.Views.Pages
             cbTypes.SelectedValuePath = "Value";
         }
 
-        private async void btnExport_Click(object sender, RoutedEventArgs e)
+        private async void OnExportClick(object sender, RoutedEventArgs e)
         {
             FolderPicker picker = new FolderPicker();
             StorageFolder folder = await picker.PickSingleFolderAsync();
@@ -87,12 +87,12 @@ namespace TramlineFive.Views.Pages
             }
         }
 
-        private void btnImport_Click(object sender, RoutedEventArgs e)
+        private void OnImportClick(object sender, RoutedEventArgs e)
         {
             throw new NotSupportedException();
         }
 
-        private void btnBack_Click(object sender, RoutedEventArgs e)
+        private void OnBackClick(object sender, RoutedEventArgs e)
         {
             Frame rootFrame = Window.Current.Content as Frame;
 
@@ -100,7 +100,7 @@ namespace TramlineFive.Views.Pages
                 rootFrame.GoBack();
         }
 
-        private async void btnClearHistory_Click(object sender, RoutedEventArgs e)
+        private async void OnClearHistoryClick(object sender, RoutedEventArgs e)
         {
             btnClearHistory.IsEnabled = false;
             prClearHistory.IsActive = true;
@@ -129,7 +129,7 @@ namespace TramlineFive.Views.Pages
             prClearHistory.Visibility = Visibility.Collapsed;
         }
 
-        private async void tsLiveTile_Toggled(object sender, RoutedEventArgs e)
+        private async void OnLiveTileToggled(object sender, RoutedEventArgs e)
         {
 
             if (SettingsViewModel.LiveTile != tsLiveTile.IsOn)

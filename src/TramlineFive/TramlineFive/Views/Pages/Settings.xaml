@@ -18,8 +18,8 @@
         <CommandBar Background="{ThemeResource SystemAccentColor}">
             <CommandBar.Content>
                 <StackPanel Orientation="Horizontal">
-                    <Button Name="btnBack" FontFamily="Segoe MDL2 Assets" Content="&#xE830;" Padding="15" FontSize="20" FontWeight="Bold" Click="btnBack_Click" Margin="0,-2,0,0" />
-                    <TextBlock Text="НАСТРОЙКИ" FontWeight="Bold" Margin="0,14,0,0" Foreground="White"/>
+                    <Button Name="btnBack" Click="OnBackClick" Style="{StaticResource BackButton}" />
+                    <TextBlock Text="НАСТРОЙКИ" Style="{StaticResource Title}"/>
                 </StackPanel>
             </CommandBar.Content>
         </CommandBar>
@@ -45,7 +45,7 @@
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
                 
-                <ToggleSwitch Grid.Column="0" Name="tsLiveTile" IsOn="{Binding LiveTile}" Toggled="tsLiveTile_Toggled" />
+                <ToggleSwitch Grid.Column="0" Name="tsLiveTile" IsOn="{Binding LiveTile}" Toggled="OnLiveTileToggled" />
                 <ProgressRing Name="prCheckingStop" Grid.Column="1" IsActive="False" Visibility="Collapsed" HorizontalAlignment="Left" />
             </Grid>
 
@@ -53,7 +53,7 @@
             <Button Content="Оцени" Margin="0,10,0,20" />
 
             <TextBlock Text="Изчистване история на търсенията" TextWrapping="Wrap" />
-            <Button Name="btnClearHistory" Margin="0,10,0,20" Click="btnClearHistory_Click">
+            <Button Name="btnClearHistory" Margin="0,10,0,20" Click="OnClearHistoryClick">
                 <Button.Content>
                     <Grid>
                         <ProgressRing Name="prClearHistory" IsActive="False" Visibility="Collapsed" />
@@ -64,8 +64,8 @@
 
             <TextBlock Text="Ако искате да прехвърлите любимите си спирки на друго устройство, използвайте бутона за извличане на данни." TextWrapping="Wrap" />
 
-            <Button Name="btnExport" Content="Извличане на данни" Margin="0,10,0,0" Click="btnExport_Click" />
-            <Button Name="btnImport" Content="Възстановяване на данни" Margin="0,10,0,0" Click="btnImport_Click" IsEnabled="False" />
+            <Button Name="btnExport" Content="Извличане на данни" Margin="0,10,0,0" Click="OnExportClick" />
+            <Button Name="btnImport" Content="Възстановяване на данни" Margin="0,10,0,0" Click="OnImportClick" IsEnabled="False" />
         </StackPanel>
     </ScrollViewer>
 </Page>

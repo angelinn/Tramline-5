@@ -19,9 +19,29 @@
                 </ResourceDictionary>
             </ResourceDictionary.ThemeDictionaries>
 
-            <Style TargetType="Button">
+            <Style x:Key="Title" TargetType="TextBlock">
+                <Setter Property="FontWeight" Value="Bold" />
+                <Setter Property="Margin" Value="0,14,0,0" />
+                <Setter Property="Foreground" Value="White" />
+            </Style>
+            
+            <Style TargetType="Button" BasedOn="{StaticResource DefaultButtonStyle}">
                 <Setter Property="Background" Value="{ThemeResource SystemAccentColor}" />
                 <Setter Property="Foreground" Value="White" />
+            </Style>
+
+            <Style x:Key="DefaultButtonStyle" TargetType="Button">
+                <Setter Property="Background" Value="{ThemeResource SystemAccentColor}" />
+                <Setter Property="Foreground" Value="White" />
+            </Style>
+
+            <Style x:Key="BackButton" TargetType="Button" BasedOn="{StaticResource DefaultButtonStyle}">
+                <Setter Property="FontFamily" Value="Segoe MDL2 Assets" />
+                <Setter Property="Content" Value="&#xE830;" />
+                <Setter Property="Padding" Value="15" />
+                <Setter Property="FontSize" Value="20" />
+                <Setter Property="FontWeight" Value="Bold" />
+                <Setter Property="Margin" Value="0,-2,0,0" />
             </Style>
 
             <Style x:Key="EllipsisButton" TargetType="Button">

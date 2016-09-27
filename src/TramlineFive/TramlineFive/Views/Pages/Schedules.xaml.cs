@@ -35,10 +35,10 @@ namespace TramlineFive.Views.Pages
             this.LineViewModel = new AllLinesViewModel();
             this.DataContext = LineViewModel;
 
-            this.Loaded += Schedules_Loaded;
+            this.Loaded += OnLoaded;
         }
 
-        private async void Schedules_Loaded(object sender, RoutedEventArgs e)
+        private async void OnLoaded(object sender, RoutedEventArgs e)
         {
             try
             {
@@ -59,12 +59,12 @@ namespace TramlineFive.Views.Pages
             }
         }
 
-        private void ListView_ItemClick(object sender, ItemClickEventArgs e)
+        private void OnSchedulesItemClick(object sender, ItemClickEventArgs e)
         {
             PromptForDirection(new ScheduleChooserViewModel(e.ClickedItem as LineViewModel));
         }
 
-        private void AutoSuggestBox_TextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
+        private void OnTextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
         {
             if (args.Reason == AutoSuggestionBoxTextChangeReason.UserInput)
             {
@@ -72,7 +72,7 @@ namespace TramlineFive.Views.Pages
             }
         }
 
-        private void AutoSuggestBox_SuggestionChosen(AutoSuggestBox sender, AutoSuggestBoxSuggestionChosenEventArgs args)
+        private void OnSuggestionChosen(AutoSuggestBox sender, AutoSuggestBoxSuggestionChosenEventArgs args)
         {
             PromptForDirection(new ScheduleChooserViewModel(args.SelectedItem as LineViewModel));
         }
@@ -80,21 +80,9 @@ namespace TramlineFive.Views.Pages
         private void PromptForDirection(ScheduleChooserViewModel scheduleViewModel)
         {
             Frame.Navigate(typeof(ChooseSchedule), scheduleViewModel);
-            //DirectionDialog dialog = new DirectionDialog(scheduleViewModel);
-            //ContentDialogResult result = await dialog.ShowAsync();
-
-            //if (result == ContentDialogResult.Primary)
-            //{
-            //    Frame.Navigate(typeof(Schedule), new Dictionary<string, object>
-            //    {
-            //        { "Direction", dialog.ScheduleViewModel.SelectedDirection },
-            //        { "Day", dialog.ScheduleViewModel.SelectedDay },
-            //        { "ScheduleViewModel", scheduleViewModel }
-            //    });
-            //}
         }
 
-        private void btnBack_Click(object sender, RoutedEventArgs e)
+        private void OnBackClick(object sender, RoutedEventArgs e)
         {
             Frame rootFrame = Window.Current.Content as Frame;
 
