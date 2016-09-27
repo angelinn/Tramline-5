@@ -24,11 +24,7 @@
 
     <ScrollViewer Name="svMain" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Grid>
-            <ProgressRing Name="prLines"
-                          Style="{StaticResource Spinner}"
-                          Visibility="Visible"
-                          IsActive="True"
-                          Margin="0,20,0,0" />
+            <ProgressRing Name="prLines" Style="{StaticResource ActiveSpinner}" Margin="0,20,0,0" />
             
             <StackPanel Margin="0,0,0,25">
                 <AutoSuggestBox PlaceholderText="Търсене" TextChanged="OnTextChanged" SuggestionChosen="OnSuggestionChosen" QueryIcon="Find" Margin="5" />

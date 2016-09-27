@@ -14,7 +14,7 @@
     </Page.Resources>
 
     <Grid Padding="10">
-        <ProgressRing Name="prDirections" Style="{StaticResource Spinner}" Visibility="Visible" IsActive="True" />
+        <ProgressRing Name="prDirections" Style="{StaticResource ActiveSpinner}" />
         
         <StackPanel Margin="0,10,0,0">
             <ListView Name="lvDirections" ItemsSource="{Binding Directions}" SelectedItem="{Binding SelectedDirection, Mode=TwoWay}" SelectionMode="Single" BorderThickness="1" BorderBrush="DodgerBlue" Background="White" Visibility="Collapsed">
