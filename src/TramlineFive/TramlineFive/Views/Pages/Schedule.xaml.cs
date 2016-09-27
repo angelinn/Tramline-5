@@ -5,6 +5,8 @@ using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using TramlineFive.DataAccess.DomainLogic;
+using TramlineFive.ViewModels;
+using TramlineFive.ViewModels.Wrappers;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
@@ -24,37 +26,31 @@ namespace TramlineFive.Views.Pages
     /// </summary>
     public sealed partial class Schedule : Page
     {
-        public ObservableCollection<StopDO> Stops { get; set; }
-
-        public LineDO Line { get; set; }
-        public DirectionDO Direction { get; set; }
-        public DayDO Day { get; set; }
+        public ScheduleChooserViewModel ScheduleChooserViewModel { get; private set; }
+        public IList<StopViewModel> Stops { get; set; }
 
         public Schedule()
         {
             this.InitializeComponent();
-            this.Stops = new ObservableCollection<StopDO>();
+            this.Stops = new ObservableCollection<StopViewModel>();
 
             this.DataContext = this;
         }
 
         protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
-            Dictionary<string, object> incoming = e.Parameter as Dictionary<string, object>;
-            Direction = incoming["Direction"] as DirectionDO;
-            Day = incoming["Day"] as DayDO;
-            Line = incoming["Line"] as LineDO;
+            ScheduleChooserViewModel = e.Parameter as ScheduleChooserViewModel;
 
-            txtTitle.Text = $"{Line} - {Direction.Name}";
+            txtTitle.Text = $"{ScheduleChooserViewModel.SelectedLine.FriendlyName} - {ScheduleChooserViewModel.SelectedDirection.Name}";
 
-            await Day.LoadStops();
-            foreach (StopDO stop in Day.Stops)
+            await ScheduleChooserViewModel.SelectedDay.LoadStops();
+            foreach (StopViewModel stop in ScheduleChooserViewModel.SelectedDay.Stops)
                 Stops.Add(stop);
         }
 
         private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            StopDO selected = e.AddedItems.First() as StopDO;
+            StopViewModel selected = e.AddedItems.First() as StopViewModel;
             txtTimings.Text = String.Join(", ", selected.Timings);
         }
 

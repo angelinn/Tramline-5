@@ -10,12 +10,16 @@ namespace TramlineFive.DataAccess.DomainLogic
 {
     public class StopDO
     {
+        public string Name { get; private set; }
+        public string Code { get; private set; }
+        public List<string> Timings { get; private set; }
+
         public StopDO(Stop entity)
         {
             id = entity.ID;
-            name = entity.Name;
-            code = entity.Code;
-            timings = entity.Timings;
+            Name = entity.Name;
+            Code = entity.Code;
+            Timings = entity.Timings;
         }
 
         public static async Task<IEnumerable<StopDO>> GetFromDayId(int dayId)
@@ -31,32 +35,5 @@ namespace TramlineFive.DataAccess.DomainLogic
         }
 
         private int id;
-
-        private string name;
-        public string Name
-        {
-            get
-            {
-                return name;
-            }
-        }
-
-        private string code;
-        public string Code
-        {
-            get
-            {
-                return code;
-            }
-        }
-
-        private List<string> timings;
-        public List<string> Timings
-        {
-            get
-            {
-                return timings;
-            }
-        }
     }
 }

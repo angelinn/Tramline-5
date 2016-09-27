@@ -36,8 +36,8 @@
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <StackPanel>
-                            <TextBlock Text="{Binding}" />
-                            <TextBlock Text="{Binding Directions[0].Name}" FontSize="12"/>
+                            <TextBlock Text="{Binding FriendlyName}" />
+                            <TextBlock Text="{Binding Route}" FontSize="12"/>
                         </StackPanel>
                     </DataTemplate>
                 </ListView.ItemTemplate>

@@ -8,10 +8,15 @@ using TramlineFive.ViewModels.Wrappers;
 
 namespace TramlineFive.ViewModels
 {
-    public class LineViewModel : BaseViewModel
+    public class AllLinesViewModel : BaseViewModel
     {
-        private IEnumerable<LineDO> lines;
-        public IEnumerable<LineDO> Lines
+        public async Task<IEnumerable<LineViewModel>> AllAsync()
+        {
+            return (await LineDO.AllAsync()).Select(l => new LineViewModel(l));
+        }
+
+        private IEnumerable<LineViewModel> lines;
+        public IEnumerable<LineViewModel> Lines
         {
             get
             {
@@ -24,8 +29,8 @@ namespace TramlineFive.ViewModels
             }
         }
 
-        private IEnumerable<IGrouping<string, LineDO>> grouped;
-        public IEnumerable<IGrouping<string, LineDO>> Grouped
+        private IEnumerable<IGrouping<string, LineViewModel>> grouped;
+        public IEnumerable<IGrouping<string, LineViewModel>> Grouped
         {
             get
             {

@@ -60,14 +60,7 @@ namespace TramlineFive.Views.Pages
         private void OnOpenScheduleClicked(object sender, RoutedEventArgs e)
         {
             if (ScheduleViewModel.IsValid())
-            {
-                Frame.Navigate(typeof(Schedule), new Dictionary<string, object>()
-                {
-                    { "Direction", ScheduleViewModel.SelectedDirection },
-                    { "Day", ScheduleViewModel.SelectedDay },
-                    { "Line", ScheduleViewModel.SelectedLine }
-                });
-            }
+                Frame.Navigate(typeof(Schedule), ScheduleViewModel);
         }
     }
 }

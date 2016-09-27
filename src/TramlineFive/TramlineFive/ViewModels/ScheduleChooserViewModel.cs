@@ -5,48 +5,43 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TramlineFive.DataAccess.DomainLogic;
+using TramlineFive.ViewModels.Wrappers;
 
 namespace TramlineFive.ViewModels
 {
     public class ScheduleChooserViewModel
     {
-        public ObservableCollection<DirectionDO> Directions { get; set; }
-        public ObservableCollection<DayDO> Days { get; set; }
+        public IList<DirectionViewModel> Directions { get; private set; }
+        public IList<DayViewModel> Days { get; private set; }
         
-        public DirectionDO SelectedDirection { get; set; }
-        public DayDO SelectedDay { get; set; }
-        public LineDO SelectedLine
-        {
-            get
-            {
-                return line;
-            }
-        }
+        public DirectionViewModel SelectedDirection { get; set; }
+        public DayViewModel SelectedDay { get; set; }
+        public LineViewModel SelectedLine { get; set; }
 
         public ScheduleChooserViewModel()
         {
-            Directions = new ObservableCollection<DirectionDO>();
-            Days = new ObservableCollection<DayDO>();
+            Directions = new ObservableCollection<DirectionViewModel>();
+            Days = new ObservableCollection<DayViewModel>();
         }
 
-        public ScheduleChooserViewModel(LineDO line)
+        public ScheduleChooserViewModel(LineViewModel line)
         {
-            this.line = line;
+            SelectedLine = line;
 
-            Directions = new ObservableCollection<DirectionDO>();
-            Days = new ObservableCollection<DayDO>();
+            Directions = new ObservableCollection<DirectionViewModel>();
+            Days = new ObservableCollection<DayViewModel>();
         }
 
         public async Task LoadChoosableData()
         {
-            await line.LoadDirections();
-            foreach (DirectionDO direction in line.Directions)
+            await SelectedLine.LoadDirections();
+            foreach (DirectionViewModel direction in SelectedLine.Directions)
             {
                 Directions.Add(direction);
                 await direction.LoadDays();
             }
 
-            foreach (DayDO day in Directions.First().Days)
+            foreach (DayViewModel day in Directions.First().Days)
                 Days.Add(day);
         }
 
@@ -57,9 +52,7 @@ namespace TramlineFive.ViewModels
 
         public void UpdateFrom(ScheduleChooserViewModel other)
         {
-            line = other.line;
+            SelectedLine = other.SelectedLine;
         }
-
-        private LineDO line;
     }
 }

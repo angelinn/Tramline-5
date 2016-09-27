@@ -14,18 +14,23 @@ namespace TramlineFive.DataAccess.DomainLogic
 {
     public class LineDO
     {
+        public int Number { get; private set; }
+        public string NumberString { get; private set; }
+        public VehicleType Type { get; private set; }
+        public IEnumerable<DirectionDO> Directions { get; private set; }
+
         public LineDO(Line entity)
         {
             id = entity.ID;
-            numberString = WebUtility.UrlDecode(entity.Number);
-            directions = entity.Directions?.Select(d => new DirectionDO(d)).ToList();
-            type = entity.Type;
+            NumberString = WebUtility.UrlDecode(entity.Number);
+            Directions = entity.Directions?.Select(d => new DirectionDO(d)).ToList();
+            Type = entity.Type;
 
             int tempNum;
-            if (Int32.TryParse(numberString, out tempNum))
-                number = tempNum;
+            if (Int32.TryParse(NumberString, out tempNum))
+                Number = tempNum;
             else
-                number = Int32.Parse(numberString[0].ToString());
+                Number = Int32.Parse(NumberString[0].ToString());
         }
 
         public static async Task<IEnumerable<LineDO>> AllAsync()
@@ -42,7 +47,7 @@ namespace TramlineFive.DataAccess.DomainLogic
 
         public async Task LoadDirections()
         {
-            directions = await DirectionDO.GetByLineId(id);
+            Directions = await DirectionDO.GetByLineId(id);
         }
 
         public static async Task<List<StopDO>> FetchByVehicleAsync(VehicleType type, string number)
@@ -79,64 +84,5 @@ namespace TramlineFive.DataAccess.DomainLogic
         }
 
         private int id;
-
-        private VehicleType type;
-        public VehicleType Type
-        {
-            get
-            {
-                return type;
-            }
-        }
-
-        private int number;
-        public int Number
-        {
-            get
-            {
-                return number;
-            }
-        }
-
-        private string numberString;
-        public string NumberString
-        {
-            get
-            {
-                return numberString;
-            }
-        }
-
-        private IEnumerable<DirectionDO> directions;
-        public IEnumerable<DirectionDO> Directions
-        {
-            get
-            {
-                return directions;
-            }
-        }
-
-        public override string ToString()
-        {
-            return $"{VehicleTypeManager.Stringify(type)} {numberString}";
-        }
-
-        public int SortID
-        {
-            get
-            {
-                switch (type)
-                {
-                    case VehicleType.Bus:
-                        return 3;
-                    case VehicleType.Tram:
-                        return 1;
-                    case VehicleType.Trolley:
-                        return 2;
-                    default:
-                        return 4;
-                }
-            } 
-        }
     }
 }

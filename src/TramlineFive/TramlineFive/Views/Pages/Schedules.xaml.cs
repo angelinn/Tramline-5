@@ -7,12 +7,7 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
 using TramlineFive.Common;
 using TramlineFive.Common.Models;
-using TramlineFive.DataAccess.DomainLogic;
-using TramlineFive.Views.Dialogs;
 using TramlineFive.ViewModels;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
-using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -21,6 +16,7 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using TramlineFive.Common.Managers;
+using TramlineFive.ViewModels.Wrappers;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -31,13 +27,13 @@ namespace TramlineFive.Views.Pages
     /// </summary>
     public sealed partial class Schedules : Page
     {
-        public LineViewModel LineViewModel { get; set; }
+        public AllLinesViewModel LineViewModel { get; set; }
         public Schedules()
         {
             this.InitializeComponent();
             this.Transitions = AnimationManager.GeneratePageTransitions();
 
-            this.LineViewModel = new LineViewModel();
+            this.LineViewModel = new AllLinesViewModel();
             this.DataContext = LineViewModel;
 
             this.Loaded += Schedules_Loaded;
@@ -47,7 +43,7 @@ namespace TramlineFive.Views.Pages
         {
             try
             {
-                LineViewModel.Lines = (await LineDO.AllAsync()).Where(l => l.Type != VehicleType.None)
+                LineViewModel.Lines = (await LineViewModel.AllAsync()).Where(l => l.Type != VehicleType.None)
                                                                .OrderBy(l => l.SortID)
                                                                .ThenBy(l => l.Number);
 
@@ -66,7 +62,7 @@ namespace TramlineFive.Views.Pages
 
         private void ListView_ItemClick(object sender, ItemClickEventArgs e)
         {
-            PromptForDirection(new ScheduleChooserViewModel(e.ClickedItem as LineDO));
+            PromptForDirection(new ScheduleChooserViewModel(e.ClickedItem as LineViewModel));
         }
 
         private void AutoSuggestBox_TextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
@@ -79,7 +75,7 @@ namespace TramlineFive.Views.Pages
 
         private void AutoSuggestBox_SuggestionChosen(AutoSuggestBox sender, AutoSuggestBoxSuggestionChosenEventArgs args)
         {
-            PromptForDirection(new ScheduleChooserViewModel(args.SelectedItem as LineDO));
+            PromptForDirection(new ScheduleChooserViewModel(args.SelectedItem as LineViewModel));
         }
 
         private void PromptForDirection(ScheduleChooserViewModel scheduleViewModel)

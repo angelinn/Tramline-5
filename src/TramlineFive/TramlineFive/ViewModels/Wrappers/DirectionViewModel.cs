@@ -27,11 +27,11 @@ namespace TramlineFive.ViewModels.Wrappers
             }
         }
 
-        public IEnumerable<DayDO> Days
+        public IEnumerable<DayViewModel> Days
         {
             get
             {
-                return core.Days;
+                return core.Days.Select(d => new DayViewModel(d));
             }
         }
 

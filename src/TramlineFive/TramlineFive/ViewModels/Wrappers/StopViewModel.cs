@@ -7,34 +7,37 @@ using TramlineFive.DataAccess.DomainLogic;
 
 namespace TramlineFive.ViewModels.Wrappers
 {
-    public class DayViewModel
+    public class StopViewModel
     {
-        public DayViewModel(DayDO domain)
+        public StopViewModel(StopDO domain)
         {
             core = domain;
         }
 
-        public string Type
+        public string Name
         {
             get
             {
-                return core.Type;
+                return core.Name;
             }
         }
 
-        public IEnumerable<StopViewModel> Stops
+        public string Code
         {
             get
             {
-                return core.Stops.Select(s => new StopViewModel(s));
+                return core.Code;
             }
         }
 
-        public async Task LoadStops()
+        public List<string> Timings
         {
-            await core.LoadStops();
+            get
+            {
+                return core.Timings;
+            }
         }
 
-        private DayDO core;
+        private StopDO core;
     }
 }
