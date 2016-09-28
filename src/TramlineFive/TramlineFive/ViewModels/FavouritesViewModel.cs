@@ -20,7 +20,7 @@ namespace TramlineFive.ViewModels
 
         public async Task LoadFavouritesAsync(bool force = false)
         {
-            IsLoadingFavourites = true;
+            IsLoading = true;
 
             if (Favourites.Count == 0 || force)
             {
@@ -28,15 +28,19 @@ namespace TramlineFive.ViewModels
                     Favourites.Add(new FavouriteViewModel(favourite));
             }
 
-            IsLoadingFavourites = false;
+            IsLoading = false;
             OnPropertyChanged("IsEmpty");
         }
 
         public async Task AddAsync(string code)
         {
+            IsAdding = true;
+
             FavouriteDO added = await FavouriteDO.Add(code);
             if (added != null)
                 Favourites.Insert(0, new FavouriteViewModel(added));
+
+            IsAdding = false;
 
             OnPropertyChanged("IsEmpty");
         }
@@ -53,20 +57,34 @@ namespace TramlineFive.ViewModels
         {
             get
             {
-                return (Favourites.Count == 0 && !IsLoadingFavourites);
+                return (Favourites.Count == 0 && !IsLoading);
             }
         }
 
-        private bool isLoadingFavourites = true;
-        public bool IsLoadingFavourites
+        private bool isLoading = true;
+        public bool IsLoading
         {
             get
             {
-                return isLoadingFavourites;
+                return isLoading;
             }
             set
             {
-                isLoadingFavourites = value;
+                isLoading = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool isAdding;
+        public bool IsAdding
+        {
+            get
+            {
+                return isAdding;
+            }
+            set
+            {
+                isAdding = value;
                 OnPropertyChanged();
             }
         }

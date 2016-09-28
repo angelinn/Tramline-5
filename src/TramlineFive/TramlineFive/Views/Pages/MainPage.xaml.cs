@@ -160,20 +160,14 @@ namespace TramlineFive.Views.Pages
 
         private async Task AddFavouriteAsync()
         {
-            pbFavourites.Visibility = Visibility.Visible;
             pvMain.SelectedIndex = 1;
-
             await FavouritesViewModel.AddAsync(txtStopCode.Text);
-
-            pbFavourites.Visibility = Visibility.Collapsed;
         }
 
         private async Task QueryVirtualTableAsync()
         {
             if (!VirtualTableViewModel.IsLoading)
             {
-                VirtualTableViewModel.IsLoading = true;
-
                 try
                 {
                     if (!await VirtualTableViewModel.GetByStopCode(txtStopCode.Text))
@@ -183,14 +177,8 @@ namespace TramlineFive.Views.Pages
                 {
                     await new MessageDialog(ex.Message).ShowAsync();
                 }
-
-                VirtualTableViewModel.IsLoading = false;
-
-                pbHistory.Visibility = Visibility.Visible;
-
-                await HistoryViewModel.AddHistoryAsync(txtStopCode.Text);
                 
-                pbHistory.Visibility = Visibility.Collapsed;
+                await HistoryViewModel.AddHistoryAsync(txtStopCode.Text);
             }
         }
 

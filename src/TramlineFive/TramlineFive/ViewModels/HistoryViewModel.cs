@@ -20,21 +20,25 @@ namespace TramlineFive.ViewModels
 
         public async Task AddHistoryAsync(string code)
         {
+            IsAdding = true;
+
             HistoryDO added = await HistoryDO.Add(code);
             History.Insert(0, new HistoryEntryViewModel(added));
+
+            IsAdding = false;
 
             OnPropertyChanged("IsEmpty");
         }
 
         public async Task LoadHistoryAsync()
         {
-            IsLoadingHistory = true;
+            IsLoading = true;
             History.Clear();
 
             foreach (HistoryDO history in (await HistoryDO.AllAsync()).Reverse())
                 History.Add(new HistoryEntryViewModel(history));
 
-            IsLoadingHistory = false;
+            IsLoading = false;
 
             OnPropertyChanged("IsEmpty");
         }
@@ -43,20 +47,34 @@ namespace TramlineFive.ViewModels
         {
             get
             {
-                return (History.Count == 0 && !IsLoadingHistory);
+                return (History.Count == 0 && !IsLoading);
             }
         }
 
-        private bool isLoadingHistory = true;
-        public bool IsLoadingHistory
+        private bool isLoading = true;
+        public bool IsLoading
         {
             get
             {
-                return isLoadingHistory;
+                return isLoading;
             }
             set
             {
-                isLoadingHistory = value;
+                isLoading = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool isAdding;
+        public bool IsAdding
+        {
+            get
+            {
+                return isAdding;
+            }
+            set
+            {
+                isAdding = value;
                 OnPropertyChanged();
             }
         }

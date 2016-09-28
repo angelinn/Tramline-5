@@ -22,6 +22,7 @@ namespace TramlineFive.ViewModels
         }
         public async Task<bool> GetByStopCode(string stopCode)
         {
+            IsLoading = true;
             Arrivals.Clear();
             IsQueried = false;
 
@@ -31,7 +32,10 @@ namespace TramlineFive.ViewModels
             {
 
                 if (arrivals.Count == 0)
+                {
+                    IsLoading = false;
                     return false;
+                }
 
                 foreach (Arrival arrival in arrivals)
                     Arrivals.Add(arrival);
@@ -41,6 +45,7 @@ namespace TramlineFive.ViewModels
                 IsQueried = true;
             }
 
+            IsLoading = false;
             return true;
         }
 
