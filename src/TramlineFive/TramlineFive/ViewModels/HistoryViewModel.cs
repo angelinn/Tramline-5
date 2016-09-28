@@ -16,8 +16,6 @@ namespace TramlineFive.ViewModels
         public HistoryViewModel()
         {
             History = new ObservableCollection<HistoryEntryViewModel>();
-
-            IsLoadingHistory = true;
         }
 
         public async Task AddHistoryAsync(string code)
@@ -30,10 +28,13 @@ namespace TramlineFive.ViewModels
 
         public async Task LoadHistoryAsync()
         {
+            IsLoadingHistory = true;
             History.Clear();
 
             foreach (HistoryDO history in (await HistoryDO.AllAsync()).Reverse())
                 History.Add(new HistoryEntryViewModel(history));
+
+            IsLoadingHistory = false;
 
             OnPropertyChanged("IsEmpty");
         }
@@ -46,7 +47,7 @@ namespace TramlineFive.ViewModels
             }
         }
 
-        private bool isLoadingHistory;
+        private bool isLoadingHistory = true;
         public bool IsLoadingHistory
         {
             get

@@ -36,9 +36,9 @@ namespace TramlineFive.Views.Pages
         {
             this.InitializeComponent();
 
-            VirtualTableViewModel = new VirtualTableViewModel();
-            FavouritesViewModel = new FavouritesViewModel();
-            HistoryViewModel = new HistoryViewModel();
+            this.VirtualTableViewModel = new VirtualTableViewModel();
+            this.FavouritesViewModel = new FavouritesViewModel();
+            this.HistoryViewModel = new HistoryViewModel();
 
             this.DataContext = this;
             this.NavigationCacheMode = NavigationCacheMode.Enabled;
@@ -68,12 +68,7 @@ namespace TramlineFive.Views.Pages
         private async void OnLoaded(object sender, RoutedEventArgs e)
         {
             await FavouritesViewModel.LoadFavouritesAsync();
-
-            FavouritesViewModel.IsLoadingFavourites = false;
-
             await HistoryViewModel.LoadHistoryAsync();
-
-            HistoryViewModel.IsLoadingHistory = false;
         }
 
         private async void OnStopCodeKeyDown(object sender, KeyRoutedEventArgs e)

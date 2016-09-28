@@ -16,18 +16,19 @@ namespace TramlineFive.ViewModels
         public FavouritesViewModel()
         {
             Favourites = new ObservableCollection<FavouriteViewModel>();
-
-            IsLoadingFavourites = true;
         }
 
         public async Task LoadFavouritesAsync(bool force = false)
         {
+            IsLoadingFavourites = true;
+
             if (Favourites.Count == 0 || force)
             {
                 foreach (FavouriteDO favourite in await FavouriteDO.AllAsync())
                     Favourites.Add(new FavouriteViewModel(favourite));
             }
 
+            IsLoadingFavourites = false;
             OnPropertyChanged("IsEmpty");
         }
 
@@ -56,7 +57,7 @@ namespace TramlineFive.ViewModels
             }
         }
 
-        private bool isLoadingFavourites;
+        private bool isLoadingFavourites = true;
         public bool IsLoadingFavourites
         {
             get
