@@ -7,7 +7,7 @@ using Windows.ApplicationModel;
 
 namespace TramlineFive.Common.Managers
 {
-    public static class VersionManager
+    public class VersionManager
     {
         public static string Version
         {
@@ -26,7 +26,7 @@ namespace TramlineFive.Common.Managers
         {
             get
             {
-                return Package.Current.DisplayName;
+                return Package.Current.DisplayName.ToUpper();
             }
         }
 

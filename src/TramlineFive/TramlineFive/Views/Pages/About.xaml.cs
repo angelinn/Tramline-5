@@ -34,8 +34,6 @@ namespace TramlineFive.Views.Pages
         {
             this.InitializeComponent();
             this.Transitions = AnimationManager.GeneratePageTransitions();
-
-            this.DataContext = new VersionViewModel();
         }
 
         private async void OnEmailClick(object sender, RoutedEventArgs e)

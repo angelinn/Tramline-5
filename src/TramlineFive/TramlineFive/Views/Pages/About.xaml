@@ -5,12 +5,15 @@
     xmlns:local="using:TramlineFive"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:mg="using:TramlineFive.Common.Managers"
     mc:Ignorable="d">
 
     <Page.Resources>
         <Style x:Name="aboutText" TargetType="TextBlock">
             <Setter Property="TextWrapping" Value="Wrap" />
         </Style>
+        
+        <mg:VersionManager x:Key="VersionManager" />
     </Page.Resources>
 
     <Page.TopAppBar>
@@ -29,7 +32,7 @@
             <TextBlock FontSize="20" Text="Трамвай №5 за Windows" />
             <TextBlock FontSize="20" >
                 <Run Text="Версия: " />
-                <Run Text="{Binding Version}" />
+                <Run Text="{Binding Source={StaticResource VersionManager}, Path=Version}" />
             </TextBlock>
 
             <Button Content="FAQ" Margin="0,20,0,10" IsEnabled="False" />

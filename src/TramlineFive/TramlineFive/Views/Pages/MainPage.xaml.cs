@@ -65,16 +65,14 @@ namespace TramlineFive.Views.Pages
         {
             await HomeViewModel.FavouritesViewModel.LoadFavouritesAsync();
 
-            prFavourites.IsActive = false;
-            prFavourites.Visibility = Visibility.Collapsed;
+            HomeViewModel.IsLoadingFavourites = false;
 
             if (HomeViewModel.FavouritesViewModel.Favourites.Count == 0)
                 txtNoFavourites.Visibility = Visibility.Visible;
 
             await HomeViewModel.HistoryViewModel.LoadHistoryAsync();
 
-            prHistory.IsActive = false;
-            prHistory.Visibility = Visibility.Collapsed;
+            HomeViewModel.IsLoadingHistory = false;
 
             if (HomeViewModel.HistoryViewModel.History.Count == 0)
                 txtNoHistory.Visibility = Visibility.Visible;
