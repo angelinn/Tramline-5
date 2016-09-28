@@ -18,8 +18,8 @@ namespace TramlineFive.Converters
                 TimeSpan timing;
                 if (TimeSpan.TryParse((string)singleTiming, out timing))
                 {
-                    TimeSpan timeLeft = timing - DateTime.Now.TimeOfDay;
-                    builder.AppendFormat("{0} ({1} мин), ", singleTiming, timeLeft.Minutes < 0 ? 0 : timeLeft.Minutes);
+                    int timeLeft = (int)(timing - DateTime.Now.TimeOfDay).TotalMinutes;
+                    builder.AppendFormat("{0} ({1} мин), ", singleTiming, timeLeft < 0 ? 0 : timeLeft);
                 }
             }
 
