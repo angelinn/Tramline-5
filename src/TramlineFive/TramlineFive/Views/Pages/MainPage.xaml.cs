@@ -84,7 +84,8 @@ namespace TramlineFive.Views.Pages
 
         private async void OnSumcClick(object sender, RoutedEventArgs e)
         {
-            await new QuestionDialog(Strings.SumcRedirect, async () => await Launcher.LaunchUriAsync(new Uri(Urls.Sumc))).ShowAsync();
+            await new QuestionDialog(Strings.SumcRedirect,
+                async () => await Launcher.LaunchUriAsync(new Uri(Urls.Sumc))).ShowAsync();
         }
 
         private void OnArrivalHolding(object sender, HoldingRoutedEventArgs e)
@@ -169,10 +170,9 @@ namespace TramlineFive.Views.Pages
 
         private async Task QueryVirtualTableAsync()
         {
-            if (!prVirtualTables.IsActive)
+            if (!VirtualTableViewModel.IsLoading)
             {
-                prVirtualTables.IsActive = true;
-                prVirtualTables.Visibility = Visibility.Visible;
+                VirtualTableViewModel.IsLoading = true;
 
                 try
                 {
@@ -183,11 +183,8 @@ namespace TramlineFive.Views.Pages
                 {
                     await new MessageDialog(ex.Message).ShowAsync();
                 }
-                finally
-                {
-                    prVirtualTables.IsActive = false;
-                    prVirtualTables.Visibility = Visibility.Collapsed;
-                }
+
+                VirtualTableViewModel.IsLoading = false;
 
                 pbHistory.Visibility = Visibility.Visible;
 

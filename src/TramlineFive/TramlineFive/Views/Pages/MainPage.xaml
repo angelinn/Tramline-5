@@ -81,8 +81,8 @@
                             <RowDefinition Height="1*" />
                             <RowDefinition Height="2*" />
                         </Grid.RowDefinitions>
-                        
-                        <ProgressRing Grid.Row="0" Grid.RowSpan="2" Name="prVirtualTables" Style="{StaticResource Spinner}" Visibility="Collapsed" />
+
+                        <ProgressRing Grid.Row="0" Grid.RowSpan="2" Name="prVirtualTables" Style="{StaticResource Spinner}" IsActive="{Binding IsLoading}" Visibility="{Binding IsLoading, Converter={StaticResource BoolToVisibility}}" />
 
                         <StackPanel Grid.Row="0">
                             <Grid>
