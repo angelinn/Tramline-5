@@ -9,13 +9,15 @@ using TramlineFive.ViewModels.Wrappers;
 
 namespace TramlineFive.ViewModels
 {
-    public class FavouritesViewModel
+    public class FavouritesViewModel : BaseViewModel
     {
         public IList<FavouriteViewModel> Favourites { get; set; }
 
         public FavouritesViewModel()
         {
             Favourites = new ObservableCollection<FavouriteViewModel>();
+
+            IsLoadingFavourites = true;
         }
 
         public async Task LoadFavouritesAsync(bool force = false)
@@ -25,6 +27,8 @@ namespace TramlineFive.ViewModels
                 foreach (FavouriteDO favourite in await FavouriteDO.AllAsync())
                     Favourites.Add(new FavouriteViewModel(favourite));
             }
+
+            OnPropertyChanged("IsEmpty");
         }
 
         public async Task AddAsync(string code)
@@ -32,12 +36,38 @@ namespace TramlineFive.ViewModels
             FavouriteDO added = await FavouriteDO.Add(code);
             if (added != null)
                 Favourites.Insert(0, new FavouriteViewModel(added));
+
+            OnPropertyChanged("IsEmpty");
         }
 
         public async Task Remove(FavouriteViewModel favourite)
         {
             Favourites.Remove(Favourites.Where(f => f.Code == favourite.Code).First());
             await FavouriteViewModel.Remove(favourite);
+
+            OnPropertyChanged("IsEmpty");
+        }
+
+        public bool IsEmpty
+        {
+            get
+            {
+                return (Favourites.Count == 0 && !IsLoadingFavourites);
+            }
+        }
+
+        private bool isLoadingFavourites;
+        public bool IsLoadingFavourites
+        {
+            get
+            {
+                return isLoadingFavourites;
+            }
+            set
+            {
+                isLoadingFavourites = value;
+                OnPropertyChanged();
+            }
         }
     }
 }

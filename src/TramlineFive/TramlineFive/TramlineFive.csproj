@@ -106,7 +106,6 @@
     <Compile Include="ViewModels\FavouritesViewModel.cs" />
     <Compile Include="ViewModels\Wrappers\HistoryEntryViewModel.cs" />
     <Compile Include="ViewModels\HistoryViewModel.cs" />
-    <Compile Include="ViewModels\HomeViewModel.cs" />
     <Compile Include="ViewModels\Wrappers\BaseViewModel.cs" />
     <Compile Include="ViewModels\ScheduleChooserViewModel.cs" />
     <Compile Include="ViewModels\Wrappers\DayViewModel.cs" />

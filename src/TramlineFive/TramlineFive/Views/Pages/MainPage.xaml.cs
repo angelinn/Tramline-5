@@ -28,15 +28,19 @@ namespace TramlineFive.Views.Pages
     /// </summary>
     public sealed partial class MainPage : Page
     {
-        public HomeViewModel HomeViewModel { get; private set; }
+        public VirtualTableViewModel VirtualTableViewModel { get; private set; }
+        public FavouritesViewModel FavouritesViewModel { get; private set; }
+        public HistoryViewModel HistoryViewModel { get; private set; }
 
         public MainPage()
         {
             this.InitializeComponent();
 
-            this.HomeViewModel = new HomeViewModel();
+            VirtualTableViewModel = new VirtualTableViewModel();
+            FavouritesViewModel = new FavouritesViewModel();
+            HistoryViewModel = new HistoryViewModel();
 
-            this.DataContext = HomeViewModel;
+            this.DataContext = this;
             this.NavigationCacheMode = NavigationCacheMode.Enabled;
 
             this.Loaded += OnLoaded;
@@ -63,19 +67,13 @@ namespace TramlineFive.Views.Pages
 
         private async void OnLoaded(object sender, RoutedEventArgs e)
         {
-            await HomeViewModel.FavouritesViewModel.LoadFavouritesAsync();
+            await FavouritesViewModel.LoadFavouritesAsync();
 
-            HomeViewModel.IsLoadingFavourites = false;
+            FavouritesViewModel.IsLoadingFavourites = false;
 
-            if (HomeViewModel.FavouritesViewModel.Favourites.Count == 0)
-                txtNoFavourites.Visibility = Visibility.Visible;
+            await HistoryViewModel.LoadHistoryAsync();
 
-            await HomeViewModel.HistoryViewModel.LoadHistoryAsync();
-
-            HomeViewModel.IsLoadingHistory = false;
-
-            if (HomeViewModel.HistoryViewModel.History.Count == 0)
-                txtNoHistory.Visibility = Visibility.Visible;
+            HistoryViewModel.IsLoadingHistory = false;
         }
 
         private async void OnStopCodeKeyDown(object sender, KeyRoutedEventArgs e)
@@ -151,10 +149,7 @@ namespace TramlineFive.Views.Pages
         {
             FavouriteViewModel item = (sender as Button).DataContext as FavouriteViewModel;
             await new QuestionDialog(String.Format(Formats.ConfirmDeleteFavourite, item.Name),
-                async () => await HomeViewModel.FavouritesViewModel.Remove(item)).ShowAsync();
-
-            if (HomeViewModel.FavouritesViewModel.Favourites.Count == 0)
-                txtNoFavourites.Visibility = Visibility.Visible;
+                async () => await FavouritesViewModel.Remove(item)).ShowAsync();
         }
 
         private async void OnStopCodeClick(object sender, RoutedEventArgs e)
@@ -172,10 +167,7 @@ namespace TramlineFive.Views.Pages
             pbFavourites.Visibility = Visibility.Visible;
             pvMain.SelectedIndex = 1;
 
-            await HomeViewModel.FavouritesViewModel.AddAsync(txtStopCode.Text);
-
-            if (HomeViewModel.FavouritesViewModel.Favourites.Count > 0)
-                txtNoFavourites.Visibility = Visibility.Collapsed;
+            await FavouritesViewModel.AddAsync(txtStopCode.Text);
 
             pbFavourites.Visibility = Visibility.Collapsed;
         }
@@ -189,7 +181,7 @@ namespace TramlineFive.Views.Pages
 
                 try
                 {
-                    if (!await HomeViewModel.VirtualTableViewModel.GetByStopCode(txtStopCode.Text))
+                    if (!await VirtualTableViewModel.GetByStopCode(txtStopCode.Text))
                         await new MessageDialog(Strings.NoResults).ShowAsync();
                 }
                 catch (Exception ex)
@@ -204,9 +196,8 @@ namespace TramlineFive.Views.Pages
 
                 pbHistory.Visibility = Visibility.Visible;
 
-                await HomeViewModel.HistoryViewModel.AddHistoryAsync(txtStopCode.Text);
-
-                txtNoHistory.Visibility = HomeViewModel.HistoryViewModel.History.Count == 0 ? Visibility.Visible : Visibility.Collapsed;
+                await HistoryViewModel.AddHistoryAsync(txtStopCode.Text);
+                
                 pbHistory.Visibility = Visibility.Collapsed;
             }
         }
