@@ -15,6 +15,53 @@ namespace TramlineFive.ViewModels
 {
     public class SettingsViewModel : BaseViewModel
     {
+        public List<NameValueObject> VehicleTypes { get; private set; }
+        public string VehicleTypeKey { get; private set; }
+        public string VehicleTypeValue { get; private set; }
+
+        public SettingsViewModel()
+        {
+            VehicleTypes = VehicleTypeManager.GetNameValuePair();
+            VehicleTypeKey = "Name";
+            VehicleTypeValue = "Value";
+        }
+
+        public async Task ClearHistoryAsync()
+        {
+            IsClearingHistory = true;
+
+            await HistoryDO.ClearAllAsync();
+
+            IsClearingHistory = false;
+        }
+
+        public async Task<string> GetSerializedFavourites()
+        {
+            return JsonConvert.SerializeObject(await FavouriteDO.AllAsync());
+        }
+
+        public bool IsValid()
+        {
+            return LiveTile || (!String.IsNullOrEmpty(StopCode) && !String.IsNullOrEmpty(LineNumber));
+        }
+
+        public async Task<bool> DoesStopExist()
+        {
+            IsSwitchable = false;
+            IsCheckingStop = true;
+            
+            bool doesStop = await LineDO.DoesStopAt((VehicleType)SelectedType.Value, LineNumber, StopCode);
+            if (!doesStop)
+            {
+                LiveTile = !LiveTile;
+                IsSwitchable = true;
+            }
+
+            IsCheckingStop = false;
+
+            return doesStop;
+        }
+
         public bool PushNotifications
         {
             get
@@ -32,36 +79,103 @@ namespace TramlineFive.ViewModels
             }
         }
 
+        private bool liveTile;
         public bool LiveTile
         {
             get
             {
-                string value = SettingsManager.ReadValue(SettingsKeys.LiveTile);
-                if (value == null)
-                    return false;
-
-                return Boolean.Parse(value);
+                return liveTile;
             }
             set
             {
-                SettingsManager.UpdateValue(SettingsKeys.LiveTile, value);
+                liveTile = value;
                 OnPropertyChanged();
             }
         }
 
-        public async Task ClearHistoryAsync()
+        private NameValueObject selectedType;
+        public NameValueObject SelectedType
         {
-            await HistoryDO.ClearAllAsync();
+            get
+            {
+                return selectedType;
+            }
+            set
+            {
+                selectedType = value;
+                OnPropertyChanged();
+            }
         }
 
-        public async Task<string> GetSerializedFavourites()
+        private string stopCode;
+        public string StopCode
         {
-            return JsonConvert.SerializeObject(await FavouriteDO.AllAsync());
+            get
+            {
+                return stopCode;
+            }
+            set
+            {
+                stopCode = value;
+                OnPropertyChanged();
+            }
         }
 
-        public async Task<bool> DoesStopExist(VehicleType type, string line, string code)
+        private string lineNumber;
+        public string LineNumber
         {
-            return await LineDO.DoesStopAt(type, line, code);
+            get
+            {
+                return lineNumber;
+            }
+            set
+            {
+                lineNumber = value;
+                OnPropertyChanged();
+            }
+        }
+
+
+        private bool isCheckingStop;
+        public bool IsCheckingStop
+        {
+            get
+            {
+                return isCheckingStop;
+            }
+            set
+            {
+                isCheckingStop = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool isClearingHistory;
+        public bool IsClearingHistory
+        {
+            get
+            {
+                return isClearingHistory;
+            }
+            set
+            {
+                isClearingHistory = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool isSwitchable = true;
+        public bool IsSwitchable
+        {
+            get
+            {
+                return isSwitchable;
+            }
+            set
+            {
+                isSwitchable = value;
+                OnPropertyChanged();
+            }
         }
     }
 }

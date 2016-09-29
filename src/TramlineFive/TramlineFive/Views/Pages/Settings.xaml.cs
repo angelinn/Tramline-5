@@ -48,27 +48,20 @@ namespace TramlineFive.Views.Pages
 
         private void OnLoaded(object sender, RoutedEventArgs e)
         {
-            FillTypesComboBox();
             UpdateFavouriteStopFromSettingsAsync();
+            SettingsViewModel.LiveTile = SettingsManager.ReadValue(SettingsKeys.LiveTile) == null ? default(bool) : Boolean.Parse(SettingsManager.ReadValue(SettingsKeys.LiveTile));
         }
 
         private void UpdateFavouriteStopFromSettingsAsync()
         {
             string type = SettingsManager.ReadValue(SettingsKeys.FavouriteType);
-            cbTypes.SelectedIndex = (type == null) ? 0 : (int)VehicleTypeManager.Destringify(type);
+            SettingsViewModel.SelectedType = (type == null) ? SettingsViewModel.VehicleTypes.First() : SettingsViewModel.VehicleTypes.Where(t => t.Name == type).First();
 
             string line = SettingsManager.ReadValue(SettingsKeys.FavouriteLine);
-            txtLine.Text = line ?? String.Empty;
+            SettingsViewModel.LineNumber = line ?? String.Empty;
 
             string code = SettingsManager.ReadValue(SettingsKeys.FavouriteStopCode);
-            txtCode.Text = code ?? String.Empty;
-        }
-
-        private void FillTypesComboBox()
-        {
-            cbTypes.ItemsSource = VehicleTypeManager.GetNameValuePair();
-            cbTypes.DisplayMemberPath = "Name";
-            cbTypes.SelectedValuePath = "Value";
+            SettingsViewModel.StopCode = code ?? String.Empty;
         }
 
         private async void OnExportClick(object sender, RoutedEventArgs e)
@@ -101,12 +94,62 @@ namespace TramlineFive.Views.Pages
 
         private async void OnClearHistoryClick(object sender, RoutedEventArgs e)
         {
-            btnClearHistory.IsEnabled = false;
-            prClearHistory.IsActive = true;
-            prClearHistory.Visibility = Visibility.Visible;
-
             await SettingsViewModel.ClearHistoryAsync();
+            ShowClearedToastNotification();
+        }
 
+        private async void OnLiveTileToggled(object sender, RoutedEventArgs e)
+        {
+            if (SettingsViewModel.LiveTile != Boolean.Parse(SettingsManager.ReadValue(SettingsKeys.LiveTile)))
+            {
+                bool undo = false;
+
+                if (!SettingsViewModel.IsValid())
+                {
+                    // Simulate attempt to turn on
+                    await Task.Delay(200);
+                    undo = true;
+                }
+                else
+                {
+                    // Give the UI time to refresh
+                    await Task.Delay(50);
+
+                    if (SettingsViewModel.LiveTile)
+                    {
+                        if (!await SettingsViewModel.DoesStopExist())
+                        {
+                            await new MessageDialog($"{SettingsViewModel.SelectedType.Name} №{SettingsViewModel.LineNumber} не спира на спирка с код {SettingsViewModel.StopCode}").ShowAsync();
+                            return;
+                        }
+
+                        SettingsManager.UpdateValue(SettingsKeys.FavouriteStopCode, SettingsViewModel.StopCode);
+                        SettingsManager.UpdateValue(SettingsKeys.FavouriteType, SettingsViewModel.SelectedType.Name);
+                        SettingsManager.UpdateValue(SettingsKeys.FavouriteLine, SettingsViewModel.LineNumber);
+
+                        if (!await BackgroundTaskManager.RegisterBackgroundTaskAsync())
+                            undo = true;
+                    }
+                    else if (await BackgroundTaskManager.UnregisterBackgroundTaskAsync())
+                    {
+                        SettingsManager.ClearValue(SettingsKeys.FavouriteStopCode);
+                        SettingsManager.ClearValue(SettingsKeys.FavouriteLine);
+                        SettingsManager.ClearValue(SettingsKeys.FavouriteType);
+                    }
+                    else
+                        undo = true;
+                }
+
+                if (undo)
+                    SettingsViewModel.LiveTile = !SettingsViewModel.LiveTile;
+
+                SettingsViewModel.IsSwitchable = true;
+                SettingsManager.UpdateValue(SettingsKeys.LiveTile, SettingsViewModel.LiveTile);
+            }
+        }
+
+        private void ShowClearedToastNotification()
+        {
             ToastBindingGeneric text = new ToastBindingGeneric();
             text.Children.Add(new AdaptiveText() { Text = Strings.HistoryCleared });
             ToastContent cont = new ToastContent()
@@ -122,70 +165,6 @@ namespace TramlineFive.Views.Pages
             notification.ExpirationTime = DateTime.Now.AddSeconds(3);
 
             ToastNotificationManager.CreateToastNotifier().Show(notification);
-
-            btnClearHistory.IsEnabled = true;
-            prClearHistory.IsActive = false;
-            prClearHistory.Visibility = Visibility.Collapsed;
-        }
-
-        private async void OnLiveTileToggled(object sender, RoutedEventArgs e)
-        {
-
-            if (SettingsViewModel.LiveTile != tsLiveTile.IsOn)
-            {
-                if (String.IsNullOrEmpty(txtLine.Text) && tsLiveTile.IsOn)
-                {
-                    // Simulate attempt to turn on
-                    await Task.Delay(200);
-                    tsLiveTile.IsOn = !tsLiveTile.IsOn;
-                    return;
-                }
-
-                tsLiveTile.IsEnabled = false;
-
-                // Give the UI time to refresh
-                await Task.Delay(50);
-
-                if (tsLiveTile.IsOn && txtCode.Text != SettingsManager.ReadValue(SettingsKeys.FavouriteStopCode))
-                {
-                    prCheckingStop.IsActive = true;
-                    prCheckingStop.Visibility = Visibility.Visible;
-
-                    NameValueObject type = (NameValueObject)(cbTypes.SelectedItem);
-                    bool stopExists = await SettingsViewModel.DoesStopExist((VehicleType)type.Value, txtLine.Text, txtCode.Text);
-
-                    prCheckingStop.IsActive = false;
-                    prCheckingStop.Visibility = Visibility.Collapsed;
-
-                    if (!stopExists)
-                    {
-                        await new MessageDialog($"{type.Name} №{txtLine.Text} не спира на спирка с код {txtCode.Text}").ShowAsync();
-                        tsLiveTile.IsOn = !tsLiveTile.IsOn;
-                        tsLiveTile.IsEnabled = true;
-
-                        return;
-                    }
-
-                    SettingsManager.UpdateValue(SettingsKeys.FavouriteStopCode, txtCode.Text);
-                    SettingsManager.UpdateValue(SettingsKeys.FavouriteType, type.Name);
-                    SettingsManager.UpdateValue(SettingsKeys.FavouriteLine, txtLine.Text);
-
-                    if (!await BackgroundTaskManager.RegisterBackgroundTaskAsync())
-                        tsLiveTile.IsOn = !tsLiveTile.IsOn;
-                }
-                else if (await BackgroundTaskManager.UnregisterBackgroundTaskAsync())
-                {
-                    SettingsManager.ClearValue(SettingsKeys.FavouriteStopCode);
-                    SettingsManager.ClearValue(SettingsKeys.FavouriteLine);
-                    SettingsManager.ClearValue(SettingsKeys.FavouriteType);
-                }
-                else
-                    tsLiveTile.IsOn = !tsLiveTile.IsOn;
-
-                tsLiveTile.IsEnabled = true;
-
-                SettingsViewModel.LiveTile = tsLiveTile.IsOn;
-            }
         }
     }
 }
