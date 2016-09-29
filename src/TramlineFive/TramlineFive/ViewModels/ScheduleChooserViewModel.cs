@@ -9,13 +9,11 @@ using TramlineFive.ViewModels.Wrappers;
 
 namespace TramlineFive.ViewModels
 {
-    public class ScheduleChooserViewModel
+    public class ScheduleChooserViewModel : BaseViewModel
     {
         public IList<DirectionViewModel> Directions { get; private set; }
         public IList<DayViewModel> Days { get; private set; }
         
-        public DirectionViewModel SelectedDirection { get; set; }
-        public DayViewModel SelectedDay { get; set; }
         public LineViewModel SelectedLine { get; set; }
 
         public ScheduleChooserViewModel()
@@ -34,6 +32,8 @@ namespace TramlineFive.ViewModels
 
         public async Task LoadChoosableData()
         {
+            IsLoading = true;
+
             await SelectedLine.LoadDirections();
             foreach (DirectionViewModel direction in SelectedLine.Directions)
             {
@@ -43,6 +43,11 @@ namespace TramlineFive.ViewModels
 
             foreach (DayViewModel day in Directions.First().Days)
                 Days.Add(day);
+
+            SelectedDirection = Directions.First();
+            SelectedDay = Days.First();
+
+            IsLoading = false;
         }
 
         public bool IsValid()
@@ -53,6 +58,48 @@ namespace TramlineFive.ViewModels
         public void UpdateFrom(ScheduleChooserViewModel other)
         {
             SelectedLine = other.SelectedLine;
+        }
+
+        private bool isLoading;
+        public bool IsLoading
+        {
+            get
+            {
+                return isLoading;
+            }
+            set
+            {
+                isLoading = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private DirectionViewModel selectedDirection;
+        public DirectionViewModel SelectedDirection
+        {
+            get
+            {
+                return selectedDirection;
+            }
+            set
+            {
+                selectedDirection = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private DayViewModel selectedDay;
+        public DayViewModel SelectedDay
+        {
+            get
+            {
+                return selectedDay;
+            }
+            set
+            {
+                selectedDay = value;
+                OnPropertyChanged();
+            }
         }
     }
 }

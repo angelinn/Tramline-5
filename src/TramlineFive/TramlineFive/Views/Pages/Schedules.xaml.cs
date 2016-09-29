@@ -26,7 +26,8 @@ namespace TramlineFive.Views.Pages
     /// </summary>
     public sealed partial class Schedules : Page
     {
-        public AllLinesViewModel LineViewModel { get; set; }
+        public AllLinesViewModel LineViewModel { get; private set; }
+
         public Schedules()
         {
             this.InitializeComponent();
@@ -40,28 +41,17 @@ namespace TramlineFive.Views.Pages
 
         private async void OnLoaded(object sender, RoutedEventArgs e)
         {
-            try
-            {
-                LineViewModel.Lines = (await LineViewModel.AllAsync()).Where(l => l.Type != VehicleType.None)
-                                                               .OrderBy(l => l.SortID)
-                                                               .ThenBy(l => l.Number);
-
-                LineViewModel.Grouped = LineViewModel.Lines.GroupBy(l => VehicleTypeManager.Stringify(l.Type, true));
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-            finally
-            {
-                prLines.IsEnabled = false;
-                prLines.Visibility = Visibility.Collapsed;
-            }
+            await LineViewModel.LoadAndGroupLinesAsync();
         }
 
         private void OnSchedulesItemClick(object sender, ItemClickEventArgs e)
         {
-            PromptForDirection(new ScheduleChooserViewModel(e.ClickedItem as LineViewModel));
+            Frame.Navigate(typeof(ChooseSchedule), new ScheduleChooserViewModel(e.ClickedItem as LineViewModel));
+        }
+
+        private void OnSuggestionChosen(AutoSuggestBox sender, AutoSuggestBoxSuggestionChosenEventArgs args)
+        {
+            Frame.Navigate(typeof(ChooseSchedule), new ScheduleChooserViewModel(args.SelectedItem as LineViewModel));
         }
 
         private void OnTextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
@@ -70,16 +60,6 @@ namespace TramlineFive.Views.Pages
             {
                 sender.ItemsSource = LineViewModel.Lines.Where(l => l.NumberString.Contains(sender.Text));
             }
-        }
-
-        private void OnSuggestionChosen(AutoSuggestBox sender, AutoSuggestBoxSuggestionChosenEventArgs args)
-        {
-            PromptForDirection(new ScheduleChooserViewModel(args.SelectedItem as LineViewModel));
-        }
-
-        private void PromptForDirection(ScheduleChooserViewModel scheduleViewModel)
-        {
-            Frame.Navigate(typeof(ChooseSchedule), scheduleViewModel);
         }
 
         private void OnBackClick(object sender, RoutedEventArgs e)

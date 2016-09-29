@@ -100,7 +100,6 @@
     <Compile Include="Converters\BoolToVisibilityConverter.cs" />
     <Compile Include="Converters\DateTimeConverter.cs" />
     <Compile Include="Converters\StopCodeConverter.cs" />
-    <Compile Include="Converters\StringFormatConverter.cs" />
     <Compile Include="Converters\TimingConverter.cs" />
     <Compile Include="Converters\UrlToImageSourceConverter.cs" />
     <Compile Include="ViewModels\FavouritesViewModel.cs" />

@@ -38,16 +38,6 @@ namespace TramlineFive.Views.Pages
         private async void OnLoaded(object sender, RoutedEventArgs e)
         {
             await ScheduleViewModel.LoadChoosableData();
-
-            lvDirections.SelectedIndex = 0;
-            lvDays.SelectedIndex = 0;
-
-            UIManager.DisableControl(prDirections);
-
-            btnOpenSchedule.Visibility = Visibility.Visible;
-
-            UIManager.ShowControl(lvDirections);
-            UIManager.ShowControl(lvDays);
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -60,6 +50,14 @@ namespace TramlineFive.Views.Pages
         {
             if (ScheduleViewModel.IsValid())
                 Frame.Navigate(typeof(Schedule), ScheduleViewModel);
+        }
+
+        private void OnBackClick(object sender, RoutedEventArgs e)
+        {
+            Frame rootFrame = Window.Current.Content as Frame;
+
+            if (rootFrame.CanGoBack)
+                rootFrame.GoBack();
         }
     }
 }

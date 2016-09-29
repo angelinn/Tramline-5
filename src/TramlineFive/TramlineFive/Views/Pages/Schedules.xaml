@@ -5,10 +5,12 @@
     xmlns:local="using:TramlineFive"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:cv="using:TramlineFive.Converters"
     mc:Ignorable="d">
 
     <Page.Resources>
         <CollectionViewSource x:Key="collectionViewSource" IsSourceGrouped="True" Source="{Binding Grouped}" />
+        <cv:BoolToVisibilityConverter x:Key="BoolToVisibility" />
     </Page.Resources>
 
     <Page.TopAppBar>
@@ -24,7 +26,7 @@
 
     <ScrollViewer Name="svMain" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Grid>
-            <ProgressRing Name="prLines" Style="{StaticResource ActiveSpinner}" Margin="0,20,0,0" />
+            <ProgressRing Style="{StaticResource Spinner}" IsActive="{Binding IsLoading}" Visibility="{Binding IsLoading, Converter={StaticResource BoolToVisibility}}" Margin="0,20,0,0" />
             
             <StackPanel Margin="0,0,0,25">
                 <AutoSuggestBox PlaceholderText="Търсене" TextChanged="OnTextChanged" SuggestionChosen="OnSuggestionChosen" QueryIcon="Find" Margin="5" />

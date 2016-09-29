@@ -5,17 +5,16 @@
     xmlns:local="using:TramlineFive"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:su="using:TramlineFive.Converters"
+    xmlns:cv="using:TramlineFive.Converters"
     xmlns:mg="using:TramlineFive.Common.Managers"
     mc:Ignorable="d" >
 
     <Page.Resources>
-        <su:TimingConverter x:Key="TimingConverter" />
-        <su:StopCodeConverter x:Key="StopCodeConverter" />
-        <su:StringFormatConverter x:Key="StringFormat" />
-        <su:BoolToVisibilityConverter x:Key="BoolToVisibility" />
-        <su:UrlToImageSourceConverter x:Key="UrlToImageSource" />
-        <su:DateTimeConverter x:Key="DateTimeConverter" />
+        <cv:TimingConverter x:Key="TimingConverter" />
+        <cv:StopCodeConverter x:Key="StopCodeConverter" />
+        <cv:BoolToVisibilityConverter x:Key="BoolToVisibility" />
+        <cv:UrlToImageSourceConverter x:Key="UrlToImageSource" />
+        <cv:DateTimeConverter x:Key="DateTimeConverter" />
 
         <mg:VersionManager x:Key="VersionManager" />
 
@@ -139,7 +138,7 @@
                 <PivotItem Header="Любими" DataContext="{Binding FavouritesViewModel}">
                     <Grid Padding="0,10,0,10">
                         <TextBlock Text="Тази секция е самотна... добавете спирка..." Style="{StaticResource Lonely}" Visibility="{Binding IsEmpty, Converter={StaticResource BoolToVisibility}}" />
-                        <ProgressRing Style="{StaticResource ActiveSpinner}"
+                        <ProgressRing Style="{StaticResource Spinner}"
                                       IsActive="{Binding IsLoading}"
                                       Visibility="{Binding IsLoading, Converter={StaticResource BoolToVisibility}}"
                                       Margin="0,0,0,38" />
@@ -181,7 +180,7 @@
                 <PivotItem Header="История" DataContext="{Binding HistoryViewModel}">
                     <Grid>
                         <TextBlock Text="Тази секция е самотна... потърсете спирка..." Style="{StaticResource Lonely}" Visibility="{Binding IsEmpty, Converter={StaticResource BoolToVisibility}}" />
-                        <ProgressRing Style="{StaticResource ActiveSpinner}"
+                        <ProgressRing Style="{StaticResource Spinner}"
                                       IsActive="{Binding IsLoading}"
                                       Visibility="{Binding IsLoading, Converter={StaticResource BoolToVisibility}}"
                                       Margin="0,0,0,28" />
