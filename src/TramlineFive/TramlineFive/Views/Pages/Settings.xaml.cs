@@ -49,7 +49,7 @@ namespace TramlineFive.Views.Pages
         private void OnLoaded(object sender, RoutedEventArgs e)
         {
             UpdateFavouriteStopFromSettingsAsync();
-            SettingsViewModel.LiveTile = SettingsManager.ReadValue(SettingsKeys.LiveTile) == null ? default(bool) : Boolean.Parse(SettingsManager.ReadValue(SettingsKeys.LiveTile));
+            SettingsViewModel.IsLiveTileEnabled = SettingsManager.ReadValue(SettingsKeys.LiveTile) == null ? default(bool) : Boolean.Parse(SettingsManager.ReadValue(SettingsKeys.LiveTile));
         }
 
         private void UpdateFavouriteStopFromSettingsAsync()
@@ -100,7 +100,7 @@ namespace TramlineFive.Views.Pages
 
         private async void OnLiveTileToggled(object sender, RoutedEventArgs e)
         {
-            if (SettingsViewModel.LiveTile != Boolean.Parse(SettingsManager.ReadValue(SettingsKeys.LiveTile)))
+            if (SettingsViewModel.IsLiveTileEnabled != Boolean.Parse(SettingsManager.ReadValue(SettingsKeys.LiveTile)))
             {
                 bool undo = false;
 
@@ -115,7 +115,7 @@ namespace TramlineFive.Views.Pages
                     // Give the UI time to refresh
                     await Task.Delay(50);
 
-                    if (SettingsViewModel.LiveTile)
+                    if (SettingsViewModel.IsLiveTileEnabled)
                     {
                         if (!await SettingsViewModel.DoesStopExist())
                         {
@@ -141,10 +141,10 @@ namespace TramlineFive.Views.Pages
                 }
 
                 if (undo)
-                    SettingsViewModel.LiveTile = !SettingsViewModel.LiveTile;
+                    SettingsViewModel.IsLiveTileEnabled = !SettingsViewModel.IsLiveTileEnabled;
 
                 SettingsViewModel.IsSwitchable = true;
-                SettingsManager.UpdateValue(SettingsKeys.LiveTile, SettingsViewModel.LiveTile);
+                SettingsManager.UpdateValue(SettingsKeys.LiveTile, SettingsViewModel.IsLiveTileEnabled);
             }
         }
 

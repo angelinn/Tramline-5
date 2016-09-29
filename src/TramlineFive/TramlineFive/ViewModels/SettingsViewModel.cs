@@ -42,7 +42,7 @@ namespace TramlineFive.ViewModels
 
         public bool IsValid()
         {
-            return LiveTile || (!String.IsNullOrEmpty(StopCode) && !String.IsNullOrEmpty(LineNumber));
+            return IsLiveTileEnabled || (!String.IsNullOrEmpty(StopCode) && !String.IsNullOrEmpty(LineNumber));
         }
 
         public async Task<bool> DoesStopExist()
@@ -53,7 +53,7 @@ namespace TramlineFive.ViewModels
             bool doesStop = await LineDO.DoesStopAt((VehicleType)SelectedType.Value, LineNumber, StopCode);
             if (!doesStop)
             {
-                LiveTile = !LiveTile;
+                IsLiveTileEnabled = !IsLiveTileEnabled;
                 IsSwitchable = true;
             }
 
@@ -62,7 +62,7 @@ namespace TramlineFive.ViewModels
             return doesStop;
         }
 
-        public bool PushNotifications
+        public bool ArePushNotificationsEnabled
         {
             get
             {
@@ -79,16 +79,16 @@ namespace TramlineFive.ViewModels
             }
         }
 
-        private bool liveTile;
-        public bool LiveTile
+        private bool isLiveTileEnabled;
+        public bool IsLiveTileEnabled
         {
             get
             {
-                return liveTile;
+                return isLiveTileEnabled;
             }
             set
             {
-                liveTile = value;
+                isLiveTileEnabled = value;
                 OnPropertyChanged();
             }
         }
