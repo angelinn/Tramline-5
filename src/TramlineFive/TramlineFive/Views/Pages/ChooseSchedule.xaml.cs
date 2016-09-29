@@ -5,6 +5,7 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using TramlineFive.Common.Managers;
 using TramlineFive.ViewModels;
+using TramlineFive.ViewModels.Wrappers;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
@@ -30,8 +31,9 @@ namespace TramlineFive.Views.Pages
         {
             this.InitializeComponent();
             this.ScheduleViewModel = new ScheduleChooserViewModel();
-
             this.DataContext = ScheduleViewModel;
+
+            this.Transitions = AnimationManager.GeneratePageTransitions();
             this.Loaded += OnLoaded;
         }
 
@@ -43,7 +45,7 @@ namespace TramlineFive.Views.Pages
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
-            ScheduleViewModel.UpdateFrom(e.Parameter as ScheduleChooserViewModel);
+            ScheduleViewModel.SelectedLine = e.Parameter as LineViewModel;
         }
 
         private void OnOpenScheduleClicked(object sender, RoutedEventArgs e)

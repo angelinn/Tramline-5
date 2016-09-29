@@ -4,7 +4,6 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TramlineFive.DataAccess.DomainLogic;
 using TramlineFive.ViewModels.Wrappers;
 
 namespace TramlineFive.ViewModels
@@ -16,13 +15,7 @@ namespace TramlineFive.ViewModels
         
         public LineViewModel SelectedLine { get; set; }
 
-        public ScheduleChooserViewModel()
-        {
-            Directions = new ObservableCollection<DirectionViewModel>();
-            Days = new ObservableCollection<DayViewModel>();
-        }
-
-        public ScheduleChooserViewModel(LineViewModel line)
+        public ScheduleChooserViewModel(LineViewModel line = null)
         {
             SelectedLine = line;
 
@@ -53,11 +46,6 @@ namespace TramlineFive.ViewModels
         public bool IsValid()
         {
             return (SelectedDirection != null && SelectedDay != null);
-        }
-
-        public void UpdateFrom(ScheduleChooserViewModel other)
-        {
-            SelectedLine = other.SelectedLine;
         }
 
         private bool isLoading;

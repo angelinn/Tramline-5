@@ -35,8 +35,7 @@
                       SelectedItem="{Binding SelectedDirection, Mode=TwoWay}"
                       SelectionMode="Single"
                       BorderThickness="1"
-                      BorderBrush="DodgerBlue"
-                      Background="White"
+                      BorderBrush="{ThemeResource SystemAccentColor}"
                       Visibility="{Binding IsLoading, Converter={StaticResource BoolToVisibility}, ConverterParameter=Inverse}">
                 
                 <ListView.ItemTemplate>
@@ -50,10 +49,9 @@
                       SelectedItem="{Binding SelectedDay, Mode=TwoWay}" 
                       SelectionMode="Single"
                       BorderThickness="1"
-                      BorderBrush="DodgerBlue"
-                      Background="White"
+                      BorderBrush="{ThemeResource SystemAccentColor}"
                       Visibility="{Binding IsLoading, Converter={StaticResource BoolToVisibility}, ConverterParameter=Inverse}"
-                      Margin="0,30,0,0">
+                      Margin="0,30,0,10">
                 
                 <ListView.ItemTemplate>
                     <DataTemplate>
@@ -62,7 +60,11 @@
                 </ListView.ItemTemplate>
             </ListView>
 
-            <Button Name="btnOpenSchedule" Content="Напред" Click="OnOpenScheduleClicked" Visibility="{Binding IsLoading, Converter={StaticResource BoolToVisibility}, ConverterParameter=Inverse}" />
+            <Button Name="btnOpenSchedule"
+                    Content="Напред"
+                    Click="OnOpenScheduleClicked"
+                    HorizontalAlignment="Right"
+                    Visibility="{Binding IsLoading, Converter={StaticResource BoolToVisibility}, ConverterParameter=Inverse}" />
         </StackPanel>
     </Grid>
 </Page>

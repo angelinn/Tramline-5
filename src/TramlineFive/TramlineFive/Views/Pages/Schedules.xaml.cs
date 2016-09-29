@@ -46,12 +46,12 @@ namespace TramlineFive.Views.Pages
 
         private void OnSchedulesItemClick(object sender, ItemClickEventArgs e)
         {
-            Frame.Navigate(typeof(ChooseSchedule), new ScheduleChooserViewModel(e.ClickedItem as LineViewModel));
+            Frame.Navigate(typeof(ChooseSchedule), e.ClickedItem);
         }
 
         private void OnSuggestionChosen(AutoSuggestBox sender, AutoSuggestBoxSuggestionChosenEventArgs args)
         {
-            Frame.Navigate(typeof(ChooseSchedule), new ScheduleChooserViewModel(args.SelectedItem as LineViewModel));
+            Frame.Navigate(typeof(ChooseSchedule), args.SelectedItem);
         }
 
         private void OnTextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
