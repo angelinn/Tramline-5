@@ -16,6 +16,7 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using TramlineFive.Common.Managers;
 using TramlineFive.ViewModels.Wrappers;
+using TramlineFive.Views.Dialogs;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -44,14 +45,18 @@ namespace TramlineFive.Views.Pages
             await LineViewModel.LoadAndGroupLinesAsync();
         }
 
-        private void OnSchedulesItemClick(object sender, ItemClickEventArgs e)
+        private async void OnSchedulesItemClick(object sender, ItemClickEventArgs e)
         {
-            Frame.Navigate(typeof(ChooseSchedule), e.ClickedItem);
+            ChooseDirectionDialog dialog = new ChooseDirectionDialog(e.ClickedItem as LineViewModel);
+            if (await dialog.ShowAsync() != ContentDialogResult.None)
+                Frame.Navigate(typeof(Schedule), dialog.ScheduleViewModel);                
         }
 
-        private void OnSuggestionChosen(AutoSuggestBox sender, AutoSuggestBoxSuggestionChosenEventArgs args)
+        private async void OnSuggestionChosen(AutoSuggestBox sender, AutoSuggestBoxSuggestionChosenEventArgs args)
         {
-            Frame.Navigate(typeof(ChooseSchedule), args.SelectedItem);
+            ChooseDirectionDialog dialog = new ChooseDirectionDialog(args.SelectedItem as LineViewModel);
+            if (await dialog.ShowAsync() != ContentDialogResult.None)
+                Frame.Navigate(typeof(Schedule), dialog.ScheduleViewModel);
         }
 
         private void OnTextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)

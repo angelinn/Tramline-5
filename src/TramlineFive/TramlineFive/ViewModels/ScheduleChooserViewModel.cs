@@ -13,7 +13,8 @@ namespace TramlineFive.ViewModels
     {
         public IList<DirectionViewModel> Directions { get; private set; }
         public IList<DayViewModel> Days { get; private set; }
-        
+        public IList<StopViewModel> Stops { get; private set; }
+
         public LineViewModel SelectedLine { get; set; }
 
         public ScheduleChooserViewModel(LineViewModel line = null)
@@ -22,6 +23,7 @@ namespace TramlineFive.ViewModels
 
             Directions = new ObservableCollection<DirectionViewModel>();
             Days = new ObservableCollection<DayViewModel>();
+            Stops = new ObservableCollection<StopViewModel>();
         }
 
         public async Task LoadChoosableData()

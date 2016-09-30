@@ -16,21 +16,22 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
-// The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
+// The Content Dialog item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
-namespace TramlineFive.Views.Pages
+namespace TramlineFive.Views.Dialogs
 {
-    /// <summary>
-    /// An empty page that can be used on its own or navigated to within a Frame.
-    /// </summary>
-    public sealed partial class ChooseSchedule : Page
+    public sealed partial class ChooseDirectionDialog : ContentDialog
     {
         public ScheduleChooserViewModel ScheduleViewModel { get; private set; }
 
-        public ChooseSchedule()
+        public ChooseDirectionDialog(LineViewModel line)
         {
             this.InitializeComponent();
-            this.ScheduleViewModel = new ScheduleChooserViewModel();
+            this.ScheduleViewModel = new ScheduleChooserViewModel()
+            {
+                SelectedLine = line
+            };
+
             this.DataContext = ScheduleViewModel;
 
             this.Transitions = AnimationManager.GeneratePageTransitions();
@@ -42,24 +43,10 @@ namespace TramlineFive.Views.Pages
             await ScheduleViewModel.LoadChoosableData();
         }
 
-        protected override void OnNavigatedTo(NavigationEventArgs e)
+        private void OnSecondaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
-            base.OnNavigatedTo(e);
-            ScheduleViewModel.SelectedLine = e.Parameter as LineViewModel;
-        }
-
-        private void OnOpenScheduleClicked(object sender, RoutedEventArgs e)
-        {
-            if (ScheduleViewModel.IsValid())
-                Frame.Navigate(typeof(Schedule), ScheduleViewModel);
-        }
-
-        private void OnBackClick(object sender, RoutedEventArgs e)
-        {
-            Frame rootFrame = Window.Current.Content as Frame;
-
-            if (rootFrame.CanGoBack)
-                rootFrame.GoBack();
+            if (!ScheduleViewModel.IsValid())
+                args.Cancel = true;
         }
     }
 }
