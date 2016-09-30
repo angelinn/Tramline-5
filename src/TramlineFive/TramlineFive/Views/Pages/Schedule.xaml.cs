@@ -25,7 +25,7 @@ namespace TramlineFive.Views.Pages
     public sealed partial class Schedule : Page
     {
         public ScheduleChooserViewModel ScheduleChooserViewModel { get; private set; }
-        public IList<StopViewModel> Stops { get; set; }
+        public IList<StopViewModel> Stops { get; private set; }
 
         public Schedule()
         {

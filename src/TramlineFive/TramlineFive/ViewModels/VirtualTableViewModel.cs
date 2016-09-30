@@ -15,18 +15,13 @@ namespace TramlineFive.ViewModels
 {
     public class VirtualTableViewModel : BaseViewModel
     {
-        public IList<Arrival> Arrivals { get; set; }
+        public IList<Arrival> Arrivals { get; private set; }
 
         public VirtualTableViewModel()
         {
             Arrivals = new ObservableCollection<Arrival>();
             (App.Current as App).AppViewModel.PropertyChanged += OnAppViewModelPropertyChanged;
         }
-
-        //~VirtualTableViewModel()
-        //{
-        //    (App.Current as App).AppViewModel.PropertyChanged -= OnAppViewModelPropertyChanged;
-        //}
 
         public async Task<bool> GetByStopCode()
         {

@@ -24,7 +24,7 @@ namespace TramlineFive.Views.Dialogs
 {
     public sealed partial class CaptchaDialog : ContentDialog, ICaptchaDialog
     {
-        public string CaptchaString { get; set; }
+        public string CaptchaString { get; private set; }
 
         public CaptchaDialog()
         {
