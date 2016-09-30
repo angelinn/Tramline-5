@@ -52,5 +52,22 @@ namespace TramlineFive.Common.Managers
                     return VehicleType.None;
             }
         }
+
+        public static string ToShort(VehicleType type)
+
+        {
+            switch (type)
+            {
+                case VehicleType.Bus:
+                    return "А";
+                case VehicleType.Tram:
+                    return "ТМ";
+                case VehicleType.Trolley:
+                    return "ТБ";
+
+                default:
+                    return String.Empty;
+            }
+        }
     }
 }

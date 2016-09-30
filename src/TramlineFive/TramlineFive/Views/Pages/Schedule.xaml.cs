@@ -39,7 +39,7 @@ namespace TramlineFive.Views.Pages
         {
             ScheduleChooserViewModel = e.Parameter as ScheduleChooserViewModel;
 
-            txtTitle.Text = $"{ScheduleChooserViewModel.SelectedLine.FriendlyName} - {ScheduleChooserViewModel.SelectedDirection.Name}";
+            txtTitle.Text = $"{ScheduleChooserViewModel.SelectedLine.ShortName} - {ScheduleChooserViewModel.SelectedDirection.Name.ToUpper()}";
 
             await ScheduleChooserViewModel.SelectedDay.LoadStops();
             foreach (StopViewModel stop in ScheduleChooserViewModel.SelectedDay.Stops)

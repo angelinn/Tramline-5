@@ -48,6 +48,14 @@ namespace TramlineFive.ViewModels.Wrappers
             }
         }
 
+        public string ShortName
+        {
+            get
+            {
+                return $"{VehicleTypeManager.ToShort(core.Type)} {core.NumberString}";
+            }
+        }
+
         public VehicleType Type
         {
             get
