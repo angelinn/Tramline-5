@@ -95,6 +95,11 @@ namespace TramlineFive.ViewModels.Wrappers
             await core.LoadDirections();
         }
 
+        public override string ToString()
+        {
+            return FriendlyName;
+        }
+
         private LineDO core;
     }
 }
