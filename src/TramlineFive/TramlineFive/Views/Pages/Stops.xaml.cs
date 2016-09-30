@@ -45,7 +45,7 @@ namespace TramlineFive.Views.Pages
 
             txtTitle.Text = $"{ScheduleChooserViewModel.SelectedLine.ShortName} - {ScheduleChooserViewModel.SelectedDirection.Name.ToUpper()}";
 
-            
+            ScheduleChooserViewModel.SelectedDay = ScheduleChooserViewModel.SelectedDirection.Days.Where(d => d.Type == ScheduleChooserViewModel.SelectedDay.Type).First();
             await ScheduleChooserViewModel.SelectedDay.LoadStops();
             foreach (StopViewModel stop in ScheduleChooserViewModel.SelectedDay.Stops)
                 LineStops.Add(stop);
