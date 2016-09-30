@@ -32,6 +32,7 @@ namespace TramlineFive.Views.Pages
         public FavouritesViewModel FavouritesViewModel { get; private set; }
         public HistoryViewModel HistoryViewModel { get; private set; }
 
+
         public MainPage()
         {
             this.InitializeComponent();
@@ -105,7 +106,7 @@ namespace TramlineFive.Views.Pages
             if (pvMain.SelectedIndex == 0)
             {
                 Focus(FocusState.Programmatic);
-                if (reloadVirtualTable && !String.IsNullOrEmpty(txtStopCode.Text))
+                if (reloadVirtualTable && !String.IsNullOrEmpty((App.Current as App).AppViewModel.StopCode))
                 {
                     await QueryVirtualTableAsync();
                     reloadVirtualTable = false;
@@ -115,7 +116,7 @@ namespace TramlineFive.Views.Pages
 
         private void OnFavouritesItemClick(object sender, ItemClickEventArgs e)
         {
-            txtStopCode.Text = String.Format("{0:D4}", Int32.Parse((e.ClickedItem as FavouriteViewModel).Code));
+            (App.Current as App).AppViewModel.StopCode = String.Format("{0:D4}", Int32.Parse((e.ClickedItem as FavouriteViewModel).Code));
 
             reloadVirtualTable = true;
             pvMain.SelectedIndex = 0;
@@ -161,7 +162,7 @@ namespace TramlineFive.Views.Pages
         private async Task AddFavouriteAsync()
         {
             pvMain.SelectedIndex = 1;
-            await FavouritesViewModel.AddAsync(txtStopCode.Text);
+            await FavouritesViewModel.AddAsync();
         }
 
         private async Task QueryVirtualTableAsync()
@@ -170,7 +171,7 @@ namespace TramlineFive.Views.Pages
             {
                 try
                 {
-                    if (!await VirtualTableViewModel.GetByStopCode(txtStopCode.Text))
+                    if (!await VirtualTableViewModel.GetByStopCode())
                         await new MessageDialog(Strings.NoResults).ShowAsync();
                 }
                 catch (Exception ex)
@@ -178,13 +179,13 @@ namespace TramlineFive.Views.Pages
                     await new MessageDialog(ex.Message).ShowAsync();
                 }
                 
-                await HistoryViewModel.AddHistoryAsync(txtStopCode.Text);
+                await HistoryViewModel.AddHistoryAsync();
             }
         }
 
         private void OnHistoryItemClick(object sender, ItemClickEventArgs e)
         {
-            txtStopCode.Text = String.Format("{0:D4}", Int32.Parse((e.ClickedItem as HistoryEntryViewModel).Code));
+            (App.Current as App).AppViewModel.StopCode = String.Format("{0:D4}", Int32.Parse((e.ClickedItem as HistoryEntryViewModel).Code));
 
             reloadVirtualTable = true;
             pvMain.SelectedIndex = 0;

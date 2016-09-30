@@ -22,7 +22,6 @@ using Windows.UI.Notifications;
 using NotificationsExtensions.Toasts;
 using NotificationsExtensions;
 using System.Threading.Tasks;
-using TramlineFive.Common.Models;
 using TramlineFive.Common.Managers;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
@@ -113,13 +112,13 @@ namespace TramlineFive.Views.Pages
                 else
                 {
                     // Give the UI time to refresh
-                    await Task.Delay(50);
+                    //await Task.Delay(50);
 
                     if (SettingsViewModel.IsLiveTileEnabled)
                     {
                         if (!await SettingsViewModel.DoesStopExist())
                         {
-                            await new MessageDialog($"{SettingsViewModel.SelectedType.Name} №{SettingsViewModel.LineNumber} не спира на спирка с код {SettingsViewModel.StopCode}").ShowAsync();
+                            await new MessageDialog(String.Format(Formats.DoesNotStopAt, SettingsViewModel.SelectedType.Name, SettingsViewModel.LineNumber, SettingsViewModel.StopCode)).ShowAsync();
                             return;
                         }
 

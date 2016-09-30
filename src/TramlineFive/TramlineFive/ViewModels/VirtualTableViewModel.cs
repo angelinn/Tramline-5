@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,14 +20,21 @@ namespace TramlineFive.ViewModels
         public VirtualTableViewModel()
         {
             Arrivals = new ObservableCollection<Arrival>();
+            (App.Current as App).AppViewModel.PropertyChanged += OnAppViewModelPropertyChanged;
         }
-        public async Task<bool> GetByStopCode(string stopCode)
+
+        //~VirtualTableViewModel()
+        //{
+        //    (App.Current as App).AppViewModel.PropertyChanged -= OnAppViewModelPropertyChanged;
+        //}
+
+        public async Task<bool> GetByStopCode()
         {
             IsLoading = true;
             Arrivals.Clear();
             IsQueried = false;
 
-            List<Arrival> arrivals = await SumcManager.GetByStopAsync(stopCode, typeof(CaptchaDialog));
+            List<Arrival> arrivals = await SumcManager.GetByStopAsync(StopCode, typeof(CaptchaDialog));
 
             if (arrivals != null)
             {
@@ -47,6 +55,11 @@ namespace TramlineFive.ViewModels
 
             IsLoading = false;
             return true;
+        }
+
+        private void OnAppViewModelPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            OnPropertyChanged(e.PropertyName);
         }
 
         private string stopTitle;
@@ -102,6 +115,18 @@ namespace TramlineFive.ViewModels
             {
                 isLoading = value;
                 OnPropertyChanged();
+            }
+        }
+        
+        public string StopCode
+        {
+            get
+            {
+                return (App.Current as App).AppViewModel.StopCode;
+            }
+            set
+            {
+                (App.Current as App).AppViewModel.StopCode = value;
             }
         }
     }

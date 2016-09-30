@@ -32,11 +32,11 @@ namespace TramlineFive.ViewModels
             OnPropertyChanged("IsEmpty");
         }
 
-        public async Task AddAsync(string code)
+        public async Task AddAsync()
         {
             IsAdding = true;
 
-            FavouriteDO added = await FavouriteDO.Add(code);
+            FavouriteDO added = await FavouriteDO.Add((App.Current as App).AppViewModel.StopCode);
             if (added != null)
                 Favourites.Insert(0, new FavouriteViewModel(added));
 

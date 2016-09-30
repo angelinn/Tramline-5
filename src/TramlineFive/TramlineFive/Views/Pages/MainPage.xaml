@@ -85,7 +85,7 @@
 
                         <StackPanel Grid.Row="0">
                             <Grid>
-                                <TextBox Name="txtStopCode" PlaceholderText="Код на спирка" KeyDown="OnStopCodeKeyDown" Margin="0,15,0,15" Style="{StaticResource SearchTextBox}" />
+                                <TextBox PlaceholderText="Код на спирка" KeyDown="OnStopCodeKeyDown" Margin="0,15,0,15" Style="{StaticResource SearchTextBox}" Text="{Binding StopCode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                                 <Button Name="btnStopCode" Click="OnStopCodeClick" FontFamily="Segoe MDL2 Assets" Content="&#xE71E;" Background="Transparent" Foreground="Black" HorizontalAlignment="Right" />
                             </Grid>
 

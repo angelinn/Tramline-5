@@ -11,18 +11,18 @@ namespace TramlineFive.ViewModels
 {
     public class HistoryViewModel : BaseViewModel
     {
-        public IList<HistoryEntryViewModel> History { get; set; }
+        public IList<HistoryEntryViewModel> History { get; private set; }
 
         public HistoryViewModel()
         {
             History = new ObservableCollection<HistoryEntryViewModel>();
         }
 
-        public async Task AddHistoryAsync(string code)
+        public async Task AddHistoryAsync()
         {
             IsAdding = true;
 
-            HistoryDO added = await HistoryDO.Add(code);
+            HistoryDO added = await HistoryDO.Add((App.Current as App).AppViewModel.StopCode);
             History.Insert(0, new HistoryEntryViewModel(added));
 
             IsAdding = false;

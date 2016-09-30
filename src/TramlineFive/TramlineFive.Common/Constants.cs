@@ -35,6 +35,7 @@ namespace TramlineFive.Common
         public static string ExportSuccess = "Успешно запазване във файл";
         public static string ConfirmDeleteFavourite = "Премахване на '{0}' от любими?";
         public static string DataFromTime = "Данни от";
+        public static string DoesNotStopAt = "{0} №{1} не спира на спирка с код {2}";
     }
 
     public static class SettingsKeys
