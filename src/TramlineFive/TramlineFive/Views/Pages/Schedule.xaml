@@ -19,7 +19,6 @@
     </Page.TopAppBar>
 
     <StackPanel Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Padding="20">
-        <ComboBox ItemsSource="{Binding Stops}" PlaceholderText="Изберете спирка" DisplayMemberPath="Name" SelectionChanged="OnSelectionChanged" />
         <TextBlock Name="txtTimings" TextWrapping="Wrap" Margin="0,20,0,0" />
     </StackPanel>
 </Page>

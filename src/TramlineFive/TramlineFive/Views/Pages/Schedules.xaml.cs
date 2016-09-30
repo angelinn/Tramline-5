@@ -49,14 +49,14 @@ namespace TramlineFive.Views.Pages
         {
             ChooseDirectionDialog dialog = new ChooseDirectionDialog(e.ClickedItem as LineViewModel);
             if (await dialog.ShowAsync() != ContentDialogResult.None)
-                Frame.Navigate(typeof(Schedule), dialog.ScheduleViewModel);                
+                Frame.Navigate(typeof(Stops), dialog.ScheduleViewModel);                
         }
 
         private async void OnSuggestionChosen(AutoSuggestBox sender, AutoSuggestBoxSuggestionChosenEventArgs args)
         {
             ChooseDirectionDialog dialog = new ChooseDirectionDialog(args.SelectedItem as LineViewModel);
             if (await dialog.ShowAsync() != ContentDialogResult.None)
-                Frame.Navigate(typeof(Schedule), dialog.ScheduleViewModel);
+                Frame.Navigate(typeof(Stops), dialog.ScheduleViewModel);
         }
 
         private void OnTextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)

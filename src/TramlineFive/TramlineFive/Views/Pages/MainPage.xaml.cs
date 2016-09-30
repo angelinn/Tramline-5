@@ -52,7 +52,18 @@ namespace TramlineFive.Views.Pages
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
             base.OnNavigatedFrom(e);
-            svMain.IsPaneOpen = false;
+            svMain.IsPaneOpen = false;                
+        }
+
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
+
+            if (e.Parameter is bool)
+                reloadVirtualTable = (bool)e.Parameter;
+
+            if (reloadVirtualTable)
+                OnPivotSelectionChanged(this, null);
         }
 
         private async void OnBackRequested(object sender, BackRequestedEventArgs e)
