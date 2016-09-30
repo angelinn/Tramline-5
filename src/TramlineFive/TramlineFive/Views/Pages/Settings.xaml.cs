@@ -111,8 +111,10 @@ namespace TramlineFive.Views.Pages
                 }
                 else
                 {
+                    SettingsViewModel.IsSwitchable = false;
+
                     // Give the UI time to refresh
-                    //await Task.Delay(50);
+                    await Task.Delay(50);
 
                     if (SettingsViewModel.IsLiveTileEnabled)
                     {
@@ -164,6 +166,11 @@ namespace TramlineFive.Views.Pages
             notification.ExpirationTime = DateTime.Now.AddSeconds(3);
 
             ToastNotificationManager.CreateToastNotifier().Show(notification);
+        }
+
+        private void OnRateClick(object sender, RoutedEventArgs e)
+        {
+            throw new NotSupportedException();
         }
     }
 }
