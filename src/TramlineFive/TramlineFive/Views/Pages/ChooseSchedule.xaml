@@ -21,7 +21,7 @@
             <CommandBar.Content>
                 <StackPanel Orientation="Horizontal">
                     <Button Name="btnBack" Click="OnBackClick" Style="{StaticResource BackButton}" />
-                    <TextBlock Text="МАРШРУТ" Style="{StaticResource Title}"/>
+                    <TextBlock Text="{Binding Title}" Style="{StaticResource Title}"/>
                 </StackPanel>
             </CommandBar.Content>
         </CommandBar>
@@ -51,7 +51,7 @@
                       BorderThickness="1"
                       BorderBrush="{ThemeResource SystemAccentColor}"
                       Visibility="{Binding IsLoading, Converter={StaticResource BoolToVisibility}, ConverterParameter=Inverse}"
-                      Margin="0,30,0,10">
+                      Margin="0,30,0,20">
                 
                 <ListView.ItemTemplate>
                     <DataTemplate>

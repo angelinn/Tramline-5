@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TramlineFive.Common.Managers;
 using TramlineFive.ViewModels.Wrappers;
 
 namespace TramlineFive.ViewModels
@@ -87,6 +88,14 @@ namespace TramlineFive.ViewModels
             {
                 selectedDay = value;
                 OnPropertyChanged();
+            }
+        }
+                            
+        public string Title
+        {
+            get
+            {
+                return $"{VehicleTypeManager.Stringify(SelectedLine.Type).ToUpper()} №{SelectedLine.Number} - МАРШРУТИ";
             }
         }
     }
