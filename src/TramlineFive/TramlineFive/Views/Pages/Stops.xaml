@@ -39,7 +39,7 @@
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <Grid>
-                        <StackPanel>
+                        <StackPanel VerticalAlignment="Center">
                             <TextBlock Text="{Binding Name}" />
                             <TextBlock>
                                 Код на спирка:
