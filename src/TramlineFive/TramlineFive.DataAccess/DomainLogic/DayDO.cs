@@ -10,11 +10,15 @@ namespace TramlineFive.DataAccess.DomainLogic
 {
     public class DayDO
     {
+        public string Type { get; set; }
+
+        public IEnumerable<StopDO> Stops { get; set; }
+
         public DayDO(Day entity)
         {
             id = entity.ID;
-            type = entity.Type;
-            stops = entity.Stops?.Select(s => new StopDO(s));
+            Type = entity.Type;
+            Stops = entity.Stops?.Select(s => new StopDO(s));
         }
 
         public static async Task<IEnumerable<DayDO>> GetByDirectionId(int dirId)
@@ -31,27 +35,10 @@ namespace TramlineFive.DataAccess.DomainLogic
 
         public async Task LoadStops()
         {
-            stops = await StopDO.GetFromDayId(id);
+            Stops = await StopDO.GetFromDayId(id);
         }
 
         private int id;
-
-        private string type;
-        public string Type
-        {
-            get
-            {
-                return type;
-            }
-        }
-
-        private IEnumerable<StopDO> stops;
-        public IEnumerable<StopDO> Stops
-        {
-            get
-            {
-                return stops;
-            }
-        } 
+        
     }
 }

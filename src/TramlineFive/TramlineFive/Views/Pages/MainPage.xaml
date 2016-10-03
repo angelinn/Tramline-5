@@ -71,132 +71,129 @@
                 </Button>
             </StackPanel>
         </SplitView.Pane>
+        <Pivot Name="pvMain" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" SelectionChanged="OnPivotSelectionChanged">
+            <PivotItem Header="Виртуални табла" DataContext="{Binding VirtualTableViewModel}">
+                <Grid Padding="0,0,0,20">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1*" />
+                        <RowDefinition Height="2*" />
+                    </Grid.RowDefinitions>
 
-        <SplitView.Content>
-            <Pivot Name="pvMain" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" SelectionChanged="OnPivotSelectionChanged">
-                <PivotItem Header="Виртуални табла" DataContext="{Binding VirtualTableViewModel}">
-                    <Grid Padding="0,0,0,20">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="1*" />
-                            <RowDefinition Height="2*" />
-                        </Grid.RowDefinitions>
+                    <ProgressRing Grid.Row="0" Grid.RowSpan="2" Name="prVirtualTables" Style="{StaticResource Spinner}" IsActive="{Binding IsLoading}" Visibility="{Binding IsLoading, Converter={StaticResource BoolToVisibility}}" />
 
-                        <ProgressRing Grid.Row="0" Grid.RowSpan="2" Name="prVirtualTables" Style="{StaticResource Spinner}" IsActive="{Binding IsLoading}" Visibility="{Binding IsLoading, Converter={StaticResource BoolToVisibility}}" />
-
-                        <StackPanel Grid.Row="0">
-                            <Grid>
-                                <TextBox PlaceholderText="Код на спирка" KeyDown="OnStopCodeKeyDown" Margin="0,15,0,15" Style="{StaticResource SearchTextBox}" Text="{Binding StopCode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                                <Button Name="btnStopCode" Click="OnStopCodeClick" FontFamily="Segoe MDL2 Assets" Content="&#xE71E;" Background="Transparent" Foreground="Black" HorizontalAlignment="Right" />
-                            </Grid>
-
-                            <Grid Background="#CC3399FF" BorderBrush="DodgerBlue" BorderThickness="1" Padding="10" Visibility="{Binding IsQueried, Converter={StaticResource BoolToVisibility}}">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="4*" />
-                                    <ColumnDefinition Width="*" />
-                                </Grid.ColumnDefinitions>
-                            
-                            
-                                <StackPanel Grid.Column="0">
-                                    <TextBlock Foreground="White" FontWeight="Bold" Text="{Binding StopTitle}" HorizontalAlignment="Center" TextTrimming="Clip" />
-                                    <TextBlock Foreground="White" Text="{Binding AsOfTime}" HorizontalAlignment="Center" />
-                                </StackPanel>
-                                <Button Grid.Column="1" Name="btnFavourite" Padding="10" FontFamily="Segoe MDL2 Assets" FontSize="25" Content="&#xE734;" Background="Transparent" Foreground="White" HorizontalAlignment="Right" Margin="0,-5,0,0" Click="OnAddFavouriteClick" />
-                            </Grid>
-                        </StackPanel>
-                        
-                        <Grid Grid.Row="1">
-                            <ListView ItemsSource="{Binding Arrivals}" SelectionMode="None">
-                                <ListView.ItemTemplate>
-                                    <DataTemplate>
-                                        <Grid Holding="OnArrivalHolding" FlyoutBase.AttachedFlyout="{StaticResource LineFlyout}" Height="80" Padding="0,10,0,10" >
-                                            <Grid.RowDefinitions>
-                                                <RowDefinition />
-                                                <RowDefinition />
-                                                <RowDefinition />
-                                            </Grid.RowDefinitions>
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="58" />
-                                                <ColumnDefinition Width="*" />
-                                            </Grid.ColumnDefinitions>
-
-                                            <Image Grid.RowSpan="2" Source="{Binding Type, Converter={StaticResource UrlToImageSource}}" HorizontalAlignment="Left"/>
-                                            <TextBlock Grid.Column="1" FontWeight="Bold">
-                                                    <Run Text="{Binding Type}" />
-                                                    <Run Text="{Binding VehicleNumber}" />
-                                            </TextBlock>
-
-                                            <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding Direction}" />
-                                            <TextBlock FontWeight="Bold" Grid.Row="2" Grid.ColumnSpan="2" Text="{Binding Timings, Converter={StaticResource TimingConverter}}" />
-                                        </Grid>
-                                    </DataTemplate>
-                                </ListView.ItemTemplate>
-                            </ListView>
+                    <StackPanel Grid.Row="0">
+                        <Grid>
+                            <TextBox PlaceholderText="Код на спирка" KeyDown="OnStopCodeKeyDown" Margin="0,15,0,15" Style="{StaticResource SearchTextBox}" Text="{Binding StopCode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                            <Button Name="btnStopCode" Click="OnStopCodeClick" FontFamily="Segoe MDL2 Assets" Content="&#xE71E;" Background="Transparent" Foreground="Black" HorizontalAlignment="Right" />
                         </Grid>
-                    </Grid>
-                </PivotItem>
 
-                <PivotItem Header="Любими" DataContext="{Binding FavouritesViewModel}">
-                    <Grid Padding="0,10,0,10">
-                        <TextBlock Text="Тази секция е самотна... добавете спирка..." Style="{StaticResource Lonely}" Visibility="{Binding IsEmpty, Converter={StaticResource BoolToVisibility}}" />
-                        <ProgressRing Style="{StaticResource Spinner}"
-                                      IsActive="{Binding IsLoading}"
-                                      Visibility="{Binding IsLoading, Converter={StaticResource BoolToVisibility}}"
-                                      Margin="0,0,0,38" />
+                        <Grid Background="#CC3399FF" BorderBrush="DodgerBlue" BorderThickness="1" Padding="10" Visibility="{Binding IsQueried, Converter={StaticResource BoolToVisibility}}">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="4*" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
 
-                        <ProgressBar VerticalAlignment="Top" Visibility="{Binding IsAdding, Converter={StaticResource BoolToVisibility}}" IsIndeterminate="True" />
 
-                        <ListView Name="lvFavourites" ItemsSource="{Binding Favourites}" ItemClick="OnFavouritesItemClick" IsItemClickEnabled="True" SelectionMode="None">
-                            <ListView.Resources>
-                                <Style TargetType="ListViewItem">
-                                    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-                                    <Setter Property="BorderThickness" Value="0,0,0,1" />
-                                    <Setter Property="BorderBrush" Value="LightGray" />
-                                </Style>
-                            </ListView.Resources>
+                            <StackPanel Grid.Column="0">
+                                <TextBlock Foreground="White" FontWeight="Bold" Text="{Binding StopTitle}" HorizontalAlignment="Center" TextTrimming="Clip" />
+                                <TextBlock Foreground="White" Text="{Binding AsOfTime}" HorizontalAlignment="Center" />
+                            </StackPanel>
+                            <Button Grid.Column="1" Name="btnFavourite" Padding="10" FontFamily="Segoe MDL2 Assets" FontSize="25" Content="&#xE734;" Background="Transparent" Foreground="White" HorizontalAlignment="Right" Margin="0,-5,0,0" Click="OnAddFavouriteClick" />
+                        </Grid>
+                    </StackPanel>
+
+                    <Grid Grid.Row="1">
+                        <ListView ItemsSource="{Binding Arrivals}" SelectionMode="None">
                             <ListView.ItemTemplate>
                                 <DataTemplate>
-                                    <Grid>
-                                        <TextBlock VerticalAlignment="Center">
-                                             <Run Text="{Binding Name}" />
-                                            (<Run Text="{Binding Code, Converter={StaticResource StopCodeConverter}}" />)
+                                    <Grid Holding="OnArrivalHolding" FlyoutBase.AttachedFlyout="{StaticResource LineFlyout}" Height="80" Padding="0,10,0,10" >
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition />
+                                            <RowDefinition />
+                                            <RowDefinition />
+                                        </Grid.RowDefinitions>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="58" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+
+                                        <Image Grid.RowSpan="2" Source="{Binding Type, Converter={StaticResource UrlToImageSource}}" HorizontalAlignment="Left"/>
+                                        <TextBlock Grid.Column="1" FontWeight="Bold">
+                                                    <Run Text="{Binding Type}" />
+                                                    <Run Text="{Binding VehicleNumber}" />
                                         </TextBlock>
-                                        <Button Name="btnRemoveFavourite" Style="{StaticResource ListViewButton}" Content="&#xE8D9;" Click="OnRemoveFavouriteClick"/>
+
+                                        <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding Direction}" />
+                                        <TextBlock FontWeight="Bold" Grid.Row="2" Grid.ColumnSpan="2" Text="{Binding Timings, Converter={StaticResource TimingConverter}}" />
                                     </Grid>
                                 </DataTemplate>
                             </ListView.ItemTemplate>
                         </ListView>
                     </Grid>
-                </PivotItem>
-                
-                <PivotItem Header="История" DataContext="{Binding HistoryViewModel}">
-                    <Grid>
-                        <TextBlock Text="Тази секция е самотна... потърсете спирка..." Style="{StaticResource Lonely}" Visibility="{Binding IsEmpty, Converter={StaticResource BoolToVisibility}}" />
-                        <ProgressRing Style="{StaticResource Spinner}"
+                </Grid>
+            </PivotItem>
+
+            <PivotItem Header="Любими" DataContext="{Binding FavouritesViewModel}">
+                <Grid Padding="0,10,0,10">
+                    <TextBlock Text="Тази секция е самотна... добавете спирка..." Style="{StaticResource Lonely}" Visibility="{Binding IsEmpty, Converter={StaticResource BoolToVisibility}}" />
+                    <ProgressRing Style="{StaticResource Spinner}"
+                                      IsActive="{Binding IsLoading}"
+                                      Visibility="{Binding IsLoading, Converter={StaticResource BoolToVisibility}}"
+                                      Margin="0,0,0,38" />
+
+                    <ProgressBar VerticalAlignment="Top" Visibility="{Binding IsAdding, Converter={StaticResource BoolToVisibility}}" IsIndeterminate="True" />
+
+                    <ListView Name="lvFavourites" ItemsSource="{Binding Favourites}" ItemClick="OnFavouritesItemClick" IsItemClickEnabled="True" SelectionMode="None">
+                        <ListView.Resources>
+                            <Style TargetType="ListViewItem">
+                                <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                                <Setter Property="BorderThickness" Value="0,0,0,1" />
+                                <Setter Property="BorderBrush" Value="LightGray" />
+                            </Style>
+                        </ListView.Resources>
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <Grid>
+                                    <TextBlock VerticalAlignment="Center">
+                                             <Run Text="{Binding Name}" />
+                                            (<Run Text="{Binding Code, Converter={StaticResource StopCodeConverter}}" />)
+                                    </TextBlock>
+                                    <Button Name="btnRemoveFavourite" Style="{StaticResource ListViewButton}" Content="&#xE8D9;" Click="OnRemoveFavouriteClick"/>
+                                </Grid>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </Grid>
+            </PivotItem>
+
+            <PivotItem Header="История" DataContext="{Binding HistoryViewModel}">
+                <Grid>
+                    <TextBlock Text="Тази секция е самотна... потърсете спирка..." Style="{StaticResource Lonely}" Visibility="{Binding IsEmpty, Converter={StaticResource BoolToVisibility}}" />
+                    <ProgressRing Style="{StaticResource Spinner}"
                                       IsActive="{Binding IsLoading}"
                                       Visibility="{Binding IsLoading, Converter={StaticResource BoolToVisibility}}"
                                       Margin="0,0,0,28" />
 
-                        <ProgressBar VerticalAlignment="Top" Visibility="{Binding IsAdding, Converter={StaticResource BoolToVisibility}}" IsIndeterminate="True" />
-                        <ListView Name="lvHistory" ItemsSource="{Binding History}" IsItemClickEnabled="True" SelectionMode="None" ItemClick="OnHistoryItemClick">
-                            <ListView.ItemTemplate>
-                                <DataTemplate>
-                                    <StackPanel Orientation="Horizontal" >
-                                        <Button Margin="-15,4,5,0" IsHitTestVisible="False" FontFamily="Segoe MDL2 Assets" Background="Transparent" Foreground="#AA3399FF" Content="&#xE913;" FontSize="40" />
+                    <ProgressBar VerticalAlignment="Top" Visibility="{Binding IsAdding, Converter={StaticResource BoolToVisibility}}" IsIndeterminate="True" />
+                    <ListView Name="lvHistory" ItemsSource="{Binding History}" IsItemClickEnabled="True" SelectionMode="None" ItemClick="OnHistoryItemClick">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal" >
+                                    <Button Margin="-15,4,5,0" IsHitTestVisible="False" FontFamily="Segoe MDL2 Assets" Background="Transparent" Foreground="#AA3399FF" Content="&#xE913;" FontSize="40" />
 
-                                        <StackPanel VerticalAlignment="Center">
-                                            <TextBlock>
+                                    <StackPanel VerticalAlignment="Center">
+                                        <TextBlock>
                                                     <Run Text="{Binding Name}" />
                                                     (<Run Text="{Binding Code, Converter={StaticResource StopCodeConverter}}" />)
-                                            </TextBlock>
-                                            <TextBlock Text="{Binding TimeStamp, Converter={StaticResource DateTimeConverter}}" FontSize="13" />
-                                        </StackPanel>
+                                        </TextBlock>
+                                        <TextBlock Text="{Binding TimeStamp, Converter={StaticResource DateTimeConverter}}" FontSize="13" />
                                     </StackPanel>
-                                </DataTemplate>
-                            </ListView.ItemTemplate>
-                        </ListView>
-                    </Grid>
-                </PivotItem>
-            </Pivot>
-        </SplitView.Content>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </Grid>
+            </PivotItem>
+        </Pivot>
     </SplitView>
 </Page>

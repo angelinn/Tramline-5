@@ -115,8 +115,8 @@
     <Compile Include="ViewModels\Wrappers\LineViewModel.cs" />
     <Compile Include="ViewModels\Wrappers\StopViewModel.cs" />
     <Compile Include="ViewModels\VirtualTableViewModel.cs" />
-    <Compile Include="Views\Dialogs\ChooseDirectionDialog.xaml.cs">
-      <DependentUpon>ChooseDirectionDialog.xaml</DependentUpon>
+    <Compile Include="Views\Pages\Direction.xaml.cs">
+      <DependentUpon>Direction.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Dialogs\QuestionDialog.cs" />
     <Compile Include="Views\Pages\About.xaml.cs">
@@ -215,7 +215,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="Views\Dialogs\ChooseDirectionDialog.xaml">
+    <Page Include="Views\Pages\Direction.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

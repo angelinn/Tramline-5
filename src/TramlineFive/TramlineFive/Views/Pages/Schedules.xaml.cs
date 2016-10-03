@@ -37,6 +37,7 @@ namespace TramlineFive.Views.Pages
             this.LineViewModel = new AllLinesViewModel();
             this.DataContext = LineViewModel;
 
+            this.NavigationCacheMode = NavigationCacheMode.Enabled;
             this.Loaded += OnLoaded;
         }
 
@@ -45,18 +46,14 @@ namespace TramlineFive.Views.Pages
             await LineViewModel.LoadAndGroupLinesAsync();
         }
 
-        private async void OnSchedulesItemClick(object sender, ItemClickEventArgs e)
+        private void OnSchedulesItemClick(object sender, ItemClickEventArgs e)
         {
-            ChooseDirectionDialog dialog = new ChooseDirectionDialog(e.ClickedItem as LineViewModel);
-            if (await dialog.ShowAsync() != ContentDialogResult.None)
-                Frame.Navigate(typeof(Stops), dialog.ScheduleViewModel);                
+            Frame.Navigate(typeof(Direction), e.ClickedItem);           
         }
 
-        private async void OnSuggestionChosen(AutoSuggestBox sender, AutoSuggestBoxSuggestionChosenEventArgs args)
+        private void OnSuggestionChosen(AutoSuggestBox sender, AutoSuggestBoxSuggestionChosenEventArgs args)
         {
-            ChooseDirectionDialog dialog = new ChooseDirectionDialog(args.SelectedItem as LineViewModel);
-            if (await dialog.ShowAsync() != ContentDialogResult.None)
-                Frame.Navigate(typeof(Stops), dialog.ScheduleViewModel);
+            Frame.Navigate(typeof(Direction), args.SelectedItem);
         }
 
         private void OnTextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)

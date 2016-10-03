@@ -14,16 +14,19 @@ namespace TramlineFive.ViewModels
     {
         public async Task LoadAndGroupLinesAsync()
         {
-            IsLoading = true;
+            if (Grouped == null)
+            {
+                IsLoading = true;
 
-            Lines = (await LineDO.AllAsync()).Select(l => new LineViewModel(l))
-                                                .Where(l => l.Type != VehicleType.None)
-                                                .OrderBy(l => l.SortID)
-                                                .ThenBy(l => l.Number);
+                Lines = (await LineDO.AllAsync()).Select(l => new LineViewModel(l))
+                                                    .Where(l => l.Type != VehicleType.None)
+                                                    .OrderBy(l => l.SortID)
+                                                    .ThenBy(l => l.Number);
 
-            Grouped = Lines.GroupBy(l => VehicleTypeManager.Stringify(l.Type, true));
+                Grouped = Lines.GroupBy(l => VehicleTypeManager.Stringify(l.Type, true));
 
-            IsLoading = false;
+                IsLoading = false;
+            }
         }
 
         private bool isLoading;

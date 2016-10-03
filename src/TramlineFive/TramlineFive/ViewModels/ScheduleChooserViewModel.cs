@@ -17,10 +17,8 @@ namespace TramlineFive.ViewModels
 
         public LineViewModel SelectedLine { get; set; }
 
-        public ScheduleChooserViewModel(LineViewModel line = null)
+        public ScheduleChooserViewModel()
         {
-            SelectedLine = line;
-
             Directions = new ObservableCollection<DirectionViewModel>();
             Days = new ObservableCollection<DayViewModel>();
             Stops = new ObservableCollection<StopViewModel>();
@@ -28,27 +26,35 @@ namespace TramlineFive.ViewModels
 
         public async Task LoadChoosableData()
         {
-            IsLoading = true;
-
-            await SelectedLine.LoadDirections();
-            foreach (DirectionViewModel direction in SelectedLine.Directions)
+            if (Directions.Count == 0)
             {
-                Directions.Add(direction);
-                await direction.LoadDays();
+                IsLoading = true;
+
+                await SelectedLine.LoadDirections();
+                foreach (DirectionViewModel direction in SelectedLine.Directions)
+                {
+                    Directions.Add(direction);
+                    await direction.LoadDays();
+                }
+
+                SelectedDirection = Directions.First();
+
+                IsLoading = false;
             }
-
-            foreach (DayViewModel day in Directions.First().Days)
-                Days.Add(day);
-
-            SelectedDirection = Directions.First();
-            SelectedDay = Days.First();
-
-            IsLoading = false;
         }
 
         public bool IsValid()
         {
             return (SelectedDirection != null && SelectedDay != null);
+        }
+
+        private void UpdateDays()
+        {
+            Days.Clear();
+            foreach (DayViewModel day in SelectedDirection.Days)
+                Days.Add(day);
+
+            SelectedDay = Days.FirstOrDefault();
         }
 
         private bool isLoading;
@@ -76,6 +82,8 @@ namespace TramlineFive.ViewModels
             {
                 selectedDirection = value;
                 OnPropertyChanged();
+
+                UpdateDays();
             }
         }
 
