@@ -150,7 +150,7 @@
                                 <Style TargetType="ListViewItem">
                                     <Setter Property="HorizontalContentAlignment" Value="Stretch" />
                                     <Setter Property="BorderThickness" Value="0,0,0,1" />
-                                    <Setter Property="BorderBrush" Value="#CC3399FF" />
+                                    <Setter Property="BorderBrush" Value="LightGray" />
                                 </Style>
                             </ListView.Resources>
                             <ListView.ItemTemplate>
