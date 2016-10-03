@@ -63,7 +63,7 @@ namespace TramlineFive.Views.Pages
                 reloadVirtualTable = (bool)e.Parameter;
 
             if (reloadVirtualTable)
-                OnPivotSelectionChanged(this, null);
+                pvMain.SelectedIndex = 0;
         }
 
         private async void OnBackRequested(object sender, BackRequestedEventArgs e)
