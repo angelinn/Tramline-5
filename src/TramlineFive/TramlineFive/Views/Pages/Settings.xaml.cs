@@ -99,7 +99,7 @@ namespace TramlineFive.Views.Pages
 
         private async void OnLiveTileToggled(object sender, RoutedEventArgs e)
         {
-            if (SettingsViewModel.IsLiveTileEnabled != Boolean.Parse(SettingsManager.ReadValue(SettingsKeys.LiveTile)))
+            if (SettingsViewModel.IsLiveTileEnabled != Boolean.Parse(SettingsManager.ReadValue(SettingsKeys.LiveTile) ?? "false"))
             {
                 bool undo = false;
 
