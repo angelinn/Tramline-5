@@ -70,6 +70,8 @@ namespace TramlineFive.Views.Pages
                     pvMain.SelectedIndex = 0;
 
                 Frame.BackStack.Clear();
+                svMain.IsPaneOpen = !svMain.IsPaneOpen;
+                svMain.IsPaneOpen = !svMain.IsPaneOpen;
             }
         }
 

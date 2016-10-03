@@ -71,6 +71,8 @@
                 </Button>
             </StackPanel>
         </SplitView.Pane>
+
+        <SplitView.Content>
         <Pivot Name="pvMain" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" SelectionChanged="OnPivotSelectionChanged">
             <PivotItem Header="Виртуални табла" DataContext="{Binding VirtualTableViewModel}">
                 <Grid Padding="0,0,0,20">
@@ -195,5 +197,6 @@
                 </Grid>
             </PivotItem>
         </Pivot>
+        </SplitView.Content>
     </SplitView>
 </Page>
