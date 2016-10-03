@@ -47,15 +47,7 @@
                             </TextBlock>
                         </StackPanel>
 
-                        <Button HorizontalAlignment="Right"
-                                VerticalAlignment="Center"
-                                FontFamily="Segoe MDL2 Assets"
-                                Content="&#xE121;"
-                                Padding="15"
-                                FontSize="20"
-                                Background="Transparent"
-                                Foreground="Black"
-                                Click="OnVirtualTableClick"/>
+                        <Button Style="{StaticResource ListViewButton}" Content="&#xE121;" Click="OnVirtualTableClick"/>
                     </Grid>
                 </DataTemplate>
             </ListView.ItemTemplate>

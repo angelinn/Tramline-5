@@ -160,16 +160,7 @@
                                              <Run Text="{Binding Name}" />
                                             (<Run Text="{Binding Code, Converter={StaticResource StopCodeConverter}}" />)
                                         </TextBlock>
-                                        <Button Name="btnRemoveFavourite" 
-                                                HorizontalAlignment="Right"
-                                                VerticalAlignment="Center"
-                                                FontFamily="Segoe MDL2 Assets"
-                                                Content="&#xE8D9;"
-                                                Padding="15"
-                                                FontSize="20"
-                                                Background="Transparent"
-                                                Foreground="Black"
-                                                Click="OnRemoveFavouriteClick"/>
+                                        <Button Name="btnRemoveFavourite" Style="{StaticResource ListViewButton}" Content="&#xE8D9;" Click="OnRemoveFavouriteClick"/>
                                     </Grid>
                                 </DataTemplate>
                             </ListView.ItemTemplate>
