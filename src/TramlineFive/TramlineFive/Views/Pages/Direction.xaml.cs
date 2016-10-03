@@ -39,19 +39,21 @@ namespace TramlineFive.Views.Pages
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
-            ScheduleChooserViewModel.SelectedLine = e.Parameter as LineViewModel;
-        }
 
-        protected override void OnNavigatedFrom(NavigationEventArgs e)
-        {
-            base.OnNavigatedFrom(e);
-            if (e.NavigationMode == NavigationMode.Back)
-                NavigationCacheMode = NavigationCacheMode.Disabled;
+            if (!(e.Parameter as LineViewModel).Equals(ScheduleChooserViewModel.SelectedLine))
+            {
+                ScheduleChooserViewModel.SelectedLine = e.Parameter as LineViewModel;
+                shouldReload = true;
+            }
         }
 
         private async void OnLoaded(object sender, RoutedEventArgs e)
         {
-            await ScheduleChooserViewModel.LoadChoosableData();
+            if (shouldReload)
+            {
+                await ScheduleChooserViewModel.LoadChoosableData();
+                shouldReload = false;
+            }
         }
 
         private void OnSecondaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
@@ -72,5 +74,7 @@ namespace TramlineFive.Views.Pages
             if (rootFrame.CanGoBack)
                 rootFrame.GoBack();
         }
+
+        private bool shouldReload;
     }
 }

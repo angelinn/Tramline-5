@@ -41,7 +41,7 @@ namespace TramlineFive.Views.Pages
             this.SettingsViewModel = new SettingsViewModel();
             this.DataContext = SettingsViewModel;
             this.Transitions = AnimationManager.GeneratePageTransitions();
-
+            
             this.Loaded += OnLoaded;
         }
 

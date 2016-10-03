@@ -13,7 +13,6 @@ namespace TramlineFive.ViewModels
     {
         public IList<DirectionViewModel> Directions { get; private set; }
         public IList<DayViewModel> Days { get; private set; }
-        public IList<StopViewModel> Stops { get; private set; }
 
         public LineViewModel SelectedLine { get; set; }
 
@@ -21,26 +20,25 @@ namespace TramlineFive.ViewModels
         {
             Directions = new ObservableCollection<DirectionViewModel>();
             Days = new ObservableCollection<DayViewModel>();
-            Stops = new ObservableCollection<StopViewModel>();
         }
 
         public async Task LoadChoosableData()
         {
-            if (Directions.Count == 0)
+            IsLoading = true;
+
+            Directions.Clear();
+            Days.Clear();
+
+            await SelectedLine.LoadDirections();
+            foreach (DirectionViewModel direction in SelectedLine.Directions)
             {
-                IsLoading = true;
-
-                await SelectedLine.LoadDirections();
-                foreach (DirectionViewModel direction in SelectedLine.Directions)
-                {
-                    Directions.Add(direction);
-                    await direction.LoadDays();
-                }
-
-                SelectedDirection = Directions.First();
-
-                IsLoading = false;
+                Directions.Add(direction);
+                await direction.LoadDays();
             }
+
+            SelectedDirection = Directions.First();
+
+            IsLoading = false;
         }
 
         public bool IsValid()
