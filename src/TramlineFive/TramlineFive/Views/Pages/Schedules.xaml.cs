@@ -44,6 +44,7 @@ namespace TramlineFive.Views.Pages
         private async void OnLoaded(object sender, RoutedEventArgs e)
         {
             await LineViewModel.LoadAndGroupLinesAsync();
+            lvLines.Focus(FocusState.Programmatic);
         }
 
         private void OnSchedulesItemClick(object sender, ItemClickEventArgs e)
