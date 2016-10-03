@@ -17,6 +17,9 @@
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{A5A43C5B-DE2A-4C0C-9213-0A381AF9435A};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <PackageCertificateKeyFile>TramlineFive_TemporaryKey.pfx</PackageCertificateKeyFile>
+    <AppxAutoIncrementPackageRevision>False</AppxAutoIncrementPackageRevision>
+    <AppxBundle>Always</AppxBundle>
+    <AppxBundlePlatforms>x86</AppxBundlePlatforms>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
     <DebugSymbols>true</DebugSymbols>
@@ -157,12 +160,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\Bus-64.png" />
-    <Content Include="Assets\Store\360.png" />
-    <Content Include="Assets\Store\BadgeLogo.scale-100.png" />
-    <Content Include="Assets\Store\BadgeLogo.scale-125.png" />
-    <Content Include="Assets\Store\BadgeLogo.scale-150.png" />
-    <Content Include="Assets\Store\BadgeLogo.scale-200.png" />
-    <Content Include="Assets\Store\BadgeLogo.scale-400.png" />
     <Content Include="Assets\Store\NewStoreLogo.scale-100.png" />
     <Content Include="Assets\Store\NewStoreLogo.scale-125.png" />
     <Content Include="Assets\Store\NewStoreLogo.scale-150.png" />
@@ -203,6 +200,7 @@
     <Content Include="Assets\Store\Square71x71Logo.scale-150.png" />
     <Content Include="Assets\Store\Square71x71Logo.scale-200.png" />
     <Content Include="Assets\Store\Square71x71Logo.scale-400.png" />
+    <Content Include="Assets\Store\tram_5.png" />
     <Content Include="Assets\Store\Wide310x150Logo.scale-100.png" />
     <Content Include="Assets\Store\Wide310x150Logo.scale-125.png" />
     <Content Include="Assets\Store\Wide310x150Logo.scale-150.png" />
