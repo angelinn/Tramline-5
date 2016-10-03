@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices.WindowsRuntime;
 using TramlineFive.Common.Managers;
-using TramlineFive.ViewModels;
-using TramlineFive.ViewModels.Wrappers;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
@@ -23,11 +21,11 @@ namespace TramlineFive.Views.Pages
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class Schedule : Page
+    public sealed partial class Timings : Page
     {
-        public List<string> Timings { get; set; }
+        public List<string> ArrivalTimings { get; set; }
 
-        public Schedule()
+        public Timings()
         {
             this.InitializeComponent();
 
@@ -37,8 +35,8 @@ namespace TramlineFive.Views.Pages
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            Timings = e.Parameter as List<string>;
-            txtTimings.Text = String.Join(", ", Timings);
+            ArrivalTimings = e.Parameter as List<string>;
+            txtTimings.Text = String.Join(", ", ArrivalTimings);
         }
 
         private void OnBackClick(object sender, RoutedEventArgs e)
