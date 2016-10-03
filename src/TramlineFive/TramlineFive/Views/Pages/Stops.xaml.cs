@@ -26,31 +26,23 @@ namespace TramlineFive.Views.Pages
     /// </summary>
     public sealed partial class Stops : Page
     {
-        public ScheduleChooserViewModel ScheduleChooserViewModel { get; private set; }
-        public IList<StopViewModel> LineStops { get; private set; }
+        public StopsViewModel StopsViewModel { get; private set; }
 
         public Stops()
         {
             this.InitializeComponent();
-            this.LineStops = new ObservableCollection<StopViewModel>();
 
             this.Transitions = AnimationManager.GeneratePageTransitions();
-            this.DataContext = this;
         }
 
         protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
-            ScheduleChooserViewModel = e.Parameter as ScheduleChooserViewModel;
 
-            txtTitle.Text = $"{ScheduleChooserViewModel.SelectedLine.ShortName} - {ScheduleChooserViewModel.SelectedDirection.Name.ToUpper()}";
+            StopsViewModel = new StopsViewModel(e.Parameter as ScheduleChooserViewModel);
+            await StopsViewModel.LoadStops();
 
-            ScheduleChooserViewModel.SelectedDay = ScheduleChooserViewModel.SelectedDirection.Days.Where(d => d.Type == ScheduleChooserViewModel.SelectedDay.Type).First();
-
-            await ScheduleChooserViewModel.SelectedDay.LoadStops();
-
-            foreach (StopViewModel stop in ScheduleChooserViewModel.SelectedDay.Stops)
-                LineStops.Add(stop);
+            DataContext = StopsViewModel;
         }
 
         private void OnBackClick(object sender, RoutedEventArgs e)
@@ -68,7 +60,7 @@ namespace TramlineFive.Views.Pages
 
         private void OnVirtualTableClick(object sender, RoutedEventArgs e)
         {
-            (App.Current as App).AppViewModel.StopCode = String.Format("{0:D4}", Int32.Parse(((sender as Button).DataContext as StopViewModel).Code));
+            (App.Current as App).AppViewModel.StopCode = ParseManager.ToStopCode(((sender as Button).DataContext as StopViewModel).Code);
             Frame.Navigate(typeof(MainPage), true);
         }
     }

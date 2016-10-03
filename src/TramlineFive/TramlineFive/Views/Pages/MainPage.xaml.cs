@@ -18,6 +18,7 @@ using Windows.UI.Xaml.Navigation;
 using TramlineFive.Views.Dialogs;
 using Windows.ApplicationModel.Core;
 using TramlineFive.ViewModels.Wrappers;
+using TramlineFive.Common.Managers;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
@@ -136,7 +137,7 @@ namespace TramlineFive.Views.Pages
 
         private void OnFavouritesItemClick(object sender, ItemClickEventArgs e)
         {
-            (App.Current as App).AppViewModel.StopCode = String.Format("{0:D4}", Int32.Parse((e.ClickedItem as FavouriteViewModel).Code));
+            (App.Current as App).AppViewModel.StopCode = ParseManager.ToStopCode((e.ClickedItem as FavouriteViewModel).Code);
 
             reloadVirtualTable = true;
             pvMain.SelectedIndex = 0;
@@ -205,7 +206,7 @@ namespace TramlineFive.Views.Pages
 
         private void OnHistoryItemClick(object sender, ItemClickEventArgs e)
         {
-            (App.Current as App).AppViewModel.StopCode = String.Format("{0:D4}", Int32.Parse((e.ClickedItem as HistoryEntryViewModel).Code));
+            (App.Current as App).AppViewModel.StopCode = ParseManager.ToStopCode((e.ClickedItem as HistoryEntryViewModel).Code);
 
             reloadVirtualTable = true;
             pvMain.SelectedIndex = 0;
