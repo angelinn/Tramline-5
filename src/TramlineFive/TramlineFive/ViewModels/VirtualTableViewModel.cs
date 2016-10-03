@@ -20,14 +20,15 @@ namespace TramlineFive.ViewModels
         public VirtualTableViewModel()
         {
             Arrivals = new ObservableCollection<Arrival>();
-            (App.Current as App).AppViewModel.PropertyChanged += OnAppViewModelPropertyChanged;
+            (App.Current as App).AppViewModel.PropertyChanged += (s, e) => OnPropertyChanged(e.PropertyName);
         }
 
         public async Task<bool> GetByStopCode()
         {
             IsLoading = true;
-            Arrivals.Clear();
             IsQueried = false;
+
+            Arrivals.Clear();
 
             List<Arrival> arrivals = await SumcManager.GetByStopAsync(StopCode, typeof(CaptchaDialog));
 
@@ -50,11 +51,6 @@ namespace TramlineFive.ViewModels
 
             IsLoading = false;
             return true;
-        }
-
-        private void OnAppViewModelPropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-            OnPropertyChanged(e.PropertyName);
         }
 
         private string stopTitle;

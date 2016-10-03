@@ -7,18 +7,38 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
+    <Page.Resources>
+        <CollectionViewSource x:Key="collectionViewSource" IsSourceGrouped="True" Source="{Binding ArrivalTimings}" />
+    </Page.Resources>
+
     <Page.TopAppBar>
         <CommandBar Background="{ThemeResource SystemAccentColor}">
             <CommandBar.Content>
                 <StackPanel Orientation="Horizontal">
                     <Button Name="btnBack" Click="OnBackClick" Style="{StaticResource BackButton}" />
-                    <TextBlock Name="txtTitle" Style="{StaticResource Title}"/>
+                    <TextBlock Text="{Binding Title}" Style="{StaticResource Title}"/>
                 </StackPanel>
             </CommandBar.Content>
         </CommandBar>
     </Page.TopAppBar>
 
-    <StackPanel Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Padding="20">
-        <TextBlock Name="txtTimings" TextWrapping="Wrap" Margin="0,20,0,0" />
-    </StackPanel>
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Padding="10">
+        <GridView ItemsSource="{Binding Source={StaticResource collectionViewSource}}" SelectionMode="None" >
+            <GridView.GroupStyle>
+                <GroupStyle>
+                    <GroupStyle.HeaderTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Key}"  />
+                        </DataTemplate>
+                    </GroupStyle.HeaderTemplate>
+                </GroupStyle>
+            </GridView.GroupStyle>
+
+            <GridView.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding}" />
+                </DataTemplate>
+            </GridView.ItemTemplate>
+        </GridView>
+    </Grid>
 </Page>

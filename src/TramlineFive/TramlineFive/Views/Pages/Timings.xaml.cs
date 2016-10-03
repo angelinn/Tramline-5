@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
 using TramlineFive.Common.Managers;
+using TramlineFive.ViewModels;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
@@ -23,20 +23,20 @@ namespace TramlineFive.Views.Pages
     /// </summary>
     public sealed partial class Timings : Page
     {
-        public List<string> ArrivalTimings { get; set; }
+        public TimingsViewModel TimingsViewModel { get; set; }
 
         public Timings()
         {
             this.InitializeComponent();
+            this.TimingsViewModel = new TimingsViewModel();
 
             this.Transitions = AnimationManager.GeneratePageTransitions();
-            this.DataContext = this;
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            ArrivalTimings = e.Parameter as List<string>;
-            txtTimings.Text = String.Join(", ", ArrivalTimings);
+            TimingsViewModel.SetArrivals(e.Parameter as List<string>);
+            DataContext = TimingsViewModel;
         }
 
         private void OnBackClick(object sender, RoutedEventArgs e)
