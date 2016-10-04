@@ -29,7 +29,7 @@
 
     <ScrollViewer Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <StackPanel Margin="15,15,15,30">
-            <TextBlock FontSize="20" Text="Трамвай №5 за Windows" />
+            <TextBlock FontSize="20" Text="Трамвай №5 Beta за Windows" />
             <TextBlock FontSize="20" >
                 <Run Text="Версия: " />
                 <Run Text="{Binding Source={StaticResource VersionManager}, Path=Version}" />
