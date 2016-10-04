@@ -42,7 +42,10 @@ namespace TramlineFive.ViewModels
 
         public bool IsValid()
         {
-            return !IsLiveTileEnabled || (!String.IsNullOrEmpty(StopCode) && !String.IsNullOrEmpty(LineNumber));
+            int line;
+            int stop;
+
+            return !IsLiveTileEnabled || Int32.TryParse(lineNumber, out line) && Int32.TryParse(stopCode, out stop);
         }
 
         public async Task<bool> DoesStopExist()
