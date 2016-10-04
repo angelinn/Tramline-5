@@ -120,6 +120,9 @@
     <Compile Include="ViewModels\Wrappers\LineViewModel.cs" />
     <Compile Include="ViewModels\Wrappers\StopViewModel.cs" />
     <Compile Include="ViewModels\VirtualTableViewModel.cs" />
+    <Compile Include="Views\Dialogs\StopChooserDialog.xaml.cs">
+      <DependentUpon>StopChooserDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Pages\Direction.xaml.cs">
       <DependentUpon>Direction.xaml</DependentUpon>
     </Compile>
@@ -215,6 +218,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="Views\Dialogs\StopChooserDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\Pages\Direction.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

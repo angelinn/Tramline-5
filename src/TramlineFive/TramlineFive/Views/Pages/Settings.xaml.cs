@@ -23,6 +23,7 @@ using NotificationsExtensions.Toasts;
 using NotificationsExtensions;
 using System.Threading.Tasks;
 using TramlineFive.Common.Managers;
+using TramlineFive.Views.Dialogs;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -95,6 +96,16 @@ namespace TramlineFive.Views.Pages
         {
             await SettingsViewModel.ClearHistoryAsync();
             ShowClearedToastNotification();
+        }
+
+        public async void OnChooseFromFavourites(object sender, RoutedEventArgs e)
+        {
+            StopChooserDialog dialog = new StopChooserDialog();
+            if ((await dialog.ShowAsync()) == ContentDialogResult.Secondary && dialog.FavouritesViewModel.SelectedFavourite != null)
+            {
+                SettingsViewModel.StopCode = ParseManager.ToStopCode(dialog.FavouritesViewModel.SelectedFavourite.Code);
+                SettingsViewModel.IsLiveTileEnabled = false;
+            }
         }
 
         private async void OnLiveTileToggled(object sender, RoutedEventArgs e)

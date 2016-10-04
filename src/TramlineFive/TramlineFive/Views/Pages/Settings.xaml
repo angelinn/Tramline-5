@@ -52,10 +52,12 @@
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="120" />
                     <ColumnDefinition />
+                    <ColumnDefinition />
                 </Grid.ColumnDefinitions>
 
                 <ToggleSwitch Grid.Column="0" Name="tsLiveTile" IsOn="{Binding IsLiveTileEnabled, Mode=TwoWay}" IsEnabled="{Binding IsSwitchable}" Toggled="OnLiveTileToggled"  />
                 <ProgressRing Grid.Column="1" HorizontalAlignment="Left" IsActive="{Binding IsCheckingStop}" Visibility="{Binding IsCheckingStop, Converter={StaticResource BoolToVisibility}}" />
+                <Button Grid.Column="1" Grid.ColumnSpan="2" Content="От любими" Click="OnChooseFromFavourites" HorizontalAlignment="Right" />
             </Grid>
 
             <TextBlock Text="Оценете приложението в Windows Store!" Margin="0,20,0,0" TextWrapping="Wrap" />
