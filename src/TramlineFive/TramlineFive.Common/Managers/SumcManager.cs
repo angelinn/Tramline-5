@@ -34,6 +34,8 @@ namespace TramlineFive.Common.Managers
             if (String.IsNullOrEmpty(query) || !Int32.TryParse(query, out queryNum))
                 return null;
 
+            await CheckIfObsoleteAsync();
+
             HttpResponseMessage getResult = await httpClient.GetAsync(VT_URI);
             HtmlDocument doc = new HtmlDocument();
             doc.Load(await getResult.Content.ReadAsStreamAsync());
@@ -160,8 +162,21 @@ namespace TramlineFive.Common.Managers
             SessionCookieValue = String.Empty;
         }
 
+        private static async Task CheckIfObsoleteAsync()
+        {
+            if (String.IsNullOrEmpty(azureVersion))
+            {
+                HttpResponseMessage res = await httpClient.GetAsync(AZURE_API_URL);
+                azureVersion = await res.Content.ReadAsStringAsync();
+            }
+
+            if (azureVersion != $"\"{VersionManager.Version}\"")
+                throw new VersionException();
+        }
+
         private const string BASE_URL = "http://m.sofiatraffic.bg";
         private const string VIRTUAL_TABLES_URL = "http://m.sofiatraffic.bg/vt";
+        private const string AZURE_API_URL = "http://tramlinefive.azurewebsites.net/api/values";
         private const string STOP_CODE = "stopCode";
         private const string CAPTCHA_KEY = "sc";
         private const string SESSION_COOKIE_NAME = "alpocjengi";
@@ -170,6 +185,8 @@ namespace TramlineFive.Common.Managers
         private static Uri VT_URI = new Uri(VIRTUAL_TABLES_URL);
         private static string captchaUrl;
         private static string SessionCookieValue;
+
+        private static string azureVersion;
 
         private static HttpClient httpClient;
         private static HttpClientHandler httpClientHandler;

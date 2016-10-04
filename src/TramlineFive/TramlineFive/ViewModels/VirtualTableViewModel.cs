@@ -41,6 +41,11 @@ namespace TramlineFive.ViewModels
                 IsLoading = false;
                 throw;
             }
+            catch (VersionException)
+            {
+                IsLoading = false;
+                throw;
+            }
 
             if (arrivals != null)
             {

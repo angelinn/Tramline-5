@@ -121,6 +121,7 @@
     <Compile Include="Managers\SumcManager.cs" />
     <Compile Include="Models\VehicleType.cs" />
     <Compile Include="Managers\VersionManager.cs" />
+    <Compile Include="VersionException.cs" />
     <EmbeddedResource Include="Properties\TramlineFive.Common.rd.xml" />
   </ItemGroup>
   <ItemGroup />

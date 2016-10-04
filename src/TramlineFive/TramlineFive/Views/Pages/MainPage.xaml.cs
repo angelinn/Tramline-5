@@ -200,6 +200,11 @@ namespace TramlineFive.Views.Pages
                 {
                     await new MessageDialog(Strings.NoInternetConnection).ShowAsync();
                 }
+                catch (VersionException)
+                {
+                    await new MessageDialog("Текущата версия вече не се поддържа. Моля свалете нова версия.").ShowAsync();
+                    throw;
+                }
                 
                 await HistoryViewModel.AddHistoryAsync();
             }
