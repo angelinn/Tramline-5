@@ -6,7 +6,6 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
 using TramlineFive.Common;
 using TramlineFive.DataAccess;
-using TramlineFive.DataAccess.Repositories;
 using TramlineFive.ViewModels;
 using TramlineFive.Views.Pages;
 using Windows.ApplicationModel;
@@ -25,6 +24,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using Microsoft.HockeyApp;
 
 namespace TramlineFive
 {
@@ -44,6 +44,7 @@ namespace TramlineFive
             this.Suspending += OnSuspending;
 
             this.AppViewModel = new AppViewModel();
+            HockeyClient.Current.Configure("6a862d6933fe42aaac3c85e2d4cd505a");
         }
 
         /// <summary>
