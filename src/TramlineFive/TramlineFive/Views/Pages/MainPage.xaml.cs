@@ -60,7 +60,7 @@ namespace TramlineFive.Views.Pages
         {
             base.OnNavigatedTo(e);
 
-            if (e.Parameter is bool)
+            if (e.Parameter is bool && e.NavigationMode != NavigationMode.Back)
                 reloadVirtualTable = (bool)e.Parameter;
 
             if (reloadVirtualTable)
