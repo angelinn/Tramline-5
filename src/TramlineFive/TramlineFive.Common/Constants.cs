@@ -20,6 +20,7 @@ namespace TramlineFive.Common
         public static string DatabaseNotFound = "Базата от данни не беше открита. Приложението не може да продължи.";
         public static string HistoryCleared = "Историята е изчистена успешно.";
         public static string BackupExtension = "t5d";
+        public static string NoInternetConnection = "Няма налична интернет връзка.";
     }
 
     public static class Urls

@@ -19,6 +19,7 @@ using TramlineFive.Views.Dialogs;
 using Windows.ApplicationModel.Core;
 using TramlineFive.ViewModels.Wrappers;
 using TramlineFive.Common.Managers;
+using System.Net.Http;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
@@ -69,8 +70,7 @@ namespace TramlineFive.Views.Pages
                     OnPivotSelectionChanged(this, null);
                 else
                     pvMain.SelectedIndex = 0;
-
-                Frame.BackStack.Clear();
+                
                 svMain.IsPaneOpen = !svMain.IsPaneOpen;
                 svMain.IsPaneOpen = !svMain.IsPaneOpen;
             }
@@ -126,7 +126,6 @@ namespace TramlineFive.Views.Pages
         {
             if (pvMain.SelectedIndex == 0)
             {
-                Focus(FocusState.Programmatic);
                 if (reloadVirtualTable && !String.IsNullOrEmpty((App.Current as App).AppViewModel.StopCode))
                 {
                     await QueryVirtualTableAsync();
@@ -190,14 +189,16 @@ namespace TramlineFive.Views.Pages
         {
             if (!VirtualTableViewModel.IsLoading)
             {
+                Focus(FocusState.Programmatic);
+
                 try
                 {
                     if (!await VirtualTableViewModel.GetByStopCode())
                         await new MessageDialog(Strings.NoResults).ShowAsync();
                 }
-                catch (Exception ex)
+                catch (HttpRequestException)
                 {
-                    await new MessageDialog(ex.Message).ShowAsync();
+                    await new MessageDialog(Strings.NoInternetConnection).ShowAsync();
                 }
                 
                 await HistoryViewModel.AddHistoryAsync();

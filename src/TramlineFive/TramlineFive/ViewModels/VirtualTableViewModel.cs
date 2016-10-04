@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using TramlineFive.Common;
@@ -30,7 +31,16 @@ namespace TramlineFive.ViewModels
 
             Arrivals.Clear();
 
-            List<Arrival> arrivals = await SumcManager.GetByStopAsync(StopCode, typeof(CaptchaDialog));
+            List<Arrival> arrivals;
+            try
+            {
+                arrivals = await SumcManager.GetByStopAsync(StopCode, typeof(CaptchaDialog));
+            }
+            catch (HttpRequestException)
+            {
+                IsLoading = false;
+                throw;
+            }
 
             if (arrivals != null)
             {
