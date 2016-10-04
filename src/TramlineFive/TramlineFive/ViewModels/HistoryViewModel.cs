@@ -22,8 +22,14 @@ namespace TramlineFive.ViewModels
         {
             IsAdding = true;
 
-            HistoryDO added = await HistoryDO.Add((App.Current as App).AppViewModel.StopCode);
-            History.Insert(0, new HistoryEntryViewModel(added));
+            string code = (App.Current as App).AppViewModel.StopCode;
+            int intCode;
+
+            if (Int32.TryParse(code, out intCode))
+            {
+                HistoryDO added = await HistoryDO.Add(intCode);
+                History.Insert(0, new HistoryEntryViewModel(added));
+            }
 
             IsAdding = false;
 
