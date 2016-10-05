@@ -101,9 +101,9 @@ namespace TramlineFive.Views.Pages
         public async void OnChooseFromFavourites(object sender, RoutedEventArgs e)
         {
             StopChooserDialog dialog = new StopChooserDialog();
-            if ((await dialog.ShowAsync()) == ContentDialogResult.Secondary && dialog.FavouritesViewModel.SelectedFavourite != null)
+            if ((await dialog.ShowAsync()) == ContentDialogResult.Secondary && dialog.StopChooserViewModel.SelectedFavourite != null)
             {
-                SettingsViewModel.StopCode = ParseManager.ToStopCode(dialog.FavouritesViewModel.SelectedFavourite.Code);
+                SettingsViewModel.StopCode = ParseManager.ToStopCode(dialog.StopChooserViewModel.SelectedFavourite.Code);
                 SettingsViewModel.IsLiveTileEnabled = false;
             }
         }

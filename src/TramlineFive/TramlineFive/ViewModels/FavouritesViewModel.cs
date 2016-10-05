@@ -12,7 +12,6 @@ namespace TramlineFive.ViewModels
     public class FavouritesViewModel : BaseViewModel
     {
         public IList<FavouriteViewModel> Favourites { get; private set; }
-        public FavouriteViewModel SelectedFavourite { get; set; }
 
         public FavouritesViewModel()
         {

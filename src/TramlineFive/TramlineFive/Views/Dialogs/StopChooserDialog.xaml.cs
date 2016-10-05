@@ -20,21 +20,20 @@ namespace TramlineFive.Views.Dialogs
 {
     public sealed partial class StopChooserDialog : ContentDialog
     {
-        public FavouritesViewModel FavouritesViewModel { get; private set; }
-        public string Code { get; set; }
+        public StopChooserViewModel StopChooserViewModel { get; private set; }
 
         public StopChooserDialog()
         {
             this.InitializeComponent();
 
-            this.FavouritesViewModel = new FavouritesViewModel();
+            this.StopChooserViewModel = new StopChooserViewModel();
             this.Loaded += OnLoaded;
         }
 
         private async void OnLoaded(object sender, RoutedEventArgs e)
         {
-            await FavouritesViewModel.LoadFavouritesAsync();
-            this.DataContext = FavouritesViewModel;
+            await StopChooserViewModel.FavouritesViewModel.LoadFavouritesAsync();
+            this.DataContext = StopChooserViewModel;
         }
     }
 }

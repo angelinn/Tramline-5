@@ -35,7 +35,7 @@
             <TextBlock Text="Позволи на приложението да изпраща известия" Style="{StaticResource SettingTitle}"/>
             <ToggleSwitch IsOn="{Binding ArePushNotificationsEnabled, Mode=TwoWay}" />
 
-            <TextBlock Text="Можете да изберете любима линия, чиито пристигания да виждате на жива плочка (обновява се на всеки час)" Style="{StaticResource SettingTitle}"/>
+            <TextBlock Text="Изберете любима линия, чиито пристигания да виждате на жива плочка (обновява се на всеки час)" Style="{StaticResource SettingTitle}"/>
             <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
                 <ComboBox VerticalAlignment="Center"
                           ItemsSource="{Binding VehicleTypes}"

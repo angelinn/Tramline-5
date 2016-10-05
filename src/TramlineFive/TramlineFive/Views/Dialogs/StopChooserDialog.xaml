@@ -18,7 +18,7 @@
 
     <Grid>
         <ProgressRing Style="{StaticResource Spinner}" Height="50" Width="50" IsActive="{Binding IsLoading}" Visibility="{Binding IsLoading, Converter={StaticResource BoolToVisibility}}" />
-        <TextBlock Text="В момента няма любими..." Style="{StaticResource Lonely}" FontSize="17" Visibility="{Binding IsEmpty, Converter={StaticResource BoolToVisibility}}" />
+        <TextBlock Text="В момента няма любими спирки..." Style="{StaticResource Lonely}" FontSize="17" Visibility="{Binding IsEmpty, Converter={StaticResource BoolToVisibility}}" />
         <ListView ItemsSource="{Binding Favourites}"
                   IsItemClickEnabled="True"
                   SelectionMode="Single"

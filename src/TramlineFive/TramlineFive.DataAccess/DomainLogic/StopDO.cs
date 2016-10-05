@@ -1,9 +1,11 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TramlineFive.DataAccess.Entities;
+using TramlineFive.DataAccess.Extensions;
 using TramlineFive.DataAccess.Repositories;
 
 namespace TramlineFive.DataAccess.DomainLogic
@@ -31,6 +33,21 @@ namespace TramlineFive.DataAccess.DomainLogic
                     var stops = uow.Stops.Where(s => s.DayID == dayId).ToList();
                     return stops?.Select(s => new StopDO(s));
                 }
+            });
+        }
+
+        public async Task<List<LineDO>> FetchLinesAsync()
+        {
+            return await Task.Run(() =>
+            {
+                using (UnitOfWork uow = new UnitOfWork())
+                {
+                    return uow.Stops.Where(s => s.ID == id)
+                                    .IncludeMultiple(s => s.Day, s => s.Day.Direction, s => s.Day.Direction.Line)
+                                    .Select(s => new LineDO(s.Day.Direction.Line))
+                                    .ToList();
+                }
+
             });
         }
 
