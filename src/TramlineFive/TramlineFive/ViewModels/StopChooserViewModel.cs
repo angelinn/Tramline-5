@@ -16,6 +16,7 @@ namespace TramlineFive.ViewModels
 
         public StopChooserViewModel()
         {
+            FavouritesViewModel = new FavouritesViewModel();
             FavouritesViewModel.PropertyChanged += (s, e) => OnPropertyChanged(e.PropertyName);
         }
 
