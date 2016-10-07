@@ -25,13 +25,27 @@ namespace TramlineFive.ViewModels
 
         public async Task LoadFavouritesAsync()
         {
+            IsLoading = true;
+
             await FavouritesViewModel.LoadFavouritesAsync();
+
+            IsLoading = false;
         }
 
         public async Task LoadAvailableLinesAsync()
         {
+            IsLoadingStops = true;
+
+            Lines.Clear();
+            Favourites.Clear();
+
             foreach (LineViewModel line in await SelectedFavourite.GetLines())
                 Lines.Add(line);
+
+            IsLoadingStops = false;
+
+            OnPropertyChanged("AreLinesEmpty");
+            OnPropertyChanged("IsEmpty");
         }        
 
         private bool isLoading;
@@ -47,12 +61,50 @@ namespace TramlineFive.ViewModels
                 OnPropertyChanged();
             }
         }
-        
-        public bool IsEmpty
+
+        public bool AreFavouritesEmpty
         {
             get
             {
                 return FavouritesViewModel.IsEmpty;
+            }
+        }
+        
+        public bool AreFavouritesVisible
+        {
+            get
+            {
+                return FavouritesViewModel.IsEmpty;
+            }
+        }
+
+        public bool AreLinesVisible
+        {
+            get
+            {
+
+            }
+        }
+
+        public bool AreLinesEmpty
+        {
+            get
+            {
+                return Lines.Count == 0;
+            }
+        }
+
+        private bool isLoadingStops;
+        public bool IsLoadingStops
+        {
+            get
+            {
+                return isLoadingStops;
+            }
+            set
+            {
+                isLoadingStops = value;
+                OnPropertyChanged();
             }
         }
 

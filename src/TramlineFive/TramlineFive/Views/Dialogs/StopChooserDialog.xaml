@@ -21,8 +21,10 @@
             <RowDefinition />
             <RowDefinition />
         </Grid.RowDefinitions>
+        
         <ProgressRing Style="{StaticResource Spinner}" Height="50" Width="50" IsActive="{Binding IsLoading}" Visibility="{Binding IsLoading, Converter={StaticResource BoolToVisibility}}" />
-        <TextBlock Text="В момента няма любими спирки..." Style="{StaticResource Lonely}" FontSize="17" Visibility="{Binding IsEmpty, Converter={StaticResource BoolToVisibility}}" />
+
+        <TextBlock Text="В момента няма любими спирки..." Style="{StaticResource Lonely}" FontSize="17" Visibility="{Binding AreFavouritesEmpty, Converter={StaticResource BoolToVisibility}}" />
         <ListView ItemsSource="{Binding Favourites}"
                   IsItemClickEnabled="True"
                   SelectionMode="Single"
@@ -31,7 +33,7 @@
                   MaxHeight="200"      
                   BorderBrush="{ThemeResource SystemAccentColor}" 
                   BorderThickness="1"
-                  Visibility="{Binding IsEmpty, Converter={StaticResource BoolToVisibility}, ConverterParameter=Inverse}"
+                  Visibility="{Binding AreFavouritesEmpty, Converter={StaticResource BoolToVisibility}, ConverterParameter=Inverse}"
                   ItemClick="OnFavouritesItemClick">
             
             <ListView.ItemTemplate>
@@ -44,7 +46,14 @@
             </ListView.ItemTemplate>
         </ListView>
 
-        <ListView Grid.Row="1" ItemsSource="{Binding Lines}">
+        <ListView Grid.Row="1"
+                  ItemsSource="{Binding Lines}"
+                  SelectionMode="Single"
+                  Background="White"
+                  BorderBrush="{ThemeResource SystemAccentColor}" 
+                  BorderThickness="1"
+                  Visibility="{Binding AreLinesEmpty, Converter={StaticResource BoolToVisibility}, ConverterParameter=Inverse}">
+            
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <TextBlock Text="{Binding}" />
