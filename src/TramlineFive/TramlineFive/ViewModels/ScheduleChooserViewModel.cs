@@ -48,11 +48,14 @@ namespace TramlineFive.ViewModels
 
         private void UpdateDays()
         {
-            Days.Clear();
-            foreach (DayViewModel day in SelectedDirection.Days)
-                Days.Add(day);
+            if (SelectedDirection != null)
+            {
+                Days.Clear();
+                foreach (DayViewModel day in SelectedDirection.Days)
+                    Days.Add(day);
 
-            SelectedDay = Days.FirstOrDefault();
+                SelectedDay = Days.FirstOrDefault();
+            }
         }
 
         private bool isLoading;
