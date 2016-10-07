@@ -72,6 +72,17 @@ namespace TramlineFive.DataAccess.DomainLogic
             });
         }
 
+        public async Task<IEnumerable<LineDO>> GetLines()
+        {
+            return await Task.Run(() =>
+            {
+                using (UnitOfWork uow = new UnitOfWork())
+                {
+                    return new StopDO(uow.Favourites.Where(f => f.ID == id).IncludeMultiple(f => f.Stop).First().Stop).FetchLinesAsync();
+                }
+            });
+        }
+
         private int id;
     }
 }

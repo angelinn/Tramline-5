@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using TramlineFive.ViewModels;
+using TramlineFive.ViewModels.Wrappers;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
@@ -34,6 +35,12 @@ namespace TramlineFive.Views.Dialogs
         {
             await StopChooserViewModel.FavouritesViewModel.LoadFavouritesAsync();
             this.DataContext = StopChooserViewModel;
+        }
+
+        private async void OnFavouritesItemClick(object sender, ItemClickEventArgs e)
+        {
+            StopChooserViewModel.SelectedFavourite = e.ClickedItem as FavouriteViewModel;
+            await StopChooserViewModel.LoadAvailableLinesAsync();
         }
     }
 }

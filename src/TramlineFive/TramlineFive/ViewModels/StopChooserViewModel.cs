@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,6 +11,7 @@ namespace TramlineFive.ViewModels
     public class StopChooserViewModel : BaseViewModel
     {
 
+        public IList<LineViewModel> Lines { get; private set; }
         public FavouritesViewModel FavouritesViewModel { get; private set; }
         public FavouriteViewModel SelectedFavourite { get; set; }
         public string Code { get; set; }
@@ -17,6 +19,7 @@ namespace TramlineFive.ViewModels
         public StopChooserViewModel()
         {
             FavouritesViewModel = new FavouritesViewModel();
+            Lines = new ObservableCollection<LineViewModel>();
             FavouritesViewModel.PropertyChanged += (s, e) => OnPropertyChanged(e.PropertyName);
         }
 
@@ -27,7 +30,8 @@ namespace TramlineFive.ViewModels
 
         public async Task LoadAvailableLinesAsync()
         {
-
+            foreach (LineViewModel line in await SelectedFavourite.GetLines())
+                Lines.Add(line);
         }        
 
         private bool isLoading;

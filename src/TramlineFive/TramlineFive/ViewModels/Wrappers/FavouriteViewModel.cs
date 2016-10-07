@@ -19,6 +19,11 @@ namespace TramlineFive.ViewModels.Wrappers
             await FavouriteDO.Remove(favourite.core);
         }
 
+        public async Task<IEnumerable<LineViewModel>> GetLines()
+        {
+            return (await core.GetLines()).Select(l => new LineViewModel(l));
+        }
+
         public string Name
         {
             get

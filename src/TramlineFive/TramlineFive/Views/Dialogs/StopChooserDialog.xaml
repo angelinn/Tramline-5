@@ -17,6 +17,10 @@
     </ContentDialog.Resources>
 
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition />
+        </Grid.RowDefinitions>
         <ProgressRing Style="{StaticResource Spinner}" Height="50" Width="50" IsActive="{Binding IsLoading}" Visibility="{Binding IsLoading, Converter={StaticResource BoolToVisibility}}" />
         <TextBlock Text="В момента няма любими спирки..." Style="{StaticResource Lonely}" FontSize="17" Visibility="{Binding IsEmpty, Converter={StaticResource BoolToVisibility}}" />
         <ListView ItemsSource="{Binding Favourites}"
@@ -27,8 +31,8 @@
                   MaxHeight="200"      
                   BorderBrush="{ThemeResource SystemAccentColor}" 
                   BorderThickness="1"
-                  SelectedItem="{Binding SelectedFavourite, Mode=TwoWay}"
-                  Visibility="{Binding IsEmpty, Converter={StaticResource BoolToVisibility}, ConverterParameter=Inverse}">
+                  Visibility="{Binding IsEmpty, Converter={StaticResource BoolToVisibility}, ConverterParameter=Inverse}"
+                  ItemClick="OnFavouritesItemClick">
             
             <ListView.ItemTemplate>
                 <DataTemplate>
@@ -36,6 +40,14 @@
                         <Run Text="{Binding Name}" />
                        (<Run Text="{Binding Code, Converter={StaticResource StopCodeConverter}}" />)
                     </TextBlock>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+        <ListView Grid.Row="1" ItemsSource="{Binding Lines}">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding}" />
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>

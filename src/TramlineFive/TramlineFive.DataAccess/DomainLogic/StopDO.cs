@@ -36,7 +36,7 @@ namespace TramlineFive.DataAccess.DomainLogic
             });
         }
 
-        public async Task<List<LineDO>> FetchLinesAsync()
+        public async Task<IEnumerable<LineDO>> FetchLinesAsync()
         {
             return await Task.Run(() =>
             {
@@ -44,8 +44,8 @@ namespace TramlineFive.DataAccess.DomainLogic
                 {
                     return uow.Stops.Where(s => s.ID == id)
                                     .IncludeMultiple(s => s.Day, s => s.Day.Direction, s => s.Day.Direction.Line)
-                                    .Select(s => new LineDO(s.Day.Direction.Line))
-                                    .ToList();
+                                    .ToList()
+                                    .Select(s => new LineDO(s.Day.Direction.Line));
                 }
 
             });
