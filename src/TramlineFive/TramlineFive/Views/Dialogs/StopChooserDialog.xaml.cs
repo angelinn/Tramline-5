@@ -28,13 +28,13 @@ namespace TramlineFive.Views.Dialogs
             this.InitializeComponent();
 
             this.StopChooserViewModel = new StopChooserViewModel();
+            this.DataContext = StopChooserViewModel;
             this.Loaded += OnLoaded;
         }
 
         private async void OnLoaded(object sender, RoutedEventArgs e)
         {
-            await StopChooserViewModel.FavouritesViewModel.LoadFavouritesAsync();
-            this.DataContext = StopChooserViewModel;
+            await StopChooserViewModel.LoadFavouritesAsync();
         }
 
         private async void OnFavouritesItemClick(object sender, ItemClickEventArgs e)

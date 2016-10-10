@@ -26,26 +26,26 @@ namespace TramlineFive.ViewModels
         public async Task LoadFavouritesAsync()
         {
             IsLoading = true;
+            AreFavouritesVisible = false;
 
             await FavouritesViewModel.LoadFavouritesAsync();
 
             IsLoading = false;
+            AreFavouritesVisible = true;
         }
 
         public async Task LoadAvailableLinesAsync()
         {
-            IsLoadingStops = true;
+            IsLoading = true;
 
             Lines.Clear();
-            Favourites.Clear();
 
             foreach (LineViewModel line in await SelectedFavourite.GetLines())
                 Lines.Add(line);
 
-            IsLoadingStops = false;
+            IsLoading = false;
 
-            OnPropertyChanged("AreLinesEmpty");
-            OnPropertyChanged("IsEmpty");
+            OnPropertyChanged("AreLinesVisible");
         }        
 
         private bool isLoading;
@@ -53,7 +53,7 @@ namespace TramlineFive.ViewModels
         {
             get
             {
-                return isLoading || FavouritesViewModel.IsLoading;
+                return isLoading;
             }
             set
             {
@@ -69,42 +69,27 @@ namespace TramlineFive.ViewModels
                 return FavouritesViewModel.IsEmpty;
             }
         }
-        
+
+        private bool areFavouritesVisible;
         public bool AreFavouritesVisible
         {
             get
             {
-                return FavouritesViewModel.IsEmpty;
+                return areFavouritesVisible;
+            }
+            set
+            {
+                areFavouritesVisible = value;
+                OnPropertyChanged();
             }
         }
+        
 
         public bool AreLinesVisible
         {
             get
             {
-
-            }
-        }
-
-        public bool AreLinesEmpty
-        {
-            get
-            {
-                return Lines.Count == 0;
-            }
-        }
-
-        private bool isLoadingStops;
-        public bool IsLoadingStops
-        {
-            get
-            {
-                return isLoadingStops;
-            }
-            set
-            {
-                isLoadingStops = value;
-                OnPropertyChanged();
+                return Lines.Count > 0;
             }
         }
 
