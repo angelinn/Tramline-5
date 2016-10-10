@@ -43,12 +43,12 @@
         
         <ProgressRing Style="{StaticResource Spinner}" Height="50" Width="50" IsActive="{Binding IsLoading}" Margin="0,20,0,0" Visibility="{Binding IsLoading, Converter={StaticResource BoolToVisibility}}" />
 
-        <ListView Grid.Row="1"
-                  ItemsSource="{Binding Lines}"
+        <ListView ItemsSource="{Binding Lines}"
                   SelectionMode="Single"
                   Background="White"
                   BorderBrush="{ThemeResource SystemAccentColor}" 
                   BorderThickness="1"
+                  MaxHeight="100"
                   Visibility="{Binding AreLinesVisible, Converter={StaticResource BoolToVisibility}}">
             
             <ListView.ItemTemplate>

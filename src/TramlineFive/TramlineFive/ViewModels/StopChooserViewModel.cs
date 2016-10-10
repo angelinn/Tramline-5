@@ -39,10 +39,12 @@ namespace TramlineFive.ViewModels
             IsLoading = true;
 
             Lines.Clear();
+            OnPropertyChanged("AreLinesVisible");
 
+            
             foreach (LineViewModel line in await SelectedFavourite.GetLines())
                 Lines.Add(line);
-
+            
             IsLoading = false;
 
             OnPropertyChanged("AreLinesVisible");

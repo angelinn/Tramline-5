@@ -42,10 +42,11 @@ namespace TramlineFive.DataAccess.DomainLogic
             {
                 using (UnitOfWork uow = new UnitOfWork())
                 {
-                    return uow.Stops.Where(s => s.ID == id)
+                    return uow.Stops.Where(s => s.Code == Code)
                                     .IncludeMultiple(s => s.Day, s => s.Day.Direction, s => s.Day.Direction.Line)
                                     .ToList()
-                                    .Select(s => new LineDO(s.Day.Direction.Line));
+                                    .GroupBy(s => s.Day.Direction.Line)
+                                    .Select(g => new LineDO(g.Key));
                 }
 
             });
