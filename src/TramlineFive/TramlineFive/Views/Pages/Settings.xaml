@@ -36,29 +36,10 @@
             <ToggleSwitch IsOn="{Binding ArePushNotificationsEnabled, Mode=TwoWay}" />
 
             <TextBlock Text="Изберете любима линия, чиито пристигания да виждате на жива плочка (обновява се на всеки час)" Style="{StaticResource SettingTitle}"/>
-            <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
-                <ComboBox VerticalAlignment="Center"
-                          ItemsSource="{Binding VehicleTypes}"
-                          DisplayMemberPath="{Binding VehicleTypeKey}"
-                          SelectedValuePath="{Binding VehicleTypeValue}"
-                          SelectedItem="{Binding SelectedType, Mode=TwoWay}"/>
-                
-                <TextBox PlaceholderText="№" Margin="10,0,0,0" VerticalAlignment="Center" TextAlignment="Center" MinWidth="50" Text="{Binding LineNumber, Mode=TwoWay}"/>
-            </StackPanel>
+            <Button Content="Към любими" Click="OnChooseFromFavourites" Margin="0,20,0,0" />
+            <TextBlock Text="{Binding Favourite}" Margin="0,20,0,0" Visibility="{Binding FavouriteExists, Converter={StaticResource BoolToVisibility}}" />
 
-            <TextBox PlaceholderText="Код на спирка" Margin="0,10,0,0" Width="130" HorizontalAlignment="Left" Text="{Binding StopCode, Mode=TwoWay}" />
-
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="120" />
-                    <ColumnDefinition />
-                    <ColumnDefinition />
-                </Grid.ColumnDefinitions>
-
-                <ToggleSwitch Grid.Column="0" Name="tsLiveTile" IsOn="{Binding IsLiveTileEnabled, Mode=TwoWay}" IsEnabled="{Binding IsSwitchable}" Toggled="OnLiveTileToggled"  />
-                <ProgressRing Grid.Column="1" HorizontalAlignment="Left" IsActive="{Binding IsCheckingStop}" Visibility="{Binding IsCheckingStop, Converter={StaticResource BoolToVisibility}}" />
-                <Button Grid.Column="1" Grid.ColumnSpan="2" Content="От любими" Click="OnChooseFromFavourites" HorizontalAlignment="Right" />
-            </Grid>
+            <ToggleSwitch Name="tsLiveTile" IsOn="{Binding IsLiveTileEnabled, Mode=TwoWay}" IsEnabled="{Binding IsSwitchable}" Toggled="OnLiveTileToggled"  />
 
             <TextBlock Text="Оценете приложението в Windows Store!" Margin="0,20,0,0" TextWrapping="Wrap" />
             <Button Content="Оцени" Margin="0,10,0,20" IsEnabled="False" Click="OnRateClick" />

@@ -46,5 +46,6 @@ namespace TramlineFive.Common
         public static string FavouriteStopCode = "Favourite";
         public static string FavouriteType = "FavouriteType";
         public static string FavouriteLine = "FavouriteLine";
+        public static string FavouriteName = "FavouriteName";
     }
 }

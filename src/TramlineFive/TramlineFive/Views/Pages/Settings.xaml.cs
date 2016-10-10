@@ -24,6 +24,7 @@ using NotificationsExtensions;
 using System.Threading.Tasks;
 using TramlineFive.Common.Managers;
 using TramlineFive.Views.Dialogs;
+using TramlineFive.Common.Models;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -50,18 +51,17 @@ namespace TramlineFive.Views.Pages
         {
             UpdateFavouriteStopFromSettingsAsync();
             SettingsViewModel.IsLiveTileEnabled = SettingsManager.ReadValue(SettingsKeys.LiveTile) == null ? default(bool) : Boolean.Parse(SettingsManager.ReadValue(SettingsKeys.LiveTile));
+            SettingsViewModel.Update();
         }
 
         private void UpdateFavouriteStopFromSettingsAsync()
         {
+            SettingsViewModel.FavouriteNumber = SettingsManager.ReadValue(SettingsKeys.FavouriteLine);
+            SettingsViewModel.FavouriteName = SettingsManager.ReadValue(SettingsKeys.FavouriteName);
+            SettingsViewModel.StopCode = SettingsManager.ReadValue(SettingsKeys.FavouriteStopCode);
+
             string type = SettingsManager.ReadValue(SettingsKeys.FavouriteType);
-            SettingsViewModel.SelectedType = (type == null) ? SettingsViewModel.VehicleTypes.First() : SettingsViewModel.VehicleTypes.Where(t => t.Name == type).First();
-
-            string line = SettingsManager.ReadValue(SettingsKeys.FavouriteLine);
-            SettingsViewModel.LineNumber = line ?? String.Empty;
-
-            string code = SettingsManager.ReadValue(SettingsKeys.FavouriteStopCode);
-            SettingsViewModel.StopCode = code ?? String.Empty;
+            SettingsViewModel.FavouriteType = type == null ? VehicleType.None : VehicleTypeManager.Destringify(type);
         }
 
         private async void OnExportClick(object sender, RoutedEventArgs e)
@@ -101,10 +101,17 @@ namespace TramlineFive.Views.Pages
         public async void OnChooseFromFavourites(object sender, RoutedEventArgs e)
         {
             StopChooserDialog dialog = new StopChooserDialog();
-            if ((await dialog.ShowAsync()) == ContentDialogResult.Secondary && dialog.StopChooserViewModel.SelectedFavourite != null)
+            if ((await dialog.ShowAsync()) == ContentDialogResult.Secondary && dialog.StopChooserViewModel.SelectedLine != null)
             {
                 SettingsViewModel.StopCode = ParseManager.ToStopCode(dialog.StopChooserViewModel.SelectedFavourite.Code);
-                SettingsViewModel.IsLiveTileEnabled = false;
+                SettingsViewModel.FavouriteNumber = dialog.StopChooserViewModel.SelectedLine.Number.ToString();
+                SettingsViewModel.FavouriteType = dialog.StopChooserViewModel.SelectedLine.Type;
+                SettingsViewModel.FavouriteName = dialog.StopChooserViewModel.SelectedFavourite.Name;
+
+                if (SettingsViewModel.IsLiveTileEnabled)
+                    SettingsViewModel.IsLiveTileEnabled = false;
+
+                SettingsViewModel.IsLiveTileEnabled = true;
             }
         }
 
@@ -129,15 +136,10 @@ namespace TramlineFive.Views.Pages
 
                     if (SettingsViewModel.IsLiveTileEnabled)
                     {
-                        if (!await SettingsViewModel.DoesStopExist())
-                        {
-                            await new MessageDialog(String.Format(Formats.DoesNotStopAt, SettingsViewModel.SelectedType.Name, SettingsViewModel.LineNumber, SettingsViewModel.StopCode)).ShowAsync();
-                            return;
-                        }
-
                         SettingsManager.UpdateValue(SettingsKeys.FavouriteStopCode, SettingsViewModel.StopCode);
-                        SettingsManager.UpdateValue(SettingsKeys.FavouriteType, SettingsViewModel.SelectedType.Name);
-                        SettingsManager.UpdateValue(SettingsKeys.FavouriteLine, SettingsViewModel.LineNumber);
+                        SettingsManager.UpdateValue(SettingsKeys.FavouriteType, VehicleTypeManager.Stringify(SettingsViewModel.FavouriteType));
+                        SettingsManager.UpdateValue(SettingsKeys.FavouriteName, SettingsViewModel.FavouriteName);
+                        SettingsManager.UpdateValue(SettingsKeys.FavouriteLine, SettingsViewModel.FavouriteNumber);
 
                         if (!await BackgroundTaskManager.RegisterBackgroundTaskAsync())
                             undo = true;
@@ -147,6 +149,7 @@ namespace TramlineFive.Views.Pages
                         SettingsManager.ClearValue(SettingsKeys.FavouriteStopCode);
                         SettingsManager.ClearValue(SettingsKeys.FavouriteLine);
                         SettingsManager.ClearValue(SettingsKeys.FavouriteType);
+                        SettingsManager.ClearValue(SettingsKeys.FavouriteName);
                     }
                     else
                         undo = true;
@@ -157,6 +160,7 @@ namespace TramlineFive.Views.Pages
 
                 SettingsViewModel.IsSwitchable = true;
                 SettingsManager.UpdateValue(SettingsKeys.LiveTile, SettingsViewModel.IsLiveTileEnabled);
+                SettingsViewModel.Update();
             }
         }
 

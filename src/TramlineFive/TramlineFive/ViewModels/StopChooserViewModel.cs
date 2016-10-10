@@ -14,13 +14,14 @@ namespace TramlineFive.ViewModels
         public IList<LineViewModel> Lines { get; private set; }
         public FavouritesViewModel FavouritesViewModel { get; private set; }
         public FavouriteViewModel SelectedFavourite { get; set; }
+
         public string Code { get; set; }
+        public LineViewModel SelectedLine { get; set; }
 
         public StopChooserViewModel()
         {
             FavouritesViewModel = new FavouritesViewModel();
             Lines = new ObservableCollection<LineViewModel>();
-            FavouritesViewModel.PropertyChanged += (s, e) => OnPropertyChanged(e.PropertyName);
         }
 
         public async Task LoadFavouritesAsync()
@@ -30,8 +31,9 @@ namespace TramlineFive.ViewModels
 
             await FavouritesViewModel.LoadFavouritesAsync();
 
+            AreFavouritesEmpty = FavouritesViewModel.Favourites.Count == 0;
+            AreFavouritesVisible = !AreFavouritesEmpty;
             IsLoading = false;
-            AreFavouritesVisible = true;
         }
 
         public async Task LoadAvailableLinesAsync()
@@ -64,11 +66,17 @@ namespace TramlineFive.ViewModels
             }
         }
 
+        private bool areFavouritesEmpty;
         public bool AreFavouritesEmpty
         {
             get
             {
-                return FavouritesViewModel.IsEmpty;
+                return areFavouritesEmpty;
+            }
+            set
+            {
+                areFavouritesEmpty = value;
+                OnPropertyChanged();
             }
         }
 

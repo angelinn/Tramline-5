@@ -25,18 +25,6 @@ namespace TramlineFive.Common.Managers
             }
         }
 
-        public static List<NameValueObject> GetNameValuePair()
-        {
-            List<NameValueObject> list = new List<NameValueObject>();
-            foreach (int enumValue in Enum.GetValues(typeof(VehicleType)))
-            {
-                if (enumValue >= 0)
-                    list.Add(new NameValueObject { Name = Stringify((VehicleType)enumValue), Value = enumValue });
-            }
-
-            return list;
-        }
-
         public static VehicleType Destringify(string stringified)
         {
             switch (stringified)

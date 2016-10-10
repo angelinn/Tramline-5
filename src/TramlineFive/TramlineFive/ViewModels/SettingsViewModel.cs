@@ -15,15 +15,10 @@ namespace TramlineFive.ViewModels
 {
     public class SettingsViewModel : BaseViewModel
     {
-        public List<NameValueObject> VehicleTypes { get; private set; }
-        public string VehicleTypeKey { get; private set; }
-        public string VehicleTypeValue { get; private set; }
-
-        public SettingsViewModel()
+        public void Update()
         {
-            VehicleTypes = VehicleTypeManager.GetNameValuePair();
-            VehicleTypeKey = "Name";
-            VehicleTypeValue = "Value";
+            OnPropertyChanged("Favourite");
+            OnPropertyChanged("FavouriteExists");
         }
 
         public async Task ClearHistoryAsync()
@@ -42,27 +37,7 @@ namespace TramlineFive.ViewModels
 
         public bool IsValid()
         {
-            int line;
-            int stop;
-
-            return !IsLiveTileEnabled || Int32.TryParse(lineNumber, out line) && Int32.TryParse(stopCode, out stop);
-        }
-
-        public async Task<bool> DoesStopExist()
-        {
-            IsSwitchable = false;
-            IsCheckingStop = true;
-            
-            bool doesStop = await LineDO.DoesStopAt((VehicleType)SelectedType.Value, LineNumber, StopCode);
-            if (!doesStop)
-            {
-                IsLiveTileEnabled = !IsLiveTileEnabled;
-                IsSwitchable = true;
-            }
-
-            IsCheckingStop = false;
-
-            return doesStop;
+            return !String.IsNullOrEmpty(stopCode);
         }
 
         public bool ArePushNotificationsEnabled
@@ -96,17 +71,23 @@ namespace TramlineFive.ViewModels
             }
         }
 
-        private NameValueObject selectedType;
-        public NameValueObject SelectedType
+        public string FavouriteName { get; set; }
+        public string FavouriteNumber { get; set; }
+        public VehicleType FavouriteType { get; set; }
+        
+        public string Favourite
         {
             get
             {
-                return selectedType;
+                return (FavouriteName == null) ? null : $"{VehicleTypeManager.Stringify(FavouriteType)} №{FavouriteNumber} - {FavouriteName}";
             }
-            set
+        }
+
+        public bool FavouriteExists
+        {
+            get
             {
-                selectedType = value;
-                OnPropertyChanged();
+                return !String.IsNullOrEmpty(Favourite);
             }
         }
 
@@ -120,35 +101,6 @@ namespace TramlineFive.ViewModels
             set
             {
                 stopCode = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private string lineNumber;
-        public string LineNumber
-        {
-            get
-            {
-                return lineNumber;
-            }
-            set
-            {
-                lineNumber = value;
-                OnPropertyChanged();
-            }
-        }
-
-
-        private bool isCheckingStop;
-        public bool IsCheckingStop
-        {
-            get
-            {
-                return isCheckingStop;
-            }
-            set
-            {
-                isCheckingStop = value;
                 OnPropertyChanged();
             }
         }

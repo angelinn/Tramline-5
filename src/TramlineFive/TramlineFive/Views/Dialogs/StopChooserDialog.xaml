@@ -9,7 +9,7 @@
     mc:Ignorable="d"
     Title="Любими"
     MaxHeight="500"
-    SecondaryButtonText="Избор">
+    SecondaryButtonText="Напред">
 
     <ContentDialog.Resources>
         <cv:StopCodeConverter x:Key="StopCodeConverter" />
@@ -45,6 +45,7 @@
 
         <ListView ItemsSource="{Binding Lines}"
                   SelectionMode="Single"
+                  SelectedItem="{Binding SelectedLine, Mode=TwoWay}"
                   Background="White"
                   BorderBrush="{ThemeResource SystemAccentColor}" 
                   BorderThickness="1"
