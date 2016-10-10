@@ -15,11 +15,14 @@ namespace TramlineFive.DataAccess.DomainLogic
 
         public string Name { get; private set; }
 
+        public string Direction { get; private set; }
+
         public FavouriteDO(Favourite entity)
         {
             Code = entity.Stop.Code;
             Name = entity.Stop.Name;
             id = entity.ID;
+            Direction = entity.Stop.Day?.Direction.Name;
         }
 
         public static async Task<FavouriteDO> Add(string code)
@@ -67,7 +70,7 @@ namespace TramlineFive.DataAccess.DomainLogic
             {
                 using (UnitOfWork uow = new UnitOfWork())
                 {
-                    return uow.Favourites.All().IncludeMultiple(f => f.Stop).ToList().Select(f => new FavouriteDO(f));
+                    return uow.Favourites.All().IncludeMultiple(f => f.Stop, f => f.Stop.Day, f => f.Stop.Day.Direction).ToList().Select(f => new FavouriteDO(f));
                 }
             });
         }

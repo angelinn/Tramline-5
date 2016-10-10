@@ -156,10 +156,13 @@
                         <ListView.ItemTemplate>
                             <DataTemplate>
                                 <Grid>
-                                    <TextBlock VerticalAlignment="Center">
-                                             <Run Text="{Binding Name}" />
-                                            (<Run Text="{Binding Code, Converter={StaticResource StopCodeConverter}}" />)
-                                    </TextBlock>
+                                    <StackPanel VerticalAlignment="Center">
+                                        <TextBlock>
+                                                 <Run Text="{Binding Name}" />
+                                                (<Run Text="{Binding Code, Converter={StaticResource StopCodeConverter}}" />)
+                                        </TextBlock>
+                                        <TextBlock FontSize="13" Text="{Binding Direction}" />
+                                    </StackPanel>
                                     <Button Name="btnRemoveFavourite" Style="{StaticResource ListViewButton}" Content="&#xE8D9;" Click="OnRemoveFavouriteClick"/>
                                 </Grid>
                             </DataTemplate>

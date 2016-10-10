@@ -32,6 +32,14 @@ namespace TramlineFive.ViewModels.Wrappers
             }
         }
 
+        public string Direction
+        {
+            get
+            {
+                return core.Direction;
+            }
+        }
+
         public string Code
         {
             get

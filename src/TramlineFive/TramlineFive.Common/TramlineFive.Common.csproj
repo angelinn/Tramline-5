@@ -112,6 +112,7 @@
     <Compile Include="Managers\ParseManager.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="Managers\FormManager.cs" />
+    <Compile Include="Managers\TileManager.cs" />
     <Compile Include="Managers\VehicleTypeManager.cs" />
     <Compile Include="Models\Arrival.cs" />
     <Compile Include="Models\ICaptchaDialog.cs" />

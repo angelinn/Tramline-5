@@ -143,6 +143,8 @@ namespace TramlineFive.Views.Pages
 
                         if (!await BackgroundTaskManager.RegisterBackgroundTaskAsync())
                             undo = true;
+                        else
+                            await TileManager.QueryStopAndUpdate();
                     }
                     else if (await BackgroundTaskManager.UnregisterBackgroundTaskAsync())
                     {
