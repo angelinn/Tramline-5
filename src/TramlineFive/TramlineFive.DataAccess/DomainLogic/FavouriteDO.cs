@@ -47,7 +47,7 @@ namespace TramlineFive.DataAccess.DomainLogic
                     uow.Favourites.Add(favourite);
                     uow.Save();
 
-                    return new FavouriteDO(favourite);
+                    return new FavouriteDO(uow.Favourites.Where(f => f.ID == favourite.ID).IncludeMultiple(f => f.Stop, f => f.Stop.Day, f => f.Stop.Day.Direction).First());
                 };
             });
         }
