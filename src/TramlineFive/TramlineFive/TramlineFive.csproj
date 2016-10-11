@@ -164,7 +164,11 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\Bus-64.png" />
-    <Content Include="Assets\Store\BadgeLogo.png" />
+    <Content Include="Assets\Store\BadgeLogo.scale-100.png" />
+    <Content Include="Assets\Store\BadgeLogo.scale-125.png" />
+    <Content Include="Assets\Store\BadgeLogo.scale-150.png" />
+    <Content Include="Assets\Store\BadgeLogo.scale-200.png" />
+    <Content Include="Assets\Store\BadgeLogo.scale-400.png" />
     <Content Include="Assets\Store\NewStoreLogo.scale-100.png" />
     <Content Include="Assets\Store\NewStoreLogo.scale-125.png" />
     <Content Include="Assets\Store\NewStoreLogo.scale-150.png" />
