@@ -128,8 +128,8 @@ namespace TramlineFive.Views.Pages
             {
                 if (reloadVirtualTable && !String.IsNullOrEmpty((App.Current as App).AppViewModel.StopCode))
                 {
-                    await QueryVirtualTableAsync();
                     reloadVirtualTable = false;
+                    await QueryVirtualTableAsync();
                 }
             }
         }
