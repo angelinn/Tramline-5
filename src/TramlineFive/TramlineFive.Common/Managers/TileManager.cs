@@ -69,7 +69,7 @@ namespace TramlineFive.Common.Managers
             return notification;
         }
 
-        private const string WIDE_LOGO_SRC = "ms-appx:///Assets/Store/Wide310x150Logo.scale-400.png";
-        private const string SQUARE_LOGO_SRC = "ms-appx:///Assets/Store/Square150x150Logo.scale-400.png";
+        private const string WIDE_LOGO_SRC = "ms-appx:///Assets/Store/Wide310x150Logo.scale-200.png";
+        private const string SQUARE_LOGO_SRC = "ms-appx:///Assets/Store/Square150x150Logo.scale-200.png";
     }
 }
