@@ -30,9 +30,16 @@ namespace TramlineFive.ViewModels
             IsClearingHistory = false;
         }
 
-        public async Task<string> GetSerializedFavourites()
+        public async Task<string> ExportFavourites()
         {
             return JsonConvert.SerializeObject(await FavouriteDO.AllAsync());
+        }
+
+        public async Task ImportFavourites(string json)
+        {
+            IEnumerable<FavouriteDO> backuped = JsonConvert.DeserializeObject<IEnumerable<FavouriteDO>>(json);
+            foreach (FavouriteDO favourite in backuped)
+                await FavouriteDO.Add(favourite.Code);
         }
 
         public bool IsValid()

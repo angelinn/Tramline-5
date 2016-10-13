@@ -71,7 +71,7 @@ namespace TramlineFive.Views.Pages
 
             if (folder != null)
             {
-                string serialized = await SettingsViewModel.GetSerializedFavourites();
+                string serialized = await SettingsViewModel.ExportFavourites();
                 StorageFile file = await folder.CreateFileAsync($"{Strings.AppName}_{DateTime.Now.ToString(Formats.Timestamp)}.{Strings.BackupExtension}");
                 await FileIO.WriteTextAsync(file, serialized);
 
@@ -79,9 +79,20 @@ namespace TramlineFive.Views.Pages
             }
         }
 
-        private void OnImportClick(object sender, RoutedEventArgs e)
+        private async void OnImportClick(object sender, RoutedEventArgs e)
         {
-            throw new NotSupportedException();
+            FileOpenPicker picker = new FileOpenPicker();
+            picker.FileTypeFilter.Add(".t5d");
+
+            StorageFile file = await picker.PickSingleFileAsync();
+
+            if (file != null)
+            {
+                string serialized = await FileIO.ReadTextAsync(file);
+                await SettingsViewModel.ImportFavourites(serialized);
+
+                await new MessageDialog("Успешно десериализиране!").ShowAsync();
+            }
         }
 
         private void OnBackClick(object sender, RoutedEventArgs e)

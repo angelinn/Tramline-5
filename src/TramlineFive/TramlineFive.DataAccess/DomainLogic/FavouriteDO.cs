@@ -11,11 +11,13 @@ namespace TramlineFive.DataAccess.DomainLogic
 {
     public class FavouriteDO
     {
-        public string Code { get; private set; }
+        public string Code { get; set; }
 
-        public string Name { get; private set; }
+        public string Name { get; set; }
 
-        public string Direction { get; private set; }
+        public string Direction { get; set; }
+
+        public FavouriteDO() { }
 
         public FavouriteDO(Favourite entity)
         {
