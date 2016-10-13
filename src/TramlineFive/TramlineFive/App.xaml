@@ -66,7 +66,7 @@
                 <Setter Property="Foreground" Value="White" />
             </Style>
 
-            <!--Needed to hide the three dots button on the command bar-->
+            <!-- Needed to hide the three dots button on the command bar -->
             <Style x:Key="EllipsisButton" TargetType="Button">
                 <Setter Property="Visibility" Value="Collapsed"/>
             </Style>
@@ -96,8 +96,8 @@
             <Style x:Key="Spinner" TargetType="ProgressRing">
                 <Setter Property="HorizontalAlignment" Value="Center" />
                 <Setter Property="VerticalAlignment" Value="Center" />
-                <Setter Property="Height" Value="80" />
-                <Setter Property="Width" Value="80" />
+                <Setter Property="Height" Value="70" />
+                <Setter Property="Width" Value="70" />
             </Style>
 
             <Style x:Key="SearchTextBox" TargetType="TextBox">
