@@ -72,7 +72,7 @@
             </Style>
 
             <Style x:Key="BarText" TargetType="TextBlock">
-                <Setter Property="FontSize" Value="18" />
+                <Setter Property="FontSize" Value="17" />
                 <Setter Property="Foreground" Value="White" />
                 <Setter Property="VerticalAlignment" Value="Center" />
             </Style>

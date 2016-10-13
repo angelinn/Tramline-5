@@ -59,7 +59,7 @@
                 <Button Name="btnSettings" Click="OnSettingsClick" Style="{StaticResource HamburgerMenuButton}">
                     <StackPanel Orientation="Horizontal">
                         <Button Content="&#xE713;" Style="{StaticResource BarIcon}" />
-                        <TextBlock Text="Настройки" Style="{StaticResource BarText}"/>
+                        <TextBlock Text="Настройки" Style="{StaticResource BarText}" />
                     </StackPanel>
                 </Button>
 
