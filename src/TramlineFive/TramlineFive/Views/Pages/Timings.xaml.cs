@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using TramlineFive.Common.Managers;
 using TramlineFive.ViewModels;
+using TramlineFive.ViewModels.Wrappers;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
@@ -35,7 +36,8 @@ namespace TramlineFive.Views.Pages
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            TimingsViewModel.SetArrivals(e.Parameter as List<string>);
+            StopViewModel svm = e.Parameter as StopViewModel;
+            TimingsViewModel.Update(svm.Name, svm.Timings);
             DataContext = TimingsViewModel;
         }
 

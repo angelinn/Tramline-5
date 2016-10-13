@@ -15,12 +15,15 @@ namespace TramlineFive.ViewModels
         {
             get
             {
-                return "ПРИСТИГАНИЯ";
+                return $"ПРИСТИГАНИЯ - {Name}";
             }
         }
 
-        public void SetArrivals(List<string> timings)
+        public string Name { get; private set; }
+
+        public void Update(string name, List<string> timings)
         {
+            Name = name;
             ArrivalTimings = timings.GroupBy(t => Regex.Match(t, "-?[0-9]+").Value);
         }
     }

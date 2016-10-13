@@ -55,7 +55,7 @@ namespace TramlineFive.Views.Pages
 
         private void OnListViewItemClick(object sender, ItemClickEventArgs e)
         {
-            Frame.Navigate(typeof(Timings), (e.ClickedItem as StopViewModel).Timings);
+            Frame.Navigate(typeof(Timings), e.ClickedItem);
         }
 
         private void OnVirtualTableClick(object sender, RoutedEventArgs e)
