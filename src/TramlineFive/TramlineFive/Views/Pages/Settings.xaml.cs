@@ -91,7 +91,7 @@ namespace TramlineFive.Views.Pages
                 string serialized = await FileIO.ReadTextAsync(file);
                 await SettingsViewModel.ImportFavourites(serialized);
 
-                await new MessageDialog("Успешно десериализиране!").ShowAsync();
+                await new MessageDialog("Успешно възстановяване. Моля рестартирайте приложението, за да се приложат промените.").ShowAsync();
             }
         }
 

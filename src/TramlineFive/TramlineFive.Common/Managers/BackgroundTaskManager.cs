@@ -44,6 +44,6 @@ namespace TramlineFive.Common.Managers
 
         private const string TASK_NAME = "FavouriteStopBackgroundTask";
         private const string TASK_ENTRY_POINT = "BackgroundTasks.FavouriteStopBackgroundTask";
-        private const int REFRESH_TIME_MINUTES = 15;
+        private const int REFRESH_TIME_MINUTES = 60;
     }
 }

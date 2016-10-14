@@ -30,6 +30,14 @@ namespace TramlineFive.ViewModels.Wrappers
             }
         }
 
+        public int Index
+        {
+            get
+            {
+                return core.Index;
+            }
+        }
+
         public List<string> Timings
         {
             get

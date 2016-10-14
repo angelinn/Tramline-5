@@ -31,4 +31,5 @@ class Stop
   attr_accessor :name
   attr_accessor :code
   attr_accessor :timings
+  attr_accessor :index
 end
