@@ -136,7 +136,7 @@ namespace TramlineFive.Views.Pages
 
         private void OnFavouritesItemClick(object sender, ItemClickEventArgs e)
         {
-            (App.Current as App).AppViewModel.StopCode = ParseManager.ToStopCode((e.ClickedItem as FavouriteViewModel).Code);
+            (App.Current as App).AppViewModel.StopCode = (e.ClickedItem as FavouriteViewModel).Code;
 
             reloadVirtualTable = true;
             pvMain.SelectedIndex = 0;
@@ -212,7 +212,7 @@ namespace TramlineFive.Views.Pages
 
         private void OnHistoryItemClick(object sender, ItemClickEventArgs e)
         {
-            (App.Current as App).AppViewModel.StopCode = ParseManager.ToStopCode((e.ClickedItem as HistoryEntryViewModel).Code);
+            (App.Current as App).AppViewModel.StopCode = (e.ClickedItem as HistoryEntryViewModel).Code;
 
             reloadVirtualTable = true;
             pvMain.SelectedIndex = 0;

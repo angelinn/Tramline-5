@@ -81,7 +81,7 @@ namespace TramlineFive.DataAccess.DomainLogic
         public static async Task<bool> DoesStopAt(VehicleType type, string number, string stopCode)
         {
             List<StopDO> stops = await FetchByVehicleAsync(type, number);
-            return stops.Any(s => ParseManager.ToStopCode(s.Code) == stopCode);
+            return stops.Any(s => s.Code == stopCode);
         }
 
         private int id;

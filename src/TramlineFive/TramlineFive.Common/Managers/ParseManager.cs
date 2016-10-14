@@ -9,11 +9,6 @@ namespace TramlineFive.Common.Managers
 {
     public static class ParseManager
     {
-        public static string ToStopCode(string value)
-        {
-            return String.Format("{0:D4}", Int32.Parse(value));
-        }
-
         public static string ParseStopTitle(string stopTitle)
         {
             if (stopTitle == null)

@@ -12,7 +12,6 @@
     SecondaryButtonText="Напред">
 
     <ContentDialog.Resources>
-        <cv:StopCodeConverter x:Key="StopCodeConverter" />
         <cv:BoolToVisibilityConverter x:Key="BoolToVisibility" />
         <cv:InverseBoolConverter x:Key="InverseBool" />
     </ContentDialog.Resources>
@@ -35,7 +34,7 @@
                 <DataTemplate>
                     <TextBlock VerticalAlignment="Center">
                         <Run Text="{Binding Name}" />
-                       (<Run Text="{Binding Code, Converter={StaticResource StopCodeConverter}}" />)
+                       (<Run Text="{Binding Code}" />)
                     </TextBlock>
                 </DataTemplate>
             </ListView.ItemTemplate>

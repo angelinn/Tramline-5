@@ -9,10 +9,6 @@
     Name="Page"
     mc:Ignorable="d">
 
-    <Page.Resources>
-        <cv:StopCodeConverter x:Key="StopCodeConverter" />
-    </Page.Resources>
-    
     <Page.TopAppBar>
         <CommandBar Background="{ThemeResource SystemAccentColor}">
             <CommandBar.Content>
@@ -43,7 +39,7 @@
                             <TextBlock Text="{Binding Name}" />
                             <TextBlock>
                                 Код на спирка:
-                                <Run Text="{Binding Code, Converter={StaticResource StopCodeConverter}}" />
+                                <Run Text="{Binding Code}" />
                             </TextBlock>
                         </StackPanel>
 

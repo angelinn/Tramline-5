@@ -60,7 +60,7 @@ namespace TramlineFive.Views.Pages
 
         private void OnVirtualTableClick(object sender, RoutedEventArgs e)
         {
-            (App.Current as App).AppViewModel.StopCode = ParseManager.ToStopCode(((sender as Button).DataContext as StopViewModel).Code);
+            (App.Current as App).AppViewModel.StopCode = ((sender as Button).DataContext as StopViewModel).Code;
             Frame.Navigate(typeof(MainPage), true);
         }
     }

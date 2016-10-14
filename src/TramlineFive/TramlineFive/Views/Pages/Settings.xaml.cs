@@ -114,7 +114,7 @@ namespace TramlineFive.Views.Pages
             StopChooserDialog dialog = new StopChooserDialog();
             if ((await dialog.ShowAsync()) == ContentDialogResult.Secondary && dialog.StopChooserViewModel.SelectedLine != null)
             {
-                SettingsViewModel.StopCode = ParseManager.ToStopCode(dialog.StopChooserViewModel.SelectedFavourite.Code);
+                SettingsViewModel.StopCode = dialog.StopChooserViewModel.SelectedFavourite.Code;
                 SettingsViewModel.FavouriteNumber = dialog.StopChooserViewModel.SelectedLine.Number.ToString();
                 SettingsViewModel.FavouriteType = dialog.StopChooserViewModel.SelectedLine.Type;
                 SettingsViewModel.FavouriteName = dialog.StopChooserViewModel.SelectedFavourite.Name;
