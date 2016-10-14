@@ -33,17 +33,20 @@ namespace TramlineFive.DataAccess.DomainLogic
             {
                 using (UnitOfWork uow = new UnitOfWork())
                 {
-                    int intCode = Int32.Parse(code);
                     Favourite existing = uow.Favourites.All()
                                                        .IncludeMultiple(f => f.Stop)
-                                                       .Where(s => s.Stop.Code == intCode.ToString())
+                                                       .Where(s => s.Stop.Code == code)
                                                        .FirstOrDefault();
                     if (existing != null)
                         return null;
 
+                    int intCode;
+                    if (!Int32.TryParse(code, out intCode))
+                        return null;
+
                     Favourite favourite = new Favourite
                     {
-                        StopID = uow.Stops.Where(s => s.Code == intCode.ToString()).First().ID
+                        StopID = uow.Stops.Where(s => s.Code == code).First().ID
                     };
 
                     uow.Favourites.Add(favourite);

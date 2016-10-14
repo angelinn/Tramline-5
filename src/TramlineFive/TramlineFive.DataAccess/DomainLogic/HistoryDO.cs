@@ -23,15 +23,19 @@ namespace TramlineFive.DataAccess.DomainLogic
             TimeStamp = entity.TimeStamp;
         }
 
-        public static async Task<HistoryDO> Add(int intCode)
+        public static async Task<HistoryDO> Add(string code)
         {
             return await Task.Run(() =>
             {
+                int intCode;
+                if (!Int32.TryParse(code, out intCode))
+                    return null;
+
                 using (UnitOfWork uow = new UnitOfWork())
                 {
                     History history = new History
                     {
-                        StopID = uow.Stops.Where(s => s.Code == intCode.ToString()).First().ID,
+                        StopID = uow.Stops.Where(s => s.Code == code).First().ID,
                         TimeStamp = DateTime.Now
                     };
 
