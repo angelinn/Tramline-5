@@ -22,9 +22,7 @@ namespace TramlineFive.ViewModels
         {
             await scheduleChooserViewModel.SelectedDay.LoadStops();
 
-            LineStops = scheduleChooserViewModel.SelectedDay.Stops.OrderBy(s => s.)
-            foreach (StopViewModel stop in scheduleChooserViewModel.SelectedDay.Stops)
-                LineStops.Add(stop);
+            LineStops = scheduleChooserViewModel.SelectedDay.Stops.OrderBy(s => s.Index).ToList();
         }
 
         public string Title
