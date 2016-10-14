@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace TramlineFive.DataAccess.Migrations
 {
-    public partial class HistoryMigrationOnceAgain : Migration
+    public partial class CoolStopsMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -70,6 +70,7 @@ namespace TramlineFive.DataAccess.Migrations
                         .Annotation("Autoincrement", true),
                     Code = table.Column<string>(nullable: true),
                     DayID = table.Column<int>(nullable: true),
+                    Index = table.Column<int>(nullable: true),
                     Name = table.Column<string>(nullable: true),
                     TimingsAsString = table.Column<string>(nullable: true)
                 },

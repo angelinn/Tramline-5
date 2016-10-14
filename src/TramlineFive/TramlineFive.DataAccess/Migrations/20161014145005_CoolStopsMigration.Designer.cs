@@ -8,8 +8,8 @@ using TramlineFive.DataAccess;
 namespace TramlineFive.DataAccess.Migrations
 {
     [DbContext(typeof(TramlineFiveContext))]
-    [Migration("20160830163102_HistoryMigrationOnceAgain")]
-    partial class HistoryMigrationOnceAgain
+    [Migration("20161014145005_CoolStopsMigration")]
+    partial class CoolStopsMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -100,6 +100,8 @@ namespace TramlineFive.DataAccess.Migrations
                     b.Property<string>("Code");
 
                     b.Property<int?>("DayID");
+
+                    b.Property<int?>("Index");
 
                     b.Property<string>("Name");
 

@@ -100,6 +100,8 @@ namespace TramlineFive.DataAccess.Migrations
 
                     b.Property<int?>("DayID");
 
+                    b.Property<int?>("Index");
+
                     b.Property<string>("Name");
 
                     b.Property<string>("TimingsAsString");
