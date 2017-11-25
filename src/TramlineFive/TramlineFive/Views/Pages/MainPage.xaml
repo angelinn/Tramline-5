@@ -16,10 +16,6 @@
         <cv:DateTimeConverter x:Key="DateTimeConverter" />
 
         <mg:VersionManager x:Key="VersionManager" />
-
-        <MenuFlyout x:Name="LineFlyout">
-            <MenuFlyoutItem Text="Добави в любими" Click="OnFlyoutItemClick" />
-        </MenuFlyout>
     </Page.Resources>
 
     <Page.TopAppBar>
@@ -107,7 +103,7 @@
                         <ListView ItemsSource="{Binding Arrivals}" SelectionMode="None">
                             <ListView.ItemTemplate>
                                 <DataTemplate>
-                                    <Grid Holding="OnArrivalHolding" FlyoutBase.AttachedFlyout="{StaticResource LineFlyout}" Height="80" Padding="0,10,0,10" >
+                                    <Grid Holding="OnArrivalHolding" Height="80" Padding="0,10,0,10" >
                                         <Grid.RowDefinitions>
                                             <RowDefinition />
                                             <RowDefinition />
@@ -117,6 +113,12 @@
                                             <ColumnDefinition Width="58" />
                                             <ColumnDefinition Width="*" />
                                         </Grid.ColumnDefinitions>
+                                        <FlyoutBase.AttachedFlyout>
+                                            <MenuFlyout x:Name="LineFlyout">
+                                                <MenuFlyoutItem Text="Добави в любими" Click="OnFlyoutItemClick" />
+                                                <MenuFlyoutItem Text="Маркирай за жива плочка" Click="OnFlyoutItemClick" />
+                                            </MenuFlyout>
+                                        </FlyoutBase.AttachedFlyout>
 
                                         <Image Grid.RowSpan="2" Source="{Binding Type, Converter={StaticResource UrlToImageSource}}" HorizontalAlignment="Left"/>
                                         <TextBlock Grid.Column="1" FontWeight="Bold">
