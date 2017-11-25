@@ -1,4 +1,0 @@
-os: Visual Studio 2015
-
-before_build:
-  - nuget restore src/TramlineFive/TramlineFive.sln
